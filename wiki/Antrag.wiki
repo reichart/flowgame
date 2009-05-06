@@ -1,0 +1,11 @@
+==Purpose, scope and objectives==
+Concise summary of purpose, scope and objectives, integration with
+other projects, reference to requirements etc.
+
+==Assumptions and constraints==
+Schedule, budget, resources, software to be reused/incorporated,
+technology to be employed, interfaces to other products
+
+==Project deliverables==
+List of work items with delivery dates, locations and quantities (also
+includes delivery media and packaging & handling)
