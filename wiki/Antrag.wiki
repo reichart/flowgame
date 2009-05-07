@@ -14,6 +14,8 @@
 B=Blockveranstaltung
 
 
+=Projektbeschreibung=
+
 ==Purpose, scope and objectives==
 Concise summary of purpose, scope and objectives, integration with
 other projects, reference to requirements etc.
