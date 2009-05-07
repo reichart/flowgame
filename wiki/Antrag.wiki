@@ -1,11 +1,35 @@
+=Vorlesungen für nächstes Semester=
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/AOSTS1/ Arbeitspsychologie B]
+
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/OP/ Organizational Psychology B]
+
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/PPM/ Personalführung und Personalmanagement B]
+
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/PFO/ Praxis der Führung und Organisation]
+
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/PSYBS/ Psychologie in Beruf und Schule]
+
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/ENTPSY%20I/ Pädagogische und Entwicklungspsychologie]
+
+B=Blockveranstaltung
+
+
 ==Purpose, scope and objectives==
 Concise summary of purpose, scope and objectives, integration with
 other projects, reference to requirements etc.
+The current situation
+The objectives
+The functionality the new system should support
 
 ==Assumptions and constraints==
 Schedule, budget, resources, software to be reused/incorporated,
 technology to be employed, interfaces to other products
+The environment in which the system will be deployed
+
 
 ==Project deliverables==
 List of work items with delivery dates, locations and quantities (also
 includes delivery media and packaging & handling)
+Deliverables expected by the client
+Delivery dates
+A set of acceptance criteria.
