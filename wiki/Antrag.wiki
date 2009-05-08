@@ -23,11 +23,25 @@ The current situation
 
 - genaues Entstehen noch ungeklärt
 
+- bisherige Theorie von Verhältnis Schwierigkeitsgrad und Fertigkeiten
+
+- Lehrstuhl: Fertigkeit, Wichtigkeit, Spass
+
 The objectives
 
 - messen von Flow
 
 - herbeiführen von flow
+
+Hypothesen, die gemessen werden sollen
+
+- kontinuierlich/diskret: was führt leichter zu flow
+
+- beeinflusst die Stimmung flow
+
+- Anreize/Wichtigkeit (beeinflusst ein Ranking flow)
+
+- Priming
 
 The functionality the new system should support
 
@@ -41,12 +55,19 @@ The functionality the new system should support
 
 - verschiedene Szenarien mit einer Kombination aus Fragebögen und Spielleveln sollen leicht erstellbar sein
 
-==Assumptions and constraints==
-Schedule, budget, resources, software to be reused/incorporated,
-technology to be employed, interfaces to other products
-The environment in which the system will be deployed
+- Fragebögen, sollen die folgenden Themen erfassen
+  
+  - Flow 10 Fragen
 
+  - Spass/Stimmung
 
+  - Subjektive Anforderungen
+
+- Das Spiel soll in eine Social Platform eingebaut werden
+
+  - aquirieren von Testpersonen
+
+  - Ranking (sozial/individuell)
 ==Project deliverables==
 List of work items with delivery dates, locations and quantities (also
 includes delivery media and packaging & handling)
