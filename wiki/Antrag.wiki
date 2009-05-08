@@ -18,16 +18,27 @@ B=Blockveranstaltung
 
 ==Purpose, scope and objectives==
 The current situation
+
 - flow interessantes Phänomen
+
 - genaues Entstehen noch ungeklärt
+
 The objectives
+
 - messen von Flow
+
 - herbeiführen von flow
+
 The functionality the new system should support
+
 - unterhaltsames Spiel (Tunnelflyer)
+
   - mit anpassbarem Schwierigkeitsgrad (Geschwindigkeit, Anzahl Hindernisse/Boni)
+
   - in dem man Leistung gut messen kann
+
 - von Laien erstellbare Fragebögen, mit anschließender optischer Auswertung
+
 - verschiedene Szenarien mit einer Kombination aus Fragebögen und Spielleveln sollen leicht erstellbar sein
 
 ==Assumptions and constraints==
