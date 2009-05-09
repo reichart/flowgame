@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="j3dcore.jar" sourcepath="vecmath-1_5_2-src.zip"/>
+	<classpathentry kind="lib" path="j3dutils.jar" sourcepath="j3d-1_5_2-src.zip"/>
+	<classpathentry kind="lib" path="vecmath.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
