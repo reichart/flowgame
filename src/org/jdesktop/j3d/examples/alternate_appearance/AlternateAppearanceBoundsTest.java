@@ -44,18 +44,36 @@
 
 package org.jdesktop.j3d.examples.alternate_appearance;
 
-import java.applet.Applet;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Container;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.media.j3d.AlternateAppearance;
+import javax.media.j3d.AmbientLight;
+import javax.media.j3d.Appearance;
+import javax.media.j3d.BoundingLeaf;
+import javax.media.j3d.BoundingSphere;
+import javax.media.j3d.Bounds;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Canvas3D;
+import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Group;
+import javax.media.j3d.Material;
+import javax.media.j3d.Shape3D;
+import javax.swing.BoxLayout;
+import javax.swing.JApplet;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+import javax.vecmath.Color3f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3f;
+
 import com.sun.j3d.utils.applet.MainFrame;
-import com.sun.j3d.utils.geometry.*;
-import com.sun.j3d.utils.universe.*;
-import javax.media.j3d.*;
-import javax.vecmath.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.border.*;
-import com.sun.j3d.utils.behaviors.mouse.*;
+import com.sun.j3d.utils.universe.SimpleUniverse;
 
 public class AlternateAppearanceBoundsTest extends JApplet 
 implements ActionListener {
