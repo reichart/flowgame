@@ -17,34 +17,34 @@ B=Blockveranstaltung
 =Projektbeschreibung=
 
 In unserem IDP widmen wir uns der Untersuchung des sogenannten Flow, ein Zustand, der sich durch hohe Konzentration auszeichnet und bei dem subjektiv die Zeit schneller vergeht. Flow wurde erstmals von Csiksmihalyi erforscht, der herausfinden wollte, warum Menschen oft auch ohne extrinsische Belohnungen sehr lange an bestimmten Aufgaben arbeiten. Er fand hierbei heraus, dass Menschen, wenn sie ideal gefördert werden, also Schwierigkeitsgrad und Fertigkeiten aufeinander angepasst sind, in einen Zustand geraten, in dem sie sich gleichzeitig effizient, motiviert und glücklich sind. Diesen Zustand nannte er Flow.
-Inzwischen wird jedoch vermutet, dass Flow nicht alleine von den Anforderungen und Fähigkeiten abhängt, sondern dass auch Wichtigkeit der Aufgabe und Spass an ihr eine wichtige Rolle spielen.
+Inzwischen wird jedoch vermutet, dass Flow nicht alleine von den Anforderungen und Fähigkeiten abhängt, sondern dass auch Wichtigkeit der Aufgabe und Spaß an ihr eine wichtige Rolle spielen.
 
 Im Rahmen dieser Arbeit wollen wir nun versuchen, Flow und die ihn beeinflussenden Parameter zu messen. Außerdem soll im weiteren Verlauf versucht werden Flow gezielt herbei zu führen.
 
-Gezielt wollen wir uns hierbei auf vier Hypothesen konzentrieren.
+Gezielt wollen wir uns hierbei auf vier Hypothesen konzentrieren:
 
-Erstens vermuten wir, dass das kontinuierliche anpassen des Schwierigkeitsgrades leichter zum Flow-Erleben führt, als ein stufenweises Anpassen.
+Erstens vermuten wir, dass das kontinuierliche Anpassen des Schwierigkeitsgrades leichter zum Flow-Erleben führt, als ein stufenweises Anpassen.
 
 Zweitens wollen wir anhand von Fragen die Stimmung der Versuchsteilnehmer festhalten und ermitteln, ob eine bestimmte Stimmung es erleichtert, in diesen Zustand der Konzentration zu kommen.
 
 Desweiteren möchten wir herausfinden, inwiefern die Bedeutung, die man der Aufgabe zumisst, Einfluss auf Flow hat.
 
-Als letzten Punkt interessieren wir uns für die Auswirkung von Priming auf die Ergebnisse und das subjektive Empfinden der Aufgabe. Unter Priming verstehen wir hierbei ein gezieltes einsetzen von leistungsbezogenen Wörtern, um unbewusst Ziele zu verstärken, und damit potenziell eine höhere leistungsbereitschaft zu erzielen.
+Als letzten Punkt interessieren wir uns für die Auswirkung von Priming auf die Ergebnisse und das subjektive Empfinden der Aufgabe. Unter Priming verstehen wir hierbei ein gezieltes einsetzen von leistungsbezogenen Wörtern, um unbewusst Ziele zu verstärken, und damit potenziell eine höhere Leistungsbereitschaft zu erzielen.
 
 
 
-Um all diese Effekte messen zu können soll zunächst ein Spiel erstellt werden, in dem die verschiedenen Parameter, die wir untersuchen wollen angepasst werden können. In unserem Fall ein sogenannten Tunnelflyer, einem Spiel bei dem man einen Tunnel entlang fliegt und hierbei Hindernissen ausweichen und gegebenenfalls Boni aufsammeln muss.
-Dieses Genre haben wir insbesondere deshalb gewählt, da es leicht an verschiedene Szenarien angepasst werden kann. So kann insbesondere der Schwierigkeit durch wahlweises Vergrößern der Geschwindigkeit oder der Anzahl der Hindernisse leicht graduell aber auch abrupt angehoben werden.
-Außerdem ist die aktuelle Leistung, anhand der Anzahl Hindernisse, denen erfolgreich ausgewichen wird, relativ einfach objektiv messbar, so dass der Schwierigkeitsgrad gut an den Spieler angepasst werden kann, was ein gezieltes herbeiführen von Flow erleichtert.
+Um all diese Effekte messen zu können soll zunächst ein Spiel erstellt werden, in dem die verschiedenen Parameter, die wir untersuchen wollen angepasst werden können. In unserem Fall ein sogenannter Tunnelflyer -- ein Spiel, bei dem man einen Tunnel entlang fliegt, dabei Hindernissen ausweichen und gegebenenfalls Boni aufsammeln muss.
+Dieses Genre haben wir insbesondere deshalb gewählt, da es leicht an verschiedene Szenarien angepasst werden kann. So kann insbesondere der Schwierigkeitsgrad durch wahlweises Erhöhen der Geschwindigkeit oder der Anzahl der Hindernisse leicht graduell aber auch abrupt angehoben werden.
+Außerdem ist die aktuelle Leistung durch die Anzahl Hindernisse, denen erfolgreich ausgewichen wird, relativ einfach objektiv messbar. Somit kann der Schwierigkeitsgrad gut an den Spieler angepasst werden, was ein gezieltes herbeiführen von Flow erleichtert.
 
-Um die persönliche Bedeutung des Spielausgangs für die Spieler zu erhöhen soll das Spiel außerdem in ein Soziales Netzwerk, wie beispielsweise facebook, eingebunden werden. Dies ermöglicht es uns eine Highscore innerhalb des Freundeskreises des Spielers zu erstellen, was vermutlich dazu führt, dass der Spieler ein erhöhtes Interesse daran zeigt, eine höhere Punktzahl zu erreichen. Allerdings wäre auch ein individuelles Ranking möglich, dass dem Spieler seine Fortschritte anzeigt.
+Um die persönliche Bedeutung des Spielausgangs für den Spieler zu erhöhen soll das Spiel in ein Soziales Netzwerk, wie beispielsweise Facebook, eingebunden werden. Dies ermöglicht es uns einen Highscore innerhalb des Freundeskreises des Spielers zu erstellen. Daraus erhoffen wir uns, dass der Spieler ein erhöhtes Interesse daran zeigt, eine höhere Punktzahl zu erreichen. Allerdings wäre auch ein individuelles Ranking möglich, dass dem Spieler seinen Fortschritt anzeigt.
 
-Darüber hinaus bietet das einbinden in eine solche Plattform den Vorteil, dass ein großer Pool an potentiellen Testpersonen zur Verfügung steht.
+Darüber hinaus bietet das Einbinden in eine solche Plattform den Vorteil, dass ein großer Pool an potentiellen Testpersonen zur Verfügung steht.
 
-Da jedoch aus dem Spiel heraus nicht genug Informationen gewonnen werden können, um genaue Aussagen über Flow zu machen. Hierfür sollen Fragebögen dienen, die gezielt bestimmte Themen  abfragen.
-Insbesondere sollen Fragebögen zum Thema Flow selbst und weitere zum Thema Spass und Stimmung des Versuchsteilnehmers, sowie zu den subjektiven Anforderungen erstellt werden.
+Da jedoch aus dem Spiel heraus nicht genug Informationen gewonnen werden können, um genaue Aussagen über Flow zu machen, werden zusätzlich Fragebögen eingesetzt, die gezielt bestimmte Themen abfragen.
+Insbesondere sollen Fragen zum Thema Flow selbst, sowie zu Spaß und Stimmung des Versuchsteilnehmers und den subjektiv empfundenen Anforderungen gestellt werden.
 
-Nach Möglichkeit sollen diese Fragebögen auch von jemandem erstellt werden können, der keine genauen Kenntnisse über die zugrunde liegende Softwarearchitektur hat. Diese sollen dann außerdem dazu verwendet werden können verschiedene Szenarien zu erstellen, die zwischen Spielleveln mit festgelegten Parametern und den passenden Fragebögen wechseln.
+Nach Möglichkeit sollen diese Fragebögen auch von jemandem erstellt werden können, der keine genauen Kenntnisse über die zugrunde liegende Softwarearchitektur hat. Diese sollen dann zur Erstellung verschiedener Szenarien verwendet werden können, die zwischen Spielleveln mit festgelegten Parametern und den passenden Fragebögen wechseln.
 
 Abschließend soll ein Tool erstellt werden, dass die optische Auswertung der erhobenen Daten ermöglicht und bestimmte Werte, wie Varianz und Erwartungswert errechnet.
 
