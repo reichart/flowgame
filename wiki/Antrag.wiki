@@ -33,14 +33,13 @@ Als letzten Punkt interessieren wir uns für die Auswirkung von Priming auf die 
 
 
 
-Um
+Um all diese Effekte messen zu können soll zunächst ein Spiel erstellt werden, in dem die verschiedenen Parameter, die wir untersuchen wollen angepasst werden können. In unserem Fall ein sogenannten Tunnelflyer, einem Spiel bei dem man einen Tunnel entlang fliegt und hierbei Hindernissen ausweichen und gegebenenfalls Boni aufsammeln muss.
+Dieses Genre haben wir insbesondere deshalb gewählt, da es leicht an verschiedene Szenarien angepasst werden kann. So kann insbesondere der Schwierigkeit durch wahlweises Vergrößern der Geschwindigkeit oder der Anzahl der Hindernisse leicht graduell aber auch abrupt angehoben werden.
+Außerdem ist die aktuelle Leistung, anhand der Anzahl Hindernisse, denen erfolgreich ausgewichen wird, relativ einfach objektiv messbar, so dass der Schwierigkeitsgrad gut an den Spieler angepasst werden kann, was ein gezieltes herbeiführen von Flow erleichtert.
 
-- unterhaltsames Spiel (Tunnelflyer)
+Um die persönliche Bedeutung des Spielausgangs für die Spieler zu erhöhen soll das Spiel außerdem in ein Soziales Netzwerk, wie beispielsweise facebook, eingebunden werden. Dies ermöglicht es uns eine Highscore innerhalb des Freundeskreises des Spielers zu erstellen, was vermutlich dazu führt, dass der Spieler ein erhöhtes Interesse daran zeigt, eine höhere Punktzahl zu erreichen. Allerdings wäre auch ein individuelles Ranking möglich, dass dem Spieler seine Fortschritte anzeigt.
 
-  - mit anpassbarem Schwierigkeitsgrad (Geschwindigkeit, Anzahl Hindernisse/Boni)
-
-  - in dem man Leistung gut messen kann
-
+Darüber hinaus bietet das einbinden in eine solche Plattform den Vorteil, dass ein großer Pool an potentiellen Testpersonen zur Verfügung steht.
 
 - von Laien erstellbare Fragebögen, mit anschließender optischer Auswertung
 
@@ -54,11 +53,6 @@ Um
 
   - Subjektive Anforderungen
 
-- Das Spiel soll in eine Social Platform eingebaut werden
-
-  - aquirieren von Testpersonen
-
-  - Ranking (sozial/individuell)
 ==Project deliverables==
 List of work items with delivery dates, locations and quantities (also
 includes delivery media and packaging & handling)
