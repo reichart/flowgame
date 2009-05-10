@@ -16,22 +16,10 @@ B=Blockveranstaltung
 
 =Projektbeschreibung=
 
-==Purpose, scope and objectives==
-The current situation
+In unserem IDP widmen wir uns der Untersuchung des sogenannten Flow, ein Zustand, der sich durch hohe Konzentration auszeichnet und bei dem subjektiv die Zeit schneller vergeht. Flow wurde erstmals von Csiksmihalyi erforscht, der herausfinden wollte, warum Menschen oft auch ohne extrinsische Belohnungen sehr lange an bestimmten Aufgaben arbeiten. Er fand hierbei heraus, dass Menschen, wenn sie ideal gefördert werden, also Schwierigkeitsgrad und Fertigkeiten aufeinander angepasst sind, in einen Zustand geraten, in dem sie sich gleichzeitig effizient, motiviert und glücklich sind. Diesen Zustand nannte er flow.
+Inzwischen wird jedoch vermutet, dass flow nicht alleine von den Anforderungen und Fähigkeiten abhängt, sondern dass auch Wichtigkeit der Aufgabe und Spass an ihr eine wichtige Rolle spielen.
 
-- flow interessantes Phänomen
-
-- genaues Entstehen noch ungeklärt
-
-- bisherige Theorie von Verhältnis Schwierigkeitsgrad und Fertigkeiten
-
-- Lehrstuhl: Fertigkeit, Wichtigkeit, Spass
-
-The objectives
-
-- messen von Flow
-
-- herbeiführen von flow
+Im Rahmen dieser Arbeit wollen wir nun versuchen, flow und die ihn beeinflussenden Parameter zu messen. Außerdem soll im weiteren Verlauf versucht werden flow gezielt herbei zu führen.
 
 Hypothesen, die gemessen werden sollen
 
