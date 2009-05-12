@@ -1,7 +1,7 @@
 =Vorlesungen für nächstes Semester=
 [http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/AOSTS1/ Arbeitspsychologie B]
 
-[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/OP/ Organizational Psychology B *]
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/OP/ Organizational Psychology B X]
 
 [http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/PPM/ Personalführung und Personalmanagement B]
 
@@ -9,12 +9,11 @@
 
 [http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/PSYBS/ Psychologie in Beruf und Schule]
 
-[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/ENTPSY%20I/ Pädagogische und Entwicklungspsychologie *]
+[http://www.psy.wi.tum.de/Veranstaltung/WS%202008-2009/ENTPSY%20I/ Pädagogische und Entwicklungspsychologie X]
 
 B = Blockveranstaltung
 
-*
-= Hat Barbara schon gehört
+X = Hat Barbara schon gehört
 
 
 =Projektbeschreibung=
