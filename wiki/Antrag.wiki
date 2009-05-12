@@ -13,7 +13,8 @@
 
 B = Blockveranstaltung
 
-* = Hat Barbara schon gehört
+*
+= Hat Barbara schon gehört
 
 
 =Projektbeschreibung=
