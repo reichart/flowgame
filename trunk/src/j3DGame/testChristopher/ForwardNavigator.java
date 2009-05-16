@@ -19,8 +19,6 @@ public class ForwardNavigator {
 
 	private Point3d dp = new Point3d();
 	private Vector3d vpPos = new Vector3d();
-	private double vpScale;
-	private Quat4d vpQuat = new Quat4d();
 	private Transform3D vpTrans = new Transform3D();
 	private Transform3D nominal = new Transform3D();
 	private TransformGroup targetTG;
@@ -29,7 +27,7 @@ public class ForwardNavigator {
 		this.targetTG = targetTG;
 		targetTG.getTransform(nominal);
 
-		fwdSpeed = -15.0;
+		fwdSpeed = -100.0;
 		navVec = new Vector3d(0.0, 0.0, 0.0);
 	}
 
@@ -43,7 +41,7 @@ public class ForwardNavigator {
 		// Get the current View Platform transform into a transform3D object.
 		targetTG.getTransform(vpTrans);
 		// Extract the position, quaterion, and scale from the transform3D.
-		vpScale = vpTrans.get(vpQuat, vpPos);
+		vpTrans.get(vpPos);
 
 		double deltaTime = (double) getDeltaTime();
 		deltaTime *= 0.001;
@@ -58,7 +56,7 @@ public class ForwardNavigator {
 
 		/* Final update of view platform */
 		// Put the transform back into the transform group.
-		vpTrans.set(vpQuat, vpPos, vpScale);
+		vpTrans.set(vpPos);
 		targetTG.setTransform(vpTrans);
 	}
 
