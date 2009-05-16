@@ -2,9 +2,11 @@ package j3DGame.testChristopher;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
+import java.io.IOException;
 import java.net.URL;
 
 import javax.media.j3d.Alpha;
+import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingBox;
@@ -12,9 +14,10 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.ColoringAttributes;
-import javax.media.j3d.ExponentialFog;
+import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Fog;
 import javax.media.j3d.LinearFog;
+import javax.media.j3d.Material;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.TexCoordGeneration;
@@ -22,6 +25,7 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.TransparencyAttributes;
 import javax.media.j3d.View;
 import javax.media.j3d.ViewPlatform;
 import javax.vecmath.Color3f;
@@ -31,8 +35,9 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
 
+import com.sun.j3d.loaders.Scene;
+import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
-import com.sun.j3d.utils.geometry.ColorCube;
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
@@ -41,15 +46,16 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 public class Tunnel extends Applet {
 
-	private float tunnelPartLength = 400.0f;
-	private float tunnelPartRadius = 8.0f;
-	private int numberOfTunnelParts = 3;
-	private BoundingSphere worldBounds;
-	private Color3f color = new Color3f(0x3c / 255f, 0x00 / 255f, 0x00 / 255f);
+	private static final Color3f WHITE = new Color3f(1,1,1);
+	private final float tunnelPartLength = 200.0f;
+	private final float tunnelPartRadius = 8.0f;
+	private final int numberOfTunnelParts = 3;
+	private final BoundingSphere WORLD_BOUNDS = new BoundingSphere(new Point3d(), Double.POSITIVE_INFINITY);
 
-	public Tunnel() {
+	private final Color3f color = new Color3f(0.8f, 0.8f, 0.8f);
 
-		worldBounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), Double.POSITIVE_INFINITY);
+	public Tunnel() throws Exception {
+
 
 		setLayout(new BorderLayout());
 		Canvas3D canvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
@@ -64,6 +70,9 @@ public class Tunnel extends Applet {
 		// a Canvas3D can only be attached to a single Viewer
 		Viewer viewer = new Viewer(canvas3D);
 
+
+		
+		
 		// set capabilities on the TransformGroup so that the
 		// KeyNavigatorBehavior
 		// can modify the Viewer's position
@@ -73,18 +82,35 @@ public class Tunnel extends Applet {
 
 		BranchGroup scene = new BranchGroup();
 
-//		Fog fog = new ExponentialFog(color, 0.008f);
+		// Fog fog = new ExponentialFog(color, 0.2f);
 		Fog fog = new LinearFog(color, 0, tunnelPartLength);
-		fog.setInfluencingBounds(worldBounds);
+		fog.setInfluencingBounds(WORLD_BOUNDS);
 		scene.addChild(fog);
 
+		AmbientLight ambient = new AmbientLight();
+		ambient.setEnable(true);
+		ambient.setInfluencingBounds(WORLD_BOUNDS);
+		scene.addChild(ambient);
+
+		Vector3f dir = new Vector3f(0.0f, 0.0f, -1.0f);
+		DirectionalLight dirLight = new DirectionalLight(WHITE, dir);
+		dirLight.setInfluencingBounds(WORLD_BOUNDS);
+		scene.addChild(dirLight);               
+		
 		TransformGroup tc = new TransformGroup();
 		TransformGroup rc = new TransformGroup();
 		rc.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		rc.addChild(new ColorCube(0.4));
+		
+		
+//	    XMLDecoder e = new XMLDecoder(getClass().getResourceAsStream("res/fighter.xml"));
+//	        Shape3D ship = (Shape3D) e.readObject();
+//		
+//		rc.addChild(ship);
 
+		rc.addChild(loadShip());
+		
 		RotationInterpolator ri = new RotationInterpolator(new Alpha(-1, 4000), rc);
-		ri.setSchedulingBounds(worldBounds);
+		ri.setSchedulingBounds(WORLD_BOUNDS);
 		rc.addChild(ri);
 		tc.addChild(rc);
 
@@ -98,13 +124,13 @@ public class Tunnel extends Applet {
 
 		scene.addChild(tc);
 
-//		Color3f bgcolor = new Color3f(1.0f, 0.0f, 0.0f);
-		Background back = new Background(color);
-		back.setApplicationBounds(worldBounds);
+		Color3f bgcolor = new Color3f(1.0f, 0.0f, 0.0f);
+		Background back = new Background(bgcolor);
+		back.setApplicationBounds(WORLD_BOUNDS);
 		scene.addChild(back);
 
 		KeyNavigatorBehavior keyNav = new KeyNavigatorBehavior(vtg);
-		keyNav.setSchedulingBounds(worldBounds);
+		keyNav.setSchedulingBounds(WORLD_BOUNDS);
 		vtg.addChild(keyNav);
 
 		SimpleUniverse su = new SimpleUniverse(vp, viewer);
@@ -124,6 +150,31 @@ public class Tunnel extends Applet {
 		tree.setVisible(true);
 
 		view.setBackClipDistance(150);
+	}
+
+	private BranchGroup loadShip() throws IOException {
+		final Scene scene = loadScene("res/cobramkii.obj");
+		final BranchGroup sceneGroup = scene.getSceneGroup();
+		
+		final Shape3D ship = (Shape3D) sceneGroup.getChild(0);
+		
+		final Material material = new Material();
+		material.setAmbientColor(.1f, .1f, .1f);
+		material.setDiffuseColor(.3f, .3f, .3f);
+		material.setSpecularColor(.8f, .8f, .8f);
+		material.setLightingEnable(true);
+		material.setShininess(20f);
+		
+		final TransparencyAttributes transp = new TransparencyAttributes();
+		transp.setTransparency(.5f);
+		transp.setTransparencyMode(TransparencyAttributes.NICEST);
+		
+		final Appearance appear = new Appearance();
+		appear.setMaterial(material);
+		appear.setTransparencyAttributes(transp);
+		ship.setAppearance(appear);
+		
+		return sceneGroup;
 	}
 
 	void createTunnelElements(BranchGroup scene, int elements, ViewPlatform test) {
@@ -186,14 +237,14 @@ public class Tunnel extends Applet {
 			tunnelTranslationGroup.setTransform(part);
 			TunnelPartMoveBehavior reuse = new TunnelPartMoveBehavior(tunnelShape, tunnelTranslationGroup,
 					tunnelPartLength, elements);
-			reuse.setSchedulingBounds(worldBounds);
+			reuse.setSchedulingBounds(WORLD_BOUNDS);
 			tunnelTranslationGroup.addChild(reuse);
 			tunnelTranslationGroup.addChild(tunnelRotationGroup);
 			tunnelRotationGroup.addChild(tunnelShape);
 			sceneTranslationGroup.addChild(tunnelTranslationGroup);
 		}
 		ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(sceneTranslationGroup);
-		fwdNav.setSchedulingBounds(worldBounds);
+		fwdNav.setSchedulingBounds(WORLD_BOUNDS);
 		sceneTranslationGroup.addChild(fwdNav);
 
 		scene.addChild(sceneTranslationGroup);
@@ -217,4 +268,9 @@ public class Tunnel extends Applet {
 		texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 		return texture;
 	}
+	
+	public static Scene loadScene(String resource) throws IOException {
+		ObjectFile loader = new ObjectFile(ObjectFile.RESIZE);
+		       return loader.load(Tunnel.class.getResource(resource));
+	}		
 }
