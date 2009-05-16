@@ -108,9 +108,9 @@ public class Tunnel extends Applet {
 		fwdNav.setSchedulingBounds(worldBounds);
 		vtg.addChild(fwdNav);
 
-	    LinearFog fog = new LinearFog(color, 10, 15);
-	    fog.setCapability(Fog.ALLOW_COLOR_WRITE);
-	    fog.setCapability(ExponentialFog.ALLOW_DENSITY_WRITE);
+	    LinearFog fog = new LinearFog(color, 0, 100);
+//	    fog.setCapability(Fog.ALLOW_COLOR_WRITE);
+//	    fog.setCapability(ExponentialFog.ALLOW_DENSITY_WRITE);
 	    fog.setInfluencingBounds(worldBounds);
 	    scene.addChild(fog);
 		
