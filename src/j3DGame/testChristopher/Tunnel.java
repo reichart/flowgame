@@ -106,11 +106,11 @@ public class Tunnel extends Applet {
 		fwdNav.setSchedulingBounds(worldBounds);
 		vtg.addChild(fwdNav);
 
-	    LinearFog fog = new LinearFog(color, 0, 100);
+//	    LinearFog fog = new LinearFog(color, 0, 100);
 //	    fog.setCapability(Fog.ALLOW_COLOR_WRITE);
 //	    fog.setCapability(ExponentialFog.ALLOW_DENSITY_WRITE);
-	    fog.setInfluencingBounds(worldBounds);
-	    scene.addChild(fog);
+//	    fog.setInfluencingBounds(worldBounds);
+//	    scene.addChild(fog);
 		
 		SimpleUniverse su = new SimpleUniverse(vp, viewer);
 		
@@ -135,13 +135,7 @@ public class Tunnel extends Applet {
 	}
 
 	void createTunnelElements(BranchGroup scene, int elements, ViewPlatform test) {
-		URL url = getClass().getResource(
-				"/j3DGame/testChristopher/res/lava.jpg");
-		TextureLoader loader = new TextureLoader(url, null);
-		Texture tunnelTexture = loader.getTexture();
-		tunnelTexture.setBoundaryModeS(Texture.WRAP);
-		tunnelTexture.setBoundaryModeT(Texture.WRAP);
-		tunnelTexture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+		final Texture texture = getTexture("/j3DGame/testChristopher/res/lava.jpg");
 		// Set up the texture attributes
 		// could be REPLACE, BLEND or DECAL instead of MODULATE
 		TextureAttributes texAttr = new TextureAttributes();
@@ -152,7 +146,7 @@ public class Tunnel extends Applet {
 		coord.setPlaneT(new Vector4f(0, 0.01f, 0, 0));
 
 		Appearance tunnelAppearance = new Appearance();
-		tunnelAppearance.setTexture(tunnelTexture);
+		tunnelAppearance.setTexture(texture);
 		tunnelAppearance.setTextureAttributes(texAttr);
 		tunnelAppearance.setTexCoordGeneration(coord);
 		Cylinder cyl = new Cylinder(tunnelPartRadius, tunnelPartLength, 
@@ -206,5 +200,23 @@ public class Tunnel extends Applet {
 			tunnelRotationGroup.addChild(tunnelShape);
 			scene.addChild(tunnelTranslationGroup);
 		}
+	}
+
+	private Texture getTexture(final String path) {
+		final URL url = getClass().getResource(path);
+		final TextureLoader loader = new TextureLoader(url, TextureLoader.GENERATE_MIPMAP | TextureLoader.BY_REFERENCE, null);
+		
+		final Texture texture = loader.getTexture();
+		texture.setBoundaryModeS(Texture.WRAP);
+		texture.setBoundaryModeT(Texture.WRAP);
+		
+		texture.setMagFilter(Texture.NICEST); // filtering
+		texture.setMinFilter(Texture.NICEST); // tri-linear filtering
+		
+		texture.setAnisotropicFilterMode(Texture.ANISOTROPIC_SINGLE_VALUE);
+		texture.setAnisotropicFilterDegree(4);
+		
+		texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+		return texture;
 	}
 }
