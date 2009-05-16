@@ -16,7 +16,6 @@ import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.ExponentialFog;
 import javax.media.j3d.Fog;
 import javax.media.j3d.LinearFog;
-import javax.media.j3d.Node;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.TexCoordGeneration;
@@ -24,7 +23,6 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.media.j3d.View;
 import javax.media.j3d.ViewPlatform;
 import javax.vecmath.Color3f;
 import javax.vecmath.Color4f;
@@ -40,11 +38,10 @@ import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
-import com.tornadolabs.j3dtree.Java3dTree;
 
 public class Tunnel extends Applet {
 
-	private float tunnelPartLength = 3050.0f;
+	private float tunnelPartLength = 500.0f;
 	private float tunnelPartRadius = 8.0f;
 	private int numberOfTunnelParts = 3;
 	private BoundingSphere worldBounds;
@@ -111,13 +108,11 @@ public class Tunnel extends Applet {
 		fwdNav.setSchedulingBounds(worldBounds);
 		vtg.addChild(fwdNav);
 
-//		BranchGroup fogGroup = new BranchGroup();
-//	    LinearFog fog = new LinearFog(color, 10, 15);
-//	    fog.setCapability(Fog.ALLOW_COLOR_WRITE);
-//	    fog.setCapability(ExponentialFog.ALLOW_DENSITY_WRITE);
-//	    fog.setInfluencingBounds(worldBounds);
-//	    fogGroup.addChild(fog);
-//	    vtg.addChild(fogGroup);
+	    LinearFog fog = new LinearFog(color, 10, 15);
+	    fog.setCapability(Fog.ALLOW_COLOR_WRITE);
+	    fog.setCapability(ExponentialFog.ALLOW_DENSITY_WRITE);
+	    fog.setInfluencingBounds(worldBounds);
+	    scene.addChild(fog);
 		
 		SimpleUniverse su = new SimpleUniverse(vp, viewer);
 		
@@ -161,8 +156,8 @@ public class Tunnel extends Applet {
 		tunnelAppearance.setTexture(tunnelTexture);
 		tunnelAppearance.setTextureAttributes(texAttr);
 		tunnelAppearance.setTexCoordGeneration(coord);
-		Cylinder cyl = new Cylinder(tunnelPartRadius, tunnelPartLength,
-				Cylinder.GENERATE_NORMALS_INWARD, tunnelAppearance);
+		Cylinder cyl = new Cylinder(tunnelPartRadius, tunnelPartLength, 
+				Cylinder.GENERATE_NORMALS_INWARD, 50, 1, tunnelAppearance);
 
 		Transform3D rotation = new Transform3D();
 		rotation.rotX(Math.PI / 2);
@@ -188,7 +183,7 @@ public class Tunnel extends Applet {
 			a.setColoringAttributes(c);
 
 			tunnelShape.setAppearance(tunnelAppearance);
-			// tunnelShape.setAppearance(a);
+//			 tunnelShape.setAppearance(a);
 
 			TransformGroup tunnelRotationGroup = new TransformGroup(rotation);
 			TransformGroup tunnelTranslationGroup = new TransformGroup();
