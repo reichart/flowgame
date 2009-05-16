@@ -3,21 +3,13 @@ package j3DGame.testChristopher;
 import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
-import javax.media.j3d.Bounds;
 import javax.media.j3d.Shape3D;
-import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.media.j3d.ViewPlatform;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupCriterion;
-import javax.media.j3d.WakeupOnCollisionEntry;
-import javax.media.j3d.WakeupOnCollisionExit;
 import javax.media.j3d.WakeupOnElapsedFrames;
-import javax.media.j3d.WakeupOnSensorExit;
 import javax.media.j3d.WakeupOnViewPlatformExit;
 import javax.media.j3d.WakeupOr;
-
-import com.sun.j3d.utils.behaviors.keyboard.KeyNavigator;
 
 public class TunnelPartMoveBehavior extends Behavior {
 

@@ -3,7 +3,6 @@ package j3DGame.testChristopher;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point3d;
-import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
 /**
