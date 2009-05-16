@@ -2,7 +2,6 @@ package j3DGame.testChristopher;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.net.URL;
 
 import javax.media.j3d.Alpha;
@@ -13,8 +12,6 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.ColoringAttributes;
-import javax.media.j3d.ExponentialFog;
-import javax.media.j3d.Fog;
 import javax.media.j3d.LinearFog;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Shape3D;
@@ -23,6 +20,7 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.View;
 import javax.media.j3d.ViewPlatform;
 import javax.vecmath.Color3f;
 import javax.vecmath.Color4f;
@@ -116,29 +114,30 @@ public class Tunnel extends Applet {
 		
 		SimpleUniverse su = new SimpleUniverse(vp, viewer);
 		
-		ViewPlatform test = viewer.getView().getViewPlatform();
+		final View view = viewer.getView();
+		ViewPlatform test = view.getViewPlatform();
 		test.setActivationRadius(1.0f);
 		System.out.println(test.getActivationRadius());
 
 		createTunnelElements(scene, numberOfTunnelParts, test);
 		
 
-//		com.tornadolabs.j3dtree.Java3dTree tree = new com.tornadolabs.j3dtree.Java3dTree();
-//		tree.recursiveApplyCapability(scene);
-//		tree.setVisible(true);		
-		
 		su.addBranchGraph(scene);
 		
 
+		com.tornadolabs.j3dtree.Java3dTree tree = new com.tornadolabs.j3dtree.Java3dTree();
+		tree.recursiveApplyCapability(scene);
+		tree.updateNodes(su);
+		tree.setVisible(true);		
 
 		
-		viewer.getView().setBackClipDistance(150);
+		view.setBackClipDistance(150);
 	}
 
 	void createTunnelElements(BranchGroup scene, int elements, ViewPlatform test) {
 		URL url = getClass().getResource(
 				"/j3DGame/testChristopher/res/lava.jpg");
-		TextureLoader loader = new TextureLoader(url, new Container());
+		TextureLoader loader = new TextureLoader(url, null);
 		Texture tunnelTexture = loader.getTexture();
 		tunnelTexture.setBoundaryModeS(Texture.WRAP);
 		tunnelTexture.setBoundaryModeT(Texture.WRAP);
