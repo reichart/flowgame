@@ -12,6 +12,8 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.ColoringAttributes;
+import javax.media.j3d.ExponentialFog;
+import javax.media.j3d.Fog;
 import javax.media.j3d.LinearFog;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Shape3D;
@@ -39,18 +41,18 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 public class Tunnel extends Applet {
 
-	private float tunnelPartLength = 500.0f;
+	private float tunnelPartLength = 200.0f;
 	private float tunnelPartRadius = 8.0f;
 	private int numberOfTunnelParts = 3;
 	private BoundingSphere worldBounds;
+	private Color3f color = new Color3f(0.8f, 0.8f, 0.8f);
 
 	public Tunnel() {
 
 		worldBounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), Double.POSITIVE_INFINITY);
 
 		setLayout(new BorderLayout());
-		Canvas3D canvas3D = new Canvas3D(SimpleUniverse
-				.getPreferredConfiguration());
+		Canvas3D canvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 		add("Center", canvas3D);
 
 		// create a ViewingPlatform with 1 TransformGroups above the
@@ -71,19 +73,23 @@ public class Tunnel extends Applet {
 
 		BranchGroup scene = new BranchGroup();
 
+		// Fog fog = new ExponentialFog(color, 0.2f);
+		Fog fog = new LinearFog(color, 0, tunnelPartLength);
+		fog.setInfluencingBounds(worldBounds);
+		scene.addChild(fog);
+
 		TransformGroup tc = new TransformGroup();
 		TransformGroup rc = new TransformGroup();
 		rc.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		rc.addChild(new ColorCube(0.4));
 
-		RotationInterpolator ri = new RotationInterpolator(new Alpha(-1, 4000),
-				rc);
+		RotationInterpolator ri = new RotationInterpolator(new Alpha(-1, 4000), rc);
 		ri.setSchedulingBounds(worldBounds);
 		rc.addChild(ri);
 		tc.addChild(rc);
 
 		Transform3D trans = new Transform3D();
-		trans.set(new Vector3d(0.0f, 0.0f, -25.0f));
+		trans.set(new Vector3d(0.0f, 0.0f, -6.0f));
 
 		Transform3D t3d = new Transform3D();
 		vtg.getTransform(t3d);
@@ -92,9 +98,8 @@ public class Tunnel extends Applet {
 
 		scene.addChild(tc);
 
-		Color3f color = new Color3f(0.8f, 0.8f, 0.8f);
-
-		Background back = new Background(color);
+		Color3f bgcolor = new Color3f(1.0f, 0.0f, 0.0f);
+		Background back = new Background(bgcolor);
 		back.setApplicationBounds(worldBounds);
 		scene.addChild(back);
 
@@ -102,35 +107,22 @@ public class Tunnel extends Applet {
 		keyNav.setSchedulingBounds(worldBounds);
 		vtg.addChild(keyNav);
 
-		ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(vtg);
-		fwdNav.setSchedulingBounds(worldBounds);
-		vtg.addChild(fwdNav);
-
-//	    LinearFog fog = new LinearFog(color, 0, 100);
-//	    fog.setCapability(Fog.ALLOW_COLOR_WRITE);
-//	    fog.setCapability(ExponentialFog.ALLOW_DENSITY_WRITE);
-//	    fog.setInfluencingBounds(worldBounds);
-//	    scene.addChild(fog);
-		
 		SimpleUniverse su = new SimpleUniverse(vp, viewer);
-		
+
 		final View view = viewer.getView();
 		ViewPlatform test = view.getViewPlatform();
 		test.setActivationRadius(1.0f);
 		System.out.println(test.getActivationRadius());
 
 		createTunnelElements(scene, numberOfTunnelParts, test);
-		
 
 		su.addBranchGraph(scene);
-		
 
 		com.tornadolabs.j3dtree.Java3dTree tree = new com.tornadolabs.j3dtree.Java3dTree();
 		tree.recursiveApplyCapability(scene);
 		tree.updateNodes(su);
-		tree.setVisible(true);		
+		tree.setVisible(true);
 
-		
 		view.setBackClipDistance(150);
 	}
 
@@ -149,24 +141,26 @@ public class Tunnel extends Applet {
 		tunnelAppearance.setTexture(texture);
 		tunnelAppearance.setTextureAttributes(texAttr);
 		tunnelAppearance.setTexCoordGeneration(coord);
-		Cylinder cyl = new Cylinder(tunnelPartRadius, tunnelPartLength, 
-				Cylinder.GENERATE_NORMALS_INWARD, 50, 1, tunnelAppearance);
+		Cylinder cyl = new Cylinder(tunnelPartRadius, tunnelPartLength, Cylinder.GENERATE_NORMALS_INWARD, 50, 1,
+				tunnelAppearance);
 
 		Transform3D rotation = new Transform3D();
 		rotation.rotX(Math.PI / 2);
 
-		BoundingBox tunnelPartBounds = new BoundingBox(new Point3d(
-				-(double) tunnelPartLength / 2, -(double) tunnelPartLength / 2,
-				-(double) tunnelPartLength / 2), new Point3d(
-				(double) tunnelPartLength / 2, (double) tunnelPartLength / 2,
-				(double) tunnelPartLength / 2));
+		BoundingBox tunnelPartBounds = new BoundingBox(new Point3d(-(double) tunnelPartLength / 2,
+				-(double) tunnelPartLength / 2, -(double) tunnelPartLength / 2), new Point3d(
+				(double) tunnelPartLength / 2, (double) tunnelPartLength / 2, (double) tunnelPartLength / 2));
 		// BoundingSphere tunnelPartBounds = new BoundingSphere(new Point3d(0.0,
 		// 0.0, 0.0), tunnelPartLength / 2);
+
+		TransformGroup sceneTranslationGroup = new TransformGroup();
+		sceneTranslationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		sceneTranslationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+
 		float q = 1.0f / elements;
 
 		for (int i = 0; i < elements; i++) {
-			Shape3D tunnelShape = (Shape3D) cyl.getShape(Cylinder.BODY)
-					.cloneNode(true);
+			Shape3D tunnelShape = (Shape3D) cyl.getShape(Cylinder.BODY).cloneNode(true);
 			tunnelShape.setBoundsAutoCompute(false);
 			tunnelShape.setBounds(tunnelPartBounds);
 
@@ -176,46 +170,50 @@ public class Tunnel extends Applet {
 			a.setColoringAttributes(c);
 
 			tunnelShape.setAppearance(tunnelAppearance);
-//			 tunnelShape.setAppearance(a);
+			// tunnelShape.setAppearance(a);
 
 			TransformGroup tunnelRotationGroup = new TransformGroup(rotation);
 			TransformGroup tunnelTranslationGroup = new TransformGroup();
-			tunnelTranslationGroup
-					.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-			tunnelTranslationGroup
-					.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+
+			tunnelTranslationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+			tunnelTranslationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+
 			Transform3D partTrans = new Transform3D();
 			partTrans.set(new Vector3f(0.0f, 0.0f, -(tunnelPartLength * i)));
 			Transform3D part = new Transform3D();
 			tunnelTranslationGroup.getTransform(part);
 			part.mul(partTrans);
 			tunnelTranslationGroup.setTransform(part);
-			TunnelPartMoveBehavior reuse = new TunnelPartMoveBehavior(
-					tunnelShape, tunnelTranslationGroup,
-					(double) tunnelPartLength, elements);
+			TunnelPartMoveBehavior reuse = new TunnelPartMoveBehavior(tunnelShape, tunnelTranslationGroup,
+					tunnelPartLength, elements);
 			reuse.setSchedulingBounds(worldBounds);
 			tunnelTranslationGroup.addChild(reuse);
-			// tunnelTranslationGroup.addChild(tunnelShape);
 			tunnelTranslationGroup.addChild(tunnelRotationGroup);
 			tunnelRotationGroup.addChild(tunnelShape);
-			scene.addChild(tunnelTranslationGroup);
+			sceneTranslationGroup.addChild(tunnelTranslationGroup);
 		}
+		ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(sceneTranslationGroup);
+		fwdNav.setSchedulingBounds(worldBounds);
+		sceneTranslationGroup.addChild(fwdNav);
+
+		scene.addChild(sceneTranslationGroup);
 	}
 
 	private Texture getTexture(final String path) {
 		final URL url = getClass().getResource(path);
-		final TextureLoader loader = new TextureLoader(url, TextureLoader.GENERATE_MIPMAP | TextureLoader.BY_REFERENCE, null);
-		
+		final TextureLoader loader = new TextureLoader(url, TextureLoader.GENERATE_MIPMAP | TextureLoader.BY_REFERENCE,
+				null);
+
 		final Texture texture = loader.getTexture();
 		texture.setBoundaryModeS(Texture.WRAP);
 		texture.setBoundaryModeT(Texture.WRAP);
-		
+
 		texture.setMagFilter(Texture.NICEST); // filtering
 		texture.setMinFilter(Texture.NICEST); // tri-linear filtering
-		
+
 		texture.setAnisotropicFilterMode(Texture.ANISOTROPIC_SINGLE_VALUE);
 		texture.setAnisotropicFilterDegree(4);
-		
+
 		texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 		return texture;
 	}
