@@ -27,7 +27,7 @@ public class ForwardNavigator {
 		this.targetTG = targetTG;
 		targetTG.getTransform(nominal);
 
-		fwdSpeed = -100.0;
+		fwdSpeed = 100.0;
 		navVec = new Vector3d(0.0, 0.0, 0.0);
 	}
 
@@ -45,6 +45,8 @@ public class ForwardNavigator {
 
 		double deltaTime = (double) getDeltaTime();
 		deltaTime *= 0.001;
+		
+		fwdSpeed = fwdSpeed + deltaTime;
 
 		navVec.z = fwdSpeed;
 
