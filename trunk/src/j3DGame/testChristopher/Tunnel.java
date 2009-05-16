@@ -41,11 +41,11 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 public class Tunnel extends Applet {
 
-	private float tunnelPartLength = 200.0f;
+	private float tunnelPartLength = 400.0f;
 	private float tunnelPartRadius = 8.0f;
 	private int numberOfTunnelParts = 3;
 	private BoundingSphere worldBounds;
-	private Color3f color = new Color3f(0.8f, 0.8f, 0.8f);
+	private Color3f color = new Color3f(0x3c / 255f, 0x00 / 255f, 0x00 / 255f);
 
 	public Tunnel() {
 
@@ -73,7 +73,7 @@ public class Tunnel extends Applet {
 
 		BranchGroup scene = new BranchGroup();
 
-		// Fog fog = new ExponentialFog(color, 0.2f);
+//		Fog fog = new ExponentialFog(color, 0.008f);
 		Fog fog = new LinearFog(color, 0, tunnelPartLength);
 		fog.setInfluencingBounds(worldBounds);
 		scene.addChild(fog);
@@ -98,8 +98,8 @@ public class Tunnel extends Applet {
 
 		scene.addChild(tc);
 
-		Color3f bgcolor = new Color3f(1.0f, 0.0f, 0.0f);
-		Background back = new Background(bgcolor);
+//		Color3f bgcolor = new Color3f(1.0f, 0.0f, 0.0f);
+		Background back = new Background(color);
 		back.setApplicationBounds(worldBounds);
 		scene.addChild(back);
 
