@@ -1,4 +1,4 @@
-package j3DGame.testChristopher;
+package de.tum.in.flowgame;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
@@ -134,7 +134,7 @@ public class GameApplet extends Applet {
 	}
 
 	private Background createBackground() throws IOException {
-		final BufferedImage bimage = ImageIO.read(getClass().getResource("/j3DGame/testChristopher/res/stars.jpg"));
+		final BufferedImage bimage = ImageIO.read(getClass().getResource("/res/stars.jpg"));
 		final ImageComponent2D image = new ImageComponent2D(BufferedImage.TYPE_INT_RGB, bimage);
 
 		final Background back = new Background(BLACK);
@@ -167,7 +167,7 @@ public class GameApplet extends Applet {
 	}
 
 	private BranchGroup loadShip() throws IOException {
-		return loadScene("res/sun.obj");
+		return loadScene("/res/SFighter.obj");
 	}
 
 	protected static Texture getTexture(final String path) {
