@@ -12,7 +12,6 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.AmbientLight;
-import javax.media.j3d.Appearance;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
@@ -21,11 +20,8 @@ import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Fog;
 import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.LinearFog;
-import javax.media.j3d.Material;
 import javax.media.j3d.RotationInterpolator;
-import javax.media.j3d.Shape3D;
 import javax.media.j3d.Texture;
-import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.View;
@@ -35,7 +31,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
-import com.sun.j3d.loaders.Scene;
+import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
 import com.sun.j3d.utils.image.TextureLoader;
@@ -163,30 +159,7 @@ public class GameApplet extends Applet {
 	}
 
 	private BranchGroup loadShip() throws IOException {
-		final Scene scene = loadScene("res/SFighter.obj");
-		final BranchGroup sceneGroup = scene.getSceneGroup();
-
-		final Shape3D ship = (Shape3D) sceneGroup.getChild(0);
-
-		final Material material = new Material();
-		material.setAmbientColor(.4f, .4f, .4f);
-		material.setDiffuseColor(.6f, .6f, .6f);
-		material.setSpecularColor(.8f, .8f, .8f);
-		material.setLightingEnable(true);
-		material.setShininess(32f);
-
-		final Texture tex = getTexture("res/SFighter.bmp");
-
-		final TextureAttributes texAttr = new TextureAttributes();
-		texAttr.setTextureMode(TextureAttributes.MODULATE);
-		
-		final Appearance appear = new Appearance();
-		appear.setMaterial(material);
-		appear.setTexture(tex);
-		appear.setTextureAttributes(texAttr);
-		ship.setAppearance(appear);
-
-		return sceneGroup;
+		return loadScene("res/SFighter.obj");
 	}
 
 	protected static Texture getTexture(final String path) {
@@ -208,8 +181,9 @@ public class GameApplet extends Applet {
 		return texture;
 	}
 
-	public static Scene loadScene(final String resource) throws IOException {
-		final ObjectFile loader = new ObjectFile(ObjectFile.RESIZE);
-		return loader.load(GameApplet.class.getResource(resource));
+	public static BranchGroup loadScene(final String resource) throws IOException {
+		final Loader loader = new ObjectFile(ObjectFile.RESIZE);
+		final URL url = GameApplet.class.getResource(resource);
+		return loader.load(url).getSceneGroup();
 	}
 }
