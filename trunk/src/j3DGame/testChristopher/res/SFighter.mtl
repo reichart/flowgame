@@ -14,3 +14,15 @@ newmtl Sfighter_03_CLR_tifSG
 	Ke 0.0000 0.0000 0.0000
 	map_Ka sfighter.jpg
 	map_Kd sfighter.jpg
+
+newmtl blinn5SG
+	Ns 30.0000
+	Ni 1.5000
+	d 0.5100
+	Tr 0.4900
+	Tf 0.5100 0.5100 0.5100 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.3500 0.4500 0.5000
+	Ks 0.7900 0.8200 1.0000
+	Ke 0.0000 0.0000 0.0000
