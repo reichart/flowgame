@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.media.j3d.Alpha;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
@@ -20,7 +19,6 @@ import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Fog;
 import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.LinearFog;
-import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -96,6 +94,8 @@ public class GameApplet extends Applet {
 		
 		collidables = new BranchGroup();
 		collidables.addChild(createShip());
+		
+		new Collidable(collidables);
 
 		scene.addChild(createBackground());
 		scene.addChild(new Tunnel());
@@ -145,21 +145,14 @@ public class GameApplet extends Applet {
 		return back;
 	}
 
-	private TransformGroup createShip() throws IOException {
+	private TransformGroup createShip() throws IOException {		
 		final TransformGroup tc = new TransformGroup();
-//		final TransformGroup rc = new TransformGroup();
-//		rc.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-//
-//		rc.addChild(loadShip());
-//
-//		final RotationInterpolator ri = new RotationInterpolator(new Alpha(-1, 10000), rc);
-//		ri.setSchedulingBounds(WORLD_BOUNDS);
-//		rc.addChild(ri);
-//		tc.addChild(rc);
 
 		final Transform3D t3d = new Transform3D();
+
+		t3d.rotY(Math.toRadians(180));
+		t3d.setTranslation(new Vector3d(0, -1f, -6f));
 		
-		t3d.setTranslation(new Vector3d(0, 0f, -6f));
 		tc.setTransform(t3d);
 		tc.addChild(loadShip());
 		
