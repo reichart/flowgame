@@ -2,6 +2,9 @@ package j3DGame.testChristopher;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -55,6 +58,19 @@ public class GameApplet extends Applet {
 	@Override
 	public void destroy() {
 		System.out.println("GameApplet.destroy()");
+	}
+	
+	public static void main(final String[] args) throws Exception {
+		final Frame frame = new Frame();
+		frame.setSize(800, 600);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		frame.add(new GameApplet());
+		frame.setVisible(true);
 	}
 	
 	public GameApplet() throws Exception {
