@@ -35,7 +35,6 @@ public class TunnelPartMover {
 
 		partPos.add(dp);
 
-
 		partTrans.set(partPos);
 		targetTG.setTransform(partTrans);
 	}

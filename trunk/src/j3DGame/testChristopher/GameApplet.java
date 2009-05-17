@@ -46,6 +46,8 @@ public class GameApplet extends Applet {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
+	private BranchGroup collidables;
+
 	@Override
 	public void init() {
 		System.out.println("GameApplet.init()");
@@ -91,10 +93,13 @@ public class GameApplet extends Applet {
 		final DirectionalLight dirLight = new DirectionalLight(WHITE, dir);
 		dirLight.setInfluencingBounds(WORLD_BOUNDS);
 		scene.addChild(dirLight);
+		
+		collidables = new BranchGroup();
+		collidables.addChild(createShip());
 
-		scene.addChild(createShip());
 		scene.addChild(createBackground());
 		scene.addChild(new Tunnel());
+		scene.addChild(collidables);
 
 		final SimpleUniverse su = createUniverse(canvas3D);
 		su.addBranchGraph(scene);
@@ -142,24 +147,27 @@ public class GameApplet extends Applet {
 
 	private TransformGroup createShip() throws IOException {
 		final TransformGroup tc = new TransformGroup();
-		final TransformGroup rc = new TransformGroup();
-		rc.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-
-		rc.addChild(loadShip());
-
-		final RotationInterpolator ri = new RotationInterpolator(new Alpha(-1, 10000), rc);
-		ri.setSchedulingBounds(WORLD_BOUNDS);
-		rc.addChild(ri);
-		tc.addChild(rc);
+//		final TransformGroup rc = new TransformGroup();
+//		rc.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+//
+//		rc.addChild(loadShip());
+//
+//		final RotationInterpolator ri = new RotationInterpolator(new Alpha(-1, 10000), rc);
+//		ri.setSchedulingBounds(WORLD_BOUNDS);
+//		rc.addChild(ri);
+//		tc.addChild(rc);
 
 		final Transform3D t3d = new Transform3D();
-		t3d.setTranslation(new Vector3d(0, 0, -6f));
+		
+		t3d.setTranslation(new Vector3d(0, 0f, -6f));
 		tc.setTransform(t3d);
+		tc.addChild(loadShip());
+		
 		return tc;
 	}
 
 	private BranchGroup loadShip() throws IOException {
-		return loadScene("res/SFighter.obj");
+		return loadScene("res/sun.obj");
 	}
 
 	protected static Texture getTexture(final String path) {
@@ -186,4 +194,5 @@ public class GameApplet extends Applet {
 		final URL url = GameApplet.class.getResource(resource);
 		return loader.load(url).getSceneGroup();
 	}
+
 }
