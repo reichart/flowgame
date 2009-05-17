@@ -1,4 +1,4 @@
-package j3DGame.testChristopher;
+package de.tum.in.flowgame;
 
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;

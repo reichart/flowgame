@@ -1,4 +1,4 @@
-package j3DGame.testChristopher;
+package de.tum.in.flowgame;
 
 import java.util.Enumeration;
 

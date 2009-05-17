@@ -1,4 +1,4 @@
-package j3DGame.testChristopher;
+package de.tum.in.flowgame;
 
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
@@ -86,7 +86,7 @@ public class Tunnel extends TransformGroup {
 	}
 
 	private Appearance createAppearance() {
-		final Texture texture = GameApplet.getTexture("/j3DGame/testChristopher/res/water01.jpg");
+		final Texture texture = GameApplet.getTexture("/res/water01.jpg");
 
 		final TextureAttributes texAttr = new TextureAttributes();
 		texAttr.setTextureMode(TextureAttributes.MODULATE);
