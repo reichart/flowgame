@@ -3,12 +3,9 @@ package de.tum.in.flowgame;
 import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
-import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedFrames;
-
-import com.sun.j3d.utils.behaviors.keyboard.KeyNavigator;
 
 public class ForwardNavigatorBehavior extends Behavior{
 

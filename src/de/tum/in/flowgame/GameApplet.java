@@ -31,7 +31,6 @@ import javax.vecmath.Vector3f;
 
 import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
-import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
 import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
@@ -125,10 +124,6 @@ public class GameApplet extends Applet {
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 
-		final KeyNavigatorBehavior keyNav = new KeyNavigatorBehavior(vtg);
-		keyNav.setSchedulingBounds(WORLD_BOUNDS);
-		vtg.addChild(keyNav);
-
 		final SimpleUniverse su = new SimpleUniverse(vp, viewer);
 		return su;
 	}
@@ -154,7 +149,16 @@ public class GameApplet extends Applet {
 		t3d.setTranslation(new Vector3d(0, -1f, -6f));
 		
 		tc.setTransform(t3d);
-		tc.addChild(loadShip());
+		
+		TransformGroup moveGroup = new TransformGroup();
+		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		tc.addChild(moveGroup);
+		BranchGroup ship = loadShip();
+		moveGroup.addChild(ship);
+		
+		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup);
+		ship.addChild(keyShipBehavior);
+		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		
 		return tc;
 	}
