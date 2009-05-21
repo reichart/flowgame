@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import javax.media.j3d.Behavior;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnAWTEvent;
 import javax.media.j3d.WakeupOnElapsedFrames;
@@ -14,121 +15,113 @@ import javax.media.j3d.WakeupOr;
 import javax.vecmath.Vector3d;
 
 public class KeyShipBehavior extends Behavior {
-	private WakeupOr wakeup;
 
-	boolean KEY_UP;
-	boolean KEY_DOWN;
-	boolean KEY_LEFT;
-	boolean KEY_RIGHT;
-	
-	TransformGroup tg;
-	
-	KeyShipBehavior(TransformGroup tg) {
-		this.tg = tg;
-		
-		WakeupCriterion w1 = new WakeupOnAWTEvent(KeyEvent.KEY_PRESSED);
-		WakeupCriterion w2 = new WakeupOnAWTEvent(KeyEvent.KEY_RELEASED);
-		WakeupOnElapsedFrames w3 = new WakeupOnElapsedFrames(0);
-		WakeupCriterion[] warray = { w1, w2, w3 };
+	private static final float STEP = 0.01f;
 
-		KEY_DOWN = false;
-		KEY_UP = false;
-		KEY_LEFT = false;
-		KEY_RIGHT = false;
+	private static final Vector3d MOV_UP = new Vector3d(0, STEP, 0);
+	private static final Vector3d MOV_DOWN = new Vector3d(0, -STEP, 0);
+	private static final Vector3d MOV_LEFT = new Vector3d(STEP, 0, 0);
+	private static final Vector3d MOV_RIGHT = new Vector3d(-STEP, 0, 0);
 
-		wakeup = new WakeupOr(warray);
+	private final TransformGroup target;
+	private final WakeupCondition condition;
+
+	private boolean KEY_UP;
+	private boolean KEY_DOWN;
+	private boolean KEY_LEFT;
+	private boolean KEY_RIGHT;
+
+	private volatile long previousWhen;
+
+	public KeyShipBehavior(final TransformGroup target) {
+		this.target = target;
+
+		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(KeyEvent.KEY_PRESSED);
+		final WakeupCriterion keyReleased = new WakeupOnAWTEvent(KeyEvent.KEY_RELEASED);
+		final WakeupCriterion currentFrame = new WakeupOnElapsedFrames(0);
+
+		this.condition = new WakeupOr(Utils.asArray(keyPressed, keyReleased, currentFrame));
 	}
 
 	@Override
 	public void initialize() {
-		System.out.println("init KeyShipBejavior");
-		wakeupOn(wakeup);
+		wakeupOn(condition);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void processStimulus(Enumeration criteria) {
-		WakeupCriterion genericEvt;
-
+	public void processStimulus(final Enumeration criteria) {
+		WakeupCriterion crit;
 		while (criteria.hasMoreElements()) {
-			genericEvt = (WakeupCriterion) criteria.nextElement();
-			if (genericEvt instanceof WakeupOnAWTEvent) {
-				WakeupOnAWTEvent awtEvent = (WakeupOnAWTEvent) genericEvt;
-				processAWTEvent(awtEvent.getAWTEvent());
-			}
-			if (genericEvt instanceof WakeupOnElapsedFrames) {
+			crit = (WakeupCriterion) criteria.nextElement();
+			if (crit instanceof WakeupOnAWTEvent) {
+				final WakeupOnAWTEvent awtEvent = (WakeupOnAWTEvent) crit;
+				for (final AWTEvent event : awtEvent.getAWTEvent()) {
+					if (event instanceof KeyEvent) {
+						processKeyEvent((KeyEvent) event);
+					}
+				}
+			} else if (crit instanceof WakeupOnElapsedFrames) {
 				updatePosition();
 			}
 		}
-		wakeupOn(wakeup);
+		
+		wakeupOn(condition);
+	}
+
+	private void processKeyEvent(final KeyEvent e) {
+		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
+		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
+		// timestamp for key-repeat pairs so we can easily filter them.
+		final long when = e.getWhen();
+		if (when == previousWhen) {
+			return;
+		}
+		previousWhen = when;
+
+		final int id = e.getID();
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+			// pressing a key should set a flag, anything else should unset it
+			KEY_UP = (id == KeyEvent.KEY_PRESSED);
+			break;
+		case KeyEvent.VK_DOWN:
+			KEY_DOWN = (id == KeyEvent.KEY_PRESSED);
+			break;
+		case KeyEvent.VK_LEFT:
+			KEY_LEFT = (id == KeyEvent.KEY_PRESSED);
+			break;
+		case KeyEvent.VK_RIGHT:
+			KEY_RIGHT = (id == KeyEvent.KEY_PRESSED);
+			break;
+		}
 	}
 
 	private void updatePosition() {
-		Vector3d transformVector = new Vector3d();
-		if (KEY_RIGHT) {
-			transformVector.add(new Vector3d(-0.01f, 0.0f, 0.0f));
+		if (!(KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT)) {
+			return; // no flags, no update
 		}
-		if (KEY_LEFT) {
-			transformVector.add(new Vector3d(0.01f, 0.0f, 0.0f));
-		}
+
+		final Vector3d vector = new Vector3d();
 		if (KEY_UP) {
-			transformVector.add(new Vector3d(0.0f, 0.01f, 0.0f));
+			vector.add(MOV_UP);
 		}
 		if (KEY_DOWN) {
-			transformVector.add(new Vector3d(0.0f, -0.01f, 0.0f));
+			vector.add(MOV_DOWN);
 		}
-		
-		Transform3D currentTransform = new Transform3D();
-		tg.getTransform(currentTransform);
-		Transform3D updatedTransform = new Transform3D();
-		updatedTransform.setTranslation(transformVector);
+		if (KEY_LEFT) {
+			vector.add(MOV_LEFT);
+		}
+		if (KEY_RIGHT) {
+			vector.add(MOV_RIGHT);
+		}
+
+		final Transform3D updatedTransform = new Transform3D();
+		updatedTransform.setTranslation(vector);
+
+		final Transform3D currentTransform = new Transform3D();
+		target.getTransform(currentTransform);
 		currentTransform.mul(updatedTransform);
-		tg.setTransform(currentTransform);
+		target.setTransform(currentTransform);
 	}
-
-	private void processAWTEvent(AWTEvent[] events) {
-		for (int loop = 0; loop < events.length; loop++) {
-			if (events[loop] instanceof KeyEvent) {
-				KeyEvent eventKey = (KeyEvent) events[loop];
-				if (eventKey.getID() == KeyEvent.KEY_PRESSED) {
-					switch (eventKey.getKeyCode()) {
-					case KeyEvent.VK_UP:
-						KEY_UP = true;
-						break;
-					case KeyEvent.VK_DOWN:
-						KEY_DOWN = true;
-						break;
-					case KeyEvent.VK_LEFT:
-						KEY_LEFT = true;
-						break;
-					case KeyEvent.VK_RIGHT:
-						KEY_RIGHT = true;
-						break;
-					default:
-						System.out.println("andere Taste");
-						break;
-					}
-				}
-				if (eventKey.getID() == KeyEvent.KEY_RELEASED) {
-					switch (eventKey.getKeyCode()) {
-					case KeyEvent.VK_UP:
-						KEY_UP = false;
-						break;
-					case KeyEvent.VK_DOWN:
-						KEY_DOWN = false;
-						break;
-					case KeyEvent.VK_LEFT:
-						KEY_LEFT = false;
-						break;
-					case KeyEvent.VK_RIGHT:
-						KEY_RIGHT = false;
-						break;
-					default:
-						System.out.println("andere Taste");
-						break;
-					}
-				}
-			}
-		}
-	}
-
 }
