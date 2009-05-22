@@ -48,7 +48,8 @@ Insbesondere sollen Fragen zum Thema Flow selbst, sowie zu Spaß und Stimmung de
 
 Nach Möglichkeit sollen diese Fragebögen auch von jemandem erstellt werden können, der keine genauen Kenntnisse über die zugrunde liegende Softwarearchitektur hat. Diese sollen dann zur Erstellung verschiedener Szenarien verwendet werden können, die zwischen Spielleveln mit festgelegten Parametern und den passenden Fragebögen wechseln.
 
-Abschließend soll ein Tool erstellt werden, dass die optische Auswertung der erhobenen Daten ermöglicht und bestimmte Werte, wie Varianz und Erwartungswert errechnet.
+Abschließend sollen die Daten, durch Zeichen wie Tab oder Komma getrennt, in eine txt-Datei exportiert werden. Von dort aus ist eine Auswertung durch spezielle Software möglich.
+Außerdem soll eine Dokumentation erstellt werden, die es ermöglicht, an dem Projekt weiterzuarbeiten oder einzelne Programmteile wiederzuverwenden.
 
 
 ==Project deliverables==
