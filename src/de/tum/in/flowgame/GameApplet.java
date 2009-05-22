@@ -12,6 +12,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
+import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
@@ -94,7 +95,16 @@ public class GameApplet extends Applet {
 		collidables = new BranchGroup();
 		collidables.addChild(createShip());
 		
-		new Collidable(collidables);
+		new Collidable(collidables, 1.4f);
+		new Collidable(collidables, 1.2f);
+		new Collidable(collidables, 1.0f);
+		new Collidable(collidables, 0.8f);
+		new Collidable(collidables, 0.6f);
+		new Collidable(collidables, -0.6f);
+		new Collidable(collidables, -0.8f);
+		new Collidable(collidables, -1.0f);
+		new Collidable(collidables, -1.2f);
+		new Collidable(collidables, -1.4f);
 
 		scene.addChild(createBackground());
 		scene.addChild(new Tunnel());
@@ -103,11 +113,11 @@ public class GameApplet extends Applet {
 		final SimpleUniverse su = createUniverse(canvas3D);
 		su.addBranchGraph(scene);
 
-		// com.tornadolabs.j3dtree.Java3dTree tree = new
-		// com.tornadolabs.j3dtree.Java3dTree();
-		// tree.recursiveApplyCapability(scene);
-		// tree.updateNodes(su);
-		// tree.setVisible(true);
+//		 com.tornadolabs.j3dtree.Java3dTree tree = new
+//		 com.tornadolabs.j3dtree.Java3dTree();
+//		 tree.recursiveApplyCapability(scene);
+//		 tree.updateNodes(su);
+//		 tree.setVisible(true);
 	}
 
 	private SimpleUniverse createUniverse(final Canvas3D canvas3D) {
@@ -123,6 +133,10 @@ public class GameApplet extends Applet {
 		final TransformGroup vtg = vp.getViewPlatformTransform();
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		
+//		KeyNavigatorBehavior keyShipBehavior = new KeyNavigatorBehavior(vtg);
+//		vtg.addChild(keyShipBehavior);
+//		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
 		final SimpleUniverse su = new SimpleUniverse(vp, viewer);
 		return su;
@@ -140,30 +154,45 @@ public class GameApplet extends Applet {
 		return back;
 	}
 
-	private TransformGroup createShip() throws IOException {		
-		final TransformGroup tc = new TransformGroup();
+	private static TransformGroup createShip() throws IOException {		
+		final TransformGroup initialTranslation = new TransformGroup();
 
 		final Transform3D t3d = new Transform3D();
 
 		t3d.rotY(Math.toRadians(180));
 		t3d.setTranslation(new Vector3d(0, -1f, -6f));
 		
-		tc.setTransform(t3d);
+		initialTranslation.setTransform(t3d);
 		
 		TransformGroup moveGroup = new TransformGroup();
 		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		tc.addChild(moveGroup);
-		BranchGroup ship = loadShip();
-		moveGroup.addChild(ship);
 		
-		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup);
+		initialTranslation.addChild(moveGroup);
+
+		TransformGroup rotationGroup = new TransformGroup();
+		rotationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		moveGroup.addChild(rotationGroup);
+		
+		BranchGroup ship = loadShip();
+		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f, -0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
+//		Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
+//		box.setCollidable(false);
+		rotationGroup.addChild(ship);
+//		rotationGroup.addChild(box);
+		System.out.println("Ship " + ship.getBounds());
+		
+		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		
-		return tc;
+		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship);
+		ship.addChild(collisionBehavior);
+		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
+		
+		return initialTranslation;
 	}
 
-	private BranchGroup loadShip() throws IOException {
+	private static BranchGroup loadShip() throws IOException {
 		return loadScene("/res/SFighter.obj");
 	}
 
