@@ -44,6 +44,8 @@ public class Tunnel extends TransformGroup {
 			final Shape3D tunnelShape = (Shape3D) cyl.getShape(Cylinder.BODY).cloneNode(true);
 			tunnelShape.setBoundsAutoCompute(false);
 			tunnelShape.setBounds(tunnelPartBounds);
+			tunnelShape.setCollidable(false);
+			tunnelShape.setUserData("Tunnel");
 
 			tunnelShape.setAppearance(appearance);
 			
