@@ -31,8 +31,6 @@ public class KeyShipEllipseBehavior extends Behavior {
 
 	private final double MAX_ANGLE = 30;
 
-	private volatile long previousWhen;
-
 	public KeyShipEllipseBehavior(final TransformGroup translationGroup, TransformGroup rotationGroup) {
 		this.translationGroup = translationGroup;
 		this.rotationGroup = rotationGroup;
@@ -74,11 +72,11 @@ public class KeyShipEllipseBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-		final long when = e.getWhen();
-		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-			return;
-		}
-		previousWhen = when;
+//		final long when = e.getWhen();
+//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+//			return;
+//		}
+//		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -108,12 +106,12 @@ public class KeyShipEllipseBehavior extends Behavior {
 		yold = Ellipse.getYOnPosition(x);
 
 		final Vector3d vector = new Vector3d();
-		if (KEY_LEFT) {
+		if (KEY_RIGHT) {
 			if (x < 0.9 * Ellipse.ELLIPSE_A) {
 				vector.add(MOV_LEFT);
 			}
 		}
-		if (KEY_RIGHT) {
+		if (KEY_LEFT) {
 			if (x > -0.9 * Ellipse.ELLIPSE_A) {
 				vector.add(MOV_RIGHT);
 			}

@@ -15,7 +15,7 @@ import javax.vecmath.Vector3d;
 public class Collidable {
 
 	public Collidable(BranchGroup collidables, float x) throws IOException {
-		BranchGroup collidable = GameApplet.loadScene("/res/fuelcan2.obj");
+		BranchGroup collidable = GameApplet.loadScene("/res/asteroid.obj");
 		collidable.setUserData(GameLogic.FUELCAN);
 		collidable.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
 //		System.out.println("Collidable " + collidable.getCollisionBounds());
