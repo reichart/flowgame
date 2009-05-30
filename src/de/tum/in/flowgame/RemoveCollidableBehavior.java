@@ -24,6 +24,7 @@ public class RemoveCollidableBehavior extends Behavior {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void processStimulus(Enumeration criteria) {
 		System.out.println("woke up");
 		wakeupOn(wakeup);
