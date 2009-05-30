@@ -13,9 +13,12 @@ import javax.media.j3d.WakeupOr;
 public class ShipCollisionBehavior extends Behavior {
 	private WakeupOr wakeUp;
 	Node node;
+	private final CollisionCounter collisionCounter;
 	
-	public ShipCollisionBehavior(Node node) {
+	
+	public ShipCollisionBehavior(Node node, CollisionCounter collisionCounter) {
 		this.node = node;
+		this.collisionCounter = collisionCounter;
 		WakeupOnCollisionEntry w1 = new WakeupOnCollisionEntry(node, WakeupOnCollisionEntry.USE_BOUNDS);
 		WakeupOnCollisionExit w2 = new WakeupOnCollisionExit(this.node);
 		WakeupOnCollisionMovement w3 = new WakeupOnCollisionMovement(this.node);
@@ -34,7 +37,11 @@ public class ShipCollisionBehavior extends Behavior {
 		while (criteria.hasMoreElements()) {
 			Object element = criteria.nextElement();
 			if (element instanceof WakeupOnCollisionEntry) {
-				System.out.println("collideEnter");
+				WakeupOnCollisionEntry collision = (WakeupOnCollisionEntry) element;
+				Node collidable = collision.getTriggeringPath().getObject();
+				System.out.println("collideEnter with " + collidable.getUserData());
+//				collisionCounter.add(collidable);
+				
 			}
 			if (element instanceof WakeupOnCollisionExit) {
 				System.out.println("collideExit");
