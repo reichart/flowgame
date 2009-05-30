@@ -5,6 +5,7 @@ import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.BranchGroup;
+import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
 
@@ -15,13 +16,15 @@ public class CreateCollidablesBehavior extends Behavior {
 	private WakeupCriterion wakeupEvent;
 	
 	BranchGroup collidableBranchGroup;
+	SharedGroup sharedGroup;
 	
 	private CreateCollidablesBehavior() {
 		//empty
 	}
 	
-	public CreateCollidablesBehavior(BranchGroup collidableBranchGroup) {
+	public CreateCollidablesBehavior(BranchGroup collidableBranchGroup, SharedGroup sharedGroup) {
 		this.collidableBranchGroup = collidableBranchGroup;
+		this.sharedGroup = sharedGroup;
 		wakeupEvent = new WakeupOnElapsedTime(time);
 	}
 
@@ -35,7 +38,7 @@ public class CreateCollidablesBehavior extends Behavior {
 		System.out.println("Create");
 		float x = new Float(Math.random() * 3 - 1.5);
 		try {
-			new Collidable(collidableBranchGroup, 0.8f);
+			new Collidable(collidableBranchGroup, sharedGroup, x);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

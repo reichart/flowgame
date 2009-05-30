@@ -20,6 +20,7 @@ import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Fog;
 import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.LinearFog;
+import javax.media.j3d.SharedGroup;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -97,8 +98,12 @@ public class GameApplet extends Applet {
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
 		
-		new Collidable(collidables, 0.8f);
-		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
+		SharedGroup asteroid = new SharedGroup();
+		asteroid.addChild(GameApplet.loadScene("/res/asteroid.obj"));
+		asteroid.setUserData(GameLogic.ASTEROID);
+		asteroid.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
+		
+		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, asteroid);
 		ccb.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
 		
 		collidables.addChild(createShip());
