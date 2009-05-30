@@ -13,27 +13,29 @@ public class GameLogic {
 	
 	public GameLogic(){}
 
-	public GameLogic(int points) {
+	public GameLogic(final int points) {
 		this.points = points;
 	}
 
-	public GameLogic(int positive, int negative) {
+	public GameLogic(final int positive, final int negative) {
 		this.positive = positive;
 		this.negative = negative;
 	}
 
-	public GameLogic(int positive, int negative, int points) {
+	public GameLogic(final int positive, final int negative, final int points) {
 		this.positive = positive;
 		this.negative = negative;
 		this.points = points;
 	}
 
-	public void add(Node collisionObject){
-		if (collisionObject.getParent().getUserData().equals(GameLogic.FUELCAN)){
+	public void add(final Node collisionObject) {
+		final Object userData = collisionObject.getParent().getUserData();
+		if (GameLogic.FUELCAN.equals(userData)) {
 			addPositive();
-		}
-		else if (collisionObject.getUserData().equals(GameLogic.ASTEROID)){
+		} else if (GameLogic.ASTEROID.equals(userData)) {
 			addNegative();
+		} else {
+			System.out.println();
 		}
 	}
 	
