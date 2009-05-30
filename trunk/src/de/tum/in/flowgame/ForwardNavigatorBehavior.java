@@ -15,6 +15,10 @@ public class ForwardNavigatorBehavior extends Behavior{
     public ForwardNavigatorBehavior(TransformGroup targetTG) {
     	this.forwardNavigator = new ForwardNavigator(targetTG);
         }
+    
+    public ForwardNavigatorBehavior(TransformGroup targetTG, double speed){
+    	this.forwardNavigator = new ForwardNavigator(targetTG, speed);
+    }
 	
 	@Override
 	public void initialize() {

@@ -14,8 +14,9 @@ import javax.vecmath.Vector3d;
 
 public class Collidable {
 
+	private double speed = 120;
+	
 	public Collidable(BranchGroup collidables, SharedGroup group, float x) throws IOException {
-		SharedGroup collidable = group;
 //		BranchGroup collidable = GameApplet.loadScene("/res/asteroid.obj");
 //		System.out.println("Collidable " + collidable.getCollisionBounds());
 //		Box box = new Box(0.7f, 1.0f, 0.25f, new Appearance());
@@ -39,10 +40,15 @@ public class Collidable {
 		TransformGroup moveCollidable = new TransformGroup();
 		moveCollidable.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		moveCollidable.setTransform(trans);
-		final PositionInterpolator pi = new PositionInterpolator(new Alpha(1, 5000, 0, 10000, 0, 0), moveCollidable , trans, Tunnel.TUNNEL_LENGTH, -50);
-		pi.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
-		moveCollidable.addChild(pi);
 		moveCollidable.addChild(rotateCollidable);
+		
+		//set deep in tunnel and add movement towards players ship
+		final Transform3D t3d = new Transform3D();
+		t3d.setTranslation(new Vector3d(0, 0, -(Tunnel.TUNNEL_PARTS-1)*Tunnel.TUNNEL_LENGTH));
+		moveCollidable.setTransform(t3d);
+		ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(moveCollidable, speed);
+		fwdNav.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
+		moveCollidable.addChild(fwdNav);
 		
 		Transform3D initialTransform = new Transform3D();
 		initialTransform.setTranslation(new Vector3d(x, -Ellipse.getYOnPosition(x)-0.1, 0.0f));
@@ -59,7 +65,8 @@ public class Collidable {
 		initTransformGroup.addChild(initScale);
 		
 		BranchGroup bg = new BranchGroup();
-		bg.addChild(initTransformGroup);
+		bg.addChild(initTransformGroup);		
+//		bg.addChild(pi);
 		
 		collidables.addChild(bg);
 	}
