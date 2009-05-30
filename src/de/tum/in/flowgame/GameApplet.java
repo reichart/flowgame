@@ -91,21 +91,19 @@ public class GameApplet extends Applet {
 		final DirectionalLight dirLight = new DirectionalLight(WHITE, dir);
 		dirLight.setInfluencingBounds(WORLD_BOUNDS);
 		scene.addChild(dirLight);
-		
-		collidables = new BranchGroup();
-		collidables.addChild(createShip());
-		
-		new Collidable(collidables, 1.4f);
-		new Collidable(collidables, 1.2f);
-		new Collidable(collidables, 1.0f);
-		new Collidable(collidables, 0.8f);
-		new Collidable(collidables, 0.6f);
-		new Collidable(collidables, -0.6f);
-		new Collidable(collidables, -0.8f);
-		new Collidable(collidables, -1.0f);
-		new Collidable(collidables, -1.2f);
-		new Collidable(collidables, -1.4f);
 
+		collidables = new BranchGroup();
+		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
+		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
+		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+		
+		new Collidable(collidables, 0.8f);
+		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
+		ccb.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
+		
+		collidables.addChild(createShip());
+		collidables.addChild(ccb);
+		
 		scene.addChild(createBackground());
 		scene.addChild(new Tunnel());
 		scene.addChild(collidables);
@@ -158,10 +156,8 @@ public class GameApplet extends Applet {
 		final TransformGroup initialTranslation = new TransformGroup();
 
 		final Transform3D t3d = new Transform3D();
-
-		t3d.rotY(Math.toRadians(180));
 		t3d.setTranslation(new Vector3d(0, -1f, -6f));
-		
+
 		initialTranslation.setTransform(t3d);
 		
 		TransformGroup moveGroup = new TransformGroup();
@@ -173,12 +169,12 @@ public class GameApplet extends Applet {
 		rotationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		moveGroup.addChild(rotationGroup);
 		
-		BranchGroup ship = loadShip();
+		TransformGroup ship = loadShip();
+		
 		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f, -0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
 //		Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
 //		box.setCollidable(false);
 		rotationGroup.addChild(ship);
-//		rotationGroup.addChild(box);
 		System.out.println("Ship " + ship.getBounds());
 		
 		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
@@ -193,8 +189,25 @@ public class GameApplet extends Applet {
 		return initialTranslation;
 	}
 
-	private static BranchGroup loadShip() throws IOException {
-		return loadScene("/res/SFighter.obj");
+	private static TransformGroup loadShip() throws IOException {
+
+		final Transform3D rotX = new Transform3D();
+		rotX.rotX(Math.toRadians(90));
+		
+		final Transform3D rotY = new Transform3D();
+		rotY.rotY(Math.toRadians(180));
+		
+		rotX.mul(rotY);
+		
+		TransformGroup rotateShip = new TransformGroup();
+		rotateShip.setTransform(rotX);
+		
+		
+		final BranchGroup ship = loadScene("/res/SFighter.obj");
+		
+		rotateShip.addChild(ship);
+		
+		return rotateShip;
 	}
 
 	protected static Texture getTexture(final String path) {
