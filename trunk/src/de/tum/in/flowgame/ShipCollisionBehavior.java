@@ -60,6 +60,7 @@ public class ShipCollisionBehavior extends Behavior {
 		wakeupOn(wakeUp);
 	}
 
+	@SuppressWarnings("unchecked")
 	private String toString(final Object n) {
 		return n.getClass().getSimpleName() + "@" + Integer.toHexString(n.hashCode());
 	}

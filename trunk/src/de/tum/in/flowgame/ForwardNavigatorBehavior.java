@@ -22,6 +22,7 @@ public class ForwardNavigatorBehavior extends Behavior{
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void processStimulus(Enumeration criteria) {
 		forwardNavigator.integrateTransformChanges();
 		wakeupOn(wakeEvent);
