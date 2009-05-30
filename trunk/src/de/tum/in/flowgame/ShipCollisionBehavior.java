@@ -13,10 +13,10 @@ import javax.media.j3d.WakeupOr;
 public class ShipCollisionBehavior extends Behavior {
 	private WakeupOr wakeUp;
 	Node node;
-	private final CollisionCounter collisionCounter;
+	private final GameLogic collisionCounter;
 	
 	
-	public ShipCollisionBehavior(Node node, CollisionCounter collisionCounter) {
+	public ShipCollisionBehavior(Node node, GameLogic collisionCounter) {
 		this.node = node;
 		this.collisionCounter = collisionCounter;
 		WakeupOnCollisionEntry w1 = new WakeupOnCollisionEntry(node, WakeupOnCollisionEntry.USE_BOUNDS);
@@ -39,9 +39,9 @@ public class ShipCollisionBehavior extends Behavior {
 			if (element instanceof WakeupOnCollisionEntry) {
 				WakeupOnCollisionEntry collision = (WakeupOnCollisionEntry) element;
 				Node collidable = collision.getTriggeringPath().getObject();
-				System.out.println("collideEnter with " + collidable.getUserData());
-//				collisionCounter.add(collidable);
-				
+				System.out.println("collideEnter with " + collidable.getParent().getUserData());
+				collisionCounter.add(collidable);
+				System.out.println(collisionCounter.getPoints());				
 			}
 			if (element instanceof WakeupOnCollisionExit) {
 				System.out.println("collideExit");
