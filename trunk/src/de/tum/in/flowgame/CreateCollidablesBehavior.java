@@ -9,29 +9,19 @@ import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
 
-import com.sun.j3d.utils.universe.SimpleUniverse;
-
 public class CreateCollidablesBehavior extends Behavior {
 
 	private long time = 1000;
-	
-	private WakeupCriterion wakeupEvent;
-	
-	BranchGroup collidableBranchGroup;
-	SharedGroup sharedGroup;
-	com.tornadolabs.j3dtree.Java3dTree tree;
-	SimpleUniverse su;
-	
-	private CreateCollidablesBehavior() {
-		//empty
-	}
-	
-	public CreateCollidablesBehavior(BranchGroup collidableBranchGroup, SharedGroup sharedGroup) {
+
+	private final WakeupCriterion wakeupEvent;
+
+	private final BranchGroup collidableBranchGroup;
+	private final SharedGroup sharedGroup;
+
+	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup, final SharedGroup sharedGroup) {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.sharedGroup = sharedGroup;
-		wakeupEvent = new WakeupOnElapsedTime(time);
-		this.tree = tree;
-		this.su = su;
+		this.wakeupEvent = new WakeupOnElapsedTime(time);
 	}
 
 	@Override
@@ -40,12 +30,13 @@ public class CreateCollidablesBehavior extends Behavior {
 	}
 
 	@Override
-	public void processStimulus(Enumeration criteria) {
+	@SuppressWarnings("unchecked")
+	public void processStimulus(final Enumeration criteria) {
 		System.out.println("Create");
-		float x = new Float(Math.random() * 3 - 1.5);
+		final float x = new Float(Math.random() * 3 - 1.5);
 		try {
 			new Collidable(collidableBranchGroup, sharedGroup, x);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 		wakeupOn(wakeupEvent);
@@ -55,7 +46,7 @@ public class CreateCollidablesBehavior extends Behavior {
 		return time;
 	}
 
-	public void setTime(long time) {
+	public void setTime(final long time) {
 		this.time = time;
 	}
 }
