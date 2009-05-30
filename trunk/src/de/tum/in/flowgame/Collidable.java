@@ -16,7 +16,7 @@ public class Collidable {
 
 	public Collidable(BranchGroup collidables, float x) throws IOException {
 		BranchGroup collidable = GameApplet.loadScene("/res/fuelcan2.obj");
-		collidable.setUserData("FuelCan");
+		collidable.setUserData(GameLogic.FUELCAN);
 		collidable.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
 //		System.out.println("Collidable " + collidable.getCollisionBounds());
 //		Box box = new Box(0.7f, 1.0f, 0.25f, new Appearance());
