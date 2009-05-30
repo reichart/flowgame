@@ -30,7 +30,16 @@ public class ForwardNavigator {
 		fwdSpeed = 100.0;
 		navVec = new Vector3d(0.0, 0.0, 0.0);
 	}
+	
+	public ForwardNavigator(TransformGroup targetTG, double speed) {
+		this.targetTG = targetTG;
+		targetTG.getTransform(nominal);
 
+		this.fwdSpeed = speed;
+		navVec = new Vector3d(0.0, 0.0, 0.0);
+	}
+	
+	
 	/**
 	 * Computes a new transform for the next frame based on the current
 	 * transform and elapsed time. This new transform is written into the target
@@ -46,7 +55,7 @@ public class ForwardNavigator {
 		double deltaTime = (double) getDeltaTime();
 		deltaTime *= 0.001;
 		
-		fwdSpeed = fwdSpeed + deltaTime;
+//		fwdSpeed = fwdSpeed + deltaTime;
 
 		navVec.z = fwdSpeed;
 

@@ -40,7 +40,8 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 public class GameApplet extends Applet {
 
-	public static final BoundingSphere WORLD_BOUNDS = new BoundingSphere(new Point3d(), Double.POSITIVE_INFINITY);
+	public static final BoundingSphere WORLD_BOUNDS = new BoundingSphere(
+			new Point3d(), Double.POSITIVE_INFINITY);
 
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
@@ -51,12 +52,12 @@ public class GameApplet extends Applet {
 	public void init() {
 		System.out.println("GameApplet.init()");
 	}
-	
+
 	@Override
 	public void destroy() {
 		System.out.println("GameApplet.destroy()");
 	}
-	
+
 	public static void main(final String[] args) throws Exception {
 		final Frame frame = new Frame();
 		frame.setSize(800, 600);
@@ -69,12 +70,13 @@ public class GameApplet extends Applet {
 		frame.add(new GameApplet());
 		frame.setVisible(true);
 	}
-	
+
 	public GameApplet() throws Exception {
 		System.out.println("GameApplet.GameApplet()");
-		
+
 		setLayout(new BorderLayout());
-		final Canvas3D canvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
+		final Canvas3D canvas3D = new Canvas3D(SimpleUniverse
+				.getPreferredConfiguration());
 		add(BorderLayout.CENTER, canvas3D);
 
 		final BranchGroup scene = new BranchGroup();
@@ -97,18 +99,20 @@ public class GameApplet extends Applet {
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
-		
+
 		SharedGroup asteroid = new SharedGroup();
 		asteroid.addChild(GameApplet.loadScene("/res/asteroid.obj"));
 		asteroid.setUserData(GameLogic.ASTEROID);
-		asteroid.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
-		
-		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, asteroid);
+		asteroid.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
+				-0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
+
+		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(
+				collidables, asteroid);
 		ccb.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
-		
+
 		collidables.addChild(createShip());
 		collidables.addChild(ccb);
-		
+
 		scene.addChild(createBackground());
 		scene.addChild(new Tunnel());
 		scene.addChild(collidables);
@@ -116,11 +120,10 @@ public class GameApplet extends Applet {
 		final SimpleUniverse su = createUniverse(canvas3D);
 		su.addBranchGraph(scene);
 
-//		 com.tornadolabs.j3dtree.Java3dTree tree = new
-//		 com.tornadolabs.j3dtree.Java3dTree();
-//		 tree.recursiveApplyCapability(scene);
-//		 tree.updateNodes(su);
-//		 tree.setVisible(true);
+//		com.tornadolabs.j3dtree.java3dtree tree = new com.tornadolabs.j3dtree.java3dtree();
+//		tree.recursiveapplycapability(scene);
+//		tree.updatenodes(su);
+//		tree.setvisible(true);
 	}
 
 	private SimpleUniverse createUniverse(final Canvas3D canvas3D) {
@@ -136,18 +139,20 @@ public class GameApplet extends Applet {
 		final TransformGroup vtg = vp.getViewPlatformTransform();
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
-		
-//		KeyNavigatorBehavior keyShipBehavior = new KeyNavigatorBehavior(vtg);
-//		vtg.addChild(keyShipBehavior);
-//		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
+
+		// KeyNavigatorBehavior keyShipBehavior = new KeyNavigatorBehavior(vtg);
+		// vtg.addChild(keyShipBehavior);
+		// keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
 		final SimpleUniverse su = new SimpleUniverse(vp, viewer);
 		return su;
 	}
 
 	private Background createBackground() throws IOException {
-		final BufferedImage bimage = ImageIO.read(getClass().getResource("/res/stars.jpg"));
-		final ImageComponent2D image = new ImageComponent2D(BufferedImage.TYPE_INT_RGB, bimage);
+		final BufferedImage bimage = ImageIO.read(getClass().getResource(
+				"/res/stars.jpg"));
+		final ImageComponent2D image = new ImageComponent2D(
+				BufferedImage.TYPE_INT_RGB, bimage);
 
 		final Background back = new Background(BLACK);
 		back.setImageScaleMode(Background.SCALE_REPEAT);
@@ -157,40 +162,43 @@ public class GameApplet extends Applet {
 		return back;
 	}
 
-	private static TransformGroup createShip() throws IOException {		
+	private static TransformGroup createShip() throws IOException {
 		final TransformGroup initialTranslation = new TransformGroup();
 
 		final Transform3D t3d = new Transform3D();
 		t3d.setTranslation(new Vector3d(0, -1f, -6f));
 
 		initialTranslation.setTransform(t3d);
-		
+
 		TransformGroup moveGroup = new TransformGroup();
 		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		
+
 		initialTranslation.addChild(moveGroup);
 
 		TransformGroup rotationGroup = new TransformGroup();
 		rotationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		moveGroup.addChild(rotationGroup);
-		
+
 		TransformGroup ship = loadShip();
-		
-		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f, -0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
-//		Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
-//		box.setCollidable(false);
+
+		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f,
+				-0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
+		// Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
+		// box.setCollidable(false);
 		rotationGroup.addChild(ship);
 		System.out.println("Ship " + ship.getBounds());
-		
-		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
+
+		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(
+				moveGroup, rotationGroup);
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
-		
+
 		GameLogic collisionCounter = new GameLogic();
-		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship, collisionCounter);
+		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(
+				ship, collisionCounter);
 		ship.addChild(collisionBehavior);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
-		
+
 		return initialTranslation;
 	}
 
@@ -198,26 +206,26 @@ public class GameApplet extends Applet {
 
 		final Transform3D rotX = new Transform3D();
 		rotX.rotX(Math.toRadians(90));
-		
+
 		final Transform3D rotY = new Transform3D();
 		rotY.rotY(Math.toRadians(180));
-		
+
 		rotX.mul(rotY);
-		
+
 		TransformGroup rotateShip = new TransformGroup();
 		rotateShip.setTransform(rotX);
-		
-		
+
 		final BranchGroup ship = loadScene("/res/SFighter.obj");
-		
+
 		rotateShip.addChild(ship);
-		
+
 		return rotateShip;
 	}
 
 	protected static Texture getTexture(final String path) {
 		final URL url = GameApplet.class.getResource(path);
-		final TextureLoader loader = new TextureLoader(url, TextureLoader.GENERATE_MIPMAP | TextureLoader.BY_REFERENCE,
+		final TextureLoader loader = new TextureLoader(url,
+				TextureLoader.GENERATE_MIPMAP | TextureLoader.BY_REFERENCE,
 				null);
 
 		final Texture texture = loader.getTexture();
@@ -234,7 +242,8 @@ public class GameApplet extends Applet {
 		return texture;
 	}
 
-	public static BranchGroup loadScene(final String resource) throws IOException {
+	public static BranchGroup loadScene(final String resource)
+			throws IOException {
 		final Loader loader = new ObjectFile(ObjectFile.RESIZE);
 		final URL url = GameApplet.class.getResource(resource);
 		return loader.load(url).getSceneGroup();

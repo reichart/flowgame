@@ -9,14 +9,18 @@ import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
 
+import com.sun.j3d.utils.universe.SimpleUniverse;
+
 public class CreateCollidablesBehavior extends Behavior {
 
-	private long time = 3000;
+	private long time = 1000;
 	
 	private WakeupCriterion wakeupEvent;
 	
 	BranchGroup collidableBranchGroup;
 	SharedGroup sharedGroup;
+	com.tornadolabs.j3dtree.Java3dTree tree;
+	SimpleUniverse su;
 	
 	private CreateCollidablesBehavior() {
 		//empty
@@ -26,6 +30,8 @@ public class CreateCollidablesBehavior extends Behavior {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.sharedGroup = sharedGroup;
 		wakeupEvent = new WakeupOnElapsedTime(time);
+		this.tree = tree;
+		this.su = su;
 	}
 
 	@Override
@@ -52,5 +58,4 @@ public class CreateCollidablesBehavior extends Behavior {
 	public void setTime(long time) {
 		this.time = time;
 	}
-
 }
