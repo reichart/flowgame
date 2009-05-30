@@ -185,7 +185,8 @@ public class GameApplet extends Applet {
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		
-		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship);
+		CollisionCounter collisionCounter = new CollisionCounter();
+		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship, collisionCounter);
 		ship.addChild(collisionBehavior);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		
