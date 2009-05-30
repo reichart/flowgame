@@ -81,7 +81,7 @@ public class Tunnel extends TransformGroup {
 			
 			addChild(tunnelTranslationGroup);
 		}
-		final ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(this);
+		final ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(this, 100);
 		fwdNav.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
 		
 		addChild(fwdNav);

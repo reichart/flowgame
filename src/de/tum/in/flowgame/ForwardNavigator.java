@@ -13,30 +13,22 @@ import javax.vecmath.Vector3d;
  */
 public class ForwardNavigator {
 
-	private Vector3d navVec;
-	private double fwdSpeed;
+	private final Vector3d navVec;
+	private final double fwdSpeed;
 	private long time;
 
-	private Point3d dp = new Point3d();
-	private Vector3d vpPos = new Vector3d();
-	private Transform3D vpTrans = new Transform3D();
-	private Transform3D nominal = new Transform3D();
-	private TransformGroup targetTG;
+	private final Point3d dp = new Point3d();
+	private final Vector3d vpPos = new Vector3d();
+	private final Transform3D vpTrans = new Transform3D();
+	private final Transform3D nominal = new Transform3D();
+	private final TransformGroup targetTG;
 
-	public ForwardNavigator(TransformGroup targetTG) {
-		this.targetTG = targetTG;
-		targetTG.getTransform(nominal);
-
-		fwdSpeed = 100.0;
-		navVec = new Vector3d(0.0, 0.0, 0.0);
-	}
-	
-	public ForwardNavigator(TransformGroup targetTG, double speed) {
+	public ForwardNavigator(final TransformGroup targetTG, final double speed) {
 		this.targetTG = targetTG;
 		targetTG.getTransform(nominal);
 
 		this.fwdSpeed = speed;
-		navVec = new Vector3d(0.0, 0.0, 0.0);
+		this.navVec = new Vector3d(0.0, 0.0, 0.0);
 	}
 	
 	
@@ -72,8 +64,8 @@ public class ForwardNavigator {
 	}
 
 	private long getDeltaTime() {
-		long newTime = System.currentTimeMillis();
-		long deltaTime = newTime - time;
+		final long newTime = System.currentTimeMillis();
+		final long deltaTime = newTime - time;
 		time = newTime;
 		if (deltaTime > 2000)
 			return 0;
