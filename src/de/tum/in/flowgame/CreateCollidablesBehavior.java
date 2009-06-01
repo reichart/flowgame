@@ -34,7 +34,7 @@ public class CreateCollidablesBehavior extends Behavior {
 	
 	private SharedGroup loadFuelcan() throws IOException {
 		SharedGroup fuelcan = new SharedGroup();
-		fuelcan.addChild(GameApplet.loadScene("/res/fuelcan2.obj"));
+		fuelcan.addChild(Utils.loadScene("/res/fuelcan2.obj"));
 		fuelcan.setUserData(GameLogic.FUELCAN);
 		fuelcan.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f), new Point3d(0.35f, 0.5f,
 				0.125f)));
@@ -43,7 +43,7 @@ public class CreateCollidablesBehavior extends Behavior {
 
 	private SharedGroup loadAsteroid() throws IOException {
 		SharedGroup asteroid = new SharedGroup();
-		asteroid.addChild(GameApplet.loadScene("/res/asteroid.obj"));
+		asteroid.addChild(Utils.loadScene("/res/asteroid.obj"));
 		asteroid.setUserData(GameLogic.ASTEROID);
 		return asteroid;
 	}

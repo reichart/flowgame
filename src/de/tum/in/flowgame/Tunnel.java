@@ -16,6 +16,7 @@ import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Primitive;
 
+
 public class Tunnel extends TransformGroup {
 
 	public static final float TUNNEL_LENGTH = 200.0f;
@@ -54,7 +55,7 @@ public class Tunnel extends TransformGroup {
 			tunnelRotationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 			
 			final RotationInterpolator rotInt = new RotationInterpolator(new Alpha(-1, 10000), tunnelRotationGroup);
-			rotInt.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
+			rotInt.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 			
 			tunnelRotationGroup.addChild(rotInt);
 			tunnelRotationGroup.addChild(tunnelShape);
@@ -76,19 +77,19 @@ public class Tunnel extends TransformGroup {
 			tunnelTranslationGroup.setTransform(part);
 			final TunnelPartMoveBehavior reUseBevahior = new TunnelPartMoveBehavior(tunnelShape, tunnelTranslationGroup,
 					TUNNEL_LENGTH, TUNNEL_PARTS);
-			reUseBevahior.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
+			reUseBevahior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 			layTunnel.addChild(reUseBevahior);
 			
 			addChild(tunnelTranslationGroup);
 		}
 		final ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(this, 100);
-		fwdNav.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
+		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		
 		addChild(fwdNav);
 	}
 
 	private Appearance createAppearance() {
-		final Texture texture = GameApplet.getTexture("/res/water01.jpg");
+		final Texture texture = Utils.getTexture("/res/water01.jpg");
 
 		final TextureAttributes texAttr = new TextureAttributes();
 		texAttr.setTextureMode(TextureAttributes.MODULATE);
