@@ -34,7 +34,7 @@ public class CreateCollidablesBehavior extends Behavior {
 	public void processStimulus(final Enumeration criteria) {
 		final float x = new Float(Math.random() * 3 - 1.5);
 		try {
-			new Collidable(collidableBranchGroup, sharedGroup, x);
+			collidableBranchGroup.addChild(new Collidable(sharedGroup, x));
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}

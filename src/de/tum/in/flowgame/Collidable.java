@@ -12,11 +12,11 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3d;
 
-public class Collidable {
+public class Collidable extends BranchGroup {
 
 	private double speed = 120;
 	
-	public Collidable(BranchGroup collidables, SharedGroup group, float x) throws IOException {
+	public Collidable(SharedGroup group, float x) throws IOException {
 //		BranchGroup collidable = GameApplet.loadScene("/res/asteroid.obj");
 //		System.out.println("Collidable " + collidable.getCollisionBounds());
 //		Box box = new Box(0.7f, 1.0f, 0.25f, new Appearance());
@@ -67,8 +67,6 @@ public class Collidable {
 		BranchGroup bg = new BranchGroup();
 		bg.addChild(initTransformGroup);		
 //		bg.addChild(pi);
-		
-		collidables.addChild(bg);
 	}
 	
 }
