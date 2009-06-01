@@ -53,8 +53,7 @@ Außerdem soll eine Dokumentation erstellt werden, die es ermöglicht, an dem Pr
 
 
 ==Project deliverables==
-List of work items with delivery dates, locations and quantities (also
-includes delivery media and packaging & handling)
-Deliverables expected by the client
-Delivery dates
-A set of acceptance criteria.
+- Game with possibilities to adjust parameters
+- Ranking Social and Personal
+- Possibility to export data as txt-file
+- Documentation
