@@ -32,7 +32,6 @@ public class CreateCollidablesBehavior extends Behavior {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
-		System.out.println("Create");
 		final float x = new Float(Math.random() * 3 - 1.5);
 		try {
 			new Collidable(collidableBranchGroup, sharedGroup, x);
