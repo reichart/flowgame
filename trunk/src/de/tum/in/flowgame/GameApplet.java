@@ -38,6 +38,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
+
 public class GameApplet extends Applet {
 
 	public static final BoundingSphere WORLD_BOUNDS = new BoundingSphere(
@@ -47,6 +48,8 @@ public class GameApplet extends Applet {
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
 	private BranchGroup collidables;
+
+	private final GameLogic logic;
 
 	@Override
 	public void init() {
@@ -73,10 +76,11 @@ public class GameApplet extends Applet {
 
 	public GameApplet() throws Exception {
 		System.out.println("GameApplet.GameApplet()");
-
 		setLayout(new BorderLayout());
-		final Canvas3D canvas3D = new Canvas3D(SimpleUniverse
-				.getPreferredConfiguration());
+		
+		this.logic = new GameLogic();
+		
+		final Canvas3D canvas3D = new Game3D(logic);
 		add(BorderLayout.CENTER, canvas3D);
 
 		final BranchGroup scene = new BranchGroup();
@@ -110,7 +114,7 @@ public class GameApplet extends Applet {
 				collidables, asteroid);
 		ccb.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
 
-		collidables.addChild(createShip());
+		collidables.addChild(createShip(logic));
 		collidables.addChild(ccb);
 
 		scene.addChild(createBackground());
@@ -162,7 +166,7 @@ public class GameApplet extends Applet {
 		return back;
 	}
 
-	private static TransformGroup createShip() throws IOException {
+	private static TransformGroup createShip(final GameLogic logic) throws IOException {
 		final TransformGroup initialTranslation = new TransformGroup();
 
 		final Transform3D t3d = new Transform3D();
@@ -193,9 +197,7 @@ public class GameApplet extends Applet {
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
-		GameLogic collisionCounter = new GameLogic();
-		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(
-				ship, collisionCounter);
+		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship, logic);
 		ship.addChild(collisionBehavior);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
