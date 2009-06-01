@@ -54,6 +54,9 @@ Außerdem soll eine Dokumentation erstellt werden, die es ermöglicht, an dem Pr
 
 ==Project deliverables==
 - Game with possibilities to adjust parameters
+
 - Ranking Social and Personal
+
 - Possibility to export data as txt-file
+
 - Documentation
