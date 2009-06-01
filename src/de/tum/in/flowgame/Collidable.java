@@ -64,9 +64,7 @@ public class Collidable extends BranchGroup {
 		initTransformGroup.setTransform(initialTransform);
 		initTransformGroup.addChild(initScale);
 		
-		BranchGroup bg = new BranchGroup();
-		bg.addChild(initTransformGroup);		
-//		bg.addChild(pi);
+		addChild(initTransformGroup);		
 	}
 	
 }
