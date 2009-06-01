@@ -11,9 +11,11 @@ public class GameLogic {
 	private int asteroids;
 	
 	private NoiseMaker noiseMaker;
+	private CreateCollidablesBehavior ccb;
 	
-	public GameLogic() {
+	public GameLogic(CreateCollidablesBehavior ccb) {
 		this.noiseMaker = new NoiseMaker();
+		this.ccb = ccb;
 	}
 
 	public void add(final Node node) {
