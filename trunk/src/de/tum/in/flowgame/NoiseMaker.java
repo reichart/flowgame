@@ -9,8 +9,8 @@ public class NoiseMaker {
 	private AudioClip fuelSound;
 
 	public NoiseMaker() {
-		this.asteroidSound = Applet.newAudioClip(getClass().getResource("/res/crash.wav"));
-		this.fuelSound = Applet.newAudioClip(getClass().getResource("/res/water-droplet-1.wav"));
+		this.asteroidSound = Applet.newAudioClip(getClass().getResource("/res/sound/crash.wav"));
+		this.fuelSound = Applet.newAudioClip(getClass().getResource("/res/sound/water-droplet-1.wav"));
 	}
 
 	public void playSound(String soundName) {
