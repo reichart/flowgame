@@ -4,24 +4,48 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
+import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
+import javax.vecmath.Point3d;
 
 public class CreateCollidablesBehavior extends Behavior {
 
 	private long time = 1000;
+	private long speed = 120;
+	// number of asteroids compared to fuel cans, number between 0 and 1
+	private float ratioAsteroids;
 
-	private final WakeupCriterion wakeupEvent;
+	private WakeupCriterion wakeupEvent;
 
 	private final BranchGroup collidableBranchGroup;
-	private final SharedGroup sharedGroup;
+	private final SharedGroup asteroid;
+	private final SharedGroup fuelcan;
 
-	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup, final SharedGroup sharedGroup) {
+	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
-		this.sharedGroup = sharedGroup;
+		this.asteroid = loadAsteroid();
+		this.fuelcan = loadFuelcan();
 		this.wakeupEvent = new WakeupOnElapsedTime(time);
+		ratioAsteroids = 0.5f;
+	}
+	
+	private SharedGroup loadFuelcan() throws IOException {
+		SharedGroup fuelcan = new SharedGroup();
+		fuelcan.addChild(GameApplet.loadScene("/res/fuelcan2.obj"));
+		fuelcan.setUserData(GameLogic.FUELCAN);
+		fuelcan.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f), new Point3d(0.35f, 0.5f,
+				0.125f)));
+		return fuelcan;
+	}
+
+	private SharedGroup loadAsteroid() throws IOException {
+		SharedGroup asteroid = new SharedGroup();
+		asteroid.addChild(GameApplet.loadScene("/res/asteroid.obj"));
+		asteroid.setUserData(GameLogic.ASTEROID);
+		return asteroid;
 	}
 
 	@Override
@@ -33,10 +57,10 @@ public class CreateCollidablesBehavior extends Behavior {
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
 		final float x = new Float(Math.random() * 3 - 1.5);
-		try {
-			collidableBranchGroup.addChild(new Collidable(sharedGroup, x));
-		} catch (final IOException e) {
-			e.printStackTrace();
+		if (ratioAsteroids < Math.random()) {
+			collidableBranchGroup.addChild(new Collidable(collidableBranchGroup, asteroid, x, speed));
+		} else {
+			collidableBranchGroup.addChild(new Collidable(collidableBranchGroup, fuelcan, x, speed));
 		}
 		wakeupOn(wakeupEvent);
 	}
@@ -47,5 +71,22 @@ public class CreateCollidablesBehavior extends Behavior {
 
 	public void setTime(final long time) {
 		this.time = time;
+		wakeupEvent = new WakeupOnElapsedTime(this.time);
+	}
+
+	public float getRatioAsteroids() {
+		return ratioAsteroids;
+	}
+
+	public void setRatioAsteroids(long ratioAsteroids) {
+		this.ratioAsteroids = ratioAsteroids;
+	}
+
+	public long getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(final long speed) {
+		this.speed = speed;
 	}
 }
