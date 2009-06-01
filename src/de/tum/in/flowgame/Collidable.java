@@ -17,7 +17,7 @@ public class Collidable extends BranchGroup {
 		TransformGroup rotateCollidable = new TransformGroup();
 		rotateCollidable.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		final RotationInterpolator ri = new RotationInterpolator(new Alpha(-1, 10000), rotateCollidable);
-		ri.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
+		ri.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		rotateCollidable.addChild(ri);
 		rotateCollidable.addChild(link);
 		
@@ -34,7 +34,7 @@ public class Collidable extends BranchGroup {
 		t3d.setTranslation(new Vector3d(0, 0, -(Tunnel.TUNNEL_PARTS-1)*Tunnel.TUNNEL_LENGTH));
 		moveCollidable.setTransform(t3d);
 		ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(moveCollidable, speed);
-		fwdNav.setSchedulingBounds(GameApplet.WORLD_BOUNDS);
+		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		moveCollidable.addChild(fwdNav);
 		
 		Transform3D initialTransform = new Transform3D();
