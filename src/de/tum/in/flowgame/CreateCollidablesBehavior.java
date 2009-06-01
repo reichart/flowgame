@@ -58,9 +58,9 @@ public class CreateCollidablesBehavior extends Behavior {
 	public void processStimulus(final Enumeration criteria) {
 		final float x = new Float(Math.random() * 3 - 1.5);
 		if (ratioAsteroids < Math.random()) {
-			collidableBranchGroup.addChild(new Collidable(collidableBranchGroup, asteroid, x, speed));
+			collidableBranchGroup.addChild(new Collidable(asteroid, x, speed));
 		} else {
-			collidableBranchGroup.addChild(new Collidable(collidableBranchGroup, fuelcan, x, speed));
+			collidableBranchGroup.addChild(new Collidable(fuelcan, x, speed));
 		}
 		wakeupOn(wakeupEvent);
 	}

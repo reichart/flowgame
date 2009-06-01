@@ -11,7 +11,7 @@ import javax.vecmath.Vector3d;
 
 public class Collidable extends BranchGroup {
 
-	public Collidable(BranchGroup collidables, SharedGroup group, float x, long speed) {
+	public Collidable(SharedGroup group, float x, long speed) {
 		Link link = new Link(group);
 		
 		TransformGroup rotateCollidable = new TransformGroup();
