@@ -9,13 +9,21 @@ public class GameLogic {
 
 	private int fuel;
 	private int asteroids;
+	
+	private NoiseMaker noiseMaker;
+	
+	public GameLogic() {
+		this.noiseMaker = new NoiseMaker();
+	}
 
 	public void add(final Node node) {
 		final Object userData = node.getParent().getParent().getUserData();
 		if (GameLogic.FUELCAN.equals(userData)) {
 			fuel++;
+			noiseMaker.playSound(FUELCAN);
 		} else if (GameLogic.ASTEROID.equals(userData)) {
 			asteroids++;
+			noiseMaker.playSound(ASTEROID);
 		}
 	}
 
