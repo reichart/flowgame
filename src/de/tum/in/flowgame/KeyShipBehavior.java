@@ -1,3 +1,8 @@
+//TODO: add acceleration and drag
+//TODO: add rotations when movement occurs (rolling left, when moving left, etc)
+//TODO: view should follow fighter lazy
+//TODO: view should not follow to the tunnelborders
+
 package de.tum.in.flowgame;
 
 import java.awt.AWTEvent;
