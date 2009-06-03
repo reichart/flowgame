@@ -142,11 +142,11 @@ public class KeyShipBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-		final long when = e.getWhen();
-		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-			return;
-		}
-		previousWhen = when;
+//		final long when = e.getWhen();
+//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+//			return;
+//		}
+//		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -311,13 +311,13 @@ public class KeyShipBehavior extends Behavior {
 		trans.set(pos);
 		translationGroup.setTransform(trans);
 		
-		Transform3D listElement = new Transform3D(trans);
-		delayedList.add(listElement);
+//		Transform3D listElement = new Transform3D(trans);
+//		delayedList.add(listElement);
 
-//		vpPos=pos;
-//		vpTrans.set(vpPos);
+		vpPos=pos;
+		vpTrans.set(vpPos);
 		
-		vpTrans = delayedList.remove(0);
+//		vpTrans = delayedList.remove(0);
 		viewTG.setTransform(vpTrans);
 
 	}
