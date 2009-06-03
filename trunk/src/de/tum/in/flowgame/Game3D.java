@@ -38,6 +38,10 @@ public class Game3D extends Canvas3D {
 	
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
+	
+	static final float INITIAL_SHIP_PLACEMENT_X = 0;
+	static final float INITIAL_SHIP_PLACEMENT_Y = -1;
+	static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
 
 	private final BranchGroup collidables;
 	private final GameLogic logic;
@@ -56,8 +60,8 @@ public class Game3D extends Canvas3D {
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
 		
 		this.logic = new GameLogic(ccb);
-		
-		collidables.addChild(createShip(logic));
+		final SimpleUniverse su = createUniverse();
+		collidables.addChild(createShip(logic, su.getViewingPlatform().getViewPlatformTransform()));
 		collidables.addChild(ccb);
 
 		final BranchGroup scene = new BranchGroup();
@@ -80,7 +84,7 @@ public class Game3D extends Canvas3D {
 		scene.addChild(new Tunnel());
 		scene.addChild(collidables);
 
-		final SimpleUniverse su = createUniverse();
+		
 		su.addBranchGraph(scene);
 	}
 
@@ -133,11 +137,11 @@ public class Game3D extends Canvas3D {
 		return back;
 	}
 
-	private static TransformGroup createShip(final GameLogic logic) throws IOException {
+	private static TransformGroup createShip(final GameLogic logic, TransformGroup viewTG) throws IOException {
 		final TransformGroup initialTranslation = new TransformGroup();
 
 		final Transform3D t3d = new Transform3D();
-		t3d.setTranslation(new Vector3d(0, -1f, -6f));
+		t3d.setTranslation(new Vector3d(INITIAL_SHIP_PLACEMENT_X, INITIAL_SHIP_PLACEMENT_Y, INITIAL_SHIP_PLACEMENT_Z));
 
 		initialTranslation.setTransform(t3d);
 
@@ -161,6 +165,11 @@ public class Game3D extends Canvas3D {
 		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
+		
+		// Alternative KeyBehavior
+//		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup, rotationGroup, viewTG);
+//		ship.addChild(keyShipBehavior);
+//		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
 		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship, logic);
 		ship.addChild(collisionBehavior);
