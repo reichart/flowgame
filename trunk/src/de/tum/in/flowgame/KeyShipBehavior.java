@@ -7,6 +7,9 @@ package de.tum.in.flowgame;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.DelayQueue;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.Transform3D;
@@ -30,7 +33,8 @@ public class KeyShipBehavior extends Behavior {
 	private Vector3d dv = new Vector3d();
 	private final Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
-
+	
+	private List<Transform3D> delayedList = new LinkedList<Transform3D>();
 	private static final Vector3d mov = new Vector3d(0, 0, 0);
 	private Vector3d a = new Vector3d();
 
@@ -69,6 +73,11 @@ public class KeyShipBehavior extends Behavior {
 
 	public KeyShipBehavior(final TransformGroup translationGroup,
 			TransformGroup rotationGroup, TransformGroup viewTG) {
+		
+		for (int i = 0; i<3; i++){
+			delayedList.add(new Transform3D());
+		}
+		
 		this.translationGroup = translationGroup;
 		this.rotationGroup = rotationGroup;
 		this.viewTG = viewTG;
@@ -294,16 +303,21 @@ public class KeyShipBehavior extends Behavior {
 			pos.y = -distToRadiusDown;
 		}
 		
-		System.out.println("distToRadiusUp: " + distToRadiusUp + " - Pos.y: " + pos.y);
+		
 
-		vpPos=pos;
 
 		/* Final update of the target transform group */
 		// Put the transform back into the transform group.
 		trans.set(pos);
 		translationGroup.setTransform(trans);
+		
+		Transform3D listElement = new Transform3D(trans);
+		delayedList.add(listElement);
 
-		vpTrans.set(vpPos);
+//		vpPos=pos;
+//		vpTrans.set(vpPos);
+		
+		vpTrans = delayedList.remove(0);
 		viewTG.setTransform(vpTrans);
 
 	}
