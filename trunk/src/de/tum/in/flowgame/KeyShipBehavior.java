@@ -1,4 +1,3 @@
-//TODO: add acceleration and drag
 //TODO: add rotations when movement occurs (rolling left, when moving left, etc)
 //TODO: view should follow fighter lazy
 //TODO: view should not follow to the tunnelborders
@@ -20,17 +19,35 @@ import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.media.j3d.WakeupOr;
 import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
+import javax.vecmath.Tuple3d;
 import javax.vecmath.Vector3d;
 
 public class KeyShipBehavior extends Behavior {
 
-	private static final float xspeed = 20f;
-	private static float yspeed = xspeed;
+	private static final float ACC_FACTOR = 3f;
+	private static final float SPEED_MAX = 60f;
 	private final Point3d dp = new Point3d();
+	private Vector3d dv = new Vector3d();
 	private final Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
 
 	private static final Vector3d mov = new Vector3d(0, 0, 0);
+	private Vector3d a = new Vector3d();
+
+	private Vector3d leftAcc;
+	private Vector3d rightAcc;
+	private Vector3d upAcc;
+	private Vector3d downAcc;
+
+	private Vector3d leftDrag;
+	private Vector3d rightDrag;
+	private Vector3d upDrag;
+	private Vector3d downDrag;
+
+	private double leftVMax;
+	private double rightVMax;
+	private double upVMax;
+	private double downVMax;
 
 	private final TransformGroup translationGroup;
 	private final TransformGroup viewTG;
@@ -44,9 +61,7 @@ public class KeyShipBehavior extends Behavior {
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
-	private double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 1;
-
-	private final double MAX_ANGLE = 30;
+	private double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
 
 	private long previousWhen;
 
@@ -57,6 +72,23 @@ public class KeyShipBehavior extends Behavior {
 		this.translationGroup = translationGroup;
 		this.rotationGroup = rotationGroup;
 		this.viewTG = viewTG;
+
+		float Acceleration = SPEED_MAX / ACC_FACTOR;
+
+		leftAcc = new Vector3d(-Acceleration, 0.0, 0.0);
+		rightAcc = new Vector3d(Acceleration, 0.0, 0.0);
+		upAcc = new Vector3d(0.0, Acceleration, 0.0);
+		downAcc = new Vector3d(0.0, -Acceleration, 0.0);
+
+		leftDrag = new Vector3d(Acceleration, 0.0, 0.0);
+		rightDrag = new Vector3d(-Acceleration, 0.0, 0.0);
+		upDrag = new Vector3d(0.0, -Acceleration, 0.0);
+		downDrag = new Vector3d(0.0, Acceleration, 0.0);
+
+		leftVMax = -SPEED_MAX;
+		rightVMax = SPEED_MAX;
+		upVMax = SPEED_MAX;
+		downVMax = -SPEED_MAX;
 
 		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(
 				KeyEvent.KEY_PRESSED);
@@ -142,52 +174,106 @@ public class KeyShipBehavior extends Behavior {
 		double deltaTime = (double) getDeltaTime();
 		deltaTime *= 0.001;
 
-		double stepx = xspeed * deltaTime;
-		double distToRadiusX= allowedDistToCircleRadius(pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
-		double distToRadiusRight = distToRadiusX - Game3D.INITIAL_SHIP_PLACEMENT_X;
-		double distToRadiusLeft = distToRadiusX + Game3D.INITIAL_SHIP_PLACEMENT_X;
-		System.out.println("DistRight: " + distToRadiusRight);
-		System.out.println("DistLeft: " + distToRadiusLeft);
+		a.x = a.y = a.z = 0;
 		if (KEY_RIGHT) {
-			if (distToRadiusRight - pos.x - stepx > 0) {
-				mov.x = xspeed;
-			} else {
-				double remainingDist = distToRadiusRight - pos.x;
-				mov.x = adaptSpeedAtBorder(remainingDist, stepx, xspeed);
-			}
+			a.add(rightAcc);
+			a.sub(rightDrag);
 		} else if (KEY_LEFT) {
-			if (distToRadiusLeft + pos.x - stepx > 0) {
-				mov.x = -xspeed;
-			} else {
-				double remainingDist = distToRadiusLeft + pos.x;
-				mov.x = -adaptSpeedAtBorder(remainingDist, stepx, xspeed);
-			}
-		} else if (!(KEY_LEFT | KEY_RIGHT)) {
-			mov.x = 0;
+			a.add(leftAcc);
+			a.sub(leftDrag);
 		}
 
-		double stepy = yspeed * deltaTime;
-		double distToRadiusY = allowedDistToCircleRadius(pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
-		double distToRadiusUp = distToRadiusY - Game3D.INITIAL_SHIP_PLACEMENT_Y;
-		double distToRadiusDown = distToRadiusY + Game3D.INITIAL_SHIP_PLACEMENT_Y;
-		System.out.println("DistUp: " + distToRadiusUp);
-		System.out.println("DistDown: " + distToRadiusDown);
+		double pre = mov.x + a.x * deltaTime;
+		if (pre < 0.0) {
+			if (pre + leftDrag.x * deltaTime < 0.0)
+				a.add(leftDrag);
+			else
+				a.x -= pre / deltaTime;
+		} else if (pre > 0.0) {
+			if (pre + rightDrag.x * deltaTime > 0.0)
+				a.add(rightDrag);
+			else
+				a.x -= pre / deltaTime;
+		}
+
 		if (KEY_UP) {
-			if (distToRadiusUp - pos.y - stepy > 0) {
-				mov.y = yspeed;
-			} else {
+			a.add(upAcc);
+			a.sub(upDrag);
+		} else if (KEY_DOWN) {
+			a.add(downAcc);
+			a.sub(downDrag);
+		}
+
+		pre = mov.y + a.y * deltaTime;
+		if (pre < 0.0) {
+			if (pre + downDrag.y * deltaTime < 0.0)
+				a.add(downDrag);
+			else
+				a.y -= pre / deltaTime;
+		} else if (pre > 0.0) {
+			if (pre + upDrag.y * deltaTime > 0.0)
+				a.add(upDrag);
+			else
+				a.y -= pre / deltaTime;
+		}
+
+		/* Integration of acceleration to velocity */
+		dv.scale(deltaTime, a);
+		mov.add(dv);
+
+		/* Speed limits */
+		if (mov.x > rightVMax) {
+			mov.x = rightVMax;
+		}
+		if (mov.x < leftVMax) {
+			mov.x = leftVMax;
+		}
+		if (mov.y > upVMax) {
+			mov.y = upVMax;
+		}
+		if (mov.y < downVMax) {
+			mov.y = downVMax;
+		}
+
+		double stepx = mov.x * deltaTime;
+		double distToRadiusX = allowedDistToCircleRadius(pos.y
+				+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
+		double distToRadiusRight = distToRadiusX
+				- Game3D.INITIAL_SHIP_PLACEMENT_X;
+		double distToRadiusLeft = distToRadiusX
+				+ Game3D.INITIAL_SHIP_PLACEMENT_X;
+//		System.out.println("DistRight: " + distToRadiusRight);
+//		System.out.println("DistLeft: " + distToRadiusLeft);
+		if (KEY_RIGHT) {
+			if (distToRadiusRight - pos.x - stepx < 0) {
+				mov.x = adaptSpeedAtBorder(distToRadiusRight - pos.x, stepx, mov.x);
+			}
+		} else if (KEY_LEFT) {
+			if (distToRadiusLeft + pos.x - stepx < 0) {
+				double remainingDist = distToRadiusLeft + pos.x;
+				mov.x = -adaptSpeedAtBorder(remainingDist, stepx, mov.x);
+			}
+		}
+
+		double stepy = mov.y * deltaTime;
+		double distToRadiusY = allowedDistToCircleRadius(pos.x
+				+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
+		double distToRadiusUp = distToRadiusY - Game3D.INITIAL_SHIP_PLACEMENT_Y;
+		double distToRadiusDown = distToRadiusY
+				+ Game3D.INITIAL_SHIP_PLACEMENT_Y;
+//		System.out.println("DistUp: " + distToRadiusUp);
+//		System.out.println("DistDown: " + distToRadiusDown);
+		if (KEY_UP) {
+			if (distToRadiusUp - pos.y - stepy < 0) {
 				double remainingDist = distToRadiusUp - pos.y;
-				mov.y = adaptSpeedAtBorder(remainingDist, stepy, yspeed);
+				double newspeed = adaptSpeedAtBorder(remainingDist, stepy, mov.y);
+				mov.y = newspeed;
 			}
 		} else if (KEY_DOWN) {
-			if (distToRadiusDown + pos.y - stepx > 0) {
-				mov.y = -yspeed;
-			} else {
+			if (distToRadiusDown + pos.y - stepy < 0) {
 				double remainingDist = distToRadiusDown + pos.y;
-				mov.y = -adaptSpeedAtBorder(remainingDist, stepy, yspeed);
+				mov.y = -adaptSpeedAtBorder(remainingDist, stepy, mov.y);
 			}
-		} else if (!(KEY_UP | KEY_DOWN)) {
-			mov.y = 0;
 		}
 
 		/* Integration of velocity to distance */
@@ -195,8 +281,22 @@ public class KeyShipBehavior extends Behavior {
 
 		// add dp into current vp position.
 		pos.add(dp);
-		System.out.println(pos);
-		vpPos.add(dp);
+		
+		/* secure Position within Tunnelradius */
+		if (pos.x > distToRadiusRight){
+			pos.x = distToRadiusRight;
+		} else if (pos.x < -distToRadiusLeft){
+			pos.x = -distToRadiusLeft;
+		}
+		if (pos.y > distToRadiusUp){
+			pos.y = distToRadiusUp;
+		} else if (pos.y < -distToRadiusDown){
+			pos.y = -distToRadiusDown;
+		}
+		
+		System.out.println("distToRadiusUp: " + distToRadiusUp + " - Pos.y: " + pos.y);
+
+		vpPos=pos;
 
 		/* Final update of the target transform group */
 		// Put the transform back into the transform group.
@@ -208,14 +308,18 @@ public class KeyShipBehavior extends Behavior {
 
 	}
 
-	private float adaptSpeedAtBorder(double remainingDist, double step,
-			float speed) {
-		return (float) ((remainingDist / step) * speed);
+	private double adaptSpeedAtBorder(double remainingDist, double step,
+			double speed) {
+		return ((remainingDist / step) * speed);
 	}
 
 	private double allowedDistToCircleRadius(double pos, double radius) {
-		double dist = Math.sqrt(Math.pow(radius, 2) - Math.pow(pos, 2));
-		return dist;
+		Double dist = Math.sqrt(Math.pow(radius, 2) - Math.pow(pos, 2));
+		if (dist.equals(Double.NaN)){
+			return 0;
+		} else {
+			return dist;
+		}
 	}
 
 	private long getDeltaTime() {
