@@ -138,9 +138,9 @@ public class KeyShipBehavior extends Behavior {
 		deltaTime *= 0.001;
 
 		double stepx = xspeed * deltaTime;
-		double distToRadiusX= allowedDistToCircleRadius(pos.y + GameApplet.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
-		double distToRadiusRight = distToRadiusX - GameApplet.INITIAL_SHIP_PLACEMENT_X;
-		double distToRadiusLeft = distToRadiusX + GameApplet.INITIAL_SHIP_PLACEMENT_X;
+		double distToRadiusX= allowedDistToCircleRadius(pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
+		double distToRadiusRight = distToRadiusX - Game3D.INITIAL_SHIP_PLACEMENT_X;
+		double distToRadiusLeft = distToRadiusX + Game3D.INITIAL_SHIP_PLACEMENT_X;
 		System.out.println("DistRight: " + distToRadiusRight);
 		System.out.println("DistLeft: " + distToRadiusLeft);
 		if (KEY_RIGHT) {
@@ -162,9 +162,9 @@ public class KeyShipBehavior extends Behavior {
 		}
 
 		double stepy = yspeed * deltaTime;
-		double distToRadiusY = allowedDistToCircleRadius(pos.x + GameApplet.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
-		double distToRadiusUp = distToRadiusY - GameApplet.INITIAL_SHIP_PLACEMENT_Y;
-		double distToRadiusDown = distToRadiusY + GameApplet.INITIAL_SHIP_PLACEMENT_Y;
+		double distToRadiusY = allowedDistToCircleRadius(pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
+		double distToRadiusUp = distToRadiusY - Game3D.INITIAL_SHIP_PLACEMENT_Y;
+		double distToRadiusDown = distToRadiusY + Game3D.INITIAL_SHIP_PLACEMENT_Y;
 		System.out.println("DistUp: " + distToRadiusUp);
 		System.out.println("DistDown: " + distToRadiusDown);
 		if (KEY_UP) {
