@@ -148,11 +148,11 @@ public class KeyShipBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-		final long when = e.getWhen();
-		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-			return;
-		}
-		previousWhen = when;
+//		final long when = e.getWhen();
+//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+//			return;
+//		}
+//		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -294,15 +294,15 @@ public class KeyShipBehavior extends Behavior {
 
 		double realY = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
 		if (realY > 0) {
-			vpPos.y = realY * (realY / Tunnel.TUNNEL_RADIUS);
+			vpPos.y = realY*4/5;
 		} else {
-			vpPos.y = -realY * (realY / Tunnel.TUNNEL_RADIUS);
+			vpPos.y = realY*4/5;
 		}
 		double realX = pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X;
 		if (realX > 0) {
-			vpPos.x = realX * (realX / Tunnel.TUNNEL_RADIUS);
+			vpPos.x = realX*4/5;
 		} else {
-			vpPos.x = -realX * (realX / Tunnel.TUNNEL_RADIUS);
+			vpPos.x = realX*4/5;
 		}
 
 		//vpPos.sub(shipToViewPosition(mov.x, mov.y));
