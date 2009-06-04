@@ -27,15 +27,19 @@ import javax.vecmath.Vector3d;
 
 public class KeyShipBehavior extends Behavior {
 
-	private static final float ACC_FACTOR = 3f;
-	private static final float SPEED_MAX = 60f;
+	private static final float ACCELERATION = 60f;
+	private static final float SPEED_MAX = 30f;
 	private final Point3d dp = new Point3d();
 	private Vector3d dv = new Vector3d();
 	private final Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
 	
-	private List<Transform3D> delayedList = new LinkedList<Transform3D>();
+	private List<Point3d> delayedList = new LinkedList<Point3d>();
+	private List<Double> timeDeltas = new LinkedList<Double>();
+	private double pastDelta;
+	
 	private static final Vector3d mov = new Vector3d(0, 0, 0);
+	private static final double MAX_FOLLOWING_DIST = 1;
 	private Vector3d a = new Vector3d();
 
 	private Vector3d leftAcc;
@@ -57,6 +61,7 @@ public class KeyShipBehavior extends Behavior {
 	private final TransformGroup viewTG;
 	private Transform3D vpTrans = new Transform3D();
 	private Vector3d vpPos = new Vector3d();
+	private Point3d vpdp = new Point3d();
 	private final TransformGroup rotationGroup;
 	private final WakeupCondition condition;
 
@@ -66,6 +71,7 @@ public class KeyShipBehavior extends Behavior {
 	private boolean KEY_DOWN;
 
 	private double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
+//	private double MOV_RADIUS = 300;
 
 	private long previousWhen;
 
@@ -75,24 +81,24 @@ public class KeyShipBehavior extends Behavior {
 			TransformGroup rotationGroup, TransformGroup viewTG) {
 		
 		for (int i = 0; i<3; i++){
-			delayedList.add(new Transform3D());
+			delayedList.add(new Point3d());
+			timeDeltas.add(new Double(0));
 		}
 		
 		this.translationGroup = translationGroup;
 		this.rotationGroup = rotationGroup;
 		this.viewTG = viewTG;
 
-		float Acceleration = SPEED_MAX / ACC_FACTOR;
 
-		leftAcc = new Vector3d(-Acceleration, 0.0, 0.0);
-		rightAcc = new Vector3d(Acceleration, 0.0, 0.0);
-		upAcc = new Vector3d(0.0, Acceleration, 0.0);
-		downAcc = new Vector3d(0.0, -Acceleration, 0.0);
+		leftAcc = new Vector3d(-ACCELERATION, 0.0, 0.0);
+		rightAcc = new Vector3d(ACCELERATION, 0.0, 0.0);
+		upAcc = new Vector3d(0.0, ACCELERATION, 0.0);
+		downAcc = new Vector3d(0.0, -ACCELERATION, 0.0);
 
-		leftDrag = new Vector3d(Acceleration, 0.0, 0.0);
-		rightDrag = new Vector3d(-Acceleration, 0.0, 0.0);
-		upDrag = new Vector3d(0.0, -Acceleration, 0.0);
-		downDrag = new Vector3d(0.0, Acceleration, 0.0);
+		leftDrag = new Vector3d(ACCELERATION, 0.0, 0.0);
+		rightDrag = new Vector3d(-ACCELERATION, 0.0, 0.0);
+		upDrag = new Vector3d(0.0, -ACCELERATION, 0.0);
+		downDrag = new Vector3d(0.0, ACCELERATION, 0.0);
 
 		leftVMax = -SPEED_MAX;
 		rightVMax = SPEED_MAX;
@@ -142,11 +148,11 @@ public class KeyShipBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-//		final long when = e.getWhen();
-//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-//			return;
-//		}
-//		previousWhen = when;
+		final long when = e.getWhen();
+		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+			return;
+		}
+		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -291,7 +297,7 @@ public class KeyShipBehavior extends Behavior {
 		// add dp into current vp position.
 		pos.add(dp);
 		
-		/* secure Position within Tunnelradius */
+		/* assure Position within Tunnelradius */
 		if (pos.x > distToRadiusRight){
 			pos.x = distToRadiusRight;
 		} else if (pos.x < -distToRadiusLeft){
@@ -311,15 +317,34 @@ public class KeyShipBehavior extends Behavior {
 		trans.set(pos);
 		translationGroup.setTransform(trans);
 		
-//		Transform3D listElement = new Transform3D(trans);
-//		delayedList.add(listElement);
+		vpPos =new Vector3d(pos);
+		vpPos.sub(shipToViewPosition(mov.x, mov.y));
 
-		vpPos=pos;
-		vpTrans.set(vpPos);
 		
-//		vpTrans = delayedList.remove(0);
+//		System.out.println("mov: " + mov);
+		
+		vpTrans.set(vpPos);
 		viewTG.setTransform(vpTrans);
 
+	}
+	
+	private Point3d shipToViewPosition (double v_x, double v_y){
+		Point3d dp = new Point3d();
+		double maxDist = MAX_FOLLOWING_DIST;
+		if(v_x<0){
+			dp.x=-v_x/leftVMax;
+		} else if (v_x > 0){
+			dp.x=v_x/rightVMax;
+		}
+		if(v_y<0){
+			dp.y=-v_y/downVMax;
+		}else if (v_y > 0){
+			dp.y=v_y/upVMax;
+		}
+		if (dp.x!=0|dp.y!=0){
+		System.out.println("dp: " + dp);
+		}
+		return dp;
 	}
 
 	private double adaptSpeedAtBorder(double remainingDist, double step,
