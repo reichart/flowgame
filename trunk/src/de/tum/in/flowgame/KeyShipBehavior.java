@@ -9,20 +9,17 @@ import java.awt.event.KeyEvent;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.DelayQueue;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.media.j3d.WakeupAnd;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnAWTEvent;
 import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.media.j3d.WakeupOr;
-import javax.vecmath.Matrix3d;
+import javax.vecmath.Matrix3f;
 import javax.vecmath.Point3d;
-import javax.vecmath.Tuple3d;
 import javax.vecmath.Vector3d;
 
 public class KeyShipBehavior extends Behavior {
@@ -60,6 +57,7 @@ public class KeyShipBehavior extends Behavior {
 	private final TransformGroup translationGroup;
 	private final TransformGroup viewTG;
 	private Transform3D vpTrans = new Transform3D();
+	private Matrix3f shipRotation = new Matrix3f();
 	private Vector3d vpPos = new Vector3d();
 	private Point3d vpdp = new Point3d();
 	private final TransformGroup rotationGroup;
@@ -147,11 +145,11 @@ public class KeyShipBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-		final long when = e.getWhen();
-		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-			return;
-		}
-		previousWhen = when;
+//		final long when = e.getWhen();
+//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+//			return;
+//		}
+//		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -285,10 +283,20 @@ public class KeyShipBehavior extends Behavior {
 			pos.y = -distToRadiusDown;
 		}
 		
+		//calculate the rotation of the ship
+		Matrix3f xMov = new Matrix3f();
+		Matrix3f yMov = new Matrix3f();
+		xMov.setIdentity();
+		yMov.setIdentity();
+		if(KEY_RIGHT)	xMov.rotZ(-0.1f);
+		if(KEY_LEFT)	xMov.rotZ(0.1f);
+		if(KEY_UP)		yMov.rotX(0.1f);
+		if(KEY_DOWN)	yMov.rotX(-0.1f);
 		
+		shipRotation.mul(xMov, yMov);
 		/* Final update of the target transform group */
 		// Put the transform back into the transform group.
-		trans.set(pos);
+		trans.set(shipRotation, pos, 1);
 		translationGroup.setTransform(trans);
 
 		vpPos = new Vector3d(pos);
