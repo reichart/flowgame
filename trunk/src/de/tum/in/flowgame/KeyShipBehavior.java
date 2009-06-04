@@ -39,8 +39,7 @@ public class KeyShipBehavior extends Behavior {
 	private double pastDelta;
 
 	private static final Vector3d mov = new Vector3d(0, 0, 0);
-	private static final double MAX_FOLLOWING_DIST = 1;
-	private static final double HOLD_VIEW_BORDER = 1.5;
+	private static final double MAX_FOLLOWING_DIST = 3;
 	private Vector3d a = new Vector3d();
 
 	private Vector3d leftAcc;
@@ -148,11 +147,11 @@ public class KeyShipBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-//		final long when = e.getWhen();
-//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-//			return;
-//		}
-//		previousWhen = when;
+		final long when = e.getWhen();
+		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+			return;
+		}
+		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -294,18 +293,18 @@ public class KeyShipBehavior extends Behavior {
 
 		double realY = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
 		if (realY > 0) {
-			vpPos.y = realY*4/5;
+			vpPos.y = realY * 0.9 - Game3D.INITIAL_SHIP_PLACEMENT_Y;
 		} else {
-			vpPos.y = realY*4/5;
+			vpPos.y = realY * 0.9 - Game3D.INITIAL_SHIP_PLACEMENT_Y;
 		}
-		double realX = pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X;
+		double realX = pos.x;
 		if (realX > 0) {
-			vpPos.x = realX*4/5;
+			vpPos.x = realX * 0.9;
 		} else {
-			vpPos.x = realX*4/5;
+			vpPos.x = realX * 0.9;
 		}
 
-		//vpPos.sub(shipToViewPosition(mov.x, mov.y));
+		vpPos.sub(shipToViewPosition(mov.x, mov.y));
 
 		System.out.println(vpPos.y + " - " + realY);
 		vpTrans.set(vpPos);
