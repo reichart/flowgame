@@ -33,11 +33,11 @@ public class KeyShipBehavior extends Behavior {
 	private Vector3d dv = new Vector3d();
 	private final Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
-	
+
 	private List<Point3d> delayedList = new LinkedList<Point3d>();
 	private List<Double> timeDeltas = new LinkedList<Double>();
 	private double pastDelta;
-	
+
 	private static final Vector3d mov = new Vector3d(0, 0, 0);
 	private static final double MAX_FOLLOWING_DIST = 1;
 	private static final double HOLD_VIEW_BORDER = 1.5;
@@ -72,7 +72,7 @@ public class KeyShipBehavior extends Behavior {
 	private boolean KEY_DOWN;
 
 	private double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
-//	private double MOV_RADIUS = 300;
+	// private double MOV_RADIUS = 300;
 
 	private long previousWhen;
 
@@ -80,16 +80,15 @@ public class KeyShipBehavior extends Behavior {
 
 	public KeyShipBehavior(final TransformGroup translationGroup,
 			TransformGroup rotationGroup, TransformGroup viewTG) {
-		
-		for (int i = 0; i<3; i++){
+
+		for (int i = 0; i < 3; i++) {
 			delayedList.add(new Point3d());
 			timeDeltas.add(new Double(0));
 		}
-		
+
 		this.translationGroup = translationGroup;
 		this.rotationGroup = rotationGroup;
 		this.viewTG = viewTG;
-
 
 		leftAcc = new Vector3d(-ACCELERATION, 0.0, 0.0);
 		rightAcc = new Vector3d(ACCELERATION, 0.0, 0.0);
@@ -149,11 +148,11 @@ public class KeyShipBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-//		final long when = e.getWhen();
-//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-//			return;
-//		}
-//		previousWhen = when;
+		final long when = e.getWhen();
+		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+			return;
+		}
+		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -250,91 +249,94 @@ public class KeyShipBehavior extends Behavior {
 		if (mov.y < downVMax) {
 			mov.y = downVMax;
 		}
-		
+
 		double distToRadiusX = allowedDistToCircleRadius(pos.y
 				+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
 		double distToRadiusRight = distToRadiusX
 				- Game3D.INITIAL_SHIP_PLACEMENT_X;
 		double distToRadiusLeft = distToRadiusX
 				+ Game3D.INITIAL_SHIP_PLACEMENT_X;
-//		System.out.println("DistRight: " + distToRadiusRight);
-//		System.out.println("DistLeft: " + distToRadiusLeft);
+		// System.out.println("DistRight: " + distToRadiusRight);
+		// System.out.println("DistLeft: " + distToRadiusLeft);
 
 		double distToRadiusY = allowedDistToCircleRadius(pos.x
 				+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
 		double distToRadiusUp = distToRadiusY - Game3D.INITIAL_SHIP_PLACEMENT_Y;
 		double distToRadiusDown = distToRadiusY
 				+ Game3D.INITIAL_SHIP_PLACEMENT_Y;
-//		System.out.println("DistUp: " + distToRadiusUp);
-//		System.out.println("DistDown: " + distToRadiusDown);
-
+		// System.out.println("DistUp: " + distToRadiusUp);
+		// System.out.println("DistDown: " + distToRadiusDown);
 
 		/* Integration of velocity to distance */
 		dp.scale(deltaTime, mov);
 
 		// add dp into current vp position.
 		pos.add(dp);
-		
+
 		/* assure Position within Tunnelradius */
-		if (pos.x > distToRadiusRight){
+		if (pos.x > distToRadiusRight) {
 			pos.x = distToRadiusRight;
-		} else if (pos.x < -distToRadiusLeft){
+		} else if (pos.x < -distToRadiusLeft) {
 			pos.x = -distToRadiusLeft;
 		}
-		if (pos.y > distToRadiusUp){
+		if (pos.y > distToRadiusUp) {
 			pos.y = distToRadiusUp;
-		} else if (pos.y < -distToRadiusDown){
+		} else if (pos.y < -distToRadiusDown) {
 			pos.y = -distToRadiusDown;
 		}
-		
+
 		/* Final update of the target transform group */
 		// Put the transform back into the transform group.
 		trans.set(pos);
 		translationGroup.setTransform(trans);
-		
-		vpPos =new Vector3d(pos);
-		
-		double realY = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
-		if(realY > HOLD_VIEW_BORDER){
-			vpPos.y = pos.y - HOLD_VIEW_BORDER + Game3D.INITIAL_SHIP_PLACEMENT_Y;
-		} else if (realY <= HOLD_VIEW_BORDER & realY >= -HOLD_VIEW_BORDER){
-			vpPos.y = 0;
-		} else {
-			vpPos.y = pos.y + HOLD_VIEW_BORDER + Game3D.INITIAL_SHIP_PLACEMENT_Y;
-		}
-		
-		vpPos.sub(shipToViewPosition(mov.x, mov.y));
 
-		System.out.println(vpPos.y + " - " + pos.y);
+		vpPos = new Vector3d(pos);
+
+		double realY = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
+		if (realY > 0) {
+			vpPos.y = realY * (realY / Tunnel.TUNNEL_RADIUS);
+		} else {
+			vpPos.y = -realY * (realY / Tunnel.TUNNEL_RADIUS);
+		}
+		double realX = pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X;
+		if (realX > 0) {
+			vpPos.x = realX * (realX / Tunnel.TUNNEL_RADIUS);
+		} else {
+			vpPos.x = -realX * (realX / Tunnel.TUNNEL_RADIUS);
+		}
+
+		//vpPos.sub(shipToViewPosition(mov.x, mov.y));
+
+		System.out.println(vpPos.y + " - " + realY);
 		vpTrans.set(vpPos);
-//		System.out.println("pos.y: " + pos.y + " - vpPos.y: " + vpPos.y);
-//		System.out.println(vpPos.y);
+		// System.out.println("pos.y: " + pos.y + " - vpPos.y: " + vpPos.y);
+		// System.out.println(vpPos.y);
 		viewTG.setTransform(vpTrans);
 
 	}
-	
-	private Point3d shipToViewPosition (double v_x, double v_y){
+
+	private Point3d shipToViewPosition(double v_x, double v_y) {
 		Point3d dp = new Point3d();
-		if(v_x<0){
-			dp.x=-v_x/leftVMax;
-		} else if (v_x > 0){
-			dp.x=v_x/rightVMax;
+		if (v_x < 0) {
+			dp.x = -v_x / leftVMax;
+		} else if (v_x > 0) {
+			dp.x = v_x / rightVMax;
 		}
-		if(v_y<0){
-			dp.y=-v_y/downVMax;
-		}else if (v_y > 0){
-			dp.y=v_y/upVMax;
+		if (v_y < 0) {
+			dp.y = -v_y / downVMax;
+		} else if (v_y > 0) {
+			dp.y = v_y / upVMax;
 		}
 		dp.scale(MAX_FOLLOWING_DIST);
-		if (dp.x!=0|dp.y!=0){
-		System.out.println("dp: " + dp);
+		if (dp.x != 0 | dp.y != 0) {
+			System.out.println("dp: " + dp);
 		}
 		return dp;
 	}
 
 	private double allowedDistToCircleRadius(double pos, double radius) {
 		Double dist = Math.sqrt(Math.pow(radius, 2) - Math.pow(pos, 2));
-		if (dist.equals(Double.NaN)){
+		if (dist.equals(Double.NaN)) {
 			return 0;
 		} else {
 			return dist;
