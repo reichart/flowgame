@@ -27,7 +27,7 @@ import javax.vecmath.Vector3d;
 
 public class KeyShipBehavior extends Behavior {
 
-	private static final float ACCELERATION = 60f;
+	private static final float ACCELERATION = 15f;
 	private static final float SPEED_MAX = 30f;
 	private final Point3d dp = new Point3d();
 	private Vector3d dv = new Vector3d();
@@ -40,6 +40,7 @@ public class KeyShipBehavior extends Behavior {
 	
 	private static final Vector3d mov = new Vector3d(0, 0, 0);
 	private static final double MAX_FOLLOWING_DIST = 1;
+	private static final double HOLD_VIEW_BORDER = 1.5;
 	private Vector3d a = new Vector3d();
 
 	private Vector3d leftAcc;
@@ -148,11 +149,11 @@ public class KeyShipBehavior extends Behavior {
 		// Linux does key-repeat by signaling pairs of KEY_PRESSED/KEY_RELEASED
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
-		final long when = e.getWhen();
-		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
-			return;
-		}
-		previousWhen = when;
+//		final long when = e.getWhen();
+//		if (when == previousWhen && e.getID() == KeyEvent.KEY_RELEASED) {
+//			return;
+//		}
+//		previousWhen = when;
 
 		final int id = e.getID();
 		switch (e.getKeyCode()) {
@@ -249,8 +250,7 @@ public class KeyShipBehavior extends Behavior {
 		if (mov.y < downVMax) {
 			mov.y = downVMax;
 		}
-
-		double stepx = mov.x * deltaTime;
+		
 		double distToRadiusX = allowedDistToCircleRadius(pos.y
 				+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
 		double distToRadiusRight = distToRadiusX
@@ -259,18 +259,7 @@ public class KeyShipBehavior extends Behavior {
 				+ Game3D.INITIAL_SHIP_PLACEMENT_X;
 //		System.out.println("DistRight: " + distToRadiusRight);
 //		System.out.println("DistLeft: " + distToRadiusLeft);
-		if (KEY_RIGHT) {
-			if (distToRadiusRight - pos.x - stepx < 0) {
-				mov.x = adaptSpeedAtBorder(distToRadiusRight - pos.x, stepx, mov.x);
-			}
-		} else if (KEY_LEFT) {
-			if (distToRadiusLeft + pos.x - stepx < 0) {
-				double remainingDist = distToRadiusLeft + pos.x;
-				mov.x = -adaptSpeedAtBorder(remainingDist, stepx, mov.x);
-			}
-		}
 
-		double stepy = mov.y * deltaTime;
 		double distToRadiusY = allowedDistToCircleRadius(pos.x
 				+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
 		double distToRadiusUp = distToRadiusY - Game3D.INITIAL_SHIP_PLACEMENT_Y;
@@ -278,18 +267,7 @@ public class KeyShipBehavior extends Behavior {
 				+ Game3D.INITIAL_SHIP_PLACEMENT_Y;
 //		System.out.println("DistUp: " + distToRadiusUp);
 //		System.out.println("DistDown: " + distToRadiusDown);
-		if (KEY_UP) {
-			if (distToRadiusUp - pos.y - stepy < 0) {
-				double remainingDist = distToRadiusUp - pos.y;
-				double newspeed = adaptSpeedAtBorder(remainingDist, stepy, mov.y);
-				mov.y = newspeed;
-			}
-		} else if (KEY_DOWN) {
-			if (distToRadiusDown + pos.y - stepy < 0) {
-				double remainingDist = distToRadiusDown + pos.y;
-				mov.y = -adaptSpeedAtBorder(remainingDist, stepy, mov.y);
-			}
-		}
+
 
 		/* Integration of velocity to distance */
 		dp.scale(deltaTime, mov);
@@ -309,28 +287,34 @@ public class KeyShipBehavior extends Behavior {
 			pos.y = -distToRadiusDown;
 		}
 		
-		
-
-
 		/* Final update of the target transform group */
 		// Put the transform back into the transform group.
 		trans.set(pos);
 		translationGroup.setTransform(trans);
 		
 		vpPos =new Vector3d(pos);
+		
+		double realY = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
+		if(realY > HOLD_VIEW_BORDER){
+			vpPos.y = pos.y - HOLD_VIEW_BORDER + Game3D.INITIAL_SHIP_PLACEMENT_Y;
+		} else if (realY <= HOLD_VIEW_BORDER & realY >= -HOLD_VIEW_BORDER){
+			vpPos.y = 0;
+		} else {
+			vpPos.y = pos.y + HOLD_VIEW_BORDER + Game3D.INITIAL_SHIP_PLACEMENT_Y;
+		}
+		
 		vpPos.sub(shipToViewPosition(mov.x, mov.y));
 
-		
-//		System.out.println("mov: " + mov);
-		
+		System.out.println(vpPos.y + " - " + pos.y);
 		vpTrans.set(vpPos);
+//		System.out.println("pos.y: " + pos.y + " - vpPos.y: " + vpPos.y);
+//		System.out.println(vpPos.y);
 		viewTG.setTransform(vpTrans);
 
 	}
 	
 	private Point3d shipToViewPosition (double v_x, double v_y){
 		Point3d dp = new Point3d();
-		double maxDist = MAX_FOLLOWING_DIST;
 		if(v_x<0){
 			dp.x=-v_x/leftVMax;
 		} else if (v_x > 0){
@@ -341,15 +325,11 @@ public class KeyShipBehavior extends Behavior {
 		}else if (v_y > 0){
 			dp.y=v_y/upVMax;
 		}
+		dp.scale(MAX_FOLLOWING_DIST);
 		if (dp.x!=0|dp.y!=0){
 		System.out.println("dp: " + dp);
 		}
 		return dp;
-	}
-
-	private double adaptSpeedAtBorder(double remainingDist, double step,
-			double speed) {
-		return ((remainingDist / step) * speed);
 	}
 
 	private double allowedDistToCircleRadius(double pos, double radius) {
