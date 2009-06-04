@@ -162,14 +162,14 @@ public class Game3D extends Canvas3D {
 		rotationGroup.addChild(ship);
 		System.out.println("Ship " + ship.getBounds());
 
-		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
-		ship.addChild(keyShipBehavior);
-		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
-		
-		// Alternative KeyBehavior
-//		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup, rotationGroup, viewTG);
+//		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
 //		ship.addChild(keyShipBehavior);
 //		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
+		
+		// Alternative KeyBehavior
+		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup, rotationGroup, viewTG);
+		ship.addChild(keyShipBehavior);
+		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
 		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship, logic);
 		ship.addChild(collisionBehavior);
