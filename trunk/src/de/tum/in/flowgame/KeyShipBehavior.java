@@ -248,6 +248,7 @@ public class KeyShipBehavior extends Behavior {
 		if (mov.y < downVMax) {
 			mov.y = downVMax;
 		}
+		
 
 		double distToRadiusX = allowedDistToCircleRadius(pos.y
 				+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
@@ -283,7 +284,8 @@ public class KeyShipBehavior extends Behavior {
 		} else if (pos.y < -distToRadiusDown) {
 			pos.y = -distToRadiusDown;
 		}
-
+		
+		
 		/* Final update of the target transform group */
 		// Put the transform back into the transform group.
 		trans.set(pos);
@@ -304,7 +306,7 @@ public class KeyShipBehavior extends Behavior {
 			vpPos.x = realX * 0.9;
 		}
 
-		vpPos.sub(shipToViewPosition(mov.x, mov.y));
+//		vpPos.sub(shipToViewPosition(mov.x, mov.y));
 
 		System.out.println(vpPos.y + " - " + realY);
 		vpTrans.set(vpPos);
