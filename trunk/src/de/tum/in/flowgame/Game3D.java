@@ -167,7 +167,7 @@ public class Game3D extends Canvas3D {
 //		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		
 		// Alternative KeyBehavior
-		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup, rotationGroup, viewTG);
+		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup, viewTG);
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
