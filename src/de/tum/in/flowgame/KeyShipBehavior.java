@@ -25,7 +25,7 @@ import javax.vecmath.Vector3d;
 public class KeyShipBehavior extends Behavior {
 
 	private static final float ACCELERATION = 15f;
-	private static final float MAX_SPEED = 30f;
+	private static final float MAX_SPEED = 12f;
 	private final Point3d dp = new Point3d();
 	private Vector3d dv = new Vector3d();
 	private final Vector3d pos = new Vector3d();
@@ -33,7 +33,6 @@ public class KeyShipBehavior extends Behavior {
 
 	private List<Point3d> delayedList = new LinkedList<Point3d>();
 	private List<Double> timeDeltas = new LinkedList<Double>();
-	private double pastDelta;
 
 	private static final Vector3d mov = new Vector3d(0, 0, 0);
 	private static final double MAX_FOLLOWING_DIST = 3;
@@ -60,7 +59,6 @@ public class KeyShipBehavior extends Behavior {
 	private Matrix3f shipRotation = new Matrix3f();
 	private Vector3d vpPos = new Vector3d();
 	private Point3d vpdp = new Point3d();
-	private final TransformGroup rotationGroup;
 	private final WakeupCondition condition;
 
 	private boolean KEY_LEFT;
@@ -71,12 +69,11 @@ public class KeyShipBehavior extends Behavior {
 	private double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
 	// private double MOV_RADIUS = 300;
 
-	private long previousWhen;
+	private long lastKeyEventTime;
 
 	private long time;
 
-	public KeyShipBehavior(final TransformGroup translationGroup,
-			TransformGroup rotationGroup, TransformGroup viewTG) {
+	public KeyShipBehavior(final TransformGroup translationGroup, TransformGroup viewTG) {
 
 		for (int i = 0; i < 3; i++) {
 			delayedList.add(new Point3d());
@@ -84,7 +81,6 @@ public class KeyShipBehavior extends Behavior {
 		}
 
 		this.translationGroup = translationGroup;
-		this.rotationGroup = rotationGroup;
 		this.viewTG = viewTG;
 
 		leftAcc = new Vector3d(-ACCELERATION, 0.0, 0.0);
@@ -146,24 +142,29 @@ public class KeyShipBehavior extends Behavior {
 		// (Windows only repeats the KEY_PRESSED). Luckily, Linux uses the same
 		// timestamp for key-repeat pairs so we can easily filter them.
 		final long when = e.getWhen();
-		if ((when - previousWhen < 2) && e.getID() == KeyEvent.KEY_RELEASED) {
+		if ((when - lastKeyEventTime < 2) && e.getID() == KeyEvent.KEY_RELEASED) {
 			return;
 		}
-		previousWhen = when;
+		lastKeyEventTime = when;
 
 		final int id = e.getID();
+		final boolean pressed = (id == KeyEvent.KEY_PRESSED);
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			KEY_LEFT = (id == KeyEvent.KEY_PRESSED);
+			KEY_LEFT = pressed;
+			if(pressed) KEY_RIGHT = !pressed;
 			break;
 		case KeyEvent.VK_RIGHT:
-			KEY_RIGHT = (id == KeyEvent.KEY_PRESSED);
-			break;
-		case KeyEvent.VK_UP:
-			KEY_UP = (id == KeyEvent.KEY_PRESSED);
+			KEY_RIGHT = pressed;
+			if(pressed)KEY_LEFT = !pressed;
 			break;
 		case KeyEvent.VK_DOWN:
-			KEY_DOWN = (id == KeyEvent.KEY_PRESSED);
+			KEY_UP = pressed;
+			if(pressed)KEY_DOWN = !pressed;
+			break;
+		case KeyEvent.VK_UP:
+			KEY_DOWN = pressed;
+			if(pressed)KEY_UP = !pressed;
 			break;
 		}
 	}
@@ -174,6 +175,7 @@ public class KeyShipBehavior extends Behavior {
 	 * transform group. This method should be called once per frame.
 	 */
 	private void updatePosition() {
+		System.out.println("LEFT: "+ KEY_LEFT +" - RIGHT: "+ KEY_RIGHT +" - UP: "+KEY_UP+" - DOWN: "+ KEY_DOWN);
 		// Get the current transform of the target transform
 		// group into a transform3D object.
 		translationGroup.getTransform(trans);
@@ -288,16 +290,16 @@ public class KeyShipBehavior extends Behavior {
 		Matrix3f yMov = new Matrix3f();
 		xMov.setIdentity();
 		yMov.setIdentity();
-		float factor = (float) ((Math.PI/4)/MAX_SPEED);
+		float factor = (float) ((Math.PI/8)/MAX_SPEED);
 		float rotAngleX = (float) -(mov.x*factor);
 		float rotAngleY = (float) (mov.y*factor);
-		if(KEY_RIGHT)	xMov.rotZ(rotAngleX);
-		if(KEY_LEFT)	xMov.rotZ(rotAngleX);
-		if(KEY_UP)		yMov.rotX(rotAngleY);
-		if(KEY_DOWN)	yMov.rotX(rotAngleY);
+		xMov.rotZ(rotAngleX);
+		xMov.rotZ(rotAngleX);
+		yMov.rotX(rotAngleY);
+		yMov.rotX(rotAngleY);
 
-		if(mov.x >0 | mov.y > 0){
-		System.out.println("mov.x: " + mov.x +" - mov.y: "+ mov.y);
+		if(mov.x !=0 | mov.y != 0){
+//		System.out.println("mov.x: " + mov.x + " rotX: "+ rotAngleX +" - mov.y: "+ mov.y + " \trotY: " + rotAngleY);
 		}
 		shipRotation.mul(xMov, yMov);
 		/* Final update of the target transform group */
