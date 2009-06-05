@@ -25,7 +25,7 @@ import javax.vecmath.Vector3d;
 public class KeyShipBehavior extends Behavior {
 
 	private static final float ACCELERATION = 15f;
-	private static final float SPEED_MAX = 30f;
+	private static final float MAX_SPEED = 30f;
 	private final Point3d dp = new Point3d();
 	private Vector3d dv = new Vector3d();
 	private final Vector3d pos = new Vector3d();
@@ -97,10 +97,10 @@ public class KeyShipBehavior extends Behavior {
 		upDrag = new Vector3d(0.0, -ACCELERATION, 0.0);
 		downDrag = new Vector3d(0.0, ACCELERATION, 0.0);
 
-		leftVMax = -SPEED_MAX;
-		rightVMax = SPEED_MAX;
-		upVMax = SPEED_MAX;
-		downVMax = -SPEED_MAX;
+		leftVMax = -MAX_SPEED;
+		rightVMax = MAX_SPEED;
+		upVMax = MAX_SPEED;
+		downVMax = -MAX_SPEED;
 
 		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(
 				KeyEvent.KEY_PRESSED);
@@ -288,11 +288,17 @@ public class KeyShipBehavior extends Behavior {
 		Matrix3f yMov = new Matrix3f();
 		xMov.setIdentity();
 		yMov.setIdentity();
-		if(KEY_RIGHT)	xMov.rotZ(-0.1f);
-		if(KEY_LEFT)	xMov.rotZ(0.1f);
-		if(KEY_UP)		yMov.rotX(0.1f);
-		if(KEY_DOWN)	yMov.rotX(-0.1f);
-		
+		float factor = (float) ((Math.PI/4)/MAX_SPEED);
+		float rotAngleX = (float) -(mov.x*factor);
+		float rotAngleY = (float) (mov.y*factor);
+		if(KEY_RIGHT)	xMov.rotZ(rotAngleX);
+		if(KEY_LEFT)	xMov.rotZ(rotAngleX);
+		if(KEY_UP)		yMov.rotX(rotAngleY);
+		if(KEY_DOWN)	yMov.rotX(rotAngleY);
+
+		if(mov.x >0 | mov.y > 0){
+		System.out.println("mov.x: " + mov.x +" - mov.y: "+ mov.y);
+		}
 		shipRotation.mul(xMov, yMov);
 		/* Final update of the target transform group */
 		// Put the transform back into the transform group.
@@ -316,7 +322,7 @@ public class KeyShipBehavior extends Behavior {
 
 //		vpPos.sub(shipToViewPosition(mov.x, mov.y));
 
-		System.out.println(vpPos.y + " - " + realY);
+//		System.out.println(vpPos.y + " - " + realY);
 		vpTrans.set(vpPos);
 		// System.out.println("pos.y: " + pos.y + " - vpPos.y: " + vpPos.y);
 		// System.out.println(vpPos.y);
