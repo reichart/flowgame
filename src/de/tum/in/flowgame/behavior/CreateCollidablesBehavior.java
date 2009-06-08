@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.behavior;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -10,6 +10,10 @@ import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
 import javax.vecmath.Point3d;
+
+import de.tum.in.flowgame.Collidable;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.Utils;
 
 public class CreateCollidablesBehavior extends Behavior {
 

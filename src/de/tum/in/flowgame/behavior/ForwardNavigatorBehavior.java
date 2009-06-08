@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.behavior;
 
 import java.util.Enumeration;
 

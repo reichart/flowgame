@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.behavior;
 
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
@@ -14,6 +14,9 @@ import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.media.j3d.WakeupOr;
 import javax.vecmath.Matrix3d;
 import javax.vecmath.Vector3d;
+
+import de.tum.in.flowgame.Ellipse;
+import de.tum.in.flowgame.Utils;
 
 public class KeyShipEllipseBehavior extends Behavior {
 

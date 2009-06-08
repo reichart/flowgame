@@ -16,6 +16,9 @@ import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Primitive;
 
+import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
+import de.tum.in.flowgame.behavior.TunnelPartMoveBehavior;
+
 
 public class Tunnel extends TransformGroup {
 

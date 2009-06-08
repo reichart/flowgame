@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.behavior;
 
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
@@ -16,6 +16,10 @@ import javax.vecmath.Matrix3f;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
+
+import de.tum.in.flowgame.Game3D;
+import de.tum.in.flowgame.Tunnel;
+import de.tum.in.flowgame.Utils;
 
 public class KeyShipBehavior extends Behavior {
 
