@@ -3,7 +3,6 @@ package de.tum.in.flowgame.behavior;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point3d;
-import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
 /**
@@ -15,10 +14,7 @@ public class ForwardNavigator {
 
 	private final Vector3d navVec;
 	private double fwdSpeed;
-	public void setFwdSpeed(double fwdSpeed) {
-		this.fwdSpeed = fwdSpeed;
-	}
-
+	
 	private long time;
 
 	private final Point3d dp = new Point3d();
@@ -75,5 +71,9 @@ public class ForwardNavigator {
 			return 0;
 		else
 			return deltaTime;
+	}
+	
+	public void setFwdSpeed(final double fwdSpeed) {
+		this.fwdSpeed = fwdSpeed;
 	}
 }
