@@ -32,6 +32,11 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
+import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
+import de.tum.in.flowgame.behavior.KeyShipBehavior;
+import de.tum.in.flowgame.behavior.ShipCollisionBehavior;
+
+
 public class Game3D extends Canvas3D {
 
 	public static final BoundingSphere WORLD_BOUNDS = new BoundingSphere(new Point3d(), Double.POSITIVE_INFINITY);
@@ -39,9 +44,9 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 	
-	static final float INITIAL_SHIP_PLACEMENT_X = 0;
-	static final float INITIAL_SHIP_PLACEMENT_Y = -1;
-	static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
+	public static final float INITIAL_SHIP_PLACEMENT_X = 0;
+	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
+	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
 
 	private final BranchGroup collidables;
 	private final GameLogic logic;

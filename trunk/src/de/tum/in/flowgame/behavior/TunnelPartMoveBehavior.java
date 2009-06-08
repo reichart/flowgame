@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.behavior;
 
 import java.util.Enumeration;
 
@@ -7,6 +7,8 @@ import javax.media.j3d.Shape3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnViewPlatformExit;
+
+import de.tum.in.flowgame.TunnelPartMover;
 
 public class TunnelPartMoveBehavior extends Behavior {
 

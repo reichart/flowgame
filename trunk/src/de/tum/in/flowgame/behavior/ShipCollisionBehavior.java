@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.behavior;
 
 import java.util.Enumeration;
 
@@ -9,6 +9,8 @@ import javax.media.j3d.WakeupOnCollisionEntry;
 import javax.media.j3d.WakeupOnCollisionExit;
 import javax.media.j3d.WakeupOnCollisionMovement;
 import javax.media.j3d.WakeupOr;
+
+import de.tum.in.flowgame.GameLogic;
 
 public class ShipCollisionBehavior extends Behavior {
 

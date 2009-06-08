@@ -2,6 +2,9 @@ package de.tum.in.flowgame;
 
 import javax.media.j3d.Node;
 
+import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
+import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
+
 public class GameLogic {
 	
 	public static String FUELCAN = "FuelCan";

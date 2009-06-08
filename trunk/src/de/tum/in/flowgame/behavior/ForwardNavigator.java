@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.behavior;
 
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
