@@ -59,7 +59,8 @@ public class Game3D extends Canvas3D {
 		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
 		
-		this.logic = new GameLogic(ccb);
+		Tunnel tunnel = new Tunnel();
+		this.logic = new GameLogic(ccb, tunnel);
 		final SimpleUniverse su = createUniverse();
 		collidables.addChild(createShip(logic, su.getViewingPlatform().getViewPlatformTransform()));
 		collidables.addChild(ccb);
@@ -81,7 +82,7 @@ public class Game3D extends Canvas3D {
 		scene.addChild(dirLight);
 
 		scene.addChild(createBackground());
-		scene.addChild(new Tunnel());
+		scene.addChild(tunnel);
 		scene.addChild(collidables);
 
 		

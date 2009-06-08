@@ -14,7 +14,11 @@ import javax.vecmath.Vector3d;
 public class ForwardNavigator {
 
 	private final Vector3d navVec;
-	private final double fwdSpeed;
+	private double fwdSpeed;
+	public void setFwdSpeed(double fwdSpeed) {
+		this.fwdSpeed = fwdSpeed;
+	}
+
 	private long time;
 
 	private final Point3d dp = new Point3d();
