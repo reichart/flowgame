@@ -22,6 +22,12 @@ public class Tunnel extends TransformGroup {
 	public static final float TUNNEL_LENGTH = 200.0f;
 	public static final float TUNNEL_RADIUS = 8.0f;
 	public static final int TUNNEL_PARTS = 3;
+	
+	private ForwardNavigatorBehavior fwdNav; 
+
+	public ForwardNavigatorBehavior getFwdNav() {
+		return fwdNav;
+	}
 
 	public Tunnel() {
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
@@ -82,7 +88,7 @@ public class Tunnel extends TransformGroup {
 			
 			addChild(tunnelTranslationGroup);
 		}
-		final ForwardNavigatorBehavior fwdNav = new ForwardNavigatorBehavior(this, 100);
+		fwdNav = new ForwardNavigatorBehavior(this, 100);
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		
 		addChild(fwdNav);
