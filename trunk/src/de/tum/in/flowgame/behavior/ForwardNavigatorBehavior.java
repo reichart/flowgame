@@ -7,28 +7,19 @@ import javax.media.j3d.TransformGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedFrames;
 
-public class ForwardNavigatorBehavior extends Behavior{
-	
+public class ForwardNavigatorBehavior extends Behavior {
+
 	private double speed;
-	
 
-	public double getSpeed() {
-		return speed;
-	}
+	private final WakeupCriterion wakeEvent;
+	private final ForwardNavigator forwardNavigator;
 
-	public void setSpeed(double speed) {
+	public ForwardNavigatorBehavior(final TransformGroup targetTG, final double speed) {
 		this.speed = speed;
-		this.forwardNavigator.setFwdSpeed(speed);
+		this.wakeEvent = new WakeupOnElapsedFrames(0);
+		this.forwardNavigator = new ForwardNavigator(targetTG, speed);
 	}
 
-	private WakeupCriterion wakeEvent = new WakeupOnElapsedFrames(0);
-	private ForwardNavigator forwardNavigator;
-	
-    public ForwardNavigatorBehavior(TransformGroup targetTG, double speed){
-    	this.speed = speed;
-    	this.forwardNavigator = new ForwardNavigator(targetTG, speed);
-    }
-	
 	@Override
 	public void initialize() {
 		this.wakeupOn(wakeEvent);
@@ -36,9 +27,18 @@ public class ForwardNavigatorBehavior extends Behavior{
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void processStimulus(Enumeration criteria) {
+	public void processStimulus(final Enumeration criteria) {
 		forwardNavigator.integrateTransformChanges();
 		wakeupOn(wakeEvent);
 	}
-	
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(final double speed) {
+		this.speed = speed;
+		this.forwardNavigator.setFwdSpeed(speed);
+	}
+
 }
