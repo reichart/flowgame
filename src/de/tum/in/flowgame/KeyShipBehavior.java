@@ -63,7 +63,7 @@ public class KeyShipBehavior extends Behavior {
 	private long lastKeyEventTime;
 
 	private long time;
-	private boolean firstPerson = true;
+	private boolean firstPerson = false;
 
 	public KeyShipBehavior(final TransformGroup translationGroup,
 			TransformGroup viewTG) {
@@ -321,6 +321,12 @@ public class KeyShipBehavior extends Behavior {
 			} else {
 				vpPos.y = realY * (MOV_RADIUS-0.5)/MOV_RADIUS + 1;
 			}
+			double realX = pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X;
+			if (realX > 0) {
+				vpPos.x = realX * (MOV_RADIUS-1.8)/MOV_RADIUS;
+			} else {
+				vpPos.x = realX * (MOV_RADIUS-1.8)/MOV_RADIUS;
+			}
 		} else {
 			vpPos.z = Game3D.INITIAL_SHIP_PLACEMENT_Z-1;
 			vpPos.y = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
@@ -328,13 +334,7 @@ public class KeyShipBehavior extends Behavior {
 		}
 
 		// System.out.println(realY);
-		System.out.println("vpPos.x: " + vpPos.x + " - vpPos.y: " + vpPos.y);
-		double realX = pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X;
-		if (realX > 0) {
-			vpPos.x = realX * (MOV_RADIUS-1.8)/MOV_RADIUS;
-		} else {
-			vpPos.x = realX * (MOV_RADIUS-1.8)/MOV_RADIUS;
-		}
+//		System.out.println("vpPos.x: " + vpPos.x + " - vpPos.y: " + vpPos.y);
 
 		// vpPos.sub(shipToViewPosition(mov.x, mov.y));
 
