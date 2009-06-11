@@ -7,8 +7,7 @@ import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 
 public class GameLogic {
 	
-	public static String FUELCAN = "FuelCan";
-	public static String ASTEROID = "Asteroid";
+	public enum Item{FUELCAN, ASTEROID};
 
 	private Tunnel tunnel;
 	
@@ -29,12 +28,12 @@ public class GameLogic {
 
 	public void add(final Node node) {
 		final Object userData = node.getParent().getParent().getUserData();
-		if (GameLogic.FUELCAN.equals(userData)) {
+		if (Item.FUELCAN.toString().equals(userData)) {
 			fuel++;
-			noiseMaker.playSound(FUELCAN);
-		} else if (GameLogic.ASTEROID.equals(userData)) {
+			noiseMaker.playSound(Item.FUELCAN);
+		} else if (Item.ASTEROID.toString().equals(userData)) {
 			asteroids++;
-			noiseMaker.playSound(ASTEROID);
+			noiseMaker.playSound(Item.ASTEROID);
 		}
 	}
 
