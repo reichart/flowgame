@@ -9,7 +9,6 @@ import javax.media.j3d.TransformGroup;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
 import de.tum.in.flowgame.util.Builders;
-import de.tum.in.flowgame.util.TransformGroupBuilder;
 
 public class Collidable extends BranchGroup {
 

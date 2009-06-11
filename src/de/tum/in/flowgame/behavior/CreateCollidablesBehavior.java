@@ -14,6 +14,7 @@ import javax.vecmath.Point3d;
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.GameLogic.Item;
 
 public class CreateCollidablesBehavior extends Behavior {
 
@@ -39,7 +40,7 @@ public class CreateCollidablesBehavior extends Behavior {
 	private SharedGroup loadFuelcan() throws IOException {
 		SharedGroup fuelcan = new SharedGroup();
 		fuelcan.addChild(Utils.loadScene("/res/fuelcan2.obj"));
-		fuelcan.setUserData(GameLogic.FUELCAN);
+		fuelcan.setUserData(Item.FUELCAN.toString());
 		fuelcan.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f), new Point3d(0.35f, 0.5f,
 				0.125f)));
 		return fuelcan;
@@ -48,7 +49,7 @@ public class CreateCollidablesBehavior extends Behavior {
 	private SharedGroup loadAsteroid() throws IOException {
 		SharedGroup asteroid = new SharedGroup();
 		asteroid.addChild(Utils.loadScene("/res/asteroid.obj"));
-		asteroid.setUserData(GameLogic.ASTEROID);
+		asteroid.setUserData(Item.ASTEROID.toString());
 		return asteroid;
 	}
 

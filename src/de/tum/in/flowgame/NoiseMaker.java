@@ -3,6 +3,8 @@ package de.tum.in.flowgame;
 import java.applet.Applet;
 import java.applet.AudioClip;
 
+import de.tum.in.flowgame.GameLogic.Item;
+
 public class NoiseMaker {
 
 	private AudioClip asteroidSound;
@@ -13,11 +15,11 @@ public class NoiseMaker {
 		this.fuelSound = Applet.newAudioClip(getClass().getResource("/res/sound/water-droplet-1.wav"));
 	}
 
-	public void playSound(String soundName) {
-		if (GameLogic.ASTEROID.equals(soundName)) {
+	public void playSound(Item items) {
+		if (Item.ASTEROID == items) {
 			asteroidSound.play();
 		}
-		if (GameLogic.FUELCAN.equals(soundName)) {
+		if (Item.FUELCAN == items) {
 			fuelSound.play();
 		}
 	}
