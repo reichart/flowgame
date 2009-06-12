@@ -2,9 +2,7 @@ package de.tum.in.flowgame;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -35,18 +33,20 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
 import de.tum.in.flowgame.behavior.ShipCollisionBehavior;
-
+import de.tum.in.flowgame.ui.HealthBar;
 
 public class Game3D extends Canvas3D {
 
 	public static final BoundingSphere WORLD_BOUNDS = new BoundingSphere(new Point3d(), Double.POSITIVE_INFINITY);
-	
+
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
-	
+
 	public static final float INITIAL_SHIP_PLACEMENT_X = 0;
 	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
 	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
+
+	private HealthBar fuel, damage;
 
 	private final BranchGroup collidables;
 	private final GameLogic logic;
@@ -56,14 +56,20 @@ public class Game3D extends Canvas3D {
 	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
+		this.fuel = new HealthBar(ImageIO.read(getClass().getResource("/res/fuel.png")), "Fuel", Color.YELLOW,
+				Color.YELLOW.darker(), 0, 10);
+
+		this.damage = new HealthBar(ImageIO.read(getClass().getResource("/res/asteroid_icon.png")), "Damage",
+				Color.RED, Color.RED.darker(), 0, 10);
+
 		collidables = new BranchGroup();
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
-		
+
 		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
-		
+
 		Tunnel tunnel = new Tunnel();
 		this.logic = new GameLogic(ccb, tunnel);
 		final SimpleUniverse su = createUniverse();
@@ -90,7 +96,6 @@ public class Game3D extends Canvas3D {
 		scene.addChild(tunnel);
 		scene.addChild(collidables);
 
-		
 		su.addBranchGraph(scene);
 	}
 
@@ -98,26 +103,27 @@ public class Game3D extends Canvas3D {
 	public void postRender() {
 		final J3DGraphics2D g2 = getGraphics2D();
 		renderHUD(g2);
-		g2.flush(false);
+		g2.flush(true);
 	}
 
-	private void renderHUD(final Graphics2D g2) {
+	private void renderHUD(final Graphics2D g) {
 		if (bigFont == null) {
-			bigFont = getFont().deriveFont(Font.BOLD, 32f);
+			bigFont = getFont().deriveFont(Font.BOLD, 16f);
 		}
 
-		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		// too slow
+		//g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		//g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g2.setColor(Color.WHITE);
-		g2.setFont(bigFont);
+		g.setFont(bigFont);
 
-		final FontMetrics fm = g2.getFontMetrics();
+		fuel.setValue(logic.getFuel());
+		damage.setValue(logic.getAsteroids());
 
-		g2.drawString("Asteroids: " + logic.getAsteroids(), 20, fm.getHeight());
-		g2.drawString("Fuel: " + logic.getFuel(), 20, 2 * fm.getHeight());
+		damage.render(g, 20, 20);
+		fuel.render(g, 20, 40);
 	}
-	
+
 	private SimpleUniverse createUniverse() {
 		final Viewer viewer = new Viewer(this);
 		final View view = viewer.getView();
