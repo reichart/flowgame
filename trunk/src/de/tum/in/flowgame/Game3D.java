@@ -34,6 +34,7 @@ import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
 import de.tum.in.flowgame.behavior.ShipCollisionBehavior;
 import de.tum.in.flowgame.ui.HealthBar;
+import de.tum.in.flowgame.ui.SpriteCache;
 
 public class Game3D extends Canvas3D {
 
@@ -56,10 +57,10 @@ public class Game3D extends Canvas3D {
 	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		this.fuel = new HealthBar(ImageIO.read(getClass().getResource("/res/fuel.png")), "Fuel", Color.YELLOW,
+		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
 				Color.YELLOW.darker(), 0, 10);
 
-		this.damage = new HealthBar(ImageIO.read(getClass().getResource("/res/asteroid_icon.png")), "Damage",
+		this.damage = new HealthBar(SpriteCache.getInstance().getSprite("/res/asteroid.svg"), "Damage",
 				Color.RED, Color.RED.darker(), 0, 10);
 
 		collidables = new BranchGroup();
@@ -120,8 +121,13 @@ public class Game3D extends Canvas3D {
 		fuel.setValue(logic.getFuel());
 		damage.setValue(logic.getAsteroids());
 
-		damage.render(g, 20, 20);
-		fuel.render(g, 20, 40);
+		final int w = getWidth();
+		final int h = getHeight();
+		
+		final int barsWidth = Math.min(w, h) / 2;
+		
+		damage.render(g, 20, 20, barsWidth, -1);
+		fuel.render(g, 20, 50, barsWidth, -1);
 	}
 
 	private SimpleUniverse createUniverse() {

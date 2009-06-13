@@ -2,20 +2,19 @@ package de.tum.in.flowgame.ui;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Graphics2D;
 
-public class HealthBar {
+public class HealthBar implements Sprite {
 
-	private final Image icon;
+	private final Sprite icon;
 	private final String name;
 	private final Color valueColor;
 	private final Color maxColor;
 	private final int max;
 
 	private int value;
-	
-	public HealthBar(final Image icon, final String name, final Color valueColor, final Color maxColor,
+
+	public HealthBar(final Sprite icon, final String name, final Color valueColor, final Color maxColor,
 			final int value, final int max) {
 		this.icon = icon;
 		this.name = name;
@@ -25,28 +24,43 @@ public class HealthBar {
 		this.max = max;
 	}
 
-	public void render(final Graphics g) {
-		g.drawImage(icon, 0, 0, null);
+	private void render(final Graphics2D g) {
+		final int HEIGHT = 20;
 
-		final int s = 16;
-		final int HUD_BARS_SCALE = 10;
+		// spacing 2:1:9:1:7 for icon: :bar: :text
+
+		icon.render(g, 0, 0, 20, HEIGHT);
+
+		final int scaledValue = (int) ((90f * value) / max);
 
 		g.setColor(maxColor);
-		g.fillRect(s * 3 / 2, 0, (int) (HUD_BARS_SCALE * max), s);
+		g.fillRect(30 + scaledValue, 0, 90 - scaledValue, HEIGHT);
 
-		final float percentage = max * value / max;
 		g.setColor(valueColor);
-		g.fillRect(s * 3 / 2, 0, HUD_BARS_SCALE * (int) percentage, s);
+		g.fillRect(30, 0, scaledValue, HEIGHT);
 
 		final FontMetrics fm = g.getFontMetrics();
-
-		g.drawString(name + ": " + value, 2 * s + HUD_BARS_SCALE * max, fm.getHeight() / 5 * 4);
+		g.drawString(name + ": " + value, 130, fm.getHeight() / 5 * 4);
 	}
 
-	public void render(final Graphics g, final int x, final int y) {
+	public void render(final Graphics2D g, final int x, final int y) {
 		g.translate(x, y);
 		render(g);
 		g.translate(-x, -y);
+	}
+
+	/**
+	 * @param h
+	 *            if less than zero, only w will be used
+	 */
+	@Override
+	public void render(final Graphics2D g, final int x, final int y, final int w, final int h) {
+		final float scaleX = w / 200f;
+		final float scaleY = (h < 0) ? scaleX : h / 20f;
+
+		g.scale(scaleX, scaleY);
+		render(g, x, y);
+		g.scale(1 / scaleX, 1 / scaleY);
 	}
 
 	public void setValue(final int value) {
