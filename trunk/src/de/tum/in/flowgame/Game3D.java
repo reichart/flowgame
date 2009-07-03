@@ -144,7 +144,7 @@ public class Game3D extends Canvas3D {
 	}
 
 	private Background createBackground() throws IOException {
-		final BufferedImage bimage = ImageIO.read(getClass().getResource("/res/stars.jpg"));
+		final BufferedImage bimage = ImageIO.read(Game3D.class.getResource("/res/stars.jpg"));
 		final ImageComponent2D image = new ImageComponent2D(BufferedImage.TYPE_INT_RGB, bimage);
 
 		final Background back = new Background(BLACK);

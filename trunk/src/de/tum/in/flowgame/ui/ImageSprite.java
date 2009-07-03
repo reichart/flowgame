@@ -11,7 +11,7 @@ public class ImageSprite implements Sprite {
 	private final BufferedImage image;
 
 	public ImageSprite(final String resource) throws IOException {
-		this.image = ImageIO.read(getClass().getResource(resource));
+		this.image = ImageIO.read(ImageSprite.class.getResource(resource));
 	}
 
 	@Override

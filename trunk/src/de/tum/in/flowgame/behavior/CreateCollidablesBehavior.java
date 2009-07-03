@@ -61,7 +61,7 @@ public class CreateCollidablesBehavior extends Behavior {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
-		final float x = new Float(Math.random() * 3 - 1.5);
+		final float x = (float)(Math.random() * 3 - 1.5);
 		if (ratioAsteroids < Math.random()) {
 			collidableBranchGroup.addChild(new Collidable(asteroid, x, speed));
 		} else {
