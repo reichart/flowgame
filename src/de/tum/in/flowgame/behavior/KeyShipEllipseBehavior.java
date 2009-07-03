@@ -32,7 +32,7 @@ public class KeyShipEllipseBehavior extends Behavior {
 	private boolean KEY_LEFT;
 	private boolean KEY_RIGHT;
 
-	private final double MAX_ANGLE = 30;
+	private static final double MAX_ANGLE = 30;
 
 	public KeyShipEllipseBehavior(final TransformGroup translationGroup, TransformGroup rotationGroup) {
 		this.translationGroup = translationGroup;

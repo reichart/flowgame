@@ -61,7 +61,7 @@ public class KeyShipBehavior extends Behavior {
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
-	public static double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
+	public static final double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
 	// private double MOV_RADIUS = 300;
 
 	private long lastKeyEventTime;
@@ -135,8 +135,6 @@ public class KeyShipBehavior extends Behavior {
 		// timestamp for key-repeat pairs so we can easily filter them.
 
 		String os_name = System.getProperty("os.name", "");
-		String os_version = System.getProperty("os.version", "");
-		// System.out.println(os_name + " - " + os_version);
 		if (os_name.contains("Linux")) {
 			final long when = e.getWhen();
 			if ((when - lastKeyEventTime < 2)
