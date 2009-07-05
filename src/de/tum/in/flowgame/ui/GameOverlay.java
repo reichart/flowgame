@@ -32,6 +32,7 @@ public class GameOverlay implements GameListener, ComponentListener {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
 		this.bigFont = new Font("sans", Font.BOLD, 24);
 		this.logic = logic;
+		logic.addListener(this);
 
 		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
 				Color.YELLOW.darker(), 0, GameLogic.MAX_FUEL);
