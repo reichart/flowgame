@@ -17,6 +17,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import com.sun.org.apache.xalan.internal.xsltc.cmdline.Transform;
+
 import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
@@ -289,7 +291,7 @@ public class KeyShipBehavior extends Behavior {
 			pos.y = -distToRadiusDown;
 		}
 
-		System.out.println("Pos.x: " + pos.x + " - Pos.y: " + pos.y);
+//		System.out.println("Pos.x: " + pos.x + " - Pos.y: " + pos.y);
 
 		// calculate the rotation of the ship
 		Matrix3f xMov = new Matrix3f();
@@ -557,6 +559,19 @@ public class KeyShipBehavior extends Behavior {
 
 	public Transform3D getVpTrans() {
 		return vpTrans;
+	}
+	
+	public Vector3d getCoords(){
+		Vector3d vec = new Vector3d();
+		trans.get(vec);
+		vec.setX(vec.getX()+Ship.INITIAL_SHIP_PLACEMENT_X);
+		vec.setY(vec.getY()+Ship.INITIAL_SHIP_PLACEMENT_Y);
+		vec.setZ(vec.getZ()+Ship.INITIAL_SHIP_PLACEMENT_Z);
+		return vec;
+	}
+	
+	public Transform3D getTrans(){
+		return trans;
 	}
 
 }
