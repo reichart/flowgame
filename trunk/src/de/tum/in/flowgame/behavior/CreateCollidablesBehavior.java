@@ -5,8 +5,8 @@ import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingBox;
+import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
@@ -18,8 +18,8 @@ import de.tum.in.flowgame.GameLogic.Item;
 
 public class CreateCollidablesBehavior extends Behavior {
 
-	private long time = 800;
-	private long speed = 50;
+	private long time = 1000;
+	private long speed = 300;
 	// number of asteroids compared to fuel cans, number between 0 and 1
 	private float ratioAsteroids;
 
@@ -29,7 +29,8 @@ public class CreateCollidablesBehavior extends Behavior {
 	private final SharedGroup asteroid;
 	private final SharedGroup fuelcan;
 
-	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup) throws IOException {
+	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup)
+			throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
@@ -41,8 +42,6 @@ public class CreateCollidablesBehavior extends Behavior {
 		final SharedGroup fuelcan = new SharedGroup();
 		fuelcan.addChild(Utils.loadScene("/res/fuelcan2.obj"));
 		fuelcan.setUserData(Item.FUELCAN);
-		fuelcan.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f),
-				new Point3d(0.35f, 0.5f, 0.125f)));
 		return fuelcan;
 	}
 
@@ -67,16 +66,22 @@ public class CreateCollidablesBehavior extends Behavior {
 	public void processStimulus(final Enumeration criteria) {
 		final float x = (float) (Math.random() * 3 - 1.5);
 		if (ratioAsteroids < Math.random()) {
-			collidableBranchGroup.addChild(new Collidable(asteroid, x, speed));
+			Collidable a = new Collidable(asteroid, x, speed);
+			a.setCollisionBounds(new BoundingSphere(new Point3d(0f,0f,0f), 1f));
+			collidableBranchGroup.addChild(a);
 		} else {
-			collidableBranchGroup.addChild(new Collidable(fuelcan, x, speed));
+			Collidable f = new Collidable(fuelcan, x, speed);
+			f.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
+					-0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
+			f.setCollisionBounds(new BoundingSphere(new Point3d(0f,0f,0f), 1f));
+			collidableBranchGroup.addChild(f);
 		}
-		Node node = this;
-		while (node.getParent() != null) {
-			node = node.getParent();
-		}
-		// final SimpleUniverse su = (SimpleUniverse)
-		// this.getLocale().getVirtualUniverse();
+		// Node node = this;
+		// while (node.getParent() != null) {
+		// node = node.getParent();
+		// }
+		// final SimpleUniverse su =
+		// (SimpleUniverse)this.getLocale().getVirtualUniverse();
 		// tree.recursiveApplyCapability(node);
 		// tree.updateNodes(su);
 		wakeupOn(wakeupEvent);
