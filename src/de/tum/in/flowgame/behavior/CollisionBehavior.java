@@ -70,7 +70,7 @@ public class CollisionBehavior extends Behavior {
 					if (collidableBounds.intersect(newBounds)) {
 						System.out.println("COLLISION! BAAAAM!" + oldz + ", "
 								+ zPos + child.getUserData());
-						gameLogic.add(child);
+						gameLogic.collide(child);
 						((BranchGroup)child).detach();
 					}
 				}
