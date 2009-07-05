@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
-import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
-import javax.vecmath.Point3d;
 
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.Utils;
@@ -29,8 +27,7 @@ public class CreateCollidablesBehavior extends Behavior {
 	private final SharedGroup asteroid;
 	private final SharedGroup fuelcan;
 
-	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup)
-			throws IOException {
+	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
@@ -67,13 +64,11 @@ public class CreateCollidablesBehavior extends Behavior {
 		final float x = (float) (Math.random() * 3 - 1.5);
 		if (ratioAsteroids < Math.random()) {
 			Collidable a = new Collidable(asteroid, x, speed);
-			a.setCollisionBounds(new BoundingSphere(new Point3d(0f,0f,0f), 1f));
+			a.setCollisionBounds(new BoundingSphere());
 			collidableBranchGroup.addChild(a);
 		} else {
 			Collidable f = new Collidable(fuelcan, x, speed);
-			f.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
-					-0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
-			f.setCollisionBounds(new BoundingSphere(new Point3d(0f,0f,0f), 1f));
+			f.setCollisionBounds(new BoundingSphere());
 			collidableBranchGroup.addChild(f);
 		}
 		// Node node = this;
