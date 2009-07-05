@@ -58,7 +58,7 @@ public class GameOverlay implements GameListener, ComponentListener {
 
 		final int barsWidth = Math.min(width, height) / 2;
 
-		cockpit.render(g, 0, 0, width, height);
+//		cockpit.render(g, 0, 0, width, height);
 
 		damage.render(g, 20, 20, barsWidth, -1);
 		fuel.render(g, 20, 50, barsWidth, -1);
