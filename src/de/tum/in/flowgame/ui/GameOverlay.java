@@ -27,11 +27,16 @@ public class GameOverlay implements GameListener, ComponentListener {
 
 	private int width, height;
 
+	private final static Color DIM_COLOR = new Color(255, 255, 255, 192);
+
 	private String message;
+	private boolean drawMessage;
+	
+	private boolean dim;
 
 	public GameOverlay(final GameLogic logic) {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
-		this.bigFont = new Font("sans", Font.BOLD, 64);
+		this.bigFont = new Font("sans", Font.BOLD, 56);
 		this.logic = logic;
 		logic.addListener(this);
 
@@ -47,17 +52,20 @@ public class GameOverlay implements GameListener, ComponentListener {
 	public void render(final Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-		if (message != null) {
-			synchronized (message) {
-				g.setFont(bigFont);
-				g.setColor(Color.WHITE);
-	
-				final FontMetrics fm = g.getFontMetrics();
-				final int w = fm.stringWidth(message);
-				final int h = fm.getHeight();
-	
-				g.drawString(message, (width - w) / 2, (height - h) / 2);
-			}
+		if (drawMessage) {
+			g.setFont(bigFont);
+			g.setColor(Color.WHITE);
+
+			final FontMetrics fm = g.getFontMetrics();
+			final int w = fm.stringWidth(message);
+			final int h = fm.getHeight();
+
+			g.drawString(message, (width - w) / 2, (height - h) / 2);
+		}
+
+		if (dim) {
+			g.setColor(DIM_COLOR);
+			g.fillRect(0, 0, width, height);
 		}
 
 		fuel.setValue(logic.getFuel());
@@ -84,11 +92,16 @@ public class GameOverlay implements GameListener, ComponentListener {
 	@Override
 	public void gameStopped(final GameLogic game) {
 		message("Iz ovurr!");
+		this.dim = true;
 	}
 
 	@Override
 	public void collided(final GameLogic logic, final Item item) {
-		message("Oh noes! Collishun with " + item.toString().toLowerCase() + "!");
+		if (item == Item.ASTEROID) {
+			message("Oh noes! Evil asteroidz!");
+		} else if (item == Item.FUELCAN) {
+			message("Yay! Fuel FTW!");
+		}
 	}
 
 	/**
@@ -101,21 +114,25 @@ public class GameOverlay implements GameListener, ComponentListener {
 	 */
 	public void message(final String message, final long delay) {
 		this.message = message;
-		timer.schedule(new ClearMessage(), delay);
+		timer.schedule(new MessageTimer(), delay);
 	}
 
 	/**
 	 * Displays a message on the screen for two seconds.
 	 */
 	public void message(final String message) {
-		this.message = message;
-		timer.schedule(new ClearMessage(), 2000);
+		message(message, 2000);
 	}
 
-	private class ClearMessage extends TimerTask {
+	private class MessageTimer extends TimerTask {
+		
+		public MessageTimer() {
+			drawMessage = true;
+		}
+		
 		@Override
 		public void run() {
-			message = null;
+			drawMessage = false;
 		}
 	}
 
