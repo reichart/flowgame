@@ -7,14 +7,10 @@ import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
-import javax.media.j3d.SceneGraphPath;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
 import javax.vecmath.Point3d;
-
-import com.sun.j3d.utils.universe.SimpleUniverse;
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.Utils;
@@ -33,8 +29,7 @@ public class CreateCollidablesBehavior extends Behavior {
 	private final SharedGroup asteroid;
 	private final SharedGroup fuelcan;
 
-	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup)
-			throws IOException {
+	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
@@ -43,27 +38,27 @@ public class CreateCollidablesBehavior extends Behavior {
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
-		SharedGroup fuelcan = new SharedGroup();
+		final SharedGroup fuelcan = new SharedGroup();
 		fuelcan.addChild(Utils.loadScene("/res/fuelcan2.obj"));
-		fuelcan.setUserData(Item.FUELCAN.toString());
-		fuelcan.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
-				-0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
+		fuelcan.setUserData(Item.FUELCAN);
+		fuelcan.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f, -0.125f),
+				new Point3d(0.35f, 0.5f, 0.125f)));
 		return fuelcan;
 	}
 
 	private SharedGroup loadAsteroid() throws IOException {
-		SharedGroup asteroid = new SharedGroup();
+		final SharedGroup asteroid = new SharedGroup();
 		asteroid.addChild(Utils.loadScene("/res/asteroid.obj"));
-		asteroid.setUserData(Item.ASTEROID.toString());
+		asteroid.setUserData(Item.ASTEROID);
 		return asteroid;
 	}
 
-//	com.tornadolabs.j3dtree.Java3dTree tree;
+	// com.tornadolabs.j3dtree.Java3dTree tree;
 
 	@Override
 	public void initialize() {
-//		tree = new com.tornadolabs.j3dtree.Java3dTree();
-//		tree.setVisible(true);
+		// tree = new com.tornadolabs.j3dtree.Java3dTree();
+		// tree.setVisible(true);
 		wakeupOn(wakeupEvent);
 	}
 
@@ -76,14 +71,14 @@ public class CreateCollidablesBehavior extends Behavior {
 		} else {
 			collidableBranchGroup.addChild(new Collidable(fuelcan, x, speed));
 		}
-		SimpleUniverse su = (SimpleUniverse) this.getLocale()
-				.getVirtualUniverse();
 		Node node = this;
 		while (node.getParent() != null) {
 			node = node.getParent();
 		}
-//		tree.recursiveApplyCapability(node);
-//		tree.updateNodes(su);
+		// final SimpleUniverse su = (SimpleUniverse)
+		// this.getLocale().getVirtualUniverse();
+		// tree.recursiveApplyCapability(node);
+		// tree.updateNodes(su);
 		wakeupOn(wakeupEvent);
 	}
 
@@ -100,7 +95,7 @@ public class CreateCollidablesBehavior extends Behavior {
 		return ratioAsteroids;
 	}
 
-	public void setRatioAsteroids(long ratioAsteroids) {
+	public void setRatioAsteroids(final long ratioAsteroids) {
 		this.ratioAsteroids = ratioAsteroids;
 	}
 
