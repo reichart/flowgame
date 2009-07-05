@@ -75,6 +75,7 @@ public class Ship extends TransformGroup {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void getTransformsOfChildren(TransformGroup tg){
 		Enumeration<Node> children = tg.getAllChildren();
 		while(children.hasMoreElements()){
@@ -87,10 +88,6 @@ public class Ship extends TransformGroup {
 			}
 		}
 	}
-	
-//	protected static TransformGroup createShip(final GameLogic logic, TransformGroup viewTG) throws IOException {
-//		
-//	}
 	
 	private static TransformGroup loadShip() throws IOException {
 
