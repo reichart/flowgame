@@ -14,11 +14,9 @@ public class GameLogic {
 	private int fuel;
 	private int asteroids;
 	
-	private NoiseMaker noiseMaker;
 	private CreateCollidablesBehavior ccb;
 	
 	public GameLogic(CreateCollidablesBehavior ccb, Tunnel tunnel) {
-		this.noiseMaker = new NoiseMaker();
 		this.ccb = ccb;
 		this.tunnel = tunnel;
 		SpeedChangeBehavior speedChange = new SpeedChangeBehavior(this.tunnel.getFwdNav());
@@ -31,10 +29,10 @@ public class GameLogic {
 		System.out.println(userData);
 		if (Item.FUELCAN.toString().equals(userData)) {
 			fuel++;
-			noiseMaker.playSound(Item.FUELCAN);
+			Sounds.FUELCAN.play();
 		} else if (Item.ASTEROID.toString().equals(userData)) {
 			asteroids++;
-			noiseMaker.playSound(Item.ASTEROID);
+			Sounds.ASTEROID.play();
 		}
 	}
 
