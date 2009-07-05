@@ -1,9 +1,9 @@
 package de.tum.in.flowgame;
 
 import javax.media.j3d.Alpha;
+import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Link;
-import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -17,7 +17,6 @@ public class Collidable extends BranchGroup {
 	private final double xPos;
 	private final double yPos;
 	final private ForwardNavigatorBehavior fwdNav;
-//	final private Transform3D staticTransforms;
 	
 	public Collidable(final SharedGroup group, final float x, long speed) {
 		final TransformGroup shape = Builders.transformGroup()
@@ -25,9 +24,15 @@ public class Collidable extends BranchGroup {
 			.addRotationBehavior(new Alpha(-1, 3000), Game3D.WORLD_BOUNDS)
 			.fin();
 
+		
+		final TransformGroup scaledShape = Builders.transformGroup()
+			.scale(0.1)
+			.add(shape)
+			.fin();
+		
 		final TransformGroup tg = Builders.transformGroup()
 			.translate(0, 0, -(Tunnel.TUNNEL_PARTS - 1) * Tunnel.TUNNEL_LENGTH)
-			.add(shape)
+			.add(scaledShape)
 			.writable()
 			.fin();
 
@@ -36,34 +41,20 @@ public class Collidable extends BranchGroup {
 		tg.addChild(fwdNav);
 
 		final TransformGroup scaleTG = Builders.transformGroup()
-//			.scale(0.3)
 			.add(tg)
 			.fin();
 		
-		xPos = Math.random() * 10 - 5;
-		yPos = Math.random() * 10 - 5;
+//		xPos = Math.random() * 10 - 5;
+//		yPos = Math.random() * 10 - 5;
+		
+		xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
+		yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
 		
 		TransformGroup transTG = Builders.transformGroup()
 			.translate(xPos, yPos, 0)
 			.add(scaleTG)
 			.fin();
-		
 		addChild(transTG);
-		
-		
-//		this.staticTransforms= new Transform3D();
-//		transTG.getTransform(staticTransforms);
-//		
-//		Node node = this;
-//		while(node.getParent() != null){
-//			if(node.getParent() instanceof TransformGroup){
-//				TransformGroup transgroup = (TransformGroup)node.getParent();
-//				Transform3D trans = new Transform3D();
-//				transgroup.getTransform(trans);
-//				staticTransforms.mul(trans);
-//			}
-//			node=node.getParent();
-//		}
 	}
 	
 	public double getOldZPos() {
@@ -75,12 +66,12 @@ public class Collidable extends BranchGroup {
 	}
 	
 	public double getZPos() {
+		
 		Transform3D t3d = new Transform3D();
 		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
 		
 //		//only new line
 //		t3d.mul(staticTransforms);
-		
 		Vector3d vector = new Vector3d();
 		t3d.get(vector);
 		return vector.getZ();

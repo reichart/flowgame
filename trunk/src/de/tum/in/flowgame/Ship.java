@@ -75,7 +75,7 @@ public class Ship extends TransformGroup {
 		}
 		
 		//the following call multiplies the staticTransforms with all the transforms of the children of this node
-		//getTransformsOfChildren(this);
+		getTransformsOfChildren(this);
 		
 		
 	}
@@ -118,30 +118,15 @@ public class Ship extends TransformGroup {
 	}
 	
 	public Vector3d getVector3dtShipPos(){
-		Transform3D trans = keyShipBehavior.getVpTrans();
-		trans.mul(staticTransforms);
-		Vector3d vector = new Vector3d();
-		trans.get(vector);
-		
-		double xdiff = vector.getX()-this.getXPos();
-		double ydiff = vector.getY()-this.getYPos();
-		
-		System.out.println(staticTransforms);
-		System.out.println("xdiff: " + xdiff + "ydiff: " + ydiff);
-		
-		return vector;
+		return keyShipBehavior.getCoords();
 	}
 
 	public double getXPos() {
-		Vector3d vector = new Vector3d();
-		keyShipBehavior.getVpTrans().get(vector);
-		return vector.getX();
+		return keyShipBehavior.getCoords().getX();
 	}
 
 	public double getYPos() {
-		Vector3d vector = new Vector3d();
-		keyShipBehavior.getVpTrans().get(vector);
-		return vector.getY();
+		return keyShipBehavior.getCoords().getY();
 	}
 
 }
