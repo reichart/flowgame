@@ -22,7 +22,7 @@ public class ShipCollisionBehavior extends Behavior {
 		final WakeupOnCollisionExit w2 = new WakeupOnCollisionExit(node);
 		final WakeupOnCollisionMovement w3 = new WakeupOnCollisionMovement(node);
 		final WakeupCriterion[] wakeupCriterion = { w1, w2, w3 };
-
+		
 		this.wakeUp = new WakeupOr(wakeupCriterion);
 		this.logic = logic;
 	}
@@ -35,14 +35,15 @@ public class ShipCollisionBehavior extends Behavior {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
-		while (criteria.hasMoreElements()) {
-			final Object element = criteria.nextElement();
-			if (element instanceof WakeupOnCollisionEntry) {
-				final WakeupOnCollisionEntry collision = (WakeupOnCollisionEntry) element;
-				final Node node = collision.getTriggeringPath().getObject();
-				logic.add(node.getParent().getParent());
-			}
-		}
-		wakeupOn(wakeUp);
+//		while (criteria.hasMoreElements()) {
+//			final Object element = criteria.nextElement();
+//			if (element instanceof WakeupOnCollisionEntry) {
+//				final WakeupOnCollisionEntry collision = (WakeupOnCollisionEntry) element;
+//				final Node node = collision.getTriggeringPath().getObject();
+//				logic.add(node.getParent().getParent());
+//				
+//			}
+//		}
+//		wakeupOn(wakeUp);
 	}
 }

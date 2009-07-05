@@ -22,8 +22,8 @@ import de.tum.in.flowgame.GameLogic.Item;
 
 public class CreateCollidablesBehavior extends Behavior {
 
-	private long time = 1000;
-	private long speed = 10;
+	private long time = 800;
+	private long speed = 50;
 	// number of asteroids compared to fuel cans, number between 0 and 1
 	private float ratioAsteroids;
 
@@ -84,7 +84,7 @@ public class CreateCollidablesBehavior extends Behavior {
 		}
 //		tree.recursiveApplyCapability(node);
 //		tree.updateNodes(su);
-//		wakeupOn(wakeupEvent);
+		wakeupOn(wakeupEvent);
 	}
 
 	public long getTime() {
