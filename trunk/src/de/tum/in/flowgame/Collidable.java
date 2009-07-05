@@ -3,6 +3,7 @@ package de.tum.in.flowgame;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Link;
+import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -16,6 +17,7 @@ public class Collidable extends BranchGroup {
 	private final double xPos;
 	private final double yPos;
 	final private ForwardNavigatorBehavior fwdNav;
+//	final private Transform3D staticTransforms;
 	
 	public Collidable(final SharedGroup group, final float x, long speed) {
 		final TransformGroup shape = Builders.transformGroup()
@@ -47,6 +49,21 @@ public class Collidable extends BranchGroup {
 			.fin();
 		
 		addChild(transTG);
+		
+		
+//		this.staticTransforms= new Transform3D();
+//		transTG.getTransform(staticTransforms);
+//		
+//		Node node = this;
+//		while(node.getParent() != null){
+//			if(node.getParent() instanceof TransformGroup){
+//				TransformGroup transgroup = (TransformGroup)node.getParent();
+//				Transform3D trans = new Transform3D();
+//				transgroup.getTransform(trans);
+//				staticTransforms.mul(trans);
+//			}
+//			node=node.getParent();
+//		}
 	}
 	
 	public double getOldZPos() {
@@ -60,16 +77,39 @@ public class Collidable extends BranchGroup {
 	public double getZPos() {
 		Transform3D t3d = new Transform3D();
 		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
+		
+//		//only new line
+//		t3d.mul(staticTransforms);
+		
 		Vector3d vector = new Vector3d();
 		t3d.get(vector);
 		return vector.getZ();
 	}
 
 	public double getXPos() {
+//		Transform3D t3d = new Transform3D();
+//		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
+//		t3d.mul(staticTransforms);
+//		Vector3d vector = new Vector3d();
+//		t3d.get(vector);
+//		
+//		double diff = vector.getX()-xPos;
+//		
+//		return vector.getX();
+		
 		return xPos;
 	}
 
 	public double getYPos() {
+//		Transform3D t3d = new Transform3D();
+//		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
+//		t3d.mul(staticTransforms);
+//		Vector3d vector = new Vector3d();
+//		t3d.get(vector);
+//		
+//		double diff = vector.getY()-yPos;
+//		return vector.getY();
+		
 		return yPos;
 	}
 

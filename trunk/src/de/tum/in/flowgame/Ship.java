@@ -1,9 +1,11 @@
 package de.tum.in.flowgame;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Node;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point3d;
@@ -18,6 +20,8 @@ public class Ship extends TransformGroup {
 	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
 	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
 	private final KeyShipBehavior keyShipBehavior;
+	
+	private final Transform3D staticTransforms;
 	
 	public Ship(final GameLogic logic, TransformGroup viewTG) throws IOException {
 		super();
@@ -57,23 +61,42 @@ public class Ship extends TransformGroup {
 		ship.addChild(collisionBehavior);
 		collisionBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		
-//		Transform3D staticTransforms = new Transform3D();
-//		
-//		Node node = this;
-//		while(node.getParent() != null){
-//			if(node.getParent() instanceof TransformGroup){
-//				TransformGroup tg = (TransformGroup)node.getParent();
-//				Transform3D trans = new Transform3D();
-//				tg.getTransform(trans);
-//			}
-//		}
+		staticTransforms = new Transform3D();
 		
+		Node node = this;
+		while(node.getParent() != null){
+			if(node.getParent() instanceof TransformGroup){
+				TransformGroup tg = (TransformGroup)node.getParent();
+				Transform3D trans = new Transform3D();
+				tg.getTransform(trans);
+				staticTransforms.mul(trans);
+			}
+			node=node.getParent();
+		}
+		
+		//the following call multiplies the staticTransforms with all the transforms of the children of this node
+		//getTransformsOfChildren(this);
+		
+		
+	}
+	
+	private void getTransformsOfChildren(TransformGroup tg){
+		Enumeration<Node> children = tg.getAllChildren();
+		while(children.hasMoreElements()){
+			Node n = children.nextElement();
+			if(n instanceof TransformGroup){
+				Transform3D trans = new Transform3D();
+				((TransformGroup)n).getTransform(trans);
+				this.staticTransforms.mul(trans);
+				getTransformsOfChildren((TransformGroup)n);
+			}
+		}
 	}
 	
 //	protected static TransformGroup createShip(final GameLogic logic, TransformGroup viewTG) throws IOException {
 //		
 //	}
-
+	
 	private static TransformGroup loadShip() throws IOException {
 
 		final Transform3D rotX = new Transform3D();
@@ -94,10 +117,19 @@ public class Ship extends TransformGroup {
 		return rotateShip;
 	}
 	
-	private Vector3d getShipPos(){
+	public Vector3d getVector3dtShipPos(){
+		Transform3D trans = keyShipBehavior.getVpTrans();
+		trans.mul(staticTransforms);
+		Vector3d vector = new Vector3d();
+		trans.get(vector);
 		
-		//TODO implement
-		return null;
+		double xdiff = vector.getX()-this.getXPos();
+		double ydiff = vector.getY()-this.getYPos();
+		
+		System.out.println(staticTransforms);
+		System.out.println("xdiff: " + xdiff + "ydiff: " + ydiff);
+		
+		return vector;
 	}
 
 	public double getXPos() {
