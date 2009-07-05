@@ -1,7 +1,6 @@
 package de.tum.in.flowgame;
 
 import javax.media.j3d.Alpha;
-import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Link;
 import javax.media.j3d.SharedGroup;
@@ -19,7 +18,7 @@ public class Collidable extends BranchGroup {
 	final private ForwardNavigatorBehavior fwdNav;
 	
 	public Collidable(final SharedGroup group, final float x, long speed) {
-		this.setCapability(this.ALLOW_DETACH);
+		this.setCapability(BranchGroup.ALLOW_DETACH);
 		
 		setUserData(group.getUserData());
 		
