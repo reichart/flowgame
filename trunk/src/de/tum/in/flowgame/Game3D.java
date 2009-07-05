@@ -49,16 +49,18 @@ public class Game3D extends Canvas3D {
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
 
-		CollisionBehavior collisionBehavior = new CollisionBehavior(collidables);
-		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
-		collidables.addChild(collisionBehavior);
-
 		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
 
 		final Tunnel tunnel = new Tunnel();
 		
 		this.logic = new GameLogic(ccb, tunnel);
+		
+		CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic);
+		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
+		collidables.addChild(collisionBehavior);
+
+		
 		this.overlay = new GameOverlay(logic);
 		this.addComponentListener(overlay);
 		

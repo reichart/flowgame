@@ -47,7 +47,7 @@ public class Ship extends TransformGroup {
 		// box.setCollidable(false);
 		rotationGroup.addChild(ship);
 		System.out.println("Ship " + ship.getBounds());
-
+		
 //		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
 //		ship.addChild(keyShipBehavior);
 //		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
