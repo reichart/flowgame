@@ -30,6 +30,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
+import de.tum.in.flowgame.behavior.CollisionBehavior;
 import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
 import de.tum.in.flowgame.behavior.ShipCollisionBehavior;
@@ -44,9 +45,6 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
-	public static final float INITIAL_SHIP_PLACEMENT_X = 0;
-	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
-	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
 
 	private final Sprite cockpit;
 	private final HealthBar fuel, damage;
@@ -60,7 +58,7 @@ public class Game3D extends Canvas3D {
 		super(SimpleUniverse.getPreferredConfiguration());
 
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
-		
+
 		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
 				Color.YELLOW.darker(), 0, 10);
 
@@ -72,13 +70,20 @@ public class Game3D extends Canvas3D {
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
 
+		CollisionBehavior collisionBehavior = new CollisionBehavior(collidables);
+		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
+		collidables.addChild(collisionBehavior);
+		
 		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
-
+		
 		Tunnel tunnel = new Tunnel();
 		this.logic = new GameLogic(ccb, tunnel);
 		final SimpleUniverse su = createUniverse();
-		collidables.addChild(createShip(logic, su.getViewingPlatform().getViewPlatformTransform()));
+		
+		Ship ship = new Ship(logic, su.getViewingPlatform().getViewPlatformTransform());
+		
+		collidables.addChild(ship);
 		collidables.addChild(ccb);
 
 		final BranchGroup scene = new BranchGroup();
@@ -160,66 +165,4 @@ public class Game3D extends Canvas3D {
 
 		return back;
 	}
-
-	private static TransformGroup createShip(final GameLogic logic, TransformGroup viewTG) throws IOException {
-		final TransformGroup initialTranslation = new TransformGroup();
-
-		final Transform3D t3d = new Transform3D();
-		t3d.setTranslation(new Vector3d(INITIAL_SHIP_PLACEMENT_X, INITIAL_SHIP_PLACEMENT_Y, INITIAL_SHIP_PLACEMENT_Z));
-
-		initialTranslation.setTransform(t3d);
-
-		TransformGroup moveGroup = new TransformGroup();
-		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-
-		initialTranslation.addChild(moveGroup);
-
-		TransformGroup rotationGroup = new TransformGroup();
-		rotationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		moveGroup.addChild(rotationGroup);
-
-		TransformGroup ship = loadShip();
-
-		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f, -0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
-		// Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
-		// box.setCollidable(false);
-		rotationGroup.addChild(ship);
-		System.out.println("Ship " + ship.getBounds());
-
-//		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
-//		ship.addChild(keyShipBehavior);
-//		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
-		
-		// Alternative KeyBehavior
-		KeyShipBehavior keyShipBehavior = new KeyShipBehavior(moveGroup, viewTG);
-		ship.addChild(keyShipBehavior);
-		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
-
-		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship, logic);
-		ship.addChild(collisionBehavior);
-		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
-
-		return initialTranslation;
-	}
-
-	private static TransformGroup loadShip() throws IOException {
-
-		final Transform3D rotX = new Transform3D();
-		rotX.rotX(Math.toRadians(90));
-
-		final Transform3D rotY = new Transform3D();
-		rotY.rotY(Math.toRadians(180));
-
-		rotX.mul(rotY);
-
-		TransformGroup rotateShip = new TransformGroup();
-		rotateShip.setTransform(rotX);
-
-		final BranchGroup ship = Utils.loadScene("/res/SFighter.obj");
-
-		rotateShip.addChild(ship);
-
-		return rotateShip;
-	}
-
 }

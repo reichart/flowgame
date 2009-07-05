@@ -39,7 +39,8 @@ public class ShipCollisionBehavior extends Behavior {
 			final Object element = criteria.nextElement();
 			if (element instanceof WakeupOnCollisionEntry) {
 				final WakeupOnCollisionEntry collision = (WakeupOnCollisionEntry) element;
-				logic.add(collision.getTriggeringPath().getObject());
+				final Node node = collision.getTriggeringPath().getObject();
+				logic.add(node.getParent().getParent());
 			}
 		}
 		wakeupOn(wakeUp);

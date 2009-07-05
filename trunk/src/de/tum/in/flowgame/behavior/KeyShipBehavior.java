@@ -17,7 +17,9 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.Game3D;
+import com.sun.j3d.utils.universe.SimpleUniverse;
+
+import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
 
@@ -254,19 +256,19 @@ public class KeyShipBehavior extends Behavior {
 		}
 
 		double distToRadiusX = allowedDistToCircleRadius(pos.y
-				+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
+				+ Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS);
 		double distToRadiusRight = distToRadiusX
-				- Game3D.INITIAL_SHIP_PLACEMENT_X;
+				- Ship.INITIAL_SHIP_PLACEMENT_X;
 		double distToRadiusLeft = distToRadiusX
-				+ Game3D.INITIAL_SHIP_PLACEMENT_X;
+				+ Ship.INITIAL_SHIP_PLACEMENT_X;
 		// System.out.println("DistRight: " + distToRadiusRight);
 		// System.out.println("DistLeft: " + distToRadiusLeft);
 
 		double distToRadiusY = allowedDistToCircleRadius(pos.x
-				+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
-		double distToRadiusUp = distToRadiusY - Game3D.INITIAL_SHIP_PLACEMENT_Y;
+				+ Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS);
+		double distToRadiusUp = distToRadiusY - Ship.INITIAL_SHIP_PLACEMENT_Y;
 		double distToRadiusDown = distToRadiusY
-				+ Game3D.INITIAL_SHIP_PLACEMENT_Y;
+				+ Ship.INITIAL_SHIP_PLACEMENT_Y;
 		// System.out.println("DistUp: " + distToRadiusUp);
 		// System.out.println("DistDown: " + distToRadiusDown);
 
@@ -289,7 +291,7 @@ public class KeyShipBehavior extends Behavior {
 			pos.y = -distToRadiusDown;
 		}
 
-		// System.out.println("Pos.x: " + pos.x + " - Pos.y: " + pos.y);
+		System.out.println("Pos.x: " + pos.x + " - Pos.y: " + pos.y);
 
 		// calculate the rotation of the ship
 		Matrix3f xMov = new Matrix3f();
@@ -317,22 +319,22 @@ public class KeyShipBehavior extends Behavior {
 		vpPos = new Vector3d(pos);
 
 		if (!firstPerson) {
-			double realY = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
+			double realY = pos.y + Ship.INITIAL_SHIP_PLACEMENT_Y;
 			if (realY > 0) {
 				vpPos.y = realY * (MOV_RADIUS-1.5)/MOV_RADIUS + 1;
 			} else {
 				vpPos.y = realY * (MOV_RADIUS-0.5)/MOV_RADIUS + 1;
 			}
-			double realX = pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X;
+			double realX = pos.x + Ship.INITIAL_SHIP_PLACEMENT_X;
 			if (realX > 0) {
 				vpPos.x = realX * (MOV_RADIUS-1.8)/MOV_RADIUS;
 			} else {
 				vpPos.x = realX * (MOV_RADIUS-1.8)/MOV_RADIUS;
 			}
 		} else {
-			vpPos.z = Game3D.INITIAL_SHIP_PLACEMENT_Z-1;
-			vpPos.y = pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y;
-			vpPos.x = pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X;
+			vpPos.z = Ship.INITIAL_SHIP_PLACEMENT_Z-1;
+			vpPos.y = pos.y + Ship.INITIAL_SHIP_PLACEMENT_Y;
+			vpPos.x = pos.x + Ship.INITIAL_SHIP_PLACEMENT_X;
 		}
 
 		// System.out.println(realY);
@@ -345,7 +347,8 @@ public class KeyShipBehavior extends Behavior {
 		// System.out.println("pos.y: " + pos.y + " - vpPos.y: " + vpPos.y);
 		// System.out.println(vpPos.y);
 		viewTG.setTransform(vpTrans);
-
+		
+		
 	}
 
 	private void adaptMovementToTunnelRadius() {
@@ -354,22 +357,22 @@ public class KeyShipBehavior extends Behavior {
 			switch (circleSection) {
 			case 1:
 				if (mov.x > mov.y) {
-					if (pos.x <= MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X) {
+					if (pos.x <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
 						pos.y = allowedDistToCircleRadius(pos.x
-								+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_Y;
+								+ Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_Y;
 					} else {
-						pos.x = MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X;
-						pos.y = 0 - Game3D.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = 0 - Ship.INITIAL_SHIP_PLACEMENT_Y;
 					}
 				} else if (mov.y > mov.x) {
-					if (pos.y <= MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y) {
+					if (pos.y <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
 						pos.x = allowedDistToCircleRadius(pos.y
-								+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_X;
+								+ Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_X;
 					} else {
-						pos.y = MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y;
-						pos.x = 0 - Game3D.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = 0 - Ship.INITIAL_SHIP_PLACEMENT_X;
 					}
 				} else {
 					Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
@@ -379,22 +382,22 @@ public class KeyShipBehavior extends Behavior {
 				break;
 			case 2:
 				if (-mov.x > mov.y) {
-					if (-pos.x <= MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X) {
+					if (-pos.x <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
 						pos.y = allowedDistToCircleRadius(-pos.x
-								+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_Y;
+								+ Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_Y;
 					} else {
-						pos.x = -MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X;
-						pos.y = 0 - Game3D.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = 0 - Ship.INITIAL_SHIP_PLACEMENT_Y;
 					}
 				} else if (mov.y > -mov.x) {
-					if (pos.y <= MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y) {
+					if (pos.y <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
 						pos.x = -allowedDistToCircleRadius(pos.y
-								+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_X;
+								+ Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_X;
 					} else {
-						pos.y = MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y;
-						pos.x = 0 + Game3D.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = 0 + Ship.INITIAL_SHIP_PLACEMENT_X;
 					}
 				} else {
 					Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
@@ -404,22 +407,22 @@ public class KeyShipBehavior extends Behavior {
 				break;
 			case 3:
 				if (mov.x < mov.y) {
-					if (pos.x >= -MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X) {
+					if (pos.x >= -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
 						pos.y = -allowedDistToCircleRadius(pos.x
-								+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_Y;
+								+ Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_Y;
 					} else {
-						pos.x = -MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X;
-						pos.y = 0 + Game3D.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = 0 + Ship.INITIAL_SHIP_PLACEMENT_Y;
 					}
 				} else if (mov.y < mov.x) {
-					if (pos.y >= -MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y) {
+					if (pos.y >= -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
 						pos.x = -allowedDistToCircleRadius(pos.y
-								+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_X;
+								+ Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_X;
 					} else {
-						pos.y = -MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y;
-						pos.x = 0 + Game3D.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = 0 + Ship.INITIAL_SHIP_PLACEMENT_X;
 					}
 				} else {
 					Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
@@ -429,22 +432,22 @@ public class KeyShipBehavior extends Behavior {
 				break;
 			case 4:
 				if (mov.x > -mov.y) {
-					if (pos.x <= MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X) {
+					if (pos.x <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
 						pos.y = -allowedDistToCircleRadius(pos.x
-								+ Game3D.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_Y;
+								+ Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_Y;
 					} else {
-						pos.x = MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_X;
-						pos.y = 0 - Game3D.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = 0 - Ship.INITIAL_SHIP_PLACEMENT_Y;
 					}
 				} else if (mov.y < mov.x) {
-					if (pos.y >= -MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y) {
+					if (pos.y >= -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
 						pos.x = allowedDistToCircleRadius(pos.y
-								+ Game3D.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-								- Game3D.INITIAL_SHIP_PLACEMENT_X;
+								+ Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
+								- Ship.INITIAL_SHIP_PLACEMENT_X;
 					} else {
-						pos.y = -MOV_RADIUS - Game3D.INITIAL_SHIP_PLACEMENT_Y;
-						pos.x = 0 - Game3D.INITIAL_SHIP_PLACEMENT_X;
+						pos.y = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
+						pos.x = 0 - Ship.INITIAL_SHIP_PLACEMENT_X;
 					}
 				} else {
 					Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
@@ -482,8 +485,8 @@ public class KeyShipBehavior extends Behavior {
 		double m = mov.y / mov.x;
 		double n = pos.y - m * pos.x;
 		Point2d[] intersections = circleLineIntersection(MOV_RADIUS,
-				-Game3D.INITIAL_SHIP_PLACEMENT_X,
-				-Game3D.INITIAL_SHIP_PLACEMENT_Y, m, n);
+				-Ship.INITIAL_SHIP_PLACEMENT_X,
+				-Ship.INITIAL_SHIP_PLACEMENT_Y, m, n);
 		if (intersections.length < 2) {
 			return intersections[0];
 		} else {
@@ -501,8 +504,8 @@ public class KeyShipBehavior extends Behavior {
 
 	private int outOfCircleSection(Vector3d pos) {
 		double radius = Math.sqrt(Math.pow(
-				(pos.x + Game3D.INITIAL_SHIP_PLACEMENT_X), 2)
-				+ Math.pow((pos.y + Game3D.INITIAL_SHIP_PLACEMENT_Y), 2));
+				(pos.x + Ship.INITIAL_SHIP_PLACEMENT_X), 2)
+				+ Math.pow((pos.y + Ship.INITIAL_SHIP_PLACEMENT_Y), 2));
 		if (radius <= MOV_RADIUS) {
 			return 0;
 		}
@@ -557,4 +560,9 @@ public class KeyShipBehavior extends Behavior {
 	private String f(final boolean b) {
 		return b ? " 1" : " 0";
 	}
+
+	public Transform3D getVpTrans() {
+		return vpTrans;
+	}
+
 }

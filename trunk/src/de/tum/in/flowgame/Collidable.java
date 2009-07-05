@@ -1,17 +1,22 @@
 package de.tum.in.flowgame;
 
 import javax.media.j3d.Alpha;
-import javax.media.j3d.Behavior;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Link;
 import javax.media.j3d.SharedGroup;
+import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
 import de.tum.in.flowgame.util.Builders;
 
 public class Collidable extends BranchGroup {
-
+	private double oldZPos;
+	private final double xPos;
+	private final double yPos;
+	final private ForwardNavigatorBehavior fwdNav;
+	
 	public Collidable(final SharedGroup group, final float x, long speed) {
 		final TransformGroup shape = Builders.transformGroup()
 			.add(new Link(group))
@@ -24,21 +29,48 @@ public class Collidable extends BranchGroup {
 			.writable()
 			.fin();
 
-		final Behavior fwdNav = new ForwardNavigatorBehavior(tg, speed);
+		fwdNav = new ForwardNavigatorBehavior(tg, speed);
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		tg.addChild(fwdNav);
 
 		final TransformGroup scaleTG = Builders.transformGroup()
-			.scale(0.3)
+//			.scale(0.3)
 			.add(tg)
 			.fin();
 		
-		final TransformGroup transTG = Builders.transformGroup()
-			.translate(Math.random() * 10 - 5, Math.random() * 10 - 5, 0)
+		xPos = Math.random() * 10 - 5;
+		yPos = Math.random() * 10 - 5;
+		
+		TransformGroup transTG = Builders.transformGroup()
+			.translate(xPos, yPos, 0)
 			.add(scaleTG)
 			.fin();
 		
 		addChild(transTG);
+	}
+	
+	public double getOldZPos() {
+		return oldZPos;
+	}
+
+	public void setOldZPos(double oldZPos) {
+		this.oldZPos = oldZPos;
+	}
+	
+	public double getZPos() {
+		Transform3D t3d = new Transform3D();
+		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
+		Vector3d vector = new Vector3d();
+		t3d.get(vector);
+		return vector.getZ();
+	}
+
+	public double getXPos() {
+		return xPos;
+	}
+
+	public double getYPos() {
+		return yPos;
 	}
 
 }
