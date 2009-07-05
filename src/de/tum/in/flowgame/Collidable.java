@@ -19,6 +19,10 @@ public class Collidable extends BranchGroup {
 	final private ForwardNavigatorBehavior fwdNav;
 	
 	public Collidable(final SharedGroup group, final float x, long speed) {
+		this.setCapability(this.ALLOW_DETACH);
+		
+		setUserData(group.getUserData());
+		
 		final TransformGroup shape = Builders.transformGroup()
 			.add(new Link(group))
 			.addRotationBehavior(new Alpha(-1, 3000), Game3D.WORLD_BOUNDS)
@@ -26,7 +30,7 @@ public class Collidable extends BranchGroup {
 
 		
 		final TransformGroup scaledShape = Builders.transformGroup()
-			.scale(0.1)
+			.scale(0.5)
 			.add(shape)
 			.fin();
 		
@@ -44,11 +48,11 @@ public class Collidable extends BranchGroup {
 			.add(tg)
 			.fin();
 		
-//		xPos = Math.random() * 10 - 5;
-//		yPos = Math.random() * 10 - 5;
+		xPos = Math.random() * 10 - 5;
+		yPos = Math.random() * 10 - 5;
 		
-		xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
-		yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
+//		xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
+//		yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
 		
 		TransformGroup transTG = Builders.transformGroup()
 			.translate(xPos, yPos, 0)
