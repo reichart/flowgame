@@ -15,4 +15,21 @@ public class Answer extends AbstractEntity {
 		this.question = question;
 		this.answer = answer;
 	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	public Integer getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(Integer answer) {
+		this.answer = answer;
+	}
+
 }
