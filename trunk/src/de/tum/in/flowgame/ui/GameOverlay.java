@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Timer;
@@ -30,7 +31,7 @@ public class GameOverlay implements GameListener, ComponentListener {
 
 	public GameOverlay(final GameLogic logic) {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
-		this.bigFont = new Font("sans", Font.BOLD, 24);
+		this.bigFont = new Font("sans", Font.BOLD, 64);
 		this.logic = logic;
 		logic.addListener(this);
 
@@ -44,14 +45,19 @@ public class GameOverlay implements GameListener, ComponentListener {
 	}
 
 	public void render(final Graphics2D g) {
-		g.setFont(bigFont);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		if (message != null) {
-			final FontMetrics fm = g.getFontMetrics();
-			final int w = fm.stringWidth(message);
-			final int h = fm.getHeight();
-
-			g.drawString(message, (width + w) / 2, h);
+			synchronized (message) {
+				g.setFont(bigFont);
+				g.setColor(Color.WHITE);
+	
+				final FontMetrics fm = g.getFontMetrics();
+				final int w = fm.stringWidth(message);
+				final int h = fm.getHeight();
+	
+				g.drawString(message, (width - w) / 2, (height - h) / 2);
+			}
 		}
 
 		fuel.setValue(logic.getFuel());
@@ -59,7 +65,7 @@ public class GameOverlay implements GameListener, ComponentListener {
 
 		final int barsWidth = Math.min(width, height) / 2;
 
-//		cockpit.render(g, 0, 0, width, height);
+		// cockpit.render(g, 0, 0, width, height);
 
 		damage.render(g, 20, 20, barsWidth, -1);
 		fuel.render(g, 20, 50, barsWidth, -1);
