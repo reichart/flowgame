@@ -12,7 +12,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
-import de.tum.in.flowgame.behavior.ShipCollisionBehavior;
 
 public class Ship extends TransformGroup {
 	
@@ -57,10 +56,6 @@ public class Ship extends TransformGroup {
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 
-		ShipCollisionBehavior collisionBehavior = new ShipCollisionBehavior(ship, logic);
-		ship.addChild(collisionBehavior);
-		collisionBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		
 		staticTransforms = new Transform3D();
 		
 		Node node = this;
