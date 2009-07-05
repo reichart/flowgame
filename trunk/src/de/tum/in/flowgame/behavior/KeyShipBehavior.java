@@ -17,8 +17,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import com.sun.j3d.utils.universe.SimpleUniverse;
-
 import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
@@ -555,10 +553,6 @@ public class KeyShipBehavior extends Behavior {
 			return 0;
 		else
 			return deltaTime;
-	}
-
-	private String f(final boolean b) {
-		return b ? " 1" : " 0";
 	}
 
 	public Transform3D getVpTrans() {
