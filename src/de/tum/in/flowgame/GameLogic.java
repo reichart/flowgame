@@ -9,7 +9,7 @@ import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.model.GameRound;
 
-public class GameLogic implements Runnable, GameLogicMBean {
+public class GameLogic extends Thread implements GameLogicMBean {
 
 	public enum Item {
 		FUELCAN(Sounds.FUELCAN), ASTEROID(Sounds.ASTEROID);
@@ -32,7 +32,7 @@ public class GameLogic implements Runnable, GameLogicMBean {
 
 	private final Tunnel tunnel;
 
-	private volatile int fuel;
+	private volatile int fuel = 10;
 	private int asteroids;
 
 	private final CreateCollidablesBehavior ccb;
@@ -106,7 +106,7 @@ public class GameLogic implements Runnable, GameLogicMBean {
 		this.tunnel.getFwdNav().setSpeed(tunnelSpeed);
 	}
 
-	private void addListener(final GameListener listener) {
+	public void addListener(final GameListener listener) {
 		this.listeners.add(listener);
 	}
 
