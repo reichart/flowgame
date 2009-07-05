@@ -1,7 +1,6 @@
 package de.tum.in.flowgame.ui;
 
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
 public class HealthBar implements Sprite {
@@ -39,8 +38,8 @@ public class HealthBar implements Sprite {
 		g.setColor(valueColor);
 		g.fillRect(30, 0, scaledValue, HEIGHT);
 
-		final FontMetrics fm = g.getFontMetrics();
-		g.drawString(name + ": " + value, 130, fm.getHeight() / 5 * 4);
+//		final FontMetrics fm = g.getFontMetrics();
+//		g.drawString(name + ": " + value, 130, fm.getHeight() / 5 * 4);
 	}
 
 	public void render(final Graphics2D g, final int x, final int y) {
