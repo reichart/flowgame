@@ -75,7 +75,7 @@ public class GameLogic extends Thread implements GameLogicMBean {
 
 		while (asteroids < MAX_ASTEROIDS && fuel > 0) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(4000);
 			} catch (final InterruptedException ex) {
 				// ignore
 			}
