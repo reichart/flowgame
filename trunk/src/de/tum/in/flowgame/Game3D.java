@@ -2,8 +2,6 @@ package de.tum.in.flowgame;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 import javax.media.j3d.AmbientLight;
@@ -94,6 +92,10 @@ public class Game3D extends Canvas3D {
 		su.addBranchGraph(scene);
 	}
 
+	public void start() {
+		logic.start();
+	}
+	
 	@Override
 	public void postRender() {
 		final J3DGraphics2D g2 = getGraphics2D();
