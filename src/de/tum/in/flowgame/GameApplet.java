@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 
 public class GameApplet extends Applet {
 
+	private final Game3D game;
+
 	public static void main(final String[] args) throws Exception {
 		final Frame frame = new Frame();
 		frame.setSize(800, 600);
@@ -17,8 +19,11 @@ public class GameApplet extends Applet {
 				System.exit(0);
 			}
 		});
-		frame.add(new GameApplet());
+		final GameApplet app = new GameApplet();
+		frame.add(app);
 		frame.setVisible(true);
+		
+		app.start();
 	}
 
 	@Override
@@ -26,6 +31,11 @@ public class GameApplet extends Applet {
 		System.out.println("GameApplet.init()");
 	}
 
+	@Override
+	public void start() {
+		game.start();
+	}
+	
 	@Override
 	public void destroy() {
 		System.out.println("GameApplet.destroy()");
@@ -35,7 +45,8 @@ public class GameApplet extends Applet {
 		System.out.println("GameApplet.GameApplet()");
 		setLayout(new BorderLayout());
 
-		add(BorderLayout.CENTER, new Game3D());
+		this.game = new Game3D();
+		add(BorderLayout.CENTER, game);
 	}
 
 }
