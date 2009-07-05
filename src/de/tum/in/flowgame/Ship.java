@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Node;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point3d;

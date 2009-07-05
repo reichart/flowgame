@@ -140,8 +140,4 @@ public class KeyShipEllipseBehavior extends Behavior {
 	private Matrix3d createZRotationMatrix(double angle) {
 		return new Matrix3d(Math.cos(angle), -Math.sin(angle), 0, Math.sin(angle), Math.cos(angle), 0, 0, 0, 1);
 	}
-
-	private String f(final boolean b) {
-		return b ? " 1" : " 0";
-	}
 }
