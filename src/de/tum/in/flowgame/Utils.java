@@ -1,8 +1,11 @@
 package de.tum.in.flowgame;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.URL;
 
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
 import javax.media.j3d.Texture;
@@ -52,5 +55,23 @@ public class Utils {
 
 		texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 		return texture;
+	}
+
+	private final static MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+
+	/**
+	 * Exports an MBean or MXBean via JMX.
+	 */
+	public static void export(final Object mbean) {
+		try {
+			final Class<?> clazz = mbean.getClass();
+			final String domain = clazz.getPackage().getName();
+			final String value = clazz.getSimpleName();
+
+			final ObjectName name = new ObjectName(domain, "type", value);
+			mbs.registerMBean(mbean, name);
+		} catch (final Exception ex) {
+			throw new RuntimeException("failed to export " + mbean, ex);
+		}
 	}
 }
