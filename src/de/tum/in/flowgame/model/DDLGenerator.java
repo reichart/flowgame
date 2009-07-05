@@ -3,15 +3,6 @@ package de.tum.in.flowgame.model;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.RollbackException;
-
-import oracle.toplink.essentials.exceptions.DatabaseException;
-import de.tum.in.flowgame.dao.AnswerDAO;
-import de.tum.in.flowgame.dao.AnswerDAOImpl;
-import de.tum.in.flowgame.dao.QuestionDAO;
-import de.tum.in.flowgame.dao.QuestionDAOImpl;
-import de.tum.in.flowgame.dao.QuestionnaireDAO;
-import de.tum.in.flowgame.dao.QuestionnaireDAOImpl;
 
 public class DDLGenerator {
 
@@ -34,14 +25,7 @@ public class DDLGenerator {
 				em.persist(ans);
 				em.persist(p);
 			em.getTransaction().commit();
-		} catch (DatabaseException ex) {
-//			JOptionPane.showMessageDialog(null, "Es ist ein Fehler mit der Datenbank aufgetreten. Überprüfen Sie:\n- ob die Datenbank existiert,\n- ob die Verbindungsdaten korrekt sind", "Datenbankenfehler", JOptionPane.ERROR_MESSAGE);
-			ex.printStackTrace();
-		} catch (RollbackException ex) {
-//			JOptionPane.showMessageDialog(null, "Die Datensätze existieren bereits.", "Datenbankenfehler", JOptionPane.ERROR_MESSAGE);
-			ex.printStackTrace();
 		} catch (Exception ex) {
-//			JOptionPane.showMessageDialog(null, ex);
 			ex.printStackTrace();
 		}
 	}
