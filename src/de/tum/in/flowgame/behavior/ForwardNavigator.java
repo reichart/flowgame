@@ -61,6 +61,7 @@ public class ForwardNavigator {
 		// Put the transform back into the transform group.
 		vpTrans.set(vpPos);
 		targetTG.setTransform(vpTrans);
+		
 	}
 
 	private long getDeltaTime() {
@@ -75,5 +76,9 @@ public class ForwardNavigator {
 	
 	public void setFwdSpeed(final double fwdSpeed) {
 		this.fwdSpeed = fwdSpeed;
+	}
+
+	public TransformGroup getTargetTG() {
+		return targetTG;
 	}
 }

@@ -27,7 +27,8 @@ public class GameLogic {
 	}
 
 	public void add(final Node node) {
-		final Object userData = node.getParent().getParent().getUserData();
+		Object userData = node.getUserData();
+		System.out.println(userData);
 		if (Item.FUELCAN.toString().equals(userData)) {
 			fuel++;
 			noiseMaker.playSound(Item.FUELCAN);

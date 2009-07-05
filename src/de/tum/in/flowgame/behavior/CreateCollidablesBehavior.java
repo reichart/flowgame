@@ -12,14 +12,13 @@ import javax.media.j3d.WakeupOnElapsedTime;
 import javax.vecmath.Point3d;
 
 import de.tum.in.flowgame.Collidable;
-import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.GameLogic.Item;
 
 public class CreateCollidablesBehavior extends Behavior {
 
 	private long time = 1000;
-	private long speed = 120;
+	private long speed = 10;
 	// number of asteroids compared to fuel cans, number between 0 and 1
 	private float ratioAsteroids;
 
