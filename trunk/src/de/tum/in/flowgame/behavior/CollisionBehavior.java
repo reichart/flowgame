@@ -9,7 +9,6 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
-import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameLogic;
@@ -18,9 +17,9 @@ import de.tum.in.flowgame.Ship;
 public class CollisionBehavior extends Behavior {
 	private final WakeupCondition condition;
 	private final GameLogic gameLogic;
-	BranchGroup branchGroup;
+	private final BranchGroup branchGroup;
 
-	public CollisionBehavior(BranchGroup collidables, GameLogic gl) {
+	public CollisionBehavior(final BranchGroup collidables, final GameLogic gl) {
 		condition = new WakeupOnElapsedFrames(0);
 		branchGroup = collidables;
 		gameLogic = gl;
@@ -31,31 +30,23 @@ public class CollisionBehavior extends Behavior {
 		wakeupOn(condition);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void processStimulus(Enumeration criteria) {
-		Enumeration<Node> children = branchGroup.getAllChildren();
-		Ship ship = null;
-		while (children.hasMoreElements() && ship == null) {
-			Node child = children.nextElement();
-			if (child instanceof Ship) {
-				ship = (Ship) child;
-				Vector3d vec = ship.getVector3dtShipPos();
-				// System.out.println("Ship: " + ship.getXPos() + ", " +
-				// ship.getYPos());
-			}
-		}
+	public void processStimulus(final Enumeration criteria) {
+		final Enumeration<Node> children = branchGroup.getAllChildren();
+		final Ship ship = findShip(children);
 		final double shipX = ship.getVector3dtShipPos().getX();
 		final double shipY = ship.getVector3dtShipPos().getY();
-		final double shipZ = ship.getVector3dtShipPos().getZ();
+		// final double shipZ = ship.getVector3dtShipPos().getZ();
 
 		while (children.hasMoreElements()) {
-			Node child = children.nextElement();
+			final Node child = children.nextElement();
 			if (child instanceof Collidable) {
-				Collidable collidable = (Collidable) child;
+				final Collidable collidable = (Collidable) child;
 
 				final double zPos = collidable.getZPos();
-				final double xPos = collidable.getXPos();
-				final double yPos = collidable.getYPos();
+				// final double xPos = collidable.getXPos();
+				// final double yPos = collidable.getYPos();
 
 				final double oldz = collidable.getOldZPos();
 
@@ -63,15 +54,14 @@ public class CollisionBehavior extends Behavior {
 
 					final Bounds collidableBounds = collidable.getBounds();
 
-					BoundingBox newBounds = new BoundingBox();
+					final BoundingBox newBounds = new BoundingBox();
 					newBounds.setLower(shipX, shipY, oldz);
 					newBounds.setUpper(shipX, shipY, zPos);
 
 					if (collidableBounds.intersect(newBounds)) {
-						System.out.println("COLLISION! BAAAAM!" + oldz + ", "
-								+ zPos + child.getUserData());
+						System.out.println("COLLISION! BAAAAM!" + oldz + ", " + zPos + child.getUserData());
 						gameLogic.collide(child);
-						((BranchGroup)child).detach();
+						((BranchGroup) child).detach();
 					}
 				}
 
@@ -88,6 +78,19 @@ public class CollisionBehavior extends Behavior {
 			}
 		}
 		wakeupOn(condition);
+	}
+
+	private Ship findShip(final Enumeration<Node> children) {
+		while (children.hasMoreElements()) {
+			final Node child = children.nextElement();
+			if (child instanceof Ship) {
+				return (Ship) child;
+				// Vector3d vec = ship.getVector3dtShipPos();
+				// System.out.println("Ship: " + ship.getXPos() + ", " +
+				// ship.getYPos());
+			}
+		}
+		return null;
 	}
 
 }
