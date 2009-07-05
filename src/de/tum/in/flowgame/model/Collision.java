@@ -9,8 +9,23 @@ import javax.persistence.TemporalType;
 import de.tum.in.flowgame.GameLogic.Item;
 
 @Entity
-public class Collision extends AbstractEntity{
+public class Collision extends AbstractEntity {
+
 	@Temporal(TemporalType.TIMESTAMP)
-	Date time;
-	Item object;
+	private final Date time;
+
+	private final Item object;
+
+	public Collision(final Item object) {
+		this.object = object;
+		this.time = new Date();
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public Item getObject() {
+		return object;
+	}
 }

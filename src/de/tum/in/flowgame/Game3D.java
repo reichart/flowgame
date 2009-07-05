@@ -1,15 +1,13 @@
 package de.tum.in.flowgame;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
-import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
@@ -18,12 +16,10 @@ import javax.media.j3d.Fog;
 import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.J3DGraphics2D;
 import javax.media.j3d.LinearFog;
-import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.View;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.universe.SimpleUniverse;
@@ -32,11 +28,7 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 import de.tum.in.flowgame.behavior.CollisionBehavior;
 import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
-import de.tum.in.flowgame.behavior.KeyShipBehavior;
-import de.tum.in.flowgame.behavior.ShipCollisionBehavior;
-import de.tum.in.flowgame.ui.HealthBar;
-import de.tum.in.flowgame.ui.Sprite;
-import de.tum.in.flowgame.ui.SpriteCache;
+import de.tum.in.flowgame.ui.GameOverlay;
 
 public class Game3D extends Canvas3D {
 
@@ -45,25 +37,12 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
-
-	private final Sprite cockpit;
-	private final HealthBar fuel, damage;
-
 	private final BranchGroup collidables;
 	private final GameLogic logic;
-
-	private Font bigFont;
+	private final GameOverlay overlay;
 
 	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
-
-		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
-
-		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
-				Color.YELLOW.darker(), 0, 10);
-
-		this.damage = new HealthBar(SpriteCache.getInstance().getSprite("/res/asteroid.svg"), "Damage",
-				Color.RED, Color.RED.darker(), 0, 10);
 
 		collidables = new BranchGroup();
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
@@ -73,16 +52,20 @@ public class Game3D extends Canvas3D {
 		CollisionBehavior collisionBehavior = new CollisionBehavior(collidables);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		collidables.addChild(collisionBehavior);
-		
+
 		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
+
+		final Tunnel tunnel = new Tunnel();
 		
-		Tunnel tunnel = new Tunnel();
 		this.logic = new GameLogic(ccb, tunnel);
+		this.overlay = new GameOverlay(logic);
+		this.addComponentListener(overlay);
+		
 		final SimpleUniverse su = createUniverse();
-		
+
 		Ship ship = new Ship(logic, su.getViewingPlatform().getViewPlatformTransform());
-		
+
 		collidables.addChild(ship);
 		collidables.addChild(ccb);
 
@@ -112,33 +95,8 @@ public class Game3D extends Canvas3D {
 	@Override
 	public void postRender() {
 		final J3DGraphics2D g2 = getGraphics2D();
-		renderHUD(g2);
+		overlay.render(g2);
 		g2.flush(true);
-	}
-
-	private void renderHUD(final Graphics2D g) {
-		if (bigFont == null) {
-			bigFont = getFont().deriveFont(Font.BOLD, 16f);
-		}
-
-		// too slow
-		//g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		//g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		g.setFont(bigFont);
-
-		fuel.setValue(logic.getFuel());
-		damage.setValue(logic.getAsteroids());
-
-		final int w = getWidth();
-		final int h = getHeight();
-		
-		final int barsWidth = Math.min(w, h) / 2;
-		
-		cockpit.render(g, 0, 0, w, h);
-		
-		damage.render(g, 20, 20, barsWidth, -1);
-		fuel.render(g, 20, 50, barsWidth, -1);
 	}
 
 	private SimpleUniverse createUniverse() {
