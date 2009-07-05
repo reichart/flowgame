@@ -4,7 +4,6 @@ import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingBox;
-import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
@@ -13,15 +12,18 @@ import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.Collidable;
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Ship;
 
 public class CollisionBehavior extends Behavior {
 	private final WakeupCondition condition;
+	private final GameLogic gameLogic;
 	BranchGroup branchGroup;
 
-	public CollisionBehavior(BranchGroup collidables) {
+	public CollisionBehavior(BranchGroup collidables, GameLogic gl) {
 		condition = new WakeupOnElapsedFrames(0);
 		branchGroup = collidables;
+		gameLogic = gl;
 	}
 
 	@Override
@@ -67,8 +69,9 @@ public class CollisionBehavior extends Behavior {
 
 					if (collidableBounds.intersect(newBounds)) {
 						System.out.println("COLLISION! BAAAAM!" + oldz + ", "
-								+ zPos);
-
+								+ zPos + child.getUserData());
+						gameLogic.add(child);
+						((BranchGroup)child).detach();
 					}
 				}
 
