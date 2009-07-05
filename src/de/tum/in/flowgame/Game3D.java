@@ -34,6 +34,7 @@ import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
 import de.tum.in.flowgame.behavior.ShipCollisionBehavior;
 import de.tum.in.flowgame.ui.HealthBar;
+import de.tum.in.flowgame.ui.Sprite;
 import de.tum.in.flowgame.ui.SpriteCache;
 
 public class Game3D extends Canvas3D {
@@ -47,7 +48,8 @@ public class Game3D extends Canvas3D {
 	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
 	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
 
-	private HealthBar fuel, damage;
+	private final Sprite cockpit;
+	private final HealthBar fuel, damage;
 
 	private final BranchGroup collidables;
 	private final GameLogic logic;
@@ -57,6 +59,8 @@ public class Game3D extends Canvas3D {
 	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
+		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
+		
 		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
 				Color.YELLOW.darker(), 0, 10);
 
@@ -125,6 +129,8 @@ public class Game3D extends Canvas3D {
 		final int h = getHeight();
 		
 		final int barsWidth = Math.min(w, h) / 2;
+		
+		cockpit.render(g, 0, 0, w, h);
 		
 		damage.render(g, 20, 20, barsWidth, -1);
 		fuel.render(g, 20, 50, barsWidth, -1);
