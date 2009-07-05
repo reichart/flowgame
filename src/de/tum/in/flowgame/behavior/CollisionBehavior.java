@@ -52,11 +52,13 @@ public class CollisionBehavior extends Behavior {
 
 				if (zPos > 0 && oldz <= 0) {
 
-					final Bounds collidableBounds = collidable.getBounds();
+					final Bounds collidableBounds = collidable.getCollisionBounds();
 
 					final BoundingBox newBounds = new BoundingBox();
-					newBounds.setLower(shipX, shipY, oldz);
-					newBounds.setUpper(shipX, shipY, zPos);
+					System.out
+							.println("shipX: " + shipX + " - shipY: " + shipY);
+					newBounds.setLower(shipX - 1, shipY - 0.5, oldz);
+					newBounds.setUpper(shipX + 1, shipY + 0.5, zPos);
 
 					if (collidableBounds.intersect(newBounds)) {
 						System.out.println("COLLISION! BAAAAM!" + oldz + ", " + zPos + child.getUserData());
@@ -65,15 +67,6 @@ public class CollisionBehavior extends Behavior {
 					}
 				}
 
-				// double xdiff = xPos-shipX;
-				// double ydiff = yPos-shipY;
-				// double zdiff = zPos-shipZ;
-				//				
-				// System.out.println("Difference:"+ xdiff + ", "+ydiff+ ",
-				// "+zdiff);
-				//				
-				// System.out.println(collidable.getXPos() + ", " +
-				// collidable.getYPos() + ", " + zPos);
 				collidable.setOldZPos(zPos);
 			}
 		}
