@@ -25,6 +25,8 @@ public class Ship extends TransformGroup {
 	public Ship(final GameLogic logic, TransformGroup viewTG) throws IOException {
 		super();
 		
+		this.setBoundsAutoCompute(false);
+		
 		final Transform3D t3d = new Transform3D();
 		t3d.setTranslation(new Vector3d(INITIAL_SHIP_PLACEMENT_X, INITIAL_SHIP_PLACEMENT_Y, INITIAL_SHIP_PLACEMENT_Z));
 

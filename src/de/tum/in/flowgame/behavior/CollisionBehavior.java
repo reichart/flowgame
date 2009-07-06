@@ -13,6 +13,7 @@ import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.vecmath.Point3d;
 
 import de.tum.in.flowgame.Collidable;
+import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Ship;
 
@@ -64,9 +65,10 @@ public class CollisionBehavior extends Behavior {
 							+ " - shipZ: " + shipZ);
 					System.out.println("colX: " + xPos + " - colY: " + yPos
 							+ " - colZ: " + zPos);
-					shipBounds.setLower(shipX - 1, shipY - 0.5, oldz);
-					shipBounds.setUpper(shipX + 1, shipY + 0.5, zPos);
-					
+					shipBounds.setLower(shipX - 0.6, shipY - 0.15, oldz);
+					shipBounds.setUpper(shipX + 0.6, shipY + 0.15, zPos);
+//					ship.setBounds(shipBounds);
+
 
 					if (collidableBounds.intersect(shipBounds)) {
 						System.out.println("COLLISION! BAAAAM!" + oldz + ", "

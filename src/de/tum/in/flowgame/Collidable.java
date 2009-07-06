@@ -30,7 +30,7 @@ public class Collidable extends BranchGroup {
 			.fin();
 
 		final TransformGroup scaledShape = Builders.transformGroup()
-			.scale(0.5)
+			.scale(2)
 			.add(shape)
 			.computeAutoBounds(true)
 			.fin();
