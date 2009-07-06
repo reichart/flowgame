@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
+import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
@@ -24,6 +25,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
+import de.tum.in.flowgame.behavior.BoundsBehavior;
 import de.tum.in.flowgame.behavior.CollisionBehavior;
 import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.ui.GameOverlay;
@@ -65,8 +67,17 @@ public class Game3D extends Canvas3D {
 		final SimpleUniverse su = createUniverse();
 
 		Ship ship = new Ship(logic, su.getViewingPlatform().getViewPlatformTransform());
-
+//		ship.setBoundsAutoCompute(false);
+//		final BoundingBox shipBounds = new BoundingBox();
+//		shipBounds.setLower(-0.6,  -1.15, -7);
+//		shipBounds.setUpper(0.6, -0.85, -5);
+//		ship.setBounds(shipBounds);
 		collidables.addChild(ship);
+//		BranchGroup t = new BranchGroup();
+//		BoundsBehavior b = new BoundsBehavior(ship);
+//		b.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+//		b.addBehaviorToParentGroup(t);
+//		collidables.addChild(t);
 		collidables.addChild(ccb);
 
 		final BranchGroup scene = new BranchGroup();

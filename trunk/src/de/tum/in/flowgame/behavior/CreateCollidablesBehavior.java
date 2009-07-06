@@ -25,7 +25,7 @@ import de.tum.in.flowgame.GameLogic.Item;
 public class CreateCollidablesBehavior extends Behavior {
 
 	private long time = 1000;
-	private long speed = 20;
+	private long speed = 300;
 	// number of asteroids compared to fuel cans, number between 0 and 1
 	private float ratioAsteroids;
 
@@ -51,18 +51,21 @@ public class CreateCollidablesBehavior extends Behavior {
 
 	private SharedGroup loadFuelcan() throws IOException {
 		final SharedGroup fuelcan = new SharedGroup();
+		fuelcan.setBoundsAutoCompute(false);
 		fuelcan.addChild(Utils.loadScene("/res/fuelcan2.obj"));
 		fuelcan.setUserData(Item.FUELCAN);
-		fuelcan.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
-				-0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
+//		fuelcan.setBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
+//				-0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
+		fuelcan.setBounds(new BoundingSphere(new Point3d(), 1.5));
 		return fuelcan;
 	}
 
 	private SharedGroup loadAsteroid() throws IOException {
 		final SharedGroup asteroid = new SharedGroup();
+		asteroid.setBoundsAutoCompute(false);
 		asteroid.addChild(Utils.loadScene("/res/asteroid.obj"));
 		asteroid.setUserData(Item.ASTEROID);
-		asteroid.setCollisionBounds(new BoundingSphere());
+		asteroid.setBounds(new BoundingSphere(new Point3d(), 0.8));
 		return asteroid;
 	}
 
