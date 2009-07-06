@@ -4,11 +4,13 @@ import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingBox;
+import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
+import javax.vecmath.Point3d;
 
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameLogic;
@@ -37,34 +39,41 @@ public class CollisionBehavior extends Behavior {
 		final Ship ship = findShip(children);
 		final double shipX = ship.getVector3dtShipPos().getX();
 		final double shipY = ship.getVector3dtShipPos().getY();
-		// final double shipZ = ship.getVector3dtShipPos().getZ();
+		final double shipZ = ship.getVector3dtShipPos().getZ();
 
 		while (children.hasMoreElements()) {
 			final Node child = children.nextElement();
 			if (child instanceof Collidable) {
 				final Collidable collidable = (Collidable) child;
 
-				final double zPos = collidable.getZPos();
+				// final double zPos = collidable.getZPos();
 				// final double xPos = collidable.getXPos();
 				// final double yPos = collidable.getYPos();
+				final double zPos = collidable.getZPos();
+				final double xPos = collidable.getXPos();
+				final double yPos = collidable.getYPos();
 
 				final double oldz = collidable.getOldZPos();
 
-				if (zPos > 0 && oldz <= 0) {
+				if (zPos > Ship.INITIAL_SHIP_PLACEMENT_Z
+						&& oldz <= Ship.INITIAL_SHIP_PLACEMENT_Z) {
 
-					final Bounds collidableBounds = collidable.getCollisionBounds();
+					final Bounds collidableBounds = collidable.getBounds();
+					final BoundingBox shipBounds = new BoundingBox();
+					System.out.println("shipX: " + shipX + " - shipY: " + shipY
+							+ " - shipZ: " + shipZ);
+					System.out.println("colX: " + xPos + " - colY: " + yPos
+							+ " - colZ: " + zPos);
+					shipBounds.setLower(shipX - 1, shipY - 0.5, oldz);
+					shipBounds.setUpper(shipX + 1, shipY + 0.5, zPos);
+					
 
-					final BoundingBox newBounds = new BoundingBox();
-					System.out
-							.println("shipX: " + shipX + " - shipY: " + shipY);
-					newBounds.setLower(shipX - 1, shipY - 0.5, oldz);
-					newBounds.setUpper(shipX + 1, shipY + 0.5, zPos);
-
-					if (collidableBounds.intersect(newBounds)) {
-						System.out.println("COLLISION! BAAAAM!" + oldz + ", " + zPos + child.getUserData());
+					if (collidableBounds.intersect(shipBounds)) {
+						System.out.println("COLLISION! BAAAAM!" + oldz + ", "
+								+ zPos + child.getUserData());
 						gameLogic.collide(child);
-						((BranchGroup) child).detach();
 					}
+					((BranchGroup) child).detach();
 				}
 
 				collidable.setOldZPos(zPos);

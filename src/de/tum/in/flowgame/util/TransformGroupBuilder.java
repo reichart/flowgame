@@ -23,6 +23,11 @@ public class TransformGroupBuilder {
 		tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		return this;
 	}
+	
+	public TransformGroupBuilder computeAutoBounds(boolean compute) {
+		tg.setBoundsAutoCompute(compute);
+		return this;
+	}
 
 	public TransformGroupBuilder collidable(final Bounds bounds) {
 		tg.setCollisionBounds(bounds);
