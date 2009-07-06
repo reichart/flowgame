@@ -24,11 +24,18 @@ import de.tum.in.flowgame.GameLogic.Item;
 
 public class CreateCollidablesBehavior extends Behavior {
 
-	private final long baseSpeed = 100;
+	/*
+	 * Added factor to speed and time settings so that equidistant creation of
+	 * collidables at different speeds is possible. The actual speed now is
+	 * computed through factor * baseSpeed. The baseTime value sets the distance
+	 * between the collidables. The actual creation time is computed depending
+	 * on the speed (to create equidistant collidables).
+	 */
 	private long factor = 1;
-	private long speed = baseSpeed * factor;
+	private final long baseSpeed = 100;
 	private final long baseTime = 400;
-	private long time = baseTime/factor;
+	private long speed = baseSpeed * factor;
+	private long time = baseTime / factor;
 	// number of asteroids compared to fuel cans, number between 0 and 1
 	private float ratioAsteroids;
 
@@ -57,8 +64,8 @@ public class CreateCollidablesBehavior extends Behavior {
 		fuelcan.setBoundsAutoCompute(false);
 		fuelcan.addChild(Utils.loadScene("/res/fuelcan2.obj"));
 		fuelcan.setUserData(Item.FUELCAN);
-//		fuelcan.setBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
-//				-0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
+		// fuelcan.setBounds(new BoundingBox(new Point3d(-0.35f, -0.5f,
+		// -0.125f), new Point3d(0.35f, 0.5f, 0.125f)));
 		fuelcan.setBounds(new BoundingSphere(new Point3d(), 1.5));
 		return fuelcan;
 	}
@@ -90,11 +97,11 @@ public class CreateCollidablesBehavior extends Behavior {
 			a.setCapability(Group.ALLOW_AUTO_COMPUTE_BOUNDS_READ);
 			a.setCapability(Group.ALLOW_AUTO_COMPUTE_BOUNDS_WRITE);
 			a.setBoundsAutoCompute(true);
-//			BranchGroup t = new BranchGroup();
-//			BoundsBehavior b = new BoundsBehavior(a);
-//			b.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-//			b.addBehaviorToParentGroup(t);
-//			collidableBranchGroup.addChild(t);
+			// BranchGroup t = new BranchGroup();
+			// BoundsBehavior b = new BoundsBehavior(a);
+			// b.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+			// b.addBehaviorToParentGroup(t);
+			// collidableBranchGroup.addChild(t);
 			collidableBranchGroup.addChild(a);
 		} else {
 			Collidable f = new Collidable(fuelcan, x, speed);
@@ -103,11 +110,11 @@ public class CreateCollidablesBehavior extends Behavior {
 			f.setCapability(Group.ALLOW_AUTO_COMPUTE_BOUNDS_READ);
 			f.setCapability(Group.ALLOW_AUTO_COMPUTE_BOUNDS_WRITE);
 			f.setBoundsAutoCompute(true);
-//			BranchGroup t = new BranchGroup();
-//			BoundsBehavior b = new BoundsBehavior(f);
-//			b.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-//			b.addBehaviorToParentGroup(t);
-//			collidableBranchGroup.addChild(t);
+			// BranchGroup t = new BranchGroup();
+			// BoundsBehavior b = new BoundsBehavior(f);
+			// b.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+			// b.addBehaviorToParentGroup(t);
+			// collidableBranchGroup.addChild(t);
 			collidableBranchGroup.addChild(f);
 		}
 		if (showSceneGraph) {
@@ -120,7 +127,7 @@ public class CreateCollidablesBehavior extends Behavior {
 			tree.recursiveApplyCapability(node);
 			tree.updateNodes(su);
 		}
-			wakeupOn(wakeupEvent);
+		wakeupOn(wakeupEvent);
 	}
 
 	public long getTime() {
