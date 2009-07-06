@@ -4,9 +4,7 @@ import javax.media.j3d.Alpha;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Link;
 import javax.media.j3d.SharedGroup;
-import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
 import de.tum.in.flowgame.util.Builders;
@@ -22,30 +20,38 @@ public class Collidable extends BranchGroup {
 		
 		setUserData(group.getUserData());
 		
+		Link link = new Link(group);
+		link.setBoundsAutoCompute(true);
+		
 		final TransformGroup shape = Builders.transformGroup()
-			.add(new Link(group))
+			.add(link)
 			.addRotationBehavior(new Alpha(-1, 3000), Game3D.WORLD_BOUNDS)
+			.computeAutoBounds(true)
 			.fin();
 
-		
 		final TransformGroup scaledShape = Builders.transformGroup()
 			.scale(0.5)
 			.add(shape)
+			.computeAutoBounds(true)
 			.fin();
 		
 		final TransformGroup tg = Builders.transformGroup()
 			.translate(0, 0, -(Tunnel.TUNNEL_PARTS - 1) * Tunnel.TUNNEL_LENGTH)
 			.add(scaledShape)
 			.writable()
+			.computeAutoBounds(true)
 			.fin();
-
+		
 		fwdNav = new ForwardNavigatorBehavior(tg, speed);
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		tg.addChild(fwdNav);
 
 		final TransformGroup scaleTG = Builders.transformGroup()
 			.add(tg)
+			.computeAutoBounds(true)
 			.fin();
+		
+		scaleTG.setBoundsAutoCompute(true);
 		
 		xPos = Math.random() * 10 - 5;
 		yPos = Math.random() * 10 - 5;
@@ -69,41 +75,14 @@ public class Collidable extends BranchGroup {
 	}
 	
 	public double getZPos() {
-		
-		Transform3D t3d = new Transform3D();
-		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
-		
-//		//only new line
-//		t3d.mul(staticTransforms);
-		Vector3d vector = new Vector3d();
-		t3d.get(vector);
-		return vector.getZ();
+		return fwdNav.getForwardNavigator().getPos().getZ();
 	}
 
 	public double getXPos() {
-//		Transform3D t3d = new Transform3D();
-//		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
-//		t3d.mul(staticTransforms);
-//		Vector3d vector = new Vector3d();
-//		t3d.get(vector);
-//		
-//		double diff = vector.getX()-xPos;
-//		
-//		return vector.getX();
-		
 		return xPos;
 	}
 
 	public double getYPos() {
-//		Transform3D t3d = new Transform3D();
-//		fwdNav.getForwardNavigator().getTargetTG().getTransform(t3d);
-//		t3d.mul(staticTransforms);
-//		Vector3d vector = new Vector3d();
-//		t3d.get(vector);
-//		
-//		double diff = vector.getY()-yPos;
-//		return vector.getY();
-		
 		return yPos;
 	}
 

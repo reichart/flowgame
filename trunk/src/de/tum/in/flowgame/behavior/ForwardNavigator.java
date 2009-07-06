@@ -77,6 +77,10 @@ public class ForwardNavigator {
 	public void setFwdSpeed(final double fwdSpeed) {
 		this.fwdSpeed = fwdSpeed;
 	}
+	
+	public Vector3d getPos(){
+		return vpPos;
+	}
 
 	public TransformGroup getTargetTG() {
 		return targetTG;
