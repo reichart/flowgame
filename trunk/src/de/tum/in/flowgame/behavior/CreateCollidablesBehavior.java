@@ -24,8 +24,11 @@ import de.tum.in.flowgame.GameLogic.Item;
 
 public class CreateCollidablesBehavior extends Behavior {
 
-	private long time = 1000;
-	private long speed = 300;
+	private final long baseSpeed = 100;
+	private long factor = 1;
+	private long speed = baseSpeed * factor;
+	private final long baseTime = 400;
+	private long time = baseTime/factor;
 	// number of asteroids compared to fuel cans, number between 0 and 1
 	private float ratioAsteroids;
 
@@ -46,7 +49,7 @@ public class CreateCollidablesBehavior extends Behavior {
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
 		this.wakeupEvent = new WakeupOnElapsedTime(time);
-		ratioAsteroids = 0.5f;
+		ratioAsteroids = 0.1f;
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
