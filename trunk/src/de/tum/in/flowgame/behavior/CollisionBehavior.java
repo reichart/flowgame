@@ -61,18 +61,18 @@ public class CollisionBehavior extends Behavior {
 
 					final Bounds collidableBounds = collidable.getBounds();
 					final BoundingBox shipBounds = new BoundingBox();
-					System.out.println("shipX: " + shipX + " - shipY: " + shipY
-							+ " - shipZ: " + shipZ);
-					System.out.println("colX: " + xPos + " - colY: " + yPos
-							+ " - colZ: " + zPos);
 					shipBounds.setLower(shipX - 0.6, shipY - 0.15, oldz);
 					shipBounds.setUpper(shipX + 0.6, shipY + 0.15, zPos);
 //					ship.setBounds(shipBounds);
 
 
 					if (collidableBounds.intersect(shipBounds)) {
-						System.out.println("COLLISION! BAAAAM!" + oldz + ", "
-								+ zPos + child.getUserData());
+//						System.out.println("COLLISION! BAAAAM!" + oldz + ", "
+//								+ zPos + child.getUserData());
+//						System.out.println("shipX: " + shipX + " - shipY: " + shipY
+//								+ " - shipZ: " + shipZ);
+//						System.out.println("colX: " + xPos + " - colY: " + yPos
+//								+ " - colZ: " + zPos);
 						gameLogic.collide(child);
 					}
 					((BranchGroup) child).detach();
