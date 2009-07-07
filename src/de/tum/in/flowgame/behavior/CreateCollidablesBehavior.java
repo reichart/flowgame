@@ -31,11 +31,11 @@ public class CreateCollidablesBehavior extends Behavior {
 	 * between the collidables. The actual creation time is computed depending
 	 * on the speed (to create equidistant collidables).
 	 */
-	private long factor = 1;
+	private double factor = 1;
 	private final long baseSpeed = 100;
 	private final long baseTime = 400;
-	private long speed = baseSpeed * factor;
-	private long time = baseTime / factor;
+	private long speed = (long)(baseSpeed * factor);
+	private long time = (long)(baseTime / factor);
 	// number of asteroids compared to fuel cans, number between 0 and 1
 	private float ratioAsteroids;
 
@@ -56,7 +56,7 @@ public class CreateCollidablesBehavior extends Behavior {
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
 		this.wakeupEvent = new WakeupOnElapsedTime(time);
-		ratioAsteroids = 0.1f;
+		ratioAsteroids = 1f;
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
