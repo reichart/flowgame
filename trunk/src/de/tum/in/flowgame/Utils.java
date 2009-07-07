@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.media.j3d.BranchGroup;
@@ -11,11 +12,16 @@ import javax.media.j3d.Node;
 import javax.media.j3d.Texture;
 import javax.vecmath.Color4f;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.image.TextureLoader;
 
 public class Utils {
+
+	private static final Log log = LogFactory.getLog(Utils.class);
 
 	public static <T> T[] asArray(final T... t) {
 		return t;
@@ -49,26 +55,40 @@ public class Utils {
 
 		texture.setMagFilter(Texture.NICEST); // filtering
 		texture.setMinFilter(Texture.NICEST); // tri-linear filtering
-
-		texture.setAnisotropicFilterMode(Texture.ANISOTROPIC_SINGLE_VALUE);
-		texture.setAnisotropicFilterDegree(4);
-
+		
 		texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 		return texture;
 	}
 
-	private final static MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+	static {
+		ImageIO.setUseCache(false); // stay in JWS sandbox
+
+		try {
+			mbs = ManagementFactory.getPlatformMBeanServer();
+		} catch (final Exception ex) {
+			log.info("Could not start mbean server (sandbox?)");
+		}
+	}
+
+	private static MBeanServer mbs;
 
 	/**
 	 * Exports an MBean or MXBean via JMX.
 	 */
 	public static void export(final Object mbean) {
+		if (mbs == null) {
+			log.info("no mbean server available");
+			return;
+		}
+
 		try {
 			final Class<?> clazz = mbean.getClass();
 			final String domain = clazz.getPackage().getName();
 			final String value = clazz.getSimpleName();
 
 			final ObjectName name = new ObjectName(domain, "type", value);
+
+			log.info("registering mbean " + mbean + " as " + name);
 			mbs.registerMBean(mbean, name);
 		} catch (final Exception ex) {
 			throw new RuntimeException("failed to export " + mbean, ex);
