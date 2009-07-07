@@ -56,7 +56,7 @@ public class CreateCollidablesBehavior extends Behavior {
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
 		this.wakeupEvent = new WakeupOnElapsedTime(time);
-		ratioAsteroids = 1f;
+		ratioAsteroids = 0.2f;
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
