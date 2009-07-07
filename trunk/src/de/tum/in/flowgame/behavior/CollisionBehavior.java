@@ -4,16 +4,13 @@ import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingBox;
-import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
-import javax.vecmath.Point3d;
 
 import de.tum.in.flowgame.Collidable;
-import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Ship;
 
