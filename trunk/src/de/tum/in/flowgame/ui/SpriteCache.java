@@ -25,7 +25,7 @@ public class SpriteCache {
 	public Sprite getSprite(final String resource) {
 		Sprite sprite = sprites.get(resource);
 		if (sprite == null) {
-			sprite = createSprite(resource);
+			sprite = new CachedSprite(createSprite(resource));
 			sprites.put(resource, sprite);
 		}
 
