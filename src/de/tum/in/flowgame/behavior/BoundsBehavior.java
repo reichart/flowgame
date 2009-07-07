@@ -27,170 +27,171 @@ Daniel Selman: daniel@selman.org
 If you make changes you think others would like, please 
 contact one of the authors or someone at the 
 www.j3d.org web site.
-**************************************************************/
+ **************************************************************/
 
 package de.tum.in.flowgame.behavior;
 
-import javax.media.j3d.*;
-import javax.vecmath.*;
+import java.util.Enumeration;
 
-import com.sun.j3d.utils.applet.MainFrame;
-import com.sun.j3d.utils.geometry.*;
+import javax.media.j3d.Appearance;
+import javax.media.j3d.Behavior;
+import javax.media.j3d.BoundingBox;
+import javax.media.j3d.BoundingSphere;
+import javax.media.j3d.Bounds;
+import javax.media.j3d.Group;
+import javax.media.j3d.Node;
+import javax.media.j3d.PolygonAttributes;
+import javax.media.j3d.Switch;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.media.j3d.WakeupCondition;
+import javax.media.j3d.WakeupCriterion;
+import javax.media.j3d.WakeupOnElapsedFrames;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.geometry.Sphere;
 
 //this class implements a simple behavior that
 //displays a graphical representation of the Bounds
 //of a Node.
 
-public class BoundsBehavior extends Behavior
-{
+public class BoundsBehavior extends Behavior {
 	// the wake up condition for the behavior
-	protected WakeupCondition	m_WakeupCondition = null;
+	protected WakeupCondition m_WakeupCondition = null;
 
 	// the Node that we are tracking
-	protected Node					m_Node = null;
-	protected TransformGroup	m_TransformGroup = null;
-	protected Switch				m_BoundsSwitch = null;
+	protected Node m_Node = null;
+	protected TransformGroup m_TransformGroup = null;
+	protected Switch m_BoundsSwitch = null;
 
-	protected Transform3D		m_Transform3D = null;
-	protected Vector3d 			m_Scale = null;
-	protected Vector3d 			m_Vector3d = null;
-	protected Point3d 			m_Point3d1 = null;
-	protected Point3d 			m_Point3d2 = null;
+	protected Transform3D m_Transform3D = null;
+	protected Vector3d m_Scale = null;
+	protected Vector3d m_Vector3d = null;
+	protected Point3d m_Point3d1 = null;
+	protected Point3d m_Point3d2 = null;
 
-	private final int				m_kSphereBounds = 0;
-	private final int				m_kBoxBounds = 1;
+	private final int m_kSphereBounds = 0;
+	private final int m_kBoxBounds = 1;
 
-	public BoundsBehavior( Node node )
-	{
+	public BoundsBehavior(final Node node) {
 		// save the GeometryArray that we are modifying
 		m_Node = node;
 
-		m_Transform3D = new Transform3D( );
-		m_Scale = new Vector3d( );
-		m_Vector3d = new Vector3d( );
-		m_Point3d1 = new Point3d( );
-		m_Point3d2 = new Point3d( );
+		m_Transform3D = new Transform3D();
+		m_Scale = new Vector3d();
+		m_Vector3d = new Vector3d();
+		m_Point3d1 = new Point3d();
+		m_Point3d2 = new Point3d();
 
 		// set the capability bits that the behavior requires
-		m_Node.setCapability( Node.ALLOW_BOUNDS_READ );
+		m_Node.setCapability(Node.ALLOW_BOUNDS_READ);
 
 		// save the WakeupCriterion for the behavior
-		m_WakeupCondition = new WakeupOnElapsedFrames( 0 );
+		m_WakeupCondition = new WakeupOnElapsedFrames(0);
 	}
 
-	public void addBehaviorToParentGroup( Group nodeParentGroup )
-	{
-		nodeParentGroup.addChild( this );
+	public void addBehaviorToParentGroup(final Group nodeParentGroup) {
+		nodeParentGroup.addChild(this);
 
-		m_TransformGroup = new TransformGroup( );
-		m_TransformGroup.setCapability( TransformGroup.ALLOW_TRANSFORM_WRITE );
+		m_TransformGroup = new TransformGroup();
+		m_TransformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 
-		m_BoundsSwitch = new Switch( );
-		m_BoundsSwitch.setCapability( Switch.ALLOW_SWITCH_WRITE );
+		m_BoundsSwitch = new Switch();
+		m_BoundsSwitch.setCapability(Switch.ALLOW_SWITCH_WRITE);
 
-		Appearance app = new Appearance( );
+		final Appearance app = new Appearance();
 
-		PolygonAttributes polyAttrbutes = new PolygonAttributes( );
-		polyAttrbutes.setPolygonMode( PolygonAttributes.POLYGON_LINE );
-		polyAttrbutes.setCullFace( PolygonAttributes.CULL_NONE ) ;
-		app.setPolygonAttributes( polyAttrbutes );
+		final PolygonAttributes polyAttrbutes = new PolygonAttributes();
+		polyAttrbutes.setPolygonMode(PolygonAttributes.POLYGON_LINE);
+		polyAttrbutes.setCullFace(PolygonAttributes.CULL_NONE);
+		app.setPolygonAttributes(polyAttrbutes);
 
-		m_BoundsSwitch.addChild( new Sphere( 1, app ) );
+		m_BoundsSwitch.addChild(new Sphere(1, app));
 
-		ColorCube cube = new ColorCube( );
-		cube.setAppearance( app );
+		final ColorCube cube = new ColorCube();
+		cube.setAppearance(app);
 
-		Group g = new Group( );
-		g.addChild( cube );
-		m_BoundsSwitch.addChild( g );
+		final Group g = new Group();
+		g.addChild(cube);
+		m_BoundsSwitch.addChild(g);
 
-		m_BoundsSwitch.setWhichChild( Switch.CHILD_NONE );
+		m_BoundsSwitch.setWhichChild(Switch.CHILD_NONE);
 
-		m_TransformGroup.addChild( m_BoundsSwitch );
-		nodeParentGroup.addChild( m_TransformGroup );
+		m_TransformGroup.addChild(m_BoundsSwitch);
+		nodeParentGroup.addChild(m_TransformGroup);
 	}
 
-	public void setEnable( boolean bEnable )
-	{
-		super.setEnable( bEnable );
+	public void setEnable(final boolean bEnable) {
+		super.setEnable(bEnable);
 
-		if( m_BoundsSwitch != null )
-		{
-			if( bEnable == false )
-				m_BoundsSwitch.setWhichChild( Switch.CHILD_NONE );
+		if (m_BoundsSwitch != null) {
+			if (bEnable == false)
+				m_BoundsSwitch.setWhichChild(Switch.CHILD_NONE);
 		}
 	}
 
-	public void initialize( )
-	{
+	public void initialize() {
 		// apply the initial WakeupCriterion
-		wakeupOn( m_WakeupCondition );
+		wakeupOn(m_WakeupCondition);
 	}
 
-	public void processStimulus( java.util.Enumeration criteria )
-	{				
-		while( criteria.hasMoreElements( ) )
-		{
-			WakeupCriterion wakeUp = (WakeupCriterion) criteria.nextElement( );			
+	@SuppressWarnings("unchecked")
+	public void processStimulus(final Enumeration criteria) {
+		while (criteria.hasMoreElements()) {
+			final WakeupCriterion wakeUp = (WakeupCriterion) criteria.nextElement();
 
 			// every N frames, update position of the graphic
-			if( wakeUp instanceof WakeupOnElapsedFrames )
-			{
-				if( m_TransformGroup != null )
-				{
-					Bounds bounds = m_Node.getBounds( );
+			if (wakeUp instanceof WakeupOnElapsedFrames) {
+				if (m_TransformGroup != null) {
+					final Bounds bounds = m_Node.getBounds();
 
 					int nBoundsType = m_kBoxBounds;
-					m_Transform3D.setIdentity( );
+					m_Transform3D.setIdentity();
 
-					if( bounds instanceof BoundingSphere )
-					{
+					if (bounds instanceof BoundingSphere) {
 						nBoundsType = m_kSphereBounds;
 
-						((BoundingSphere) bounds).getCenter( m_Point3d1 );
+						((BoundingSphere) bounds).getCenter(m_Point3d1);
 
 						m_Vector3d.x = m_Point3d1.x;
 						m_Vector3d.y = m_Point3d1.y;
 						m_Vector3d.z = m_Point3d1.z;
 
-						m_Scale.x = ((BoundingSphere) bounds).getRadius( ) / 2;
+						m_Scale.x = ((BoundingSphere) bounds).getRadius() / 2;
 						m_Scale.y = m_Scale.x;
 						m_Scale.z = m_Scale.y;
 
-					}
-					else if( bounds instanceof BoundingBox )
-					{
+					} else if (bounds instanceof BoundingBox) {
 						nBoundsType = m_kBoxBounds;
 
-						((BoundingBox) bounds).getLower( m_Point3d1 );
-						((BoundingBox) bounds ).getUpper( m_Point3d2 );
+						((BoundingBox) bounds).getLower(m_Point3d1);
+						((BoundingBox) bounds).getUpper(m_Point3d2);
 
 						m_Vector3d.x = (m_Point3d1.x + m_Point3d2.x) / 2;
 						m_Vector3d.y = (m_Point3d1.y + m_Point3d2.y) / 2;
 						m_Vector3d.z = (m_Point3d1.z + m_Point3d2.z) / 2;
 
-						m_Scale.x = Math.abs( m_Point3d1.x - m_Point3d2.x ) / 2;
-						m_Scale.y = Math.abs( m_Point3d1.y - m_Point3d2.y ) / 2;
-						m_Scale.z = Math.abs( m_Point3d1.z - m_Point3d2.z ) / 2;
-					}
-					else
-						System.err.println( "BoundsBehavior found a Bounds it cannot represent: " + bounds );
+						m_Scale.x = Math.abs(m_Point3d1.x - m_Point3d2.x) / 2;
+						m_Scale.y = Math.abs(m_Point3d1.y - m_Point3d2.y) / 2;
+						m_Scale.z = Math.abs(m_Point3d1.z - m_Point3d2.z) / 2;
+					} else
+						System.err.println("BoundsBehavior found a Bounds it cannot represent: " + bounds);
 
-					m_Transform3D.setScale( m_Scale );
-					m_Transform3D.setTranslation( m_Vector3d );
+					m_Transform3D.setScale(m_Scale);
+					m_Transform3D.setTranslation(m_Vector3d);
 
-					m_TransformGroup.setTransform( m_Transform3D );
+					m_TransformGroup.setTransform(m_Transform3D);
 
-					m_BoundsSwitch.setWhichChild( nBoundsType );
-				}
-				else
-				{
-					System.err.println( "Call addBehaviorToParentGroup for BoundsBehavior." );
+					m_BoundsSwitch.setWhichChild(nBoundsType);
+				} else {
+					System.err.println("Call addBehaviorToParentGroup for BoundsBehavior.");
 				}
 			}
 		}
 
 		// assign the next WakeUpCondition, so we are notified again
-		wakeupOn( m_WakeupCondition );
+		wakeupOn(m_WakeupCondition);
 	}
 }
