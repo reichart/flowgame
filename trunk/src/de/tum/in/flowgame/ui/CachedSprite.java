@@ -37,10 +37,13 @@ public class CachedSprite implements Sprite {
 	@Override
 	public void render(final Graphics2D g, final int x, final int y, final int w, final int h) {
 		if (currentW != w || currentH != h) {
-			System.out.println("rendering at " + w + "x" + h + "(previous " + +currentW + "x" + currentH + ")");
-			img = createImage(w, h);
+			// compensate for scaled graphics context
+			final int scaledW = (int) (w * g.getTransform().getScaleX());
+			final int scaledH = (int) (h * g.getTransform().getScaleY());
+
+			img = createImage(scaledW, scaledH);
 			final Graphics2D ig = (Graphics2D) img.getGraphics();
-			sprite.render(ig, x, y, w, h);
+			sprite.render(ig, x, y, img.getWidth(), img.getHeight());
 			ig.dispose();
 
 			currentW = w;
