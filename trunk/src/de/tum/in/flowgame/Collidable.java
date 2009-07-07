@@ -23,9 +23,12 @@ public class Collidable extends BranchGroup {
 		Link link = new Link(group);
 		link.setBoundsAutoCompute(true);
 		
+		Alpha rotAlpha = new Alpha(-1,3000);
+		rotAlpha.setStartTime(System.currentTimeMillis());
+		
 		final TransformGroup shape = Builders.transformGroup()
 			.add(link)
-			.addRotationBehavior(new Alpha(-1, 3000), Game3D.WORLD_BOUNDS)
+			.addRotationBehavior(rotAlpha, Game3D.WORLD_BOUNDS)
 			.computeAutoBounds(true)
 			.fin();
 
