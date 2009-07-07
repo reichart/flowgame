@@ -5,11 +5,8 @@ import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Shape3D;
-import javax.media.j3d.Texture;
-import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.media.j3d.TransparencyAttributes;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
 
@@ -18,7 +15,9 @@ import com.sun.j3d.utils.geometry.Primitive;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
 import de.tum.in.flowgame.behavior.TunnelPartMoveBehavior;
-
+import de.tum.in.flowgame.util.AppearanceBuilder;
+import de.tum.in.flowgame.util.AppearanceBuilder.TextureMode;
+import de.tum.in.flowgame.util.AppearanceBuilder.Transparency;
 
 public class Tunnel extends TransformGroup {
 
@@ -36,7 +35,10 @@ public class Tunnel extends TransformGroup {
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 
-		final Appearance appearance = createAppearance();
+		final Appearance appearance = new AppearanceBuilder()
+			.texture(Utils.getTexture("/res/tunnel.png"), TextureMode.MODULATE)
+			.transparency(Transparency.NICEST, 0.5f)
+			.fin();
 
 		final Cylinder cyl = new Cylinder(TUNNEL_RADIUS, TUNNEL_LENGTH, Primitive.GENERATE_NORMALS_INWARD
 				| Primitive.GENERATE_TEXTURE_COORDS, 50, 1, appearance);
@@ -95,23 +97,6 @@ public class Tunnel extends TransformGroup {
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		
 		addChild(fwdNav);
-	}
-
-	private Appearance createAppearance() {
-		final Texture texture = Utils.getTexture("/res/water01.jpg");
-
-		final TextureAttributes texAttr = new TextureAttributes();
-		texAttr.setTextureMode(TextureAttributes.MODULATE);
-
-		final TransparencyAttributes transp = new TransparencyAttributes();
-		transp.setTransparency(.5f);
-		transp.setTransparencyMode(TransparencyAttributes.NICEST);
-
-		final Appearance tunnelAppearance = new Appearance();
-		tunnelAppearance.setTexture(texture);
-		tunnelAppearance.setTextureAttributes(texAttr);
-		tunnelAppearance.setTransparencyAttributes(transp);
-		return tunnelAppearance;
 	}
 
 }
