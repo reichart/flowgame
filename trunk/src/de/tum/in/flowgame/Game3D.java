@@ -55,17 +55,9 @@ public class Game3D extends Canvas3D {
 		final Tunnel tunnel = new Tunnel();
 		
 		this.logic = new GameLogic(ccb, tunnel);
-		
-		CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic);
-		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
-		collidables.addChild(collisionBehavior);
 
-		
-		this.overlay = new GameOverlay(logic);
-		this.addComponentListener(overlay);
-		
 		final SimpleUniverse su = createUniverse();
-
+		
 		Ship ship = new Ship(logic, su.getViewingPlatform().getViewPlatformTransform());
 //		ship.setBoundsAutoCompute(false);
 //		final BoundingBox shipBounds = new BoundingBox();
@@ -79,7 +71,14 @@ public class Game3D extends Canvas3D {
 //		b.addBehaviorToParentGroup(t);
 //		collidables.addChild(t);
 		collidables.addChild(ccb);
-
+		
+		CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
+		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
+		collidables.addChild(collisionBehavior);
+		
+		this.overlay = new GameOverlay(logic);
+		this.addComponentListener(overlay);
+		
 		final BranchGroup scene = new BranchGroup();
 
 		// Fog fog = new ExponentialFog(color, 0.2f);

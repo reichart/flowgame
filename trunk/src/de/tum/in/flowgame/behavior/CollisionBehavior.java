@@ -21,11 +21,13 @@ public class CollisionBehavior extends Behavior {
 	private final WakeupCondition condition;
 	private final GameLogic gameLogic;
 	private final BranchGroup branchGroup;
+	private final Ship ship;
 
-	public CollisionBehavior(final BranchGroup collidables, final GameLogic gl) {
+	public CollisionBehavior(final BranchGroup collidables, final GameLogic gl, final Ship ship) {
 		condition = new WakeupOnElapsedFrames(0);
 		branchGroup = collidables;
 		gameLogic = gl;
+		this.ship = ship;
 	}
 
 	@Override
@@ -37,22 +39,18 @@ public class CollisionBehavior extends Behavior {
 	@Override
 	public void processStimulus(final Enumeration criteria) {
 		final Enumeration<Node> children = branchGroup.getAllChildren();
-		final Ship ship = findShip(children);
 		final double shipX = ship.getVector3dtShipPos().getX();
 		final double shipY = ship.getVector3dtShipPos().getY();
-		final double shipZ = ship.getVector3dtShipPos().getZ();
+//		final double shipZ = ship.getVector3dtShipPos().getZ();
 
 		while (children.hasMoreElements()) {
 			final Node child = children.nextElement();
 			if (child instanceof Collidable) {
 				final Collidable collidable = (Collidable) child;
 
-				// final double zPos = collidable.getZPos();
-				// final double xPos = collidable.getXPos();
-				// final double yPos = collidable.getYPos();
 				final double zPos = collidable.getZPos();
-				final double xPos = collidable.getXPos();
-				final double yPos = collidable.getYPos();
+//				final double xPos = collidable.getXPos();
+//				final double yPos = collidable.getYPos();
 
 				final double oldz = collidable.getOldZPos();
 
@@ -83,18 +81,4 @@ public class CollisionBehavior extends Behavior {
 		}
 		wakeupOn(condition);
 	}
-
-	private Ship findShip(final Enumeration<Node> children) {
-		while (children.hasMoreElements()) {
-			final Node child = children.nextElement();
-			if (child instanceof Ship) {
-				return (Ship) child;
-				// Vector3d vec = ship.getVector3dtShipPos();
-				// System.out.println("Ship: " + ship.getXPos() + ", " +
-				// ship.getYPos());
-			}
-		}
-		return null;
-	}
-
 }
