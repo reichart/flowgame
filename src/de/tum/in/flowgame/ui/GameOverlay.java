@@ -27,13 +27,9 @@ public class GameOverlay implements GameListener, ComponentListener {
 
 	private int width, height;
 
-	private final static Color DIM_COLOR = new Color(255, 255, 255, 192);
-
 	private String message;
 	private boolean drawMessage;
 	
-	private boolean dim;
-
 	public GameOverlay(final GameLogic logic) {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
 		this.bigFont = new Font("sans", Font.BOLD, 56);
@@ -63,11 +59,6 @@ public class GameOverlay implements GameListener, ComponentListener {
 			g.drawString(message, (width - w) / 2, (height - h) / 2);
 		}
 
-		if (dim) {
-			g.setColor(DIM_COLOR);
-			g.fillRect(0, 0, width, height);
-		}
-
 		fuel.setValue(logic.getFuel());
 		damage.setValue(logic.getAsteroids());
 
@@ -92,7 +83,6 @@ public class GameOverlay implements GameListener, ComponentListener {
 	@Override
 	public void gameStopped(final GameLogic game) {
 		message("Iz ovurr!");
-		this.dim = true;
 	}
 
 	@Override
