@@ -1,18 +1,13 @@
 package de.tum.in.flowgame;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.media.j3d.AmbientLight;
-import javax.media.j3d.Background;
-import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Fog;
-import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.J3DGraphics2D;
 import javax.media.j3d.LinearFog;
 import javax.media.j3d.TransformGroup;
@@ -25,7 +20,6 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
-import de.tum.in.flowgame.behavior.BoundsBehavior;
 import de.tum.in.flowgame.behavior.CollisionBehavior;
 import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.ui.GameOverlay;
@@ -95,7 +89,7 @@ public class Game3D extends Canvas3D {
 		dirLight.setInfluencingBounds(WORLD_BOUNDS);
 		scene.addChild(dirLight);
 
-		scene.addChild(createBackground());
+		scene.addChild(new Space());
 		scene.addChild(tunnel);
 		scene.addChild(collidables);
 
@@ -126,15 +120,7 @@ public class Game3D extends Canvas3D {
 		return new SimpleUniverse(vp, viewer);
 	}
 
-	private Background createBackground() throws IOException {
-		final BufferedImage bimage = ImageIO.read(Game3D.class.getResource("/res/stars.jpg"));
-		final ImageComponent2D image = new ImageComponent2D(BufferedImage.TYPE_INT_RGB, bimage);
-
-		final Background back = new Background(BLACK);
-		back.setImageScaleMode(Background.SCALE_REPEAT);
-		back.setApplicationBounds(WORLD_BOUNDS);
-		back.setImage(image);
-
-		return back;
+	public GameLogic getLogic() {
+		return logic;
 	}
 }
