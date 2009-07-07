@@ -59,7 +59,9 @@ public class GameLogic extends Thread implements GameLogicMBean {
 
 		switch (item) {
 		case FUELCAN:
-			fuel++;
+			if (fuel + 1 < MAX_FUEL) {
+				fuel++;
+			}
 			break;
 		case ASTEROID:
 			asteroids++;
