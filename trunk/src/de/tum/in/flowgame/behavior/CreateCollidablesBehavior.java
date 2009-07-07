@@ -4,21 +4,15 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
-import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Group;
-import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
-import javax.media.j3d.TransformGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
 import javax.vecmath.Point3d;
 
-import com.sun.j3d.utils.universe.SimpleUniverse;
-
 import de.tum.in.flowgame.Collidable;
-import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.GameLogic.Item;
 
@@ -45,8 +39,8 @@ public class CreateCollidablesBehavior extends Behavior {
 	private final SharedGroup asteroid;
 	private final SharedGroup fuelcan;
 
-	private final boolean showSceneGraph = false;
-	private final com.tornadolabs.j3dtree.Java3dTree tree = new com.tornadolabs.j3dtree.Java3dTree();
+//	private final boolean showSceneGraph = false;
+//	private final com.tornadolabs.j3dtree.Java3dTree tree = new com.tornadolabs.j3dtree.Java3dTree();
 
 	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup)
 			throws IOException {
@@ -81,8 +75,8 @@ public class CreateCollidablesBehavior extends Behavior {
 
 	@Override
 	public void initialize() {
-		if (showSceneGraph)
-			tree.setVisible(true);
+//		if (showSceneGraph)
+//			tree.setVisible(true);
 		wakeupOn(wakeupEvent);
 	}
 
@@ -117,16 +111,16 @@ public class CreateCollidablesBehavior extends Behavior {
 			// collidableBranchGroup.addChild(t);
 			collidableBranchGroup.addChild(f);
 		}
-		if (showSceneGraph) {
-			Node node = this;
-			while (node.getParent() != null) {
-				node = node.getParent();
-			}
-			final SimpleUniverse su = (SimpleUniverse) this.getLocale()
-					.getVirtualUniverse();
-			tree.recursiveApplyCapability(node);
-			tree.updateNodes(su);
-		}
+//		if (showSceneGraph) {
+//			Node node = this;
+//			while (node.getParent() != null) {
+//				node = node.getParent();
+//			}
+//			final SimpleUniverse su = (SimpleUniverse) this.getLocale()
+//					.getVirtualUniverse();
+//			tree.recursiveApplyCapability(node);
+//			tree.updateNodes(su);
+//		}
 		wakeupOn(wakeupEvent);
 	}
 
