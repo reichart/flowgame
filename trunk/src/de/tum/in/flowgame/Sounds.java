@@ -10,19 +10,19 @@ public enum Sounds {
 	private final Source snd;
 
 	private Sounds(final String res) {
-		try {
-			this.snd = OALUtil.loadSound("/res/sound/" + res + ".wav");
-		} catch (final Exception ex) {
-			throw new RuntimeException(ex);
-		}
+		this.snd = OALUtil.loadSound("/res/sound/" + res + ".wav");
 	}
 
 	public void play() {
-		snd.play();
+		if (snd != null) {
+			snd.play();
+		}
 	}
 
 	private void destroy() {
-		snd.delete();
+		if (snd != null) {
+			snd.delete();
+		}
 	}
 
 	public static void close() {
