@@ -23,7 +23,7 @@ public class Space extends BranchGroup {
 			);
 
 		final TransformGroup nebula = sphere(1f, new AppearanceBuilder()
-			.texture(Utils.getTexture("/res/nebula.png"), TextureMode.COMBINE)
+			.texture(Utils.getTexture("/res/nebula.png"), TextureMode.MODULATE)
 			.transparency(Transparency.NICEST, 0.5f)
 			.fin()
 			);
