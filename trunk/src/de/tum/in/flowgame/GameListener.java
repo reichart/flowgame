@@ -7,6 +7,8 @@ public interface GameListener {
 	void gameStarted(GameLogic game);
 
 	void gamePaused(GameLogic game);
+	
+	void gameResumed(GameLogic game);
 
 	void gameStopped(GameLogic game);
 	
