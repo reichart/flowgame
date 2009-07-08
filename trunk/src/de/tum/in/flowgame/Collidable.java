@@ -15,7 +15,8 @@ public class Collidable extends BranchGroup {
 	private final double yPos;
 	final private ForwardNavigatorBehavior fwdNav;
 
-	public Collidable(final SharedGroup group, final float x, long speed) {
+	public Collidable(final SharedGroup group, final float x, long speed,
+			float scale) {
 		this.setCapability(BranchGroup.ALLOW_DETACH);
 
 		setUserData(group.getUserData());
@@ -28,23 +29,30 @@ public class Collidable extends BranchGroup {
 		Alpha rotAlpha = new Alpha(-1, duration);
 		rotAlpha.setStartTime(System.currentTimeMillis());
 
-		final TransformGroup shape = Builders.transformGroup().add(link)
+		final TransformGroup shape = Builders.transformGroup()
+				.add(link)
 				.addRotationBehavior(rotAlpha, Game3D.WORLD_BOUNDS)
-				.computeAutoBounds(true).fin();
+				.computeAutoBounds(true)
+				.fin();
 
-		final TransformGroup scaledShape = Builders.transformGroup().scale(1.5)
-				.add(shape).computeAutoBounds(true).fin();
+		final TransformGroup scaledShape = Builders.transformGroup()
+				.scale(scale)
+				.add(shape).computeAutoBounds(true)
+				.fin();
 
-		final TransformGroup tg = Builders.transformGroup().translate(0, 0,
-				-(Tunnel.TUNNEL_PARTS - 1) * Tunnel.TUNNEL_LENGTH).add(
-				scaledShape).writable().computeAutoBounds(true).fin();
+		final TransformGroup tg = Builders.transformGroup()
+				.translate(0, 0, -(Tunnel.TUNNEL_PARTS - 1) * Tunnel.TUNNEL_LENGTH)
+				.add(scaledShape).writable().computeAutoBounds(true)
+				.fin();
 
 		fwdNav = new ForwardNavigatorBehavior(tg, speed);
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		tg.addChild(fwdNav);
 
-		final TransformGroup scaleTG = Builders.transformGroup().add(tg)
-				.computeAutoBounds(true).fin();
+		final TransformGroup scaleTG = Builders.transformGroup()
+				.add(tg)
+				.computeAutoBounds(true)
+				.fin();
 
 		scaleTG.setBoundsAutoCompute(true);
 
