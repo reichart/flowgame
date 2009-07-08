@@ -25,7 +25,7 @@ public class Collidable extends BranchGroup {
 		link.setBoundsAutoCompute(true);
 
 		long duration = (long) (3000 + (Math.random() * 6000));
-		System.out.println(duration);
+//		System.out.println(duration);
 		Alpha rotAlpha = new Alpha(-1, duration);
 		rotAlpha.setStartTime(System.currentTimeMillis());
 
