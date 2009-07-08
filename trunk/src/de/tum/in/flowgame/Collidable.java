@@ -37,12 +37,15 @@ public class Collidable extends BranchGroup {
 
 		final TransformGroup scaledShape = Builders.transformGroup()
 				.scale(scale)
-				.add(shape).computeAutoBounds(true)
+				.add(shape)
+				.computeAutoBounds(true)
 				.fin();
 
 		final TransformGroup tg = Builders.transformGroup()
 				.translate(0, 0, -(Tunnel.TUNNEL_PARTS - 1) * Tunnel.TUNNEL_LENGTH)
-				.add(scaledShape).writable().computeAutoBounds(true)
+				.add(scaledShape)
+				.writable()
+				.computeAutoBounds(true)
 				.fin();
 
 		fwdNav = new ForwardNavigatorBehavior(tg, speed);
@@ -60,11 +63,12 @@ public class Collidable extends BranchGroup {
 		xPos = Math.random() * 10 - 5;
 		yPos = Math.random() * 10 - 5;
 
-		// xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
-		// yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
+//		 xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
+//		 yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
 
-		TransformGroup transTG = Builders.transformGroup().translate(xPos,
-				yPos, 0).add(scaleTG).fin();
+		TransformGroup transTG = Builders.transformGroup()
+			.translate(xPos,yPos, 0).add(scaleTG)
+			.fin();
 		addChild(transTG);
 	}
 
