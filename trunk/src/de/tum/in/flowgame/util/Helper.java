@@ -3,6 +3,7 @@ package de.tum.in.flowgame.util;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Behavior;
 import javax.media.j3d.Group;
+import javax.media.j3d.Node;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -28,7 +29,7 @@ public class Helper {
 	 *            where to add the {@link RotationInterpolator} to
 	 * @return a rotating group containing the specified target
 	 */
-	public static TransformGroup rotating(final TransformGroup target, final long duration, final Group parent) {
+	public static TransformGroup rotating(final Node target, final long duration, final Group parent) {
 		final TransformGroup tg = new TransformGroupBuilder().writable().add(target).fin();
 		final Behavior rotation = new RotationInterpolator(new Alpha(-1, duration * 1000), tg);
 		rotation.setSchedulingBounds(Game3D.WORLD_BOUNDS);
