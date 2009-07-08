@@ -1,7 +1,5 @@
 package de.tum.in.flowgame.behavior;
 
-import java.awt.AWTEvent;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -10,18 +8,17 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Group;
 import javax.media.j3d.SharedGroup;
-import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupCriterion;
-import javax.media.j3d.WakeupOnAWTEvent;
 import javax.media.j3d.WakeupOnElapsedTime;
-import javax.media.j3d.WakeupOr;
 import javax.vecmath.Point3d;
 
 import de.tum.in.flowgame.Collidable;
+import de.tum.in.flowgame.GameListener;
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.GameLogic.Item;
 
-public class CreateCollidablesBehavior extends Behavior {
+public class CreateCollidablesBehavior extends Behavior implements GameListener {
 
 	/*
 	 * Added factor to speed and time settings so that equidistant creation of
@@ -39,9 +36,9 @@ public class CreateCollidablesBehavior extends Behavior {
 	private float ratioAsteroids;
 
 	private boolean pause;
-	private final char pauseKey = ' ';
 
-	private final WakeupCondition condition;
+	private GameLogic gameLogic;
+	
 	private WakeupCriterion elapsedTime;
 
 	private final BranchGroup collidableBranchGroup;
@@ -52,17 +49,15 @@ public class CreateCollidablesBehavior extends Behavior {
 	// private final com.tornadolabs.j3dtree.Java3dTree tree = new
 	// com.tornadolabs.j3dtree.Java3dTree();
 
-	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup)
+	public CreateCollidablesBehavior(final BranchGroup collidableBranchGroup, final GameLogic gameLogic)
 			throws IOException {
+		this.gameLogic = gameLogic;
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.collidableBranchGroup
 				.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
-		final WakeupCriterion keyTyped = new WakeupOnAWTEvent(
-				KeyEvent.KEY_TYPED);
 		this.elapsedTime = new WakeupOnElapsedTime(time);
-		this.condition = new WakeupOr(Utils.asArray(keyTyped, elapsedTime));
 		ratioAsteroids = 0.2f;
 	}
 
@@ -90,43 +85,14 @@ public class CreateCollidablesBehavior extends Behavior {
 	public void initialize() {
 		// if (showSceneGraph)
 		// tree.setVisible(true);
-		wakeupOn(condition);
+		wakeupOn(elapsedTime);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
-		WakeupCriterion crit;
-		while (criteria.hasMoreElements()) {
-			crit = (WakeupCriterion) criteria.nextElement();
-			if (crit instanceof WakeupOnElapsedTime) {
-				if (!pause)
-					createCollidable();
-			} else if (crit instanceof WakeupOnAWTEvent) {
-				final WakeupOnAWTEvent awtEvent = (WakeupOnAWTEvent) crit;
-				for (final AWTEvent event : awtEvent.getAWTEvent()) {
-					if (event instanceof KeyEvent) {
-						processKeyEvent((KeyEvent) event);
-					}
-				}
-			}
-		}
-		wakeupOn(condition);
-	}
-
-	private void processKeyEvent(final KeyEvent e) {
-		final int id = e.getID();
-		if (id == KeyEvent.KEY_TYPED) {
-			switch (e.getKeyChar()) {
-			case pauseKey:
-				if (pause) {
-					pause = false;
-				} else {
-					pause = true;
-				}
-				break;
-			}
-		}
+		if (!pause)	createCollidable();
+		wakeupOn(elapsedTime);
 	}
 
 	private void createCollidable() {
@@ -138,9 +104,9 @@ public class CreateCollidablesBehavior extends Behavior {
 			if (testValue > 0.66) scale = 3f;
 			else if (testValue < 0.66 && testValue >= 0.33) scale = 2f;
 			else scale = 1f;
-			c = new Collidable(asteroid, x, speed, scale);
+			c = new Collidable(asteroid, x, speed, scale, gameLogic);
 		} else {
-			c = new Collidable(fuelcan, x, speed, 1f);
+			c = new Collidable(fuelcan, x, speed, 1f, gameLogic);
 		}
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_READ);
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_WRITE);
@@ -191,5 +157,33 @@ public class CreateCollidablesBehavior extends Behavior {
 
 	public void setSpeed(final long speed) {
 		this.speed = speed;
+	}
+
+	@Override
+	public void collided(GameLogic logic, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gamePaused(GameLogic game) {
+		this.pause = true;
+	}
+	
+	@Override
+	public void gameResumed(GameLogic game) {
+		this.pause = false;
+	}
+
+	@Override
+	public void gameStarted(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gameStopped(GameLogic game) {
+		// TODO Auto-generated method stub
+		
 	}
 }

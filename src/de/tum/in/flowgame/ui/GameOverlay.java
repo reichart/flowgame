@@ -147,4 +147,10 @@ public class GameOverlay implements GameListener, ComponentListener {
 		// empty
 	}
 
+	@Override
+	public void gameResumed(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

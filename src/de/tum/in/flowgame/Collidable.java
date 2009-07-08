@@ -16,7 +16,7 @@ public class Collidable extends BranchGroup {
 	final private ForwardNavigatorBehavior fwdNav;
 
 	public Collidable(final SharedGroup group, final float x, long speed,
-			float scale) {
+			float scale, GameLogic gameLogic) {
 		this.setCapability(BranchGroup.ALLOW_DETACH);
 
 		setUserData(group.getUserData());
@@ -47,6 +47,7 @@ public class Collidable extends BranchGroup {
 
 		fwdNav = new ForwardNavigatorBehavior(tg, speed);
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		gameLogic.addListener(fwdNav);
 		tg.addChild(fwdNav);
 
 		final TransformGroup scaleTG = Builders.transformGroup()

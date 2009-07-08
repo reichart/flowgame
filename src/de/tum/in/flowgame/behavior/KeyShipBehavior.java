@@ -16,11 +16,14 @@ import javax.vecmath.Matrix3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import de.tum.in.flowgame.GameListener;
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.GameLogic.Item;
 
-public class KeyShipBehavior extends Behavior {
+public class KeyShipBehavior extends Behavior implements GameListener {
 
 	private static final float ACCELERATION = 30f;
 	private static final float MAX_SPEED = 18f;
@@ -60,9 +63,10 @@ public class KeyShipBehavior extends Behavior {
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
-	private boolean KEY_PAUSE;
 	private final char pauseKey = ' ';
+	private boolean pause;
 	private long pauseBegin;
+	private GameLogic gameLogic;
 
 	public static final double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
 	// private double MOV_RADIUS = 300;
@@ -73,8 +77,10 @@ public class KeyShipBehavior extends Behavior {
 	private boolean firstPerson = false;
 
 	public KeyShipBehavior(final TransformGroup translationGroup,
-			TransformGroup viewTG) {
+			TransformGroup viewTG, GameLogic gameLogic) {
 
+		this.gameLogic = gameLogic;
+		
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
@@ -127,7 +133,7 @@ public class KeyShipBehavior extends Behavior {
 					}
 				}
 			} else if (crit instanceof WakeupOnElapsedFrames) {
-				if (!KEY_PAUSE) updatePosition();
+				if (!pause) updatePosition();
 			}
 		}
 
@@ -155,12 +161,12 @@ public class KeyShipBehavior extends Behavior {
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
 			case pauseKey:
-				if (KEY_PAUSE){
-					KEY_PAUSE = false;
-					time = time + (System.currentTimeMillis() - pauseBegin);
+				if (pause){
+					gameLogic.unpause();
+//					System.out.println("resume");
 				} else {
-					KEY_PAUSE = true;
-					pauseBegin = System.currentTimeMillis();
+					gameLogic.pause();
+//					System.out.println("pause");
 				}
 				break;
 			}
@@ -588,6 +594,36 @@ public class KeyShipBehavior extends Behavior {
 
 	public Transform3D getTrans() {
 		return trans;
+	}
+
+	@Override
+	public void collided(GameLogic logic, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gamePaused(GameLogic game) {
+		pause = true;
+		pauseBegin = System.currentTimeMillis();
+	}
+
+	@Override
+	public void gameResumed(GameLogic game) {
+		pause = false;
+		time = time + (System.currentTimeMillis() - pauseBegin);
+	}
+
+	@Override
+	public void gameStarted(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gameStopped(GameLogic game) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

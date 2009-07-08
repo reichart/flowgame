@@ -35,11 +35,8 @@ public class GameLogic extends Thread implements GameLogicMBean {
 	private volatile int fuel = 10;
 	private int asteroids;
 
-	private final CreateCollidablesBehavior ccb;
-
-	public GameLogic(final CreateCollidablesBehavior ccb, final Tunnel tunnel) {
+	public GameLogic(final Tunnel tunnel) {
 		this.listeners = new ArrayList<GameListener>();
-		this.ccb = ccb;
 		this.tunnel = tunnel;
 
 		final SpeedChangeBehavior speedChange = new SpeedChangeBehavior(this.tunnel.getFwdNav());
@@ -111,7 +108,15 @@ public class GameLogic extends Thread implements GameLogicMBean {
 	public void addListener(final GameListener listener) {
 		this.listeners.add(listener);
 	}
-
+	
+	public void pause(){
+		fireGamePaused();
+	}
+	
+	public void unpause(){
+		fireGameResumed();
+	}
+	
 	private void fireGameStarted() {
 		for (final GameListener listener : listeners) {
 			listener.gameStarted(this);
@@ -121,6 +126,12 @@ public class GameLogic extends Thread implements GameLogicMBean {
 	private void fireGamePaused() {
 		for (final GameListener listener : listeners) {
 			listener.gamePaused(this);
+		}
+	}
+	
+	private void fireGameResumed() {
+		for (final GameListener listener : listeners) {
+			listener.gameResumed(this);
 		}
 	}
 

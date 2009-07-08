@@ -54,7 +54,8 @@ public class Ship extends TransformGroup {
 //		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		
 		// Alternative KeyBehavior
-		keyShipBehavior = new KeyShipBehavior(moveGroup, viewTG);
+		keyShipBehavior = new KeyShipBehavior(moveGroup, viewTG, logic);
+		logic.addListener(keyShipBehavior);
 		ship.addChild(keyShipBehavior);
 		keyShipBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 

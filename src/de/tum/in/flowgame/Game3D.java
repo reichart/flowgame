@@ -38,17 +38,21 @@ public class Game3D extends Canvas3D {
 	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
+		final Tunnel tunnel = new Tunnel();
+		
+		this.logic = new GameLogic(tunnel);
+		
+		logic.addListener(tunnel.getFwdNav());
+		
 		collidables = new BranchGroup();
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
 
-		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables);
+		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, logic);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
-
-		final Tunnel tunnel = new Tunnel();
 		
-		this.logic = new GameLogic(ccb, tunnel);
+		this.logic.addListener(ccb);
 
 		final SimpleUniverse su = createUniverse();
 		

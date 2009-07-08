@@ -40,7 +40,7 @@ public class GameRound extends AbstractEntity implements GameListener {
 
 	@Override
 	public void gamePaused(final GameLogic game) {
-		throw new UnsupportedOperationException(); // TODO impl
+		// TODO impl
 	}
 
 	public void gameStopped(final GameLogic game) {
@@ -50,5 +50,11 @@ public class GameRound extends AbstractEntity implements GameListener {
 	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		this.collisions.add(new Collision(item));
+	}
+
+	@Override
+	public void gameResumed(GameLogic game) {
+		// TODO Auto-generated method stub
+		
 	}
 }
