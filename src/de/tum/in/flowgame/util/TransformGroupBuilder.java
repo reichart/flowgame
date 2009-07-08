@@ -46,7 +46,11 @@ public class TransformGroupBuilder {
 	}
 
 	public TransformGroupBuilder addRotationBehavior(final Alpha alpha, final Bounds schedulingBounds) {
-		return writable().addBehavior(new RotationInterpolator(alpha, tg), schedulingBounds);
+		float max = (float)(2*Math.PI);
+		if (Math.random()>0.5){
+			max = -max;
+		}
+		return writable().addBehavior(new RotationInterpolator(alpha, tg, new Transform3D(), 0f, max), schedulingBounds);
 	}
 
 	public TransformGroupBuilder translate(final double x, final double y, final double z) {
