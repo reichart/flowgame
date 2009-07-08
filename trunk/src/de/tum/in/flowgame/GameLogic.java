@@ -30,18 +30,11 @@ public class GameLogic extends Thread implements GameLogicMBean {
 
 	private final List<GameListener> listeners;
 
-	private final Tunnel tunnel;
-
 	private volatile int fuel = 10;
 	private int asteroids;
 
-	public GameLogic(final Tunnel tunnel) {
+	public GameLogic() {
 		this.listeners = new ArrayList<GameListener>();
-		this.tunnel = tunnel;
-
-		final SpeedChangeBehavior speedChange = new SpeedChangeBehavior(this.tunnel.getFwdNav());
-		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		tunnel.addChild(speedChange);
 
 		final GameRound round = new GameRound();
 		addListener(round);
@@ -97,23 +90,15 @@ public class GameLogic extends Thread implements GameLogicMBean {
 		return asteroids;
 	}
 
-	public double getTunnelSpeed() {
-		return this.tunnel.getFwdNav().getSpeed();
-	}
-
-	public void setTunnelSpeed(final double tunnelSpeed) {
-		this.tunnel.getFwdNav().setSpeed(tunnelSpeed);
-	}
-
 	public void addListener(final GameListener listener) {
 		this.listeners.add(listener);
 	}
 	
-	public void pause(){
+	public void pause() {
 		fireGamePaused();
 	}
 	
-	public void unpause(){
+	public void unpause() {
 		fireGameResumed();
 	}
 	

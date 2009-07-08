@@ -31,32 +31,36 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
-	private final BranchGroup collidables;
 	private final GameLogic logic;
 	private final GameOverlay overlay;
 
 	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		final Tunnel tunnel = new Tunnel();
+		this.logic = new GameLogic();
+		this.overlay = new GameOverlay(logic);
+		this.addComponentListener(overlay);
 		
-		this.logic = new GameLogic(tunnel);
+		final SimpleUniverse su = createUniverse();
+		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
 		
-		logic.addListener(tunnel.getFwdNav());
+		final BranchGroup scene = createScene(logic);
+		scene.addChild(createCollidables(logic, viewTG));
 		
-		collidables = new BranchGroup();
+		su.addBranchGraph(scene);
+	}
+
+	private static BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
+		final BranchGroup collidables = new BranchGroup();
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
 
-		CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, logic);
+		final CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, logic);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
-		
-		this.logic.addListener(ccb);
+		logic.addListener(ccb);
 
-		final SimpleUniverse su = createUniverse();
-		
-		Ship ship = new Ship(logic, su.getViewingPlatform().getViewPlatformTransform());
+		final Ship ship = new Ship(logic, viewTG);
 //		ship.setBoundsAutoCompute(false);
 //		final BoundingBox shipBounds = new BoundingBox();
 //		shipBounds.setLower(-0.6,  -1.15, -7);
@@ -70,16 +74,16 @@ public class Game3D extends Canvas3D {
 //		collidables.addChild(t);
 		collidables.addChild(ccb);
 		
-		CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
+		final CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		collidables.addChild(collisionBehavior);
 		
-		this.overlay = new GameOverlay(logic);
-		this.addComponentListener(overlay);
-		
+		return collidables;
+	}
+
+	private static BranchGroup createScene(final GameLogic logic) {
 		final BranchGroup scene = new BranchGroup();
 
-		// Fog fog = new ExponentialFog(color, 0.2f);
 		final Fog fog = new LinearFog(BLACK, 0, Tunnel.TUNNEL_LENGTH);
 		fog.setInfluencingBounds(WORLD_BOUNDS);
 		scene.addChild(fog);
@@ -94,10 +98,9 @@ public class Game3D extends Canvas3D {
 		scene.addChild(dirLight);
 
 		scene.addChild(new Space());
-		scene.addChild(tunnel);
-		scene.addChild(collidables);
-
-		su.addBranchGraph(scene);
+		scene.addChild(new Tunnel(logic));
+		
+		return scene;
 	}
 
 	public void start() {

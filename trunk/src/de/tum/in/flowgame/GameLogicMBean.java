@@ -6,6 +6,4 @@ public interface GameLogicMBean {
 
 	int getAsteroids();
 
-	double getTunnelSpeed();
-
 }

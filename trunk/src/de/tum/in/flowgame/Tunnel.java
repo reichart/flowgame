@@ -14,6 +14,7 @@ import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Primitive;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
+import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.behavior.TunnelPartMoveBehavior;
 import de.tum.in.flowgame.util.AppearanceBuilder;
 import de.tum.in.flowgame.util.AppearanceBuilder.TextureMode;
@@ -25,13 +26,9 @@ public class Tunnel extends TransformGroup {
 	public static final float TUNNEL_RADIUS = 8.0f;
 	public static final int TUNNEL_PARTS = 3;
 	
-	private ForwardNavigatorBehavior fwdNav; 
+	private final ForwardNavigatorBehavior fwdNav; 
 
-	public ForwardNavigatorBehavior getFwdNav() {
-		return fwdNav;
-	}
-
-	public Tunnel() {
+	public Tunnel(final GameLogic logic) {
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 
@@ -95,6 +92,11 @@ public class Tunnel extends TransformGroup {
 		}
 		fwdNav = new ForwardNavigatorBehavior(this, 100);
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		logic.addListener(fwdNav);
+		
+		final SpeedChangeBehavior speedChange = new SpeedChangeBehavior(fwdNav);
+		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		addChild(speedChange);
 		
 		addChild(fwdNav);
 	}
