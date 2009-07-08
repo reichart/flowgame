@@ -74,7 +74,7 @@ public class ForwardNavigator {
 			return deltaTime;
 	}
 	
-	public void setFwdSpeed(final double fwdSpeed) {
+	protected void setFwdSpeed(final double fwdSpeed) {
 		this.fwdSpeed = fwdSpeed;
 	}
 	
