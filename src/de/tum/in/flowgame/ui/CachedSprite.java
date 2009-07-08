@@ -26,7 +26,6 @@ public class CachedSprite implements Sprite {
 	 */
 	@Override
 	public void render(final Graphics2D g, final int x, final int y) {
-		System.out.println("CachedSprite.render()");
 		sprite.render(g, x, y);
 	}
 
