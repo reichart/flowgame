@@ -133,9 +133,14 @@ public class CreateCollidablesBehavior extends Behavior {
 		final float x = (float) (Math.random() * 3 - 1.5);
 		Collidable c;
 		if (ratioAsteroids < Math.random()) {
-			c = new Collidable(asteroid, x, speed);
+			double testValue = Math.random();
+			float scale;
+			if (testValue > 0.66) scale = 3f;
+			else if (testValue < 0.66 && testValue >= 0.33) scale = 2f;
+			else scale = 1f;
+			c = new Collidable(asteroid, x, speed, scale);
 		} else {
-			c = new Collidable(fuelcan, x, speed);
+			c = new Collidable(fuelcan, x, speed, 1f);
 		}
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_READ);
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_WRITE);
