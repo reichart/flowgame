@@ -63,7 +63,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
-	private final char pauseKey = ' ';
+	private final char pauseKey = KeyEvent.VK_SPACE;
 	private boolean pause;
 	private long pauseBegin;
 	private GameLogic gameLogic;
@@ -159,7 +159,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		final int id = e.getID();
 
 		if (id == KeyEvent.KEY_TYPED) {
-			switch (e.getKeyChar()) {
+			switch (e.getKeyCode()) {
 			case pauseKey:
 				if (pause){
 					gameLogic.unpause();
