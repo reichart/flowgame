@@ -579,10 +579,6 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 			return deltaTime;
 	}
 
-	public Transform3D getVpTrans() {
-		return vpTrans;
-	}
-
 	public Vector3d getCoords() {
 		Vector3d vec = new Vector3d();
 		trans.get(vec);
@@ -590,10 +586,6 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		vec.setY(vec.getY() + Ship.INITIAL_SHIP_PLACEMENT_Y);
 		vec.setZ(vec.getZ() + Ship.INITIAL_SHIP_PLACEMENT_Z);
 		return vec;
-	}
-
-	public Transform3D getTrans() {
-		return trans;
 	}
 
 	@Override
