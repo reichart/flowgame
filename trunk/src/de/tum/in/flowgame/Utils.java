@@ -53,10 +53,13 @@ public class Utils {
 		texture.setBoundaryModeS(Texture.WRAP);
 		texture.setBoundaryModeT(Texture.WRAP);
 
-		texture.setMagFilter(Texture.NICEST); // filtering
-		texture.setMinFilter(Texture.NICEST); // tri-linear filtering
+		// Do NOT use NICEST for min filter (breaks ATI on Linux)
+		texture.setMinFilter(Texture.BASE_LEVEL_LINEAR);
+		texture.setMagFilter(Texture.BASE_LEVEL_LINEAR);
 		
-		texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+		texture.setAnisotropicFilterMode(Texture.ANISOTROPIC_SINGLE_VALUE);
+		texture.setAnisotropicFilterDegree(4);
+		
 		return texture;
 	}
 
