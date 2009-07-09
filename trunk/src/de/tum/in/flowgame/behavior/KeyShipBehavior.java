@@ -80,7 +80,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 			TransformGroup viewTG, GameLogic gameLogic) {
 
 		this.gameLogic = gameLogic;
-
+		
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
@@ -164,12 +164,12 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
 			case pauseKey:
-				if (pause) {
+				if (pause){
 					gameLogic.unpause();
-					// System.out.println("resume");
+//					System.out.println("resume");
 				} else {
 					gameLogic.pause();
-					// System.out.println("pause");
+//					System.out.println("pause");
 				}
 				break;
 			}
@@ -594,7 +594,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	@Override
 	public void collided(GameLogic logic, Item item) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -611,14 +611,14 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 
 	@Override
 	public void gameStarted(GameLogic game) {
-		// TODO Auto-generated method stub
-
+		trans.setIdentity();
+		translationGroup.setTransform(trans);
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
