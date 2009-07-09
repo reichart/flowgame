@@ -105,7 +105,7 @@ public class GameOverlay implements GameListener, ComponentListener {
 	@Override
 	public void gameStopped(final GameLogic game) {
 		drawHUD = false;
-		message("Iz ovurr! Play Again?", null);
+		message("Click to play again!", null);
 	}
 
 	@Override
