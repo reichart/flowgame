@@ -80,7 +80,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 			TransformGroup viewTG, GameLogic gameLogic) {
 
 		this.gameLogic = gameLogic;
-		
+
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
@@ -133,7 +133,8 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 					}
 				}
 			} else if (crit instanceof WakeupOnElapsedFrames) {
-				if (!pause) updatePosition();
+				if (!pause)
+					updatePosition();
 			}
 		}
 
@@ -148,12 +149,14 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		String os_name = System.getProperty("os.name", "");
 		if (os_name.contains("Linux")) {
 			final long when = e.getWhen();
-			if ((when - lastKeyEventTime < 2)
-					&& e.getID() == KeyEvent.KEY_RELEASED) {
+			if (e.getID() == KeyEvent.KEY_RELEASED
+					&& when - lastKeyEventTime < 1) {
+//				System.out.println(when-lastKeyEventTime);
+				lastKeyEventTime = when;
 				return;
 			}
+//			System.err.println(when-lastKeyEventTime);
 			lastKeyEventTime = when;
-			// System.out.println("Filter criteria matched");
 		}
 
 		final int id = e.getID();
@@ -161,12 +164,12 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
 			case pauseKey:
-				if (pause){
+				if (pause) {
 					gameLogic.unpause();
-//					System.out.println("resume");
+					// System.out.println("resume");
 				} else {
 					gameLogic.pause();
-//					System.out.println("pause");
+					// System.out.println("pause");
 				}
 				break;
 			}
@@ -591,7 +594,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	@Override
 	public void collided(GameLogic logic, Item item) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -609,13 +612,13 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	@Override
 	public void gameStarted(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
