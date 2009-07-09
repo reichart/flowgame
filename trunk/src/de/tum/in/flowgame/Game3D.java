@@ -1,19 +1,28 @@
 package de.tum.in.flowgame;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.media.j3d.AmbientLight;
+import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Fog;
+import javax.media.j3d.Geometry;
+import javax.media.j3d.GraphicsContext3D;
 import javax.media.j3d.J3DGraphics2D;
 import javax.media.j3d.LinearFog;
+import javax.media.j3d.Switch;
+import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.TriangleArray;
 import javax.media.j3d.View;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.universe.SimpleUniverse;
@@ -33,23 +42,77 @@ public class Game3D extends Canvas3D {
 
 	private final GameLogic logic;
 	private final GameOverlay overlay;
+	
+	private final Switch switsch;
 
+	// part of workaround for Java3D bug #501
+	private final Geometry glResetGeom;
+	private final Transform3D glResetTrans; 
+	
 	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
 		this.logic = new GameLogic();
+		this.logic.addListener(new DefaultGameListener() {
+
+			@Override
+			public void gameStarted(final GameLogic game) {
+				switsch.setWhichChild(Switch.CHILD_ALL);
+			}
+			
+			@Override
+			public void gameStopped(final GameLogic game) {
+				switsch.setWhichChild(Switch.CHILD_NONE);
+			}
+		});
+
+		this.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				if (!logic.isRunning()) {
+					logic.start();
+				}
+			}
+		});
+		
 		this.overlay = new GameOverlay(logic);
 		this.addComponentListener(overlay);
 		
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
 		
-		final BranchGroup scene = createScene(logic);
-		scene.addChild(createCollidables(logic, viewTG));
+		// allow switching the game contents on/off at runtime
+		this.switsch = new Switch();
+		switsch.setCapability(Switch.ALLOW_SWITCH_READ);
+		switsch.setCapability(Switch.ALLOW_SWITCH_WRITE);
+		switsch.addChild(createCollidables(logic, viewTG));
+		
+		final BranchGroup scene = new BranchGroup();
+		scene.addChild(createScene(logic));
+		scene.addChild(switsch);
 		
 		su.addBranchGraph(scene);
+		
+		
+		/*
+		 * This is a workaround for Java3D bug #501
+		 * https://java3d.dev.java.net/issues/show_bug.cgi?id=501
+		 * from http://forums.java.net/jive/thread.jspa?threadID=28013
+		 * 
+		 * Without this, texture coordinates used somewhere in the 3D scenegraph
+		 * will affect the texture used for rendering J3DGraphics2D in postRender().
+		 */
+		getGraphicsContext3D().setAppearance(new Appearance());
+		
+		final TriangleArray tri = new TriangleArray(3, TriangleArray.COORDINATES);
+		tri.setCoordinate(0, new float[] { 0, 0, 0, 0, 1, 0, 0, 0, 1 });
+		glResetGeom = tri;
+		
+		glResetTrans = new Transform3D();
+		glResetTrans.set(new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
 	}
-
+	
 	private static BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
 		final BranchGroup collidables = new BranchGroup();
 		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
@@ -67,6 +130,8 @@ public class Game3D extends Canvas3D {
 		final CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		collidables.addChild(collisionBehavior);
+		
+		collidables.addChild(new Tunnel(logic));
 		
 		return collidables;
 	}
@@ -88,7 +153,6 @@ public class Game3D extends Canvas3D {
 		scene.addChild(dirLight);
 
 		scene.addChild(new Space());
-		scene.addChild(new Tunnel(logic));
 		
 		return scene;
 	}
@@ -99,6 +163,11 @@ public class Game3D extends Canvas3D {
 	
 	@Override
 	public void postRender() {
+		// part of workaround for Java3D bug #501
+		final GraphicsContext3D gc = getGraphicsContext3D();
+		gc.setModelTransform(glResetTrans);
+		gc.draw(glResetGeom);
+		
 		final J3DGraphics2D g2 = getGraphics2D();
 		overlay.render(g2);
 		g2.flush(true);
