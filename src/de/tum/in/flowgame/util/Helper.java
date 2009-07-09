@@ -16,7 +16,7 @@ public class Helper {
 	/**
 	 * @return the rotated target
 	 */
-	public static TransformGroup rotate(final TransformGroup target, final double x, final double y, final double z) {
+	public static TransformGroup rotate(final Node target, final double x, final double y, final double z) {
 		return new TransformGroupBuilder().add(target).rotX(x).rotY(y).rotZ(z).fin();
 	}
 
