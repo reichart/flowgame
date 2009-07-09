@@ -61,17 +61,7 @@ public class Game3D extends Canvas3D {
 		logic.addListener(ccb);
 
 		final Ship ship = new Ship(logic, viewTG);
-//		ship.setBoundsAutoCompute(false);
-//		final BoundingBox shipBounds = new BoundingBox();
-//		shipBounds.setLower(-0.6,  -1.15, -7);
-//		shipBounds.setUpper(0.6, -0.85, -5);
-//		ship.setBounds(shipBounds);
 		collidables.addChild(ship);
-//		BranchGroup t = new BranchGroup();
-//		BoundsBehavior b = new BoundsBehavior(ship);
-//		b.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-//		b.addBehaviorToParentGroup(t);
-//		collidables.addChild(t);
 		collidables.addChild(ccb);
 		
 		final CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
@@ -125,9 +115,5 @@ public class Game3D extends Canvas3D {
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 
 		return new SimpleUniverse(vp, viewer);
-	}
-
-	public GameLogic getLogic() {
-		return logic;
 	}
 }
