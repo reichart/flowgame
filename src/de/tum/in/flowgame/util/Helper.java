@@ -19,6 +19,13 @@ public class Helper {
 	public static TransformGroup rotate(final Node target, final double x, final double y, final double z) {
 		return new TransformGroupBuilder().add(target).rotX(x).rotY(y).rotZ(z).fin();
 	}
+	
+	/**
+	 * @return the translated target
+	 */
+	public static TransformGroup translate(final Node target, final double x, final double y, final double z) {
+		return new TransformGroupBuilder().add(target).translate(x, y, z).fin();
+	}
 
 	/**
 	 * @param target
