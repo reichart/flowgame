@@ -10,7 +10,6 @@ import javax.management.ObjectName;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
 import javax.media.j3d.Texture;
-import javax.vecmath.Color4f;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
