@@ -5,11 +5,9 @@ import java.util.List;
 
 import javax.media.j3d.Node;
 
-import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
-import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.model.GameRound;
 
-public class GameLogic extends Thread implements GameLogicMBean {
+public class GameLogic implements GameLogicMBean, Runnable {
 
 	public enum Item {
 		FUELCAN(Sounds.FUELCAN), ASTEROID(Sounds.ASTEROID);
@@ -27,11 +25,14 @@ public class GameLogic extends Thread implements GameLogicMBean {
 
 	public final static int MAX_ASTEROIDS = 10;
 	public final static int MAX_FUEL = 10;
-
+	
 	private final List<GameListener> listeners;
 
-	private volatile int fuel = 10;
-	private int asteroids;
+	private volatile int fuel;
+	private volatile int asteroids;
+	
+	private Thread thread;
+	private boolean paused;
 
 	public GameLogic() {
 		this.listeners = new ArrayList<GameListener>();
@@ -49,12 +50,14 @@ public class GameLogic extends Thread implements GameLogicMBean {
 
 		switch (item) {
 		case FUELCAN:
-			if (fuel + 1 < MAX_FUEL) {
+			if (fuel < MAX_FUEL) {
 				fuel++;
 			}
 			break;
 		case ASTEROID:
-			asteroids++;
+			if (asteroids < MAX_ASTEROIDS) {
+				asteroids++;
+			}
 			break;
 		}
 
@@ -72,10 +75,12 @@ public class GameLogic extends Thread implements GameLogicMBean {
 				// ignore
 			}
 
-			fuel--;
+			if (!paused) {
+				fuel--;
 
-			if (fuel == 0) {
-				break;
+				if (fuel == 0) {
+					break;
+				}
 			}
 		}
 
@@ -93,12 +98,42 @@ public class GameLogic extends Thread implements GameLogicMBean {
 	public void addListener(final GameListener listener) {
 		this.listeners.add(listener);
 	}
+
+	/**
+	 * @return <code>true</code> if a game is running, <code>false</code>
+	 *         otherwise
+	 */
+	public boolean isRunning() {
+		if (thread == null) {
+			return false;
+		} else {
+			return thread.isAlive();
+		}
+	}
+	
+	public void start() {
+		if (isRunning()) {
+			throw new IllegalStateException("A game is still running.");
+		}
+		
+		// reset internal state
+		fuel = 10;
+		asteroids = 0;
+		paused = false;
+		
+		// spawn new thread for game updates
+		this.thread = new Thread(this, GameLogic.class.getSimpleName());
+		thread.setDaemon(true);
+		thread.start();
+	}
 	
 	public void pause() {
+		this.paused = true;
 		fireGamePaused();
 	}
 	
 	public void unpause() {
+		this.paused = false;
 		fireGameResumed();
 	}
 	
