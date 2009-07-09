@@ -9,6 +9,7 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
+import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameLogic;
@@ -36,9 +37,11 @@ public class CollisionBehavior extends Behavior {
 	@Override
 	public void processStimulus(final Enumeration criteria) {
 		final Enumeration<Node> children = branchGroup.getAllChildren();
-		final double shipX = ship.getVector3dtShipPos().getX();
-		final double shipY = ship.getVector3dtShipPos().getY();
-//		final double shipZ = ship.getVector3dtShipPos().getZ();
+		
+		final Vector3d shipCoords = ship.getControls().getCoords();
+		final double shipX = shipCoords.getX();
+		final double shipY = shipCoords.getY();
+//		final double shipZ = shipCoords.getZ();
 
 		while (children.hasMoreElements()) {
 			final Node child = children.nextElement();

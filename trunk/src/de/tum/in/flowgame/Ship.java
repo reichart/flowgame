@@ -112,16 +112,8 @@ public class Ship extends TransformGroup {
 		return rotateShip;
 	}
 	
-	public Vector3d getVector3dtShipPos(){
-		return keyShipBehavior.getCoords();
-	}
-
-	public double getXPos() {
-		return keyShipBehavior.getCoords().getX();
-	}
-
-	public double getYPos() {
-		return keyShipBehavior.getCoords().getY();
+	public KeyShipBehavior getControls() {
+		return keyShipBehavior;
 	}
 
 }
