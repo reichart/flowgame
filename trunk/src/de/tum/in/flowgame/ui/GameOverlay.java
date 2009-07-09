@@ -19,20 +19,23 @@ import de.tum.in.flowgame.GameLogic.Item;
  */
 public class GameOverlay implements GameListener, ComponentListener {
 
+	private final static Font LARGE = new Font("sans", Font.BOLD, 56);
+	private final static Font SMALL = new Font("sans", Font.PLAIN, 16);
+	
 	private final Timer timer;
 	private final GameLogic logic;
-	private final Font bigFont;
 	private final Sprite cockpit;
 	private final HealthBar fuel, damage;
 
 	private int width, height;
 
 	private String message;
+	
 	private boolean drawMessage;
+	private boolean drawHUD;
 	
 	public GameOverlay(final GameLogic logic) {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
-		this.bigFont = new Font("sans", Font.BOLD, 56);
 		this.logic = logic;
 		logic.addListener(this);
 
@@ -49,7 +52,7 @@ public class GameOverlay implements GameListener, ComponentListener {
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		if (drawMessage) {
-			g.setFont(bigFont);
+			g.setFont(LARGE);
 			g.setColor(Color.WHITE);
 
 			final FontMetrics fm = g.getFontMetrics();
@@ -59,30 +62,50 @@ public class GameOverlay implements GameListener, ComponentListener {
 			g.drawString(message, (width - w) / 2, (height - h) / 2);
 		}
 
-		fuel.setValue(logic.getFuel());
-		damage.setValue(logic.getAsteroids());
-
-		final int barsWidth = Math.min(width, height) / 2;
-
-		// cockpit.render(g, 0, 0, width, height);
-
-		damage.render(g, 20, 20, barsWidth, -1);
-		fuel.render(g, 20, 50, barsWidth, -1);
+		if (drawHUD) {
+			fuel.setValue(logic.getFuel());
+			damage.setValue(logic.getAsteroids());
+	
+			final int barsWidth = Math.min(width, height) / 2;
+	
+			// cockpit.render(g, 0, 0, width, height);
+	
+			damage.render(g, 20, 20, barsWidth, -1);
+			fuel.render(g, 20, 50, barsWidth, -1);
+		}
+		
+		g.setFont(SMALL);
+		g.setColor(Color.WHITE);
+		
+		final String controls = "Pause/continue: SPACE";
+		
+		final FontMetrics fm = g.getFontMetrics();
+		final int controlsW = fm.stringWidth(controls);
+		final int controlsH = fm.getHeight();
+		
+		g.drawString(controls, width - controlsW - 20, height - controlsH);
 	}
 
 	@Override
 	public void gameStarted(final GameLogic game) {
+		drawHUD = true;
 		message("Go speed racer!");
 	}
 
 	@Override
 	public void gamePaused(final GameLogic game) {
-		message("Paused. Zzzzz...");
+		message("Paused. Zzzzz...", null);
+	}
+	
+	@Override
+	public void gameResumed(GameLogic game) {
+		message("W00t! Continue!");
 	}
 
 	@Override
 	public void gameStopped(final GameLogic game) {
-		message("Iz ovurr!");
+		drawHUD = false;
+		message("Iz ovurr! Play Again?", null);
 	}
 
 	@Override
@@ -102,27 +125,35 @@ public class GameOverlay implements GameListener, ComponentListener {
 	 * @param delay
 	 *            the time to display the message in milliseconds
 	 */
-	public void message(final String message, final long delay) {
+	public void message(final String message, final Integer seconds) {
 		this.message = message;
-		timer.schedule(new MessageTimer(), delay);
+		this.drawMessage = true;
+		
+		if (seconds != null) {
+			timer.schedule(new MessageTimer(message), seconds * 1000);
+		}
 	}
 
 	/**
 	 * Displays a message on the screen for two seconds.
 	 */
 	public void message(final String message) {
-		message(message, 2000);
+		message(message, 2);
 	}
 
 	private class MessageTimer extends TimerTask {
 		
-		public MessageTimer() {
-			drawMessage = true;
+		private final String messageToClear;
+
+		public MessageTimer(final String messageToClear) {
+			this.messageToClear = messageToClear;
 		}
 		
 		@Override
 		public void run() {
-			drawMessage = false;
+			if (messageToClear.equals(message)) {
+				drawMessage = false;
+			}
 		}
 	}
 
@@ -146,11 +177,4 @@ public class GameOverlay implements GameListener, ComponentListener {
 	public void componentShown(final ComponentEvent e) {
 		// empty
 	}
-
-	@Override
-	public void gameResumed(GameLogic game) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
