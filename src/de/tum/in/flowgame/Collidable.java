@@ -5,8 +5,10 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Link;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Point2d;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
+import de.tum.in.flowgame.behavior.KeyShipBehavior;
 import de.tum.in.flowgame.util.Builders;
 
 public class Collidable extends BranchGroup {
@@ -15,7 +17,7 @@ public class Collidable extends BranchGroup {
 	private final double yPos;
 	final private ForwardNavigatorBehavior fwdNav;
 
-	public Collidable(final SharedGroup group, final float x, long speed,
+	public Collidable(final SharedGroup group, long speed,
 			float scale, GameLogic gameLogic) {
 		this.setCapability(BranchGroup.ALLOW_DETACH);
 
@@ -60,8 +62,9 @@ public class Collidable extends BranchGroup {
 
 		scaleTG.setBoundsAutoCompute(true);
 
-		xPos = Math.random() * 10 - 5;
-		yPos = Math.random() * 10 - 5;
+		Point2d position = polarToCartesian(Math.random()*KeyShipBehavior.MOV_RADIUS, Math.random() * 2 * Math.PI);
+		xPos = position.getX();
+		yPos = position.getY();
 
 //		 xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
 //		 yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
@@ -70,6 +73,12 @@ public class Collidable extends BranchGroup {
 			.translate(xPos,yPos, 0).add(scaleTG)
 			.fin();
 		addChild(transTG);
+	}
+	
+	private Point2d polarToCartesian (double radius, double angleInRadians){
+		double x = Math.cos( angleInRadians ) * radius;
+		double y = Math.sin( angleInRadians ) * radius;
+		return new Point2d(x,y);
 	}
 
 	public double getOldZPos() {
