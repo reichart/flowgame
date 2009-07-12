@@ -104,9 +104,9 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 			if (testValue > 0.66) scale = 3f;
 			else if (testValue < 0.66 && testValue >= 0.33) scale = 2f;
 			else scale = 1f;
-			c = new Collidable(asteroid, speed, scale, gameLogic);
+			c = new Collidable(asteroid, x, speed, scale, gameLogic);
 		} else {
-			c = new Collidable(fuelcan, speed, 1f, gameLogic);
+			c = new Collidable(fuelcan, x, speed, 1f, gameLogic);
 		}
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_READ);
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_WRITE);
