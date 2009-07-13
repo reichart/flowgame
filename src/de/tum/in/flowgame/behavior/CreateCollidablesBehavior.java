@@ -96,7 +96,6 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 	}
 
 	private void createCollidable() {
-		final float x = (float) (Math.random() * 3 - 1.5);
 		Collidable c;
 		if (ratioAsteroids < Math.random()) {
 			double testValue = Math.random();
