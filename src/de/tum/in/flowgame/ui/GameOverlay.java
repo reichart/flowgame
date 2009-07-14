@@ -12,12 +12,13 @@ import java.util.TimerTask;
 
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.FrameCounterBehavior.FrameCounterListener;
 import de.tum.in.flowgame.GameLogic.Item;
 
 /**
  * Displays overlay graphics like health/damage bars, cockpit, and HUD messages.
  */
-public class GameOverlay implements GameListener, ComponentListener {
+public class GameOverlay implements GameListener, ComponentListener, FrameCounterListener {
 
 	private final static Font LARGE = new Font("sans", Font.BOLD, 56);
 	private final static Font SMALL = new Font("sans", Font.PLAIN, 16);
@@ -30,6 +31,7 @@ public class GameOverlay implements GameListener, ComponentListener {
 	private int width, height;
 
 	private String message;
+	private long fps;
 	
 	private boolean drawMessage;
 	private boolean drawHUD;
@@ -76,14 +78,17 @@ public class GameOverlay implements GameListener, ComponentListener {
 		
 		g.setFont(SMALL);
 		g.setColor(Color.WHITE);
+		final FontMetrics fm = g.getFontMetrics();
+		final int stringH = fm.getHeight();
+		
+		final String frames = fps + " FPS";
+		final int framesW = fm.stringWidth(frames);
+		g.drawString(frames, width - framesW - 20, stringH + 20);
 		
 		final String controls = "Pause/continue: SPACE";
-		
-		final FontMetrics fm = g.getFontMetrics();
 		final int controlsW = fm.stringWidth(controls);
-		final int controlsH = fm.getHeight();
 		
-		g.drawString(controls, width - controlsW - 20, height - controlsH);
+		g.drawString(controls, width - controlsW - 20, height - stringH);
 	}
 
 	@Override
@@ -117,6 +122,11 @@ public class GameOverlay implements GameListener, ComponentListener {
 		}
 	}
 
+	@Override
+	public void updateFramesPerSecond(long fps) {
+		this.fps = fps;
+	}
+	
 	/**
 	 * Displays a message on the screen for a limited time.
 	 * 

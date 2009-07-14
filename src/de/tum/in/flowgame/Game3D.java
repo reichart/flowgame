@@ -92,6 +92,11 @@ public class Game3D extends Canvas3D {
 		scene.addChild(createScene(logic));
 		scene.addChild(switsch);
 		
+		final FrameCounterBehavior fps = new FrameCounterBehavior(100);
+		fps.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		fps.getListeners().addListener(overlay);
+		scene.addChild(fps);
+		
 		su.addBranchGraph(scene);
 		
 		
