@@ -7,6 +7,7 @@ import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Group;
+import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedTime;
@@ -53,8 +54,7 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 			throws IOException {
 		this.gameLogic = gameLogic;
 		this.collidableBranchGroup = collidableBranchGroup;
-		this.collidableBranchGroup
-				.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
+		this.collidableBranchGroup.setCapability(Group.ALLOW_CHILDREN_EXTEND);
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
 		this.elapsedTime = new WakeupOnElapsedTime(time);
@@ -109,8 +109,8 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 		}
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_READ);
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_WRITE);
-		c.setCapability(Group.ALLOW_AUTO_COMPUTE_BOUNDS_READ);
-		c.setCapability(Group.ALLOW_AUTO_COMPUTE_BOUNDS_WRITE);
+		c.setCapability(Node.ALLOW_AUTO_COMPUTE_BOUNDS_READ);
+		c.setCapability(Node.ALLOW_AUTO_COMPUTE_BOUNDS_WRITE);
 		c.setBoundsAutoCompute(true);
 		// BranchGroup t = new BranchGroup();
 		// BoundsBehavior b = new BoundsBehavior(c);

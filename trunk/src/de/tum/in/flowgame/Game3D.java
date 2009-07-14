@@ -12,7 +12,9 @@ import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Fog;
 import javax.media.j3d.Geometry;
+import javax.media.j3d.GeometryArray;
 import javax.media.j3d.GraphicsContext3D;
+import javax.media.j3d.Group;
 import javax.media.j3d.J3DGraphics2D;
 import javax.media.j3d.LinearFog;
 import javax.media.j3d.Switch;
@@ -110,7 +112,7 @@ public class Game3D extends Canvas3D {
 		 */
 		getGraphicsContext3D().setAppearance(new Appearance());
 		
-		final TriangleArray tri = new TriangleArray(3, TriangleArray.COORDINATES);
+		final TriangleArray tri = new TriangleArray(3, GeometryArray.COORDINATES);
 		tri.setCoordinate(0, new float[] { 0, 0, 0, 0, 1, 0, 0, 0, 1 });
 		glResetGeom = tri;
 		
@@ -120,9 +122,9 @@ public class Game3D extends Canvas3D {
 	
 	private static BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
 		final BranchGroup collidables = new BranchGroup();
-		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
-		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
-		collidables.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+		collidables.setCapability(Group.ALLOW_CHILDREN_EXTEND);
+		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
+		collidables.setCapability(Group.ALLOW_CHILDREN_WRITE);
 
 		final CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, logic);
 		ccb.setSchedulingBounds(WORLD_BOUNDS);
