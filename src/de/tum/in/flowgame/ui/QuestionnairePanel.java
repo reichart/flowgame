@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalSliderUI;
 
@@ -35,12 +36,13 @@ public class QuestionnairePanel extends JPanel implements ActionListener {
 			this.slider = slider;
 		}
 
+		@Override
 		protected void scrollDueToClickInTrack(int direction) {
 			int value = slider.getValue();
 
-			if (slider.getOrientation() == JSlider.HORIZONTAL) {
+			if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
 				value = this.valueForXPosition(slider.getMousePosition().x);
-			} else if (slider.getOrientation() == JSlider.VERTICAL) {
+			} else if (slider.getOrientation() == SwingConstants.VERTICAL) {
 				value = this.valueForYPosition(slider.getMousePosition().y);
 			}
 			slider.setValue(value);
@@ -64,7 +66,7 @@ public class QuestionnairePanel extends JPanel implements ActionListener {
 		// Create Labels with Questions and add sliders to them
 		for (final Question question : this.questionnaire.getQuestions()) {
 			questions.add(new JLabel(question.getText()));
-			final JSlider slider = new JSlider(JSlider.HORIZONTAL);
+			final JSlider slider = new JSlider(SwingConstants.HORIZONTAL);
 			// if (first) {
 			slider.setMinorTickSpacing(50);
 			slider.setPaintTicks(true);
