@@ -5,6 +5,8 @@
 || - Servlet ||  ||  ||  ||  ||  ||
 || - Kommunikation vom Spiel zum Servlet und umgekehrt ||  ||  ||  ||  ||  ||
 || - Geschwindigkeitsfunktion aus DB ||  ||  ||  ||  ||  ||
+||  -- Verschiedene Stufen festlegen ||  ||  ||  ||  ||  ||
+||  -- Baseline messen ||  ||  ||  ||  ||  ||
 || - Ablauf nach Runden aus DB ||  ||  ||  ||  ||  ||
 || HUD schneller machen ||  ||  ||  ||  ||  ||
 || Facebookanbindung ||  ||  ||  ||  ||  ||
