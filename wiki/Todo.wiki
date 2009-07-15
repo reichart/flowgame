@@ -1,0 +1,24 @@
+= TODO =
+
+* Kommunikation mit der Datenbank
+
+  * Servlet
+  * Kommunikation vom Spiel zum Servlet und umgekehrt
+  * Geschwindigkeitsfunktion aus DB
+  * Ablauf nach Runden aus DB
+
+* HUD schneller machen
+
+* Facebookanbindung
+
+  * Holen und anzeigen der Freunde
+  * Social Ranking
+
+* Individuelles Ranking
+
+* Boni für spielen mehrerer Missionen
+
+* Missionen
+
+  * Missionsbildschirm gestalten
+  * Missionstexte ausarbeiten
