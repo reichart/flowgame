@@ -2,4 +2,4 @@
 
 * [http://code.google.com/p/flowgame/wiki/Antrag Antrag]
 
-* [http://code.google.com/p/flowgame/wiki/Todo TODO-List]
+* [http://docs.google.com/View?id=dcbkp485_7gfb8dxfm TODO-List]
