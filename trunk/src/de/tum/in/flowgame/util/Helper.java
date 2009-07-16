@@ -64,4 +64,13 @@ public class Helper {
 		t.setScale(scale);
 		return t;
 	}
+	
+	/**
+	 * @return a translating {@link Transform3D}
+	 */
+	public static Transform3D translate(final double x, final double y, final double z) {
+		final Transform3D t = new Transform3D();
+		t.setTranslation(new Vector3d(x, y, z));
+		return t;
+	}
 }
