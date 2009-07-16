@@ -9,7 +9,7 @@ import javax.vecmath.Point2d;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
-import de.tum.in.flowgame.util.Builders;
+import de.tum.in.flowgame.util.TransformGroupBuilder;
 
 public class Collidable extends BranchGroup {
 	private double oldZPos;
@@ -31,13 +31,13 @@ public class Collidable extends BranchGroup {
 		Alpha rotAlpha = new Alpha(-1, duration);
 		rotAlpha.setStartTime(System.currentTimeMillis());
 
-		final TransformGroup shape = Builders.transformGroup()
+		final TransformGroup shape = new TransformGroupBuilder()
 				.add(link)
 				.addRotationBehavior(rotAlpha, Game3D.WORLD_BOUNDS)
 				.computeAutoBounds(true)
 				.fin();
 
-		final TransformGroup scaledShape = Builders.transformGroup()
+		final TransformGroup scaledShape = new TransformGroupBuilder()
 				.scale(scale)
 				.add(shape)
 				.computeAutoBounds(true)
@@ -46,7 +46,7 @@ public class Collidable extends BranchGroup {
 		final int parts = Math.max(1, Tunnel.TUNNEL_PARTS - 1);
 		final float endOfTunnel = -parts * Tunnel.TUNNEL_LENGTH;
 		
-		final TransformGroup tg = Builders.transformGroup()
+		final TransformGroup tg = new TransformGroupBuilder()
 				.translate(0, 0, endOfTunnel)
 				.add(scaledShape)
 				.writable()
@@ -58,7 +58,7 @@ public class Collidable extends BranchGroup {
 		gameLogic.addListener(fwdNav);
 		tg.addChild(fwdNav);
 
-		final TransformGroup scaleTG = Builders.transformGroup()
+		final TransformGroup scaleTG = new TransformGroupBuilder()
 				.add(tg)
 				.computeAutoBounds(true)
 				.fin();
@@ -72,7 +72,7 @@ public class Collidable extends BranchGroup {
 //		 xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
 //		 yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
 
-		TransformGroup transTG = Builders.transformGroup()
+		TransformGroup transTG = new TransformGroupBuilder()
 			.translate(xPos,yPos, 0).add(scaleTG)
 			.fin();
 		addChild(transTG);
