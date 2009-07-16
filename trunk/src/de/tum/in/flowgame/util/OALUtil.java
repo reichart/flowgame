@@ -20,7 +20,7 @@ public class OALUtil {
 			ALut.alutInit();
 			AudioSystem3D.init();
 		} catch (final ALException ex) {
-			log.error("failed to initialize OpenAL" + ex);
+			log.error("failed to initialize OpenAL", ex);
 		}
 	}
 
