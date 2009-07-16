@@ -43,8 +43,11 @@ public class Collidable extends BranchGroup {
 				.computeAutoBounds(true)
 				.fin();
 
+		final int parts = Math.max(1, Tunnel.TUNNEL_PARTS - 1);
+		final float endOfTunnel = -parts * Tunnel.TUNNEL_LENGTH;
+		
 		final TransformGroup tg = Builders.transformGroup()
-				.translate(0, 0, -(Tunnel.TUNNEL_PARTS - 1) * Tunnel.TUNNEL_LENGTH)
+				.translate(0, 0, endOfTunnel)
 				.add(scaledShape)
 				.writable()
 				.computeAutoBounds(true)
