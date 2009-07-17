@@ -11,6 +11,7 @@
 || HUD schneller machen ||  ||  ||  ||  ||  ||
 || Facebookanbindung ||  ||  ||  ||  ||  ||
 || - Holen und anzeigen der Freunde ||  ||  ||  ||  ||  ||
+|| - Einladungsbildschirm ||  ||  ||  ||  ||  ||
 || - Social Ranking ||  ||  ||  ||  ||  ||
 || Individuelles Ranking ||  ||  ||  ||  ||  ||
 || Punktezahl ||  ||  ||  ||  ||  ||
