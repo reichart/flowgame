@@ -15,8 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.metal.MetalSliderUI;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Question;
@@ -27,24 +28,36 @@ public class QuestionnairePanel extends JPanel implements ActionListener {
 	private final JButton submitButton;
 	private final Questionnaire questionnaire;
 	private final List<JSlider> sliders;
-	private ArrayList<Answer> answers;
+	private List<Answer> answers;
 
-	private class DirectClickSliderUI extends MetalSliderUI {
-		JSlider slider;
+	/**
+	 * Scrolls directly to the clicked value instead of only moving the knob
+	 * slightly in the direction.
+	 */
+	private static class DirectClickSliderUI extends BasicSliderUI {
 
-		DirectClickSliderUI(JSlider slider) {
-			this.slider = slider;
+		private DirectClickSliderUI(final JSlider slider) {
+			super(slider);
 		}
 
 		@Override
-		protected void scrollDueToClickInTrack(int direction) {
-			int value = slider.getValue();
+		protected void scrollDueToClickInTrack(final int direction) {
+			final int value;
 
-			if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
-				value = this.valueForXPosition(slider.getMousePosition().x);
-			} else if (slider.getOrientation() == SwingConstants.VERTICAL) {
-				value = this.valueForYPosition(slider.getMousePosition().y);
+			switch (slider.getOrientation()) {
+				case SwingConstants.HORIZONTAL:
+					value = valueForXPosition(slider.getMousePosition().x);
+					break;
+
+				case SwingConstants.VERTICAL:
+					value = valueForYPosition(slider.getMousePosition().y);
+					break;
+
+				default:
+					value = slider.getValue();
+					break;
 			}
+
 			slider.setValue(value);
 		}
 	}
@@ -111,9 +124,8 @@ public class QuestionnairePanel extends JPanel implements ActionListener {
 		}
 	}
 
-	public static void main(final String[] args) throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, UnsupportedLookAndFeelException {
-		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	public static void main(final String[] args) throws Exception {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 		final Question q1 = new Question();
 		q1.setText("I have a question 1. Please answer. You better answer quickly.");
