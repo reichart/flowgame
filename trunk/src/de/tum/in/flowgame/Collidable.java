@@ -31,27 +31,37 @@ public class Collidable extends BranchGroup {
 		Alpha rotAlpha = new Alpha(-1, duration);
 		rotAlpha.setStartTime(System.currentTimeMillis());
 
-		final TransformGroup shape = new TransformGroupBuilder().add(link)
+		final TransformGroup shape = new TransformGroupBuilder()
+				.add(link)
 				.addRotationBehavior(rotAlpha, Game3D.WORLD_BOUNDS)
-				.computeAutoBounds(true).fin();
+				.computeAutoBounds(true)
+				.fin();
 
-		final TransformGroup scaledShape = new TransformGroupBuilder().scale(
-				scale).add(shape).computeAutoBounds(true).fin();
+		final TransformGroup scaledShape = new TransformGroupBuilder()
+				.scale(scale)
+				.add(shape)
+				.computeAutoBounds(true)
+				.fin();
 
 		final int parts = Math.max(1, Tunnel.TUNNEL_PARTS - 1);
 		final float endOfTunnel = -parts * Tunnel.TUNNEL_LENGTH;
 
-		final TransformGroup tg = new TransformGroupBuilder().translate(0, 0,
-				endOfTunnel).add(scaledShape).writable()
-				.computeAutoBounds(true).fin();
+		final TransformGroup tg = new TransformGroupBuilder()
+				.translate(0, 0, endOfTunnel)
+				.add(scaledShape)
+				.writable()
+				.computeAutoBounds(true)
+				.fin();
 
 		fwdNav = new ForwardNavigatorBehavior(tg, speed);
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		gameLogic.addListener(fwdNav);
 		tg.addChild(fwdNav);
 
-		final TransformGroup scaleTG = new TransformGroupBuilder().add(tg)
-				.computeAutoBounds(true).fin();
+		final TransformGroup scaleTG = new TransformGroupBuilder()
+				.add(tg)
+				.computeAutoBounds(true)
+				.fin();
 
 		scaleTG.setBoundsAutoCompute(true);
 		
@@ -59,7 +69,6 @@ public class Collidable extends BranchGroup {
 				* KeyShipBehavior.MOV_RADIUS * 2 - KeyShipBehavior.MOV_RADIUS,
 				Math.random() * KeyShipBehavior.MOV_RADIUS * 2
 						- KeyShipBehavior.MOV_RADIUS);
-		;
 		while (!withinCircle(position)) {
 			position = new Point2d(Math.random() * KeyShipBehavior.MOV_RADIUS,
 					Math.random() * KeyShipBehavior.MOV_RADIUS);
@@ -71,16 +80,19 @@ public class Collidable extends BranchGroup {
 		// xPos = Ship.INITIAL_SHIP_PLACEMENT_X;
 		// yPos = Ship.INITIAL_SHIP_PLACEMENT_Y;
 
-		TransformGroup transTG = new TransformGroupBuilder().translate(xPos,
-				yPos, 0).add(scaleTG).fin();
+		TransformGroup transTG = new TransformGroupBuilder()
+				.translate(xPos, yPos, 0)
+				.add(scaleTG)
+				.fin();
+		
 		addChild(transTG);
 	}
 
-	private Point2d polarToCartesian(double radius, double angleInRadians) {
-		double x = Math.cos(angleInRadians) * radius;
-		double y = Math.sin(angleInRadians) * radius;
-		return new Point2d(x, y);
-	}
+//	private Point2d polarToCartesian(double radius, double angleInRadians) {
+//		double x = Math.cos(angleInRadians) * radius;
+//		double y = Math.sin(angleInRadians) * radius;
+//		return new Point2d(x, y);
+//	}
 
 	private boolean withinCircle(Point2d position) {
 		double radius = Math.sqrt(Math.pow(position.getX(), 2)
