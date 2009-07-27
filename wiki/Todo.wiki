@@ -21,3 +21,4 @@
 || Missionen ||  ||  ||  ||  || ||
 || - Missionsbildschirm gestalten ||  ||  ||  ||  ||  ||
 || - Missionstexte ausarbeiten ||  ||  ||  ||  ||  ||
+|| Mehrsprachigkeit ||  ||  ||  ||  ||  ||
