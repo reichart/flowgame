@@ -9,7 +9,7 @@ import javax.media.j3d.WakeupOnElapsedFrames;
 
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.GameLogic.Item;
+import de.tum.in.flowgame.model.Collision.Item;
 
 public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 

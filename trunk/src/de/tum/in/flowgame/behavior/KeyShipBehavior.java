@@ -21,7 +21,7 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
-import de.tum.in.flowgame.GameLogic.Item;
+import de.tum.in.flowgame.model.Collision.Item;
 
 public class KeyShipBehavior extends Behavior implements GameListener {
 
