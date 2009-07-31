@@ -13,7 +13,7 @@ import java.util.TimerTask;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.FrameCounterBehavior.FrameCounterListener;
-import de.tum.in.flowgame.GameLogic.Item;
+import de.tum.in.flowgame.model.Collision.Item;
 
 /**
  * Displays overlay graphics like health/damage bars, cockpit, and HUD messages.

@@ -51,19 +51,21 @@ public class Game3D extends Canvas3D {
 	private final Geometry glResetGeom;
 	private final Transform3D glResetTrans; 
 	
-	public Game3D() throws IOException {
+	public Game3D(final GameLogic logic) throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		this.logic = new GameLogic();
+		this.logic = logic;
 		this.logic.addListener(new DefaultGameListener() {
 
 			@Override
 			public void gameStarted(final GameLogic game) {
+				System.out.println("Game3D.gameStarted()");
 				switsch.setWhichChild(Switch.CHILD_ALL);
 			}
 			
 			@Override
 			public void gameStopped(final GameLogic game) {
+				System.out.println("Game3D.gameStopped()");
 				switsch.setWhichChild(Switch.CHILD_NONE);
 			}
 		});
@@ -98,9 +100,8 @@ public class Game3D extends Canvas3D {
 		fps.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		fps.getListeners().addListener(overlay);
 		scene.addChild(fps);
-		
+				
 		su.addBranchGraph(scene);
-		
 		
 		/*
 		 * This is a workaround for Java3D bug #501
@@ -119,7 +120,7 @@ public class Game3D extends Canvas3D {
 		glResetTrans = new Transform3D();
 		glResetTrans.set(new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
 	}
-	
+
 	private static BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
 		final BranchGroup collidables = new BranchGroup();
 		collidables.setCapability(Group.ALLOW_CHILDREN_EXTEND);

@@ -1,6 +1,6 @@
 package de.tum.in.flowgame;
 
-import de.tum.in.flowgame.GameLogic.Item;
+import de.tum.in.flowgame.model.Collision.Item;
 
 /**
  * Empty implementations of all {@link GameListener} methods.

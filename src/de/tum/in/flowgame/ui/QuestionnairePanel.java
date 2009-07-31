@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -57,7 +58,6 @@ public class QuestionnairePanel extends JPanel implements ActionListener {
 					value = slider.getValue();
 					break;
 			}
-
 			slider.setValue(value);
 		}
 	}
@@ -98,13 +98,22 @@ public class QuestionnairePanel extends JPanel implements ActionListener {
 				6, 6, // initX, initY
 				6, 6); // xPad, yPad
 
+		JPanel titlePanel = new JPanel(new BorderLayout());
+		titlePanel.add(new JLabel(questionnaire.getName()), BorderLayout.NORTH);
+		final JTextArea textArea = new JTextArea(questionnaire.getDescription());
+		textArea.setEditable(false);
+		textArea.setEnabled(false);
+		textArea.setLineWrap(true);
+		textArea.setOpaque(false);
+		titlePanel.add(textArea, BorderLayout.CENTER);
+		
 		final JPanel submitPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		submitPanel.add(submitButton);
 
 		this.add(questions, BorderLayout.CENTER);
-		this.add(new JLabel(this.questionnaire.getName()), BorderLayout.NORTH);
+		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(submitPanel, BorderLayout.SOUTH);
 	}
 
@@ -124,35 +133,13 @@ public class QuestionnairePanel extends JPanel implements ActionListener {
 		}
 	}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-		final Question q1 = new Question();
-		q1.setText("I have a question 1. Please answer. You better answer quickly.");
-		final Question q2 = new Question();
-		q2.setText("I have a question 2. Please answer.");
-		final Question q3 = new Question();
-		q3.setText("I have a question 3. Please answer.");
-		final Question q4 = new Question();
-		q4.setText("I have a question 4. Please answer.");
-		final Question q5 = new Question();
-		q5.setText("I have a question 5. Please answer correctly.");
-		final Question q6 = new Question();
-		q6.setText("I have a question 6. Please answer.");
-		final Question q7 = new Question();
-		q7.setText("I have a question 7. Please answer.");
-
-		final Questionnaire questionnaire = new Questionnaire();
-		questionnaire.setName("Test");
-		questionnaire.addQuestion(q1);
-		questionnaire.addQuestion(q2);
-		questionnaire.addQuestion(q3);
-		questionnaire.addQuestion(q4);
-		questionnaire.addQuestion(q5);
-		questionnaire.addQuestion(q6);
-		questionnaire.addQuestion(q7);
-
-		final JPanel p = new QuestionnairePanel(questionnaire);
+	public static void main(final String[] args) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
+		//TODO: get all questionnaires via httpclient
+//		QuestionnaireDAO qdao = new QuestionnaireDAOImpl();
+//		List<Questionnaire> qs = qdao.findAll();
+		List<Questionnaire> qs = new ArrayList<Questionnaire>();
+		final JPanel p = new QuestionnairePanel(qs.get(0));
 
 		// Create and set up the window.
 		final JFrame frame = new JFrame("SpringForm");

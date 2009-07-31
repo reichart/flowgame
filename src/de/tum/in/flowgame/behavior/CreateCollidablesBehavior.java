@@ -17,7 +17,7 @@ import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
-import de.tum.in.flowgame.GameLogic.Item;
+import de.tum.in.flowgame.model.Collision.Item;
 
 public class CreateCollidablesBehavior extends Behavior implements GameListener {
 
