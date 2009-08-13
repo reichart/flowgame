@@ -20,7 +20,7 @@ import de.tum.in.flowgame.model.Collision.Item;
  */
 public class GameOverlay implements GameListener, ComponentListener, FrameCounterListener {
 
-	private final static Font LARGE = new Font("sans", Font.BOLD, 56);
+	private final static Font LARGE = new Font("sans", Font.BOLD, 48);
 	private final static Font SMALL = new Font("sans", Font.PLAIN, 16);
 	
 	private final Timer timer;
