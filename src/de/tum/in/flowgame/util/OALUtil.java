@@ -2,7 +2,6 @@ package de.tum.in.flowgame.util;
 
 import java.io.InputStream;
 
-import net.java.games.joal.ALException;
 import net.java.games.joal.util.ALut;
 import net.java.games.sound3d.AudioSystem3D;
 import net.java.games.sound3d.Buffer;
@@ -19,7 +18,7 @@ public class OALUtil {
 		try {
 			ALut.alutInit();
 			AudioSystem3D.init();
-		} catch (final ALException ex) {
+		} catch (final Throwable ex) {
 			log.error("failed to initialize OpenAL", ex);
 		}
 	}
