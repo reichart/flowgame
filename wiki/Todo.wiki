@@ -3,7 +3,7 @@
 || *Todo* || *Priorität* || *Bearbeiter* || *Status* || *Geschätzte Zeit* || *Benötigte Zeit* ||
 || Kommunikation mit der Datenbank ||  ||  ||  ||  ||  ||
 || - Servlet ||  || Barbara || done ||  ||  ||
-|| - Kommunikation vom Spiel zum Servlet und umgekehrt || Barbara || in progress ||  ||  ||  ||
+|| - Kommunikation vom Spiel zum Servlet und umgekehrt || || Barbara || in progress ||  ||  ||
 || - Geschwindigkeitsfunktion aus DB ||  ||  ||  ||  ||  ||
 ||  -- Verschiedene Stufen festlegen ||  ||  ||  ||  ||  ||
 ||  -- Baseline messen ||  ||  ||  ||  ||  ||
