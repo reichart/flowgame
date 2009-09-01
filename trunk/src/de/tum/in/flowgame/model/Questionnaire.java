@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -16,7 +17,7 @@ public class Questionnaire extends AbstractEntity implements Serializable {
 	String name;
 	@Column(length=3000)
 	String description;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	List<Question> questions;
 	
 	public Questionnaire() {

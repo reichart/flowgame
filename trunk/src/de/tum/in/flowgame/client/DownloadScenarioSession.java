@@ -17,11 +17,13 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 
 import de.tum.in.flowgame.model.Person;
+import de.tum.in.flowgame.model.Question;
+import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 
-public class DownloadPlayer {
+public class DownloadScenarioSession {
 
-	public static String url = "http://localhost:8080/FlowGameServlet/communicate/download.action";
+	public static String url = "http://localhost:8080/flowgame/communicate/scenarioSessionDownload.action";
 
 	public ScenarioSession download(Person person) {
 		PostMethod post = new PostMethod(url);
@@ -45,11 +47,35 @@ public class DownloadPlayer {
 
 			// Execute the method.
 			int statusCode = client.executeMethod(post);
+			System.out.println(statusCode);
 
 			InputStream in = post.getResponseBodyAsStream();
 			ObjectInputStream ois = new ObjectInputStream(in);
-			ScenarioSession scenarioSession = (ScenarioSession) ois.readObject();
-			System.out.println(scenarioSession.getId());
+			Object o = ois.readObject();
+			
+			
+			ScenarioSession scenarioSession = null;
+			if (o instanceof ScenarioSession) {
+				scenarioSession = (ScenarioSession) o;
+				System.out.println(scenarioSession.getId());
+				for (ScenarioRound round : scenarioSession.getRounds()) {
+					System.out.println(round.getId());				
+					System.out.println(round.getBaselineModifier());
+					System.out.println(round.getExpectedPlaytime());
+					
+					round.getDifficutyFunction().getIntervald().getId();
+					round.getDifficutyFunction().getRatio().getId();
+					round.getDifficutyFunction().getSpeed().getId();
+					
+					System.out.println(round.getQuestionnaire().getName());
+					System.out.println(round.getQuestionnaire().getDescription());
+					for (Question question : round.getQuestionnaire().getQuestions()) {
+						System.out.println(question.getText());
+					}
+				}				
+			} else if (o instanceof String) {
+				System.out.println((String) o);
+			}
 
 			in.close();
 
@@ -61,6 +87,8 @@ public class DownloadPlayer {
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Throwable t) {
+			t.printStackTrace();
 		} finally {
 			// release the connection
 			post.releaseConnection();
@@ -69,7 +97,7 @@ public class DownloadPlayer {
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		DownloadPlayer dp = new DownloadPlayer();
+		DownloadScenarioSession dp = new DownloadScenarioSession();
 		dp.download(new Person(12345L));
 	}
 
