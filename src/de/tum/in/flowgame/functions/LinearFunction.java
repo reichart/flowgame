@@ -7,15 +7,14 @@ import javax.persistence.Entity;
 import de.tum.in.flowgame.model.Function;
 
 @Entity
-public class ConstantFunction extends Function implements Serializable {
+public class LinearFunction extends Function implements Serializable{
 	
-	public ConstantFunction() {
-//		initialValue = 0;
-//		functionType = Function.FunctionType.CONSTANT;
+	public LinearFunction() {
+//		initialValue = 0D;
+//		functionType = Function.FunctionType.LINEAR;
 	}
 
-	public ConstantFunction(double initialValue) {
-//		this();
+	public LinearFunction(double initialValue) {
 //		this.initialValue = initialValue;
 	}
 
