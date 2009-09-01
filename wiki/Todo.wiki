@@ -1,9 +1,9 @@
 = Todo =
 
-|| *Todo* || *Priorität* || *Bearbeiter* || *Fertigstellung* || *Geschätzte Zeit* || *Benötigte Zeit* ||
+|| *Todo* || *Priorität* || *Bearbeiter* || *Status* || *Geschätzte Zeit* || *Benötigte Zeit* ||
 || Kommunikation mit der Datenbank ||  ||  ||  ||  ||  ||
-|| - Servlet ||  ||  ||  ||  ||  ||
-|| - Kommunikation vom Spiel zum Servlet und umgekehrt ||  ||  ||  ||  ||  ||
+|| - Servlet ||  || Barbara || done ||  ||  ||
+|| - Kommunikation vom Spiel zum Servlet und umgekehrt || Barbara || in progress ||  ||  ||  ||
 || - Geschwindigkeitsfunktion aus DB ||  ||  ||  ||  ||  ||
 ||  -- Verschiedene Stufen festlegen ||  ||  ||  ||  ||  ||
 ||  -- Baseline messen ||  ||  ||  ||  ||  ||
