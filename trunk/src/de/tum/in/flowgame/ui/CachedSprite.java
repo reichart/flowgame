@@ -52,7 +52,7 @@ public class CachedSprite implements Sprite {
 		g.drawImage(img, x, y, w, h, null);
 	}
 
-	private BufferedImage createImage(final int w, final int h) {
+	public static BufferedImage createImage(final int w, final int h) {
 		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		final GraphicsDevice gd = ge.getDefaultScreenDevice();
 		final GraphicsConfiguration gc = gd.getDefaultConfiguration();

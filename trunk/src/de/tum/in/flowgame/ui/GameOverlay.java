@@ -22,7 +22,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	private final static Font LARGE = new Font("sans", Font.BOLD, 48);
 	private final static Font SMALL = new Font("sans", Font.PLAIN, 16);
-	
+
 	private final Timer timer;
 	private final GameLogic logic;
 	private final Sprite cockpit;
@@ -32,11 +32,14 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	private String message;
 	private long fps;
-	
+
 	private boolean drawMessage;
 	private boolean drawHUD;
-	
-	public GameOverlay(final GameLogic logic) {
+	private boolean drawMenu;
+
+	private Sprite menu;
+
+	public GameOverlay(final GameLogic logic, final GameMenu menu) {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
 		this.logic = logic;
 		logic.addListener(this);
@@ -48,6 +51,9 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				Color.RED.darker(), 0, GameLogic.MAX_ASTEROIDS);
 
 		this.timer = new Timer(GameOverlay.class.getSimpleName(), true);
+
+		this.menu = menu;
+		this.drawMenu = true; // for testing
 	}
 
 	public void render(final Graphics2D g) {
@@ -67,28 +73,32 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		if (drawHUD) {
 			fuel.setValue(logic.getFuel());
 			damage.setValue(logic.getAsteroids());
-	
+
 			final int barsWidth = Math.min(width, height) / 2;
-	
+
 			// cockpit.render(g, 0, 0, width, height);
-	
+
 			damage.render(g, 20, 20, barsWidth, -1);
 			fuel.render(g, 20, 50, barsWidth, -1);
 		}
-		
+
 		g.setFont(SMALL);
 		g.setColor(Color.WHITE);
 		final FontMetrics fm = g.getFontMetrics();
 		final int stringH = fm.getHeight();
-		
+
 		final String frames = fps + " FPS";
 		final int framesW = fm.stringWidth(frames);
 		g.drawString(frames, width - framesW - 20, stringH + 20);
-		
+
 		final String controls = "Pause/continue: SPACE";
 		final int controlsW = fm.stringWidth(controls);
-		
+
 		g.drawString(controls, width - controlsW - 20, height - stringH);
+
+		if (drawMenu) {
+			menu.render(g, 0, 0, width, height);
+		}
 	}
 
 	@Override
@@ -101,7 +111,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	public void gamePaused(final GameLogic game) {
 		message("Paused. Zzzzz...", null);
 	}
-	
+
 	@Override
 	public void gameResumed(GameLogic game) {
 		message("W00t! Continue!");
@@ -126,7 +136,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	public void updateFramesPerSecond(long fps) {
 		this.fps = fps;
 	}
-	
+
 	/**
 	 * Displays a message on the screen for a limited time.
 	 * 
@@ -138,7 +148,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	public void message(final String message, final Integer seconds) {
 		this.message = message;
 		this.drawMessage = true;
-		
+
 		if (seconds != null) {
 			timer.schedule(new MessageTimer(message), seconds * 1000);
 		}
@@ -152,13 +162,13 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	}
 
 	private class MessageTimer extends TimerTask {
-		
+
 		private final String messageToClear;
 
 		public MessageTimer(final String messageToClear) {
 			this.messageToClear = messageToClear;
 		}
-		
+
 		@Override
 		public void run() {
 			if (messageToClear.equals(message)) {
