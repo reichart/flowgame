@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.ui.menu;
+package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -8,22 +8,22 @@ import javax.swing.JButton;
 
 import de.tum.in.flowgame.ui.GameMenu;
 
-public class GameOverScreen extends MenuScreen {
+public class PauseScreen extends MenuScreen {
 
-	private final JButton backToMain = new JButton(new AbstractAction("Main Menu") {
+	private final JButton continueButton = new JButton(new AbstractAction("Continue") {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
-			menu.show(MainScreen.class);
+			menu.getLogic().unpause();
 		}
 	});
 
-	public GameOverScreen(final GameMenu menu) {
+	public PauseScreen(final GameMenu menu) {
 		super(menu);
 	}
 
 	@Override
 	public Container getContents() {
-		return centered(title("Game Over"), backToMain);
+		return centered(title("Pause"), continueButton);
 	}
 
 }

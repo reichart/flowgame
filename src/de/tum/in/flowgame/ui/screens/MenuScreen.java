@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.ui.menu;
+package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Color;
 import java.awt.Component;
