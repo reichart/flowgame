@@ -13,7 +13,7 @@ public class MainScreen extends MenuScreen {
 	private final JButton play = new JButton(new AbstractAction("Play") {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
-			menu.getLogic().start();
+			menu.show(QuestionnaireScreen.class);
 		}
 	});
 

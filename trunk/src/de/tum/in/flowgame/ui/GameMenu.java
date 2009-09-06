@@ -18,6 +18,7 @@ import de.tum.in.flowgame.ui.screens.HighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.PauseScreen;
+import de.tum.in.flowgame.ui.screens.QuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.SettingsScreen;
 
 public class GameMenu implements Sprite, GameListener {
@@ -42,6 +43,7 @@ public class GameMenu implements Sprite, GameListener {
 		screens.setOpaque(false);
 
 		add(new MainScreen(this));
+		add(new QuestionnaireScreen(this));
 		add(new HighscoresScreen(this));
 		add(new PauseScreen(this));
 		add(new GameOverScreen(this));
