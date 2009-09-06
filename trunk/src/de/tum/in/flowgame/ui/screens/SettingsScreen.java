@@ -7,11 +7,14 @@ import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.ui.GameMenu;
 
 public class SettingsScreen extends MenuScreen {
@@ -23,14 +26,16 @@ public class SettingsScreen extends MenuScreen {
 	private final JRadioButton normal = new JRadioButton(new AbstractAction("normal") {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
-			// TODO
+			System.out.println("normal");
+			menu.getGame().getShip().getControls().setNormalSteering(true);
 		}
 	});
 
 	private final JRadioButton airplane = new JRadioButton(new AbstractAction("airplane") {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
-			// TODO
+			System.out.println("airplane");
+			menu.getGame().getShip().getControls().setNormalSteering(false);
 		}
 	});
 
@@ -50,6 +55,8 @@ public class SettingsScreen extends MenuScreen {
 
 	public SettingsScreen(final GameMenu menu) {
 		super(menu);
+		menu.getGame().getShip().getControls().setNormalSteering(true);
+		normal.setSelected(true);
 		steeringgroup.add(normal);
 		steeringgroup.add(airplane);
 		steeringbox.add(steering);

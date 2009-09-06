@@ -43,6 +43,8 @@ public class Game3D extends Canvas3D {
 	private final GameLogic logic;
 	private final GameOverlay overlay;
 	
+	private Ship ship;
+	
 	private final Switch switsch;
 
 	// part of workaround for Java3D bug #501
@@ -109,7 +111,7 @@ public class Game3D extends Canvas3D {
 		glResetTrans.set(new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
 	}
 
-	private static BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
+	private BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
 		final BranchGroup collidables = new BranchGroup();
 		collidables.setCapability(Group.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
@@ -120,6 +122,7 @@ public class Game3D extends Canvas3D {
 		logic.addListener(ccb);
 
 		final Ship ship = new Ship(logic, viewTG);
+		this.ship = ship;
 		collidables.addChild(ship);
 		collidables.addChild(ccb);
 		
@@ -176,5 +179,9 @@ public class Game3D extends Canvas3D {
 		vtg.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 
 		return new SimpleUniverse(vp, viewer);
+	}
+	
+	public Ship getShip(){
+		return this.ship;
 	}
 }
