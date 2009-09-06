@@ -104,23 +104,26 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	@Override
 	public void gameStarted(final GameLogic game) {
 		drawHUD = true;
+		drawMenu = false;
 		message("Go speed racer!");
 	}
 
 	@Override
 	public void gamePaused(final GameLogic game) {
-		message("Paused. Zzzzz...", null);
+		drawMenu = true;
+		drawMessage = false;
 	}
 
 	@Override
 	public void gameResumed(GameLogic game) {
-		message("W00t! Continue!");
+		drawMenu = false;
 	}
 
 	@Override
 	public void gameStopped(final GameLogic game) {
 		drawHUD = false;
-		message("Click to play again!", null);
+		drawMenu = true;
+		drawMessage = false;
 	}
 
 	@Override

@@ -45,11 +45,6 @@ public class GameApplet extends Applet {
 	}
 
 	@Override
-	public void start() {
-		game.start();
-	}
-	
-	@Override
 	public void destroy() {
 		System.out.println("GameApplet.destroy()");
 	}

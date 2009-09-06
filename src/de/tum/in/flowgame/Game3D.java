@@ -1,7 +1,5 @@
 package de.tum.in.flowgame;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.media.j3d.AmbientLight;
@@ -71,17 +69,7 @@ public class Game3D extends Canvas3D {
 			}
 		});
 
-		this.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(final MouseEvent e) {
-				if (!logic.isRunning()) {
-					logic.start();
-				}
-			}
-		});
-		
-		final GameMenu menu = new GameMenu(this);
+		final GameMenu menu = new GameMenu(this, logic);
 		
 		this.overlay = new GameOverlay(logic, menu);
 		this.addComponentListener(overlay);
@@ -168,10 +156,6 @@ public class Game3D extends Canvas3D {
 		return scene;
 	}
 
-	public void start() {
-		logic.start();
-	}
-	
 	@Override
 	public void postRender() {
 		// part of workaround for Java3D bug #501

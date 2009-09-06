@@ -1,89 +1,54 @@
 package de.tum.in.flowgame.ui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JSlider;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
-public class GameMenu implements Sprite {
+import de.tum.in.flowgame.GameListener;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.ui.menu.GameOverScreen;
+import de.tum.in.flowgame.ui.menu.HighscoresScreen;
+import de.tum.in.flowgame.ui.menu.MainScreen;
+import de.tum.in.flowgame.ui.menu.MenuScreen;
+import de.tum.in.flowgame.ui.menu.PauseScreen;
+
+public class GameMenu implements Sprite, GameListener {
+
+	private final GameLogic logic;
 
 	private final OffscreenJPanel panel;
 
-	/**
-	 * For testing just the menu as regular Swing app.
-	 */
-	public static void main(final String[] args) {
-		final JFrame frame = new JFrame();
-		frame.add(new GameMenu(frame).panel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(200, 200, 500, 400);
-		frame.setVisible(true);
-	}
+	private final CardLayout layout;
 
-	public GameMenu(final Component mouseTrap) {
-		final JButton oans = new JButton(new AbstractAction("Oans") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(panel, "Eins!");
-			}
-		});
+	private final JPanel screens;
 
-		final JButton zwoa = new JButton(new AbstractAction("Zwoa") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(panel, "Zwei!");
-			}
-		});
-		
-		final JButton gsuffa = new JButton(new AbstractAction("G'Suffa") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(panel, "Trinken!");
-			}
-		});
-		
-		final JCheckBox alkoholfrei = new JCheckBox(new AbstractAction("Alkoholfrei") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				final JCheckBox source = (JCheckBox) e.getSource();
-				JOptionPane.showMessageDialog(panel, source.isSelected() ? "Kein Alk" : "Mit Alk");
-			}
-		});
-		alkoholfrei.setOpaque(false);
+	public GameMenu(final Component mouseTrap, final GameLogic logic) {
+		this.logic = logic;
 
-		final JSlider centiliter = new JSlider(0, 100);
-		centiliter.setOpaque(false);
-		
-		final Box buttons = new Box(BoxLayout.Y_AXIS);
-		buttons.add(oans);
-		buttons.add(Box.createVerticalStrut(20));
-		buttons.add(zwoa);
-		buttons.add(Box.createVerticalStrut(20));
-		buttons.add(gsuffa);
-		buttons.add(Box.createVerticalStrut(20));
-		buttons.add(centiliter);
+		this.layout = new CardLayout();
+		this.screens = new JPanel(layout);
+		screens.setDoubleBuffered(false); // hides white background
+		screens.setOpaque(false);
 
-		final Box center = new Box(BoxLayout.X_AXIS);
-		center.add(Box.createHorizontalGlue());
-		center.add(buttons);
-		center.add(alkoholfrei);
-		center.add(Box.createHorizontalGlue());
+		add(new MainScreen(this));
+		add(new HighscoresScreen(this));
+		add(new PauseScreen(this));
+		add(new GameOverScreen(this));
 
 		panel = new OffscreenJPanel(mouseTrap);
 		panel.setLayout(new BorderLayout());
-		panel.setDoubleBuffered(false); // this hides the white background
+		panel.setDoubleBuffered(false); // hides white background
 		panel.setOpaque(false);
-		panel.add(center, BorderLayout.CENTER);
+		panel.add(screens, BorderLayout.CENTER);
+		
+		logic.addListener(this);
 	}
 
 	@Override
@@ -101,5 +66,67 @@ public class GameMenu implements Sprite {
 		offscreen.dispose();
 
 		g.drawImage(img, 0, 0, null);
+	}
+
+	@Override
+	public void collided(final GameLogic logic, final Item item) {
+		// empty
+	}
+
+	@Override
+	public void gamePaused(final GameLogic game) {
+		System.out.println("GameMenu.gamePaused()");
+		show(PauseScreen.class);
+	}
+
+	@Override
+	public void gameResumed(final GameLogic game) {
+		System.out.println("GameMenu.gameResumed()");
+		// empty
+	}
+
+	@Override
+	public void gameStarted(final GameLogic game) {
+		System.out.println("GameMenu.gameStarted()");
+		// empty
+	}
+
+	@Override
+	public void gameStopped(final GameLogic game) {
+		System.out.println("GameMenu.gameStopped()");
+		show(GameOverScreen.class);
+	}
+
+	private void add(final MenuScreen screen) {
+		final Container contents = screen.getContents();
+		setTransparent(contents);
+		screens.add(screen.getClass().getName(), contents);
+	}
+
+	/**
+	 * Calls {@link JComponent#setOpaque(boolean)} with <code>false</code> on
+	 * all {@link JComponent}s in the tree.
+	 */
+	private void setTransparent(final Container root) {
+		for (final Component comp : root.getComponents()) {
+			if (comp instanceof JComponent) {
+				final JComponent jcomp = (JComponent) comp;
+				jcomp.setOpaque(false);
+			}
+
+			if (comp instanceof Container) {
+				setTransparent((Container) comp);
+			}
+		}
+	}
+
+	public void show(final Class<? extends MenuScreen> screen) {
+		System.out.println("GameMenu.show() " + screen);
+		layout.show(screens, screen.getName());
+		panel.revalidate();
+	}
+
+	public GameLogic getLogic() {
+		return logic;
 	}
 }
