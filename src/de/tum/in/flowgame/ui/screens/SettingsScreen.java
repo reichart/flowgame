@@ -18,27 +18,29 @@ public class SettingsScreen extends MenuScreen {
 	private final Box steeringbox = new Box(BoxLayout.X_AXIS);
 	private final JLabel steering = new JLabel("Steering: ");
 	private final ButtonGroup steeringgroup = new ButtonGroup();
-	private final JRadioButton normal = new JRadioButton(new AbstractAction("normal"){
+
+	private final JRadioButton normal = new JRadioButton(new AbstractAction("normal") {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
-			//TODO
-		}
-	});
-	private final JRadioButton airplane = new JRadioButton(new AbstractAction("airplane"){
-		@Override
-		public void actionPerformed(final ActionEvent e) {
-			//TODO
-		}
-	});
-	private final JCheckBox fps = new JCheckBox(new AbstractAction("FrameCounter") {
-		@Override
-		public void actionPerformed(ActionEvent e) {
 			// TODO
 		}
 	});
-	
-	
-	public SettingsScreen(GameMenu menu) {
+
+	private final JRadioButton airplane = new JRadioButton(new AbstractAction("airplane") {
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			// TODO
+		}
+	});
+
+	private final JCheckBox fps = new JCheckBox(new AbstractAction("FrameCounter") {
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			menu.getOverlay().setDrawFPS(fps.isSelected());
+		}
+	});
+
+	public SettingsScreen(final GameMenu menu) {
 		super(menu);
 		steeringgroup.add(normal);
 		steeringgroup.add(airplane);
@@ -46,15 +48,10 @@ public class SettingsScreen extends MenuScreen {
 		steeringbox.add(normal);
 		steeringbox.add(airplane);
 	}
-	
-	
-	
-	
-	
 
 	@Override
 	public Container getContents() {
-		return centered(title("Settings"),steeringbox, fps);
+		return centered(title("Settings"), steeringbox, fps);
 	}
 
 }
