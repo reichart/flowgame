@@ -112,6 +112,7 @@ public class GameMenu implements Sprite, GameListener {
 		for (final Component comp : root.getComponents()) {
 			if (comp instanceof JComponent) {
 				final JComponent jcomp = (JComponent) comp;
+				jcomp.setDoubleBuffered(false);
 				jcomp.setOpaque(false);
 			}
 
