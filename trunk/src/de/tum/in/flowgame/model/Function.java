@@ -14,6 +14,8 @@ public class Function extends AbstractEntity implements Serializable {
 	@Transient
 	protected Double initialValue;
 	
-	//public abstract double getValue(Long time);
+	public double getValue(Long time) {
+		return 0.5;
+	}
 	
 }
