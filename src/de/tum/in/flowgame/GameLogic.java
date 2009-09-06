@@ -146,6 +146,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		thread.start();
 	}
 	
+	
+	
 	public void pause() {
 		this.paused = true;
 		fireGamePaused();

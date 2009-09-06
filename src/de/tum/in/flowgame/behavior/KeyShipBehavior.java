@@ -63,6 +63,8 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
+	private boolean normalSteering = true;
+
 	private final char pauseKey = ' ';
 	private boolean pause;
 	private long pauseBegin;
@@ -80,7 +82,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 			TransformGroup viewTG, GameLogic gameLogic) {
 
 		this.gameLogic = gameLogic;
-		
+
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
@@ -151,11 +153,11 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 			final long when = e.getWhen();
 			if (e.getID() == KeyEvent.KEY_RELEASED
 					&& when - lastKeyEventTime < 1) {
-//				System.out.println(when-lastKeyEventTime);
+				// System.out.println(when-lastKeyEventTime);
 				lastKeyEventTime = when;
 				return;
 			}
-//			System.err.println(when-lastKeyEventTime);
+			// System.err.println(when-lastKeyEventTime);
 			lastKeyEventTime = when;
 		}
 
@@ -164,12 +166,12 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
 			case pauseKey:
-				if (pause){
+				if (pause) {
 					gameLogic.unpause();
-//					System.out.println("resume");
+					// System.out.println("resume");
 				} else {
 					gameLogic.pause();
-//					System.out.println("pause");
+					// System.out.println("pause");
 				}
 				break;
 			}
@@ -188,14 +190,26 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 				KEY_LEFT = !pressed;
 			break;
 		case KeyEvent.VK_DOWN:
-			KEY_UP = pressed;
-			if (pressed)
-				KEY_DOWN = !pressed;
+			if (normalSteering) {
+				KEY_DOWN = pressed;
+				if (pressed)
+					KEY_UP = !pressed;
+			} else {
+				KEY_UP = pressed;
+				if (pressed)
+					KEY_DOWN = !pressed;
+			}
 			break;
 		case KeyEvent.VK_UP:
-			KEY_DOWN = pressed;
-			if (pressed)
-				KEY_UP = !pressed;
+			if (normalSteering) {
+				KEY_UP = pressed;
+				if (pressed)
+					KEY_DOWN = !pressed;
+			} else {
+				KEY_DOWN = pressed;
+				if (pressed)
+					KEY_UP = !pressed;
+			}
 			break;
 		}
 	}
@@ -362,205 +376,11 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 			vpPos.x = pos.x + Ship.INITIAL_SHIP_PLACEMENT_X;
 		}
 
-		// System.out.println(realY);
-		// System.out.println("vpPos.x: " + vpPos.x + " - vpPos.y: " + vpPos.y);
-
-		// vpPos.sub(shipToViewPosition(mov.x, mov.y));
-
-		// System.out.println(vpPos.y + " - " + realY);
 		vpTrans.set(vpPos);
-		// System.out.println("pos.y: " + pos.y + " - vpPos.y: " + vpPos.y);
-		// System.out.println(vpPos.y);
+
 		viewTG.setTransform(vpTrans);
 
 	}
-
-	// private void adaptMovementToTunnelRadius() {
-	// int circleSection = outOfCircleSection(pos);
-	// if (circleSection > 0) {
-	// switch (circleSection) {
-	// case 1:
-	// if (mov.x > mov.y) {
-	// if (pos.x <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
-	// pos.y = allowedDistToCircleRadius(pos.x
-	// + Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// } else {
-	// pos.x = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// pos.y = 0 - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// }
-	// } else if (mov.y > mov.x) {
-	// if (pos.y <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
-	// pos.x = allowedDistToCircleRadius(pos.y
-	// + Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// } else {
-	// pos.y = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// pos.x = 0 - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// }
-	// } else {
-	// Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
-	// pos.x = newPos.x;
-	// pos.y = newPos.y;
-	// }
-	// break;
-	// case 2:
-	// if (-mov.x > mov.y) {
-	// if (-pos.x <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
-	// pos.y = allowedDistToCircleRadius(-pos.x
-	// + Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// } else {
-	// pos.x = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// pos.y = 0 - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// }
-	// } else if (mov.y > -mov.x) {
-	// if (pos.y <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
-	// pos.x = -allowedDistToCircleRadius(pos.y
-	// + Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// } else {
-	// pos.y = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// pos.x = 0 + Ship.INITIAL_SHIP_PLACEMENT_X;
-	// }
-	// } else {
-	// Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
-	// pos.x = newPos.x;
-	// pos.y = newPos.y;
-	// }
-	// break;
-	// case 3:
-	// if (mov.x < mov.y) {
-	// if (pos.x >= -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
-	// pos.y = -allowedDistToCircleRadius(pos.x
-	// + Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// } else {
-	// pos.x = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// pos.y = 0 + Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// }
-	// } else if (mov.y < mov.x) {
-	// if (pos.y >= -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
-	// pos.x = -allowedDistToCircleRadius(pos.y
-	// + Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// } else {
-	// pos.y = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// pos.x = 0 + Ship.INITIAL_SHIP_PLACEMENT_X;
-	// }
-	// } else {
-	// Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
-	// pos.x = newPos.x;
-	// pos.y = newPos.y;
-	// }
-	// break;
-	// case 4:
-	// if (mov.x > -mov.y) {
-	// if (pos.x <= MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X) {
-	// pos.y = -allowedDistToCircleRadius(pos.x
-	// + Ship.INITIAL_SHIP_PLACEMENT_X, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// } else {
-	// pos.x = MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// pos.y = 0 - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// }
-	// } else if (mov.y < mov.x) {
-	// if (pos.y >= -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y) {
-	// pos.x = allowedDistToCircleRadius(pos.y
-	// + Ship.INITIAL_SHIP_PLACEMENT_Y, MOV_RADIUS)
-	// - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// } else {
-	// pos.y = -MOV_RADIUS - Ship.INITIAL_SHIP_PLACEMENT_Y;
-	// pos.x = 0 - Ship.INITIAL_SHIP_PLACEMENT_X;
-	// }
-	// } else {
-	// Point2d newPos = nearstPointOnCirce(pos, mov, circleSection);
-	// pos.x = newPos.x;
-	// pos.y = newPos.y;
-	// }
-	//
-	// }
-	// }
-	// }
-	//
-	// private Point2d[] circleLineIntersection(double r, double xm, double ym,
-	// double m, double n) {
-	// double p = (2 * n * m - 2 * xm - 2 * m * ym - ym) / (1 + m * m) / 2;
-	// double q = (xm * xm + n * n - 2 * n * ym - r * r) / (1 + m * m);
-	// double numResults = p * p - q;
-	// if (numResults < 0) {
-	// return new Point2d[0];
-	// }
-	// double x1 = -p + Math.sqrt(p * p - q);
-	// double y1 = n + m * x1;
-	// if (numResults == 0) {
-	// Point2d[] result = { new Point2d(x1, y1) };
-	// return result;
-	// }
-	// double x2 = -p - Math.sqrt(p * p - q);
-	// double y2 = n + m * x2;
-	// Point2d[] result = { new Point2d(x1, y1), new Point2d(x2, y2) };
-	// return result;
-	// }
-	//
-	// private Point2d nearstPointOnCirce(Vector3d pos, Vector3d mov, int
-	// section) {
-	// if (mov.x == 0 & mov.y == 0)
-	// return new Point2d(pos.x, pos.y);
-	// double m = mov.y / mov.x;
-	// double n = pos.y - m * pos.x;
-	// Point2d[] intersections = circleLineIntersection(MOV_RADIUS,
-	// -Ship.INITIAL_SHIP_PLACEMENT_X,
-	// -Ship.INITIAL_SHIP_PLACEMENT_Y, m, n);
-	// if (intersections.length < 2) {
-	// return intersections[0];
-	// } else {
-	// double dist1 = Math.sqrt(Math.pow(pos.x - intersections[0].x, 2)
-	// + Math.pow(pos.y - intersections[0].y, 2));
-	// double dist2 = Math.sqrt(Math.pow(pos.x - intersections[1].x, 2)
-	// + Math.pow(pos.y - intersections[1].y, 2));
-	// if (dist1 < dist2) {
-	// return intersections[0];
-	// } else {
-	// return intersections[1];
-	// }
-	// }
-	// }
-	//
-	// private int outOfCircleSection(Vector3d pos) {
-	// double radius = Math.sqrt(Math.pow(
-	// (pos.x + Ship.INITIAL_SHIP_PLACEMENT_X), 2)
-	// + Math.pow((pos.y + Ship.INITIAL_SHIP_PLACEMENT_Y), 2));
-	// if (radius <= MOV_RADIUS) {
-	// return 0;
-	// }
-	// if (pos.x >= 0 & pos.y > 0)
-	// return 1;
-	// if (pos.x < 0 & pos.y >= 0)
-	// return 2;
-	// if (pos.x <= 0 & pos.y < 0)
-	// return 3;
-	// return 4;
-	// }
-	//
-	// private Point3d shipToViewPosition(double v_x, double v_y) {
-	// Point3d dp = new Point3d();
-	// if (v_x < 0) {
-	// dp.x = -v_x / leftVMax;
-	// } else if (v_x > 0) {
-	// dp.x = v_x / rightVMax;
-	// }
-	// if (v_y < 0) {
-	// dp.y = -v_y / downVMax;
-	// } else if (v_y > 0) {
-	// dp.y = v_y / upVMax;
-	// }
-	// dp.scale(MAX_FOLLOWING_DIST);
-	// if (dp.x != 0 | dp.y != 0) {
-	// System.out.println("dp: " + dp);
-	// }
-	// return dp;
-	// }
 
 	private double allowedDistToCircleRadius(double pos, double radius) {
 		Double dist = Math.sqrt(Math.pow(radius, 2) - Math.pow(pos, 2));
@@ -591,10 +411,15 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		return vec;
 	}
 
+	public void setNormalSteering (final boolean normal){
+		System.out.println(normal);
+		this.normalSteering = normal;
+	}
+	
 	@Override
 	public void collided(GameLogic logic, Item item) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -618,7 +443,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	@Override
 	public void gameStopped(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

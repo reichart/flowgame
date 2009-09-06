@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Collision.Item;
@@ -32,10 +33,13 @@ public class GameMenu implements Sprite, GameListener {
 	private final JPanel screens;
 
 	private final GameOverlay overlay;
+	
+	private final Game3D game;
 
 	public GameMenu(final Component mouseTrap, final GameLogic logic, final GameOverlay overlay) {
 		this.logic = logic;
 		this.overlay = overlay;
+		this.game = (Game3D)mouseTrap;
 
 		this.layout = new CardLayout();
 		this.screens = new JPanel(layout);
@@ -135,5 +139,9 @@ public class GameMenu implements Sprite, GameListener {
 	
 	public GameOverlay getOverlay() {
 		return overlay;
+	}
+	
+	public Game3D getGame (){
+		return this.game;
 	}
 }
