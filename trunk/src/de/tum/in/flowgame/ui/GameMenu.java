@@ -13,11 +13,11 @@ import javax.swing.JPanel;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Collision.Item;
-import de.tum.in.flowgame.ui.menu.GameOverScreen;
-import de.tum.in.flowgame.ui.menu.HighscoresScreen;
-import de.tum.in.flowgame.ui.menu.MainScreen;
-import de.tum.in.flowgame.ui.menu.MenuScreen;
-import de.tum.in.flowgame.ui.menu.PauseScreen;
+import de.tum.in.flowgame.ui.screens.GameOverScreen;
+import de.tum.in.flowgame.ui.screens.HighscoresScreen;
+import de.tum.in.flowgame.ui.screens.MainScreen;
+import de.tum.in.flowgame.ui.screens.MenuScreen;
+import de.tum.in.flowgame.ui.screens.PauseScreen;
 
 public class GameMenu implements Sprite, GameListener {
 

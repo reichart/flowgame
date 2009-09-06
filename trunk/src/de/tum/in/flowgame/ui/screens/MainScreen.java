@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.ui.menu;
+package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
