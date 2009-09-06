@@ -17,6 +17,7 @@ public class GameRound extends AbstractEntity implements Serializable {
 	List<Collision> collisions;
 	List<Answer> answers;
 	private transient long startTime;
+	Long score;
 
 	public GameRound() {
 		this.difficultyByTime = new ArrayList<TimeDifficultyPair>();
@@ -72,4 +73,12 @@ public class GameRound extends AbstractEntity implements Serializable {
 		this.actualPlaytime = actualPlaytime;
 	}
 
+	public Long getScore() {
+		return score;
+	}
+
+	public void setScore(Long score) {
+		this.score = score;
+	}
+	
 }
