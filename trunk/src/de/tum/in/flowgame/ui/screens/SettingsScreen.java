@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -39,6 +40,13 @@ public class SettingsScreen extends MenuScreen {
 			menu.getOverlay().setDrawFPS(fps.isSelected());
 		}
 	});
+	
+	private final JButton back = new JButton(new AbstractAction("Back") {
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			menu.show(MainScreen.class);
+		}
+	});
 
 	public SettingsScreen(final GameMenu menu) {
 		super(menu);
@@ -51,7 +59,7 @@ public class SettingsScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title("Settings"), steeringbox, fps);
+		return centered(title("Settings"), steeringbox, fps, back);
 	}
 
 }
