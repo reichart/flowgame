@@ -30,8 +30,11 @@ public class GameMenu implements Sprite, GameListener {
 
 	private final JPanel screens;
 
-	public GameMenu(final Component mouseTrap, final GameLogic logic) {
+	private final GameOverlay overlay;
+
+	public GameMenu(final Component mouseTrap, final GameLogic logic, final GameOverlay overlay) {
 		this.logic = logic;
+		this.overlay = overlay;
 
 		this.layout = new CardLayout();
 		this.screens = new JPanel(layout);
@@ -125,5 +128,9 @@ public class GameMenu implements Sprite, GameListener {
 
 	public GameLogic getLogic() {
 		return logic;
+	}
+	
+	public GameOverlay getOverlay() {
+		return overlay;
 	}
 }
