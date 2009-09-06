@@ -31,7 +31,6 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 import de.tum.in.flowgame.behavior.CollisionBehavior;
 import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
-import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.GameOverlay;
 
 public class Game3D extends Canvas3D {
@@ -69,9 +68,7 @@ public class Game3D extends Canvas3D {
 			}
 		});
 
-		final GameMenu menu = new GameMenu(this, logic);
-		
-		this.overlay = new GameOverlay(logic, menu);
+		this.overlay = new GameOverlay(logic, this);
 		this.addComponentListener(overlay);
 		
 		final SimpleUniverse su = createUniverse();

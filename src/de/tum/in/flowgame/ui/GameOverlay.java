@@ -10,6 +10,7 @@ import java.awt.event.ComponentListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.FrameCounterBehavior.FrameCounterListener;
@@ -36,14 +37,17 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	private boolean drawMessage;
 	private boolean drawHUD;
 	private boolean drawMenu;
+	private boolean drawFPS;
 
 	private Sprite menu;
 
-	public GameOverlay(final GameLogic logic, final GameMenu menu) {
+	public GameOverlay(final GameLogic logic, final Game3D engine) {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
 		this.logic = logic;
 		logic.addListener(this);
 
+		this.menu = new GameMenu(engine, logic, this);
+		
 		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
 				Color.YELLOW.darker(), 0, GameLogic.MAX_FUEL);
 
@@ -52,7 +56,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 		this.timer = new Timer(GameOverlay.class.getSimpleName(), true);
 
-		this.menu = menu;
 		this.drawMenu = true; // for testing
 	}
 
@@ -70,7 +73,22 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			g.drawString(message, (width - w) / 2, (height - h) / 2);
 		}
 
+		g.setFont(SMALL);
+		g.setColor(Color.WHITE);
+		final FontMetrics fm = g.getFontMetrics();
+		final int stringH = fm.getHeight();
+
+		if (drawFPS) {
+			final String frames = fps + " FPS";
+			final int framesW = fm.stringWidth(frames);
+			g.drawString(frames, width - framesW - 20, stringH + 20);
+		}
+
 		if (drawHUD) {
+			final String controls = "Pause/continue: SPACE";
+			final int controlsW = fm.stringWidth(controls);
+			g.drawString(controls, width - controlsW - 20, height - stringH);
+			
 			fuel.setValue(logic.getFuel());
 			damage.setValue(logic.getAsteroids());
 
@@ -81,20 +99,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			damage.render(g, 20, 20, barsWidth, -1);
 			fuel.render(g, 20, 50, barsWidth, -1);
 		}
-
-		g.setFont(SMALL);
-		g.setColor(Color.WHITE);
-		final FontMetrics fm = g.getFontMetrics();
-		final int stringH = fm.getHeight();
-
-		final String frames = fps + " FPS";
-		final int framesW = fm.stringWidth(frames);
-		g.drawString(frames, width - framesW - 20, stringH + 20);
-
-		final String controls = "Pause/continue: SPACE";
-		final int controlsW = fm.stringWidth(controls);
-
-		g.drawString(controls, width - controlsW - 20, height - stringH);
 
 		if (drawMenu) {
 			menu.render(g, 0, 0, width, height);
@@ -199,5 +203,9 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	@Override
 	public void componentShown(final ComponentEvent e) {
 		// empty
+	}
+	
+	public void setDrawFPS(final boolean drawFPS) {
+		this.drawFPS = drawFPS;
 	}
 }
