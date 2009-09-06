@@ -25,8 +25,8 @@ import de.tum.in.flowgame.model.Collision.Item;
 
 public class KeyShipBehavior extends Behavior implements GameListener {
 
-	private static final float ACCELERATION = 30f;
-	private static final float MAX_SPEED = 18f;
+	private float acceleration = 30f;
+	private float maxSpeed = 18f;
 	private final Point3d dp = new Point3d();
 	private Vector3d dv = new Vector3d();
 	private final Vector3d pos = new Vector3d();
@@ -63,7 +63,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
-	private boolean normalSteering = true;
+	private boolean normalSteering = false;
 
 	private final char pauseKey = ' ';
 	private boolean pause;
@@ -86,20 +86,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
-		leftAcc = new Vector3d(-ACCELERATION, 0.0, 0.0);
-		rightAcc = new Vector3d(ACCELERATION, 0.0, 0.0);
-		upAcc = new Vector3d(0.0, ACCELERATION, 0.0);
-		downAcc = new Vector3d(0.0, -ACCELERATION, 0.0);
-
-		leftDrag = new Vector3d(ACCELERATION, 0.0, 0.0);
-		rightDrag = new Vector3d(-ACCELERATION, 0.0, 0.0);
-		upDrag = new Vector3d(0.0, -ACCELERATION, 0.0);
-		downDrag = new Vector3d(0.0, ACCELERATION, 0.0);
-
-		leftVMax = -MAX_SPEED;
-		rightVMax = MAX_SPEED;
-		upVMax = MAX_SPEED;
-		downVMax = -MAX_SPEED;
+		setPhysics(this.maxSpeed, this.acceleration);
 
 		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(
 				KeyEvent.KEY_PRESSED);
@@ -114,6 +101,23 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 
 		// Create Timer here.
 		time = System.currentTimeMillis();
+	}
+
+	private void setPhysics(float maxSpeed, float acceleration) {
+		leftAcc = new Vector3d(-acceleration, 0.0, 0.0);
+		rightAcc = new Vector3d(acceleration, 0.0, 0.0);
+		upAcc = new Vector3d(0.0, acceleration, 0.0);
+		downAcc = new Vector3d(0.0, -acceleration, 0.0);
+
+		leftDrag = new Vector3d(acceleration, 0.0, 0.0);
+		rightDrag = new Vector3d(-acceleration, 0.0, 0.0);
+		upDrag = new Vector3d(0.0, -acceleration, 0.0);
+		downDrag = new Vector3d(0.0, acceleration, 0.0);
+
+		leftVMax = -maxSpeed;
+		rightVMax = maxSpeed;
+		upVMax = maxSpeed;
+		downVMax = -maxSpeed;
 	}
 
 	@Override
@@ -337,7 +341,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		Matrix3f yMov = new Matrix3f();
 		xMov.setIdentity();
 		yMov.setIdentity();
-		float factor = (float) ((Math.PI / 8) / MAX_SPEED);
+		float factor = (float) ((Math.PI / 8) / maxSpeed);
 		float rotAngleX = (float) -(mov.x * factor);
 		float rotAngleY = (float) (mov.y * factor);
 		xMov.rotZ(rotAngleX);
@@ -412,8 +416,11 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	}
 
 	public void setNormalSteering (final boolean normal){
-		System.out.println(normal);
 		this.normalSteering = normal;
+	}
+	
+	public boolean getNormalSteering (){
+		return this.normalSteering;
 	}
 	
 	@Override
@@ -444,6 +451,24 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	public void gameStopped(GameLogic game) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public float getAcceleration() {
+		return acceleration;
+	}
+
+	public void setAcceleration(float acceleration) {
+		this.acceleration = acceleration;
+		setPhysics(this.maxSpeed, this.acceleration);
+	}
+
+	public float getMax_speed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(float maxSpeed) {
+		this.maxSpeed = maxSpeed;
+		setPhysics(this.maxSpeed, this.acceleration);
 	}
 
 }

@@ -70,9 +70,6 @@ public class Game3D extends Canvas3D {
 			}
 		});
 
-		this.overlay = new GameOverlay(logic, this);
-		this.addComponentListener(overlay);
-		
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
 		
@@ -85,6 +82,9 @@ public class Game3D extends Canvas3D {
 		final BranchGroup scene = new BranchGroup();
 		scene.addChild(createScene(logic));
 		scene.addChild(switsch);
+
+		this.overlay = new GameOverlay(logic, this);
+		this.addComponentListener(overlay);
 		
 		final FrameCounterBehavior fps = new FrameCounterBehavior(100);
 		fps.setSchedulingBounds(Game3D.WORLD_BOUNDS);
