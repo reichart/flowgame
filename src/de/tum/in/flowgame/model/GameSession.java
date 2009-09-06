@@ -46,4 +46,12 @@ public class GameSession extends AbstractEntity implements Serializable {
 		this.rounds.add(round);
 	}
 
+	public ScenarioSession getScenarioSession() {
+		return scenarioSession;
+	}
+
+	public void setScenarioSession(ScenarioSession scenarioSession) {
+		this.scenarioSession = scenarioSession;
+	}
+	
 }
