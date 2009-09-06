@@ -75,25 +75,21 @@ public class GameMenu implements Sprite, GameListener {
 
 	@Override
 	public void gamePaused(final GameLogic game) {
-		System.out.println("GameMenu.gamePaused()");
 		show(PauseScreen.class);
 	}
 
 	@Override
 	public void gameResumed(final GameLogic game) {
-		System.out.println("GameMenu.gameResumed()");
 		// empty
 	}
 
 	@Override
 	public void gameStarted(final GameLogic game) {
-		System.out.println("GameMenu.gameStarted()");
 		// empty
 	}
 
 	@Override
 	public void gameStopped(final GameLogic game) {
-		System.out.println("GameMenu.gameStopped()");
 		show(GameOverScreen.class);
 	}
 
@@ -121,7 +117,6 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	public void show(final Class<? extends MenuScreen> screen) {
-		System.out.println("GameMenu.show() " + screen);
 		layout.show(screens, screen.getName());
 		panel.revalidate();
 	}
