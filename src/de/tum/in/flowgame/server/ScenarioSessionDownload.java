@@ -23,39 +23,32 @@ public class ScenarioSessionDownload extends ActionSupport {
 	private InputStream inputStream;
 
 	@Override
-	public String execute() {
-		try {
-			FileInputStream fin = new FileInputStream(person);
-			ObjectInputStream ois = new ObjectInputStream(fin);
-			Object o = ois.readObject();
-			if (o instanceof Person) {
-				Person p = (Person) o;
+	public String execute() throws Exception {
+		FileInputStream fin = new FileInputStream(person);
+		ObjectInputStream ois = new ObjectInputStream(fin);
+		Object o = ois.readObject();
+		if (o instanceof Person) {
+			Person p = (Person) o;
 
-				// TODO select depending on player
-				ScenarioSessionDAO sdao = new ScenarioSessionDAOImpl();
-				List<ScenarioSession> scenarioSessions = sdao.findAll();
-				Integer id = 2;
-				ScenarioSession session = null;
-				if (id < scenarioSessions.size()) {
-					session = scenarioSessions.get(id);
-				}
-
-				if (session != null) {
-					writeObjectInInputStream(session);
-				} else {
-					writeObjectInInputStream("No valid session could be found for Person"
-							+ person.getName());
-				}
-			} else {
-				writeObjectInInputStream("The File did not refer to a valid Person. ScenarioSession could not be choosen");
+			// TODO select depending on player
+			ScenarioSessionDAO sdao = new ScenarioSessionDAOImpl();
+			List<ScenarioSession> scenarioSessions = sdao.findAll();
+			Integer id = 0;
+			ScenarioSession session = null;
+			if (id < scenarioSessions.size()) {
+				session = scenarioSessions.get(id);
 			}
-			return SUCCESS;
-		} catch (Exception e) {
-			System.out.println("ScenarioSessionDownload.execute() oh noes");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return ERROR;
+
+			if (session != null) {
+				writeObjectInInputStream(session);
+			} else {
+				writeObjectInInputStream("No valid session could be found for Person"
+						+ person.getName());
+			}
+		} else {
+			writeObjectInInputStream("The File did not refer to a valid Person. ScenarioSession could not be choosen");
 		}
+		return SUCCESS;
 	}
 
 	/*
