@@ -26,7 +26,13 @@ public class MainScreen extends MenuScreen {
 		}
 	});
 
-	final JButton settings = new JButton("Settings");
+	final JButton settings = new JButton(new AbstractAction("Settings") {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("MainMenu.settings.new AbstractAction() {...}.actionPerformed()");
+			menu.show(SettingsScreen.class);
+		}
+	});
 
 	public MainScreen(final GameMenu menu) {
 		super(menu);

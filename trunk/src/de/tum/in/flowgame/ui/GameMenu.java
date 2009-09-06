@@ -18,6 +18,7 @@ import de.tum.in.flowgame.ui.screens.HighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.PauseScreen;
+import de.tum.in.flowgame.ui.screens.SettingsScreen;
 
 public class GameMenu implements Sprite, GameListener {
 
@@ -41,6 +42,7 @@ public class GameMenu implements Sprite, GameListener {
 		add(new HighscoresScreen(this));
 		add(new PauseScreen(this));
 		add(new GameOverScreen(this));
+		add(new SettingsScreen(this));
 
 		panel = new OffscreenJPanel(mouseTrap);
 		panel.setLayout(new BorderLayout());
