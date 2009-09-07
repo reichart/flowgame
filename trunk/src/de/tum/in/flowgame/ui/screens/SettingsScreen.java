@@ -2,24 +2,19 @@ package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.ui.GameMenu;
 
 public class SettingsScreen extends MenuScreen {
