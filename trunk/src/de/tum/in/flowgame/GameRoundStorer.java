@@ -19,7 +19,6 @@ public class GameRoundStorer extends AbstractEntity implements GameListener {
 
 	@Override
 	public void gameStarted(final GameLogic game) {
-		gameRound.setActualPlaytime(null);
 		gameRound.setStartTime(System.currentTimeMillis());
 	}
 
