@@ -11,7 +11,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 
 import de.tum.in.flowgame.client.Client;
-import de.tum.in.flowgame.client.DownloadPerson;
 import de.tum.in.flowgame.model.Person;
 
 public class GameApplet extends Applet {
@@ -62,8 +61,7 @@ public class GameApplet extends Applet {
 		Long id = Long.decode(sid);
 		
 		//download person information from server
-		DownloadPerson dp = new DownloadPerson();
-		Person player = dp.download(id);
+		Person player = Client.downloadPerson(id);
 	
 		//player did not exist, create new profile
 		if (player == null) {
@@ -71,8 +69,7 @@ public class GameApplet extends Applet {
 			player = new Person(id);
 			String name = JOptionPane.showInputDialog("Bitte Name eingeben");
 			player.setName(name);
-			Client client = new Client();
-			client.updatePerson(player);
+			Client.uploadQuietly(player);
 		}
 
 		this.game = new Game3D(new GameLogic(player));

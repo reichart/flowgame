@@ -6,7 +6,6 @@ import java.util.List;
 import javax.media.j3d.Node;
 
 import de.tum.in.flowgame.client.Client;
-import de.tum.in.flowgame.client.DownloadScenarioSession;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
@@ -87,8 +86,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		fireGameStopped();
 		
-		Client client = new Client();
-		client.updateGameSession(gameSession);
+		Client.uploadQuietly(gameSession);
 		
 		System.out.println("GameLogic.run() stopped");
 	}
@@ -123,8 +121,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		try {
 			gameSession = new GameSession();
 			// download Scenario that should be played next
-			DownloadScenarioSession ds = new DownloadScenarioSession();
-			gameSession.setScenarioSession(ds.download(player));
+			gameSession.setScenarioSession(Client.downloadScenarioSession(player));
 			gameSession.setPlayer(player);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,8 +141,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
 		if (sessionRound == null) {
-			Client client = new Client();
-			client.updateGameSession(gameSession);
+			Client.uploadQuietly(gameSession);
 			loadNewScenarioSession();
 		}
 		

@@ -2,112 +2,127 @@ package de.tum.in.flowgame.client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import de.tum.in.flowgame.model.Answer;
-import de.tum.in.flowgame.model.GameRound;
-import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
-import de.tum.in.flowgame.model.Question;
+import de.tum.in.flowgame.model.ScenarioSession;
 
 public class Client {
 
-	private static String url = "http://localhost:8080/flowgame/upload.action";
-	
-	public void updatePerson(Person person) {
-		update(person);
-	}
-	
-	public void updateGameSession(GameSession gameSession) {
-		update(gameSession);
-	}
-	
-	/*!allows to update either a person or a gameSession */
-	private void update(Object entity) {
-		PostMethod post = new PostMethod(url);
+	private static final Log log = LogFactory.getLog(Client.class);
+
+	private static String UPLOAD_URL = "http://localhost:8080/flowgame/upload.action";
+	private static String DOWNLOAD_PERSON_URL = "http://localhost:8080/flowgame/communicate/personDownload.action";
+	private static String DOWNLOAD_SCENARIOSESSION = "http://localhost:8080/flowgame/communicate/scenarioSessionDownload.action";
+
+	private final static HttpClient client = new HttpClient();
+
+	public static void uploadQuietly(final Object entity) {
 		try {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeObject(entity);
+			upload(entity);
+		} catch (final IOException ex) {
+			log.error("failed to upload " + entity, ex);
+		}
+	}
 
-			// Create an instance of HttpClient.
-			HttpClient client = new HttpClient();
+	private static void upload(final Object entity) throws IOException {
+		final Part[] parts = { new FilePart("file", new ByteArrayPartSource("file.dat", objectToBytes(entity))) };
+		execute(UPLOAD_URL, parts);
+	}
 
-			Part[] parts = { new FilePart("file", new ByteArrayPartSource("file.dat", bos.toByteArray()))};
+	public static Person downloadPerson(final long id) throws IOException {
+		final Part[] parts = { new StringPart("id", String.valueOf(id)) };
+		return (Person) execute(DOWNLOAD_PERSON_URL, parts);
+	}
 
-			// Create a method instance.
-			// GetMethod method = new GetMethod(url);
-			MultipartRequestEntity requestEntity = new MultipartRequestEntity(parts, post.getParams());
+	public static ScenarioSession downloadScenarioSession(final Person person) throws IOException {
+		final Part[] parts = { new FilePart("person", new ByteArrayPartSource("person.dat", objectToBytes(person))) };
+		return (ScenarioSession) execute(DOWNLOAD_SCENARIOSESSION, parts);
+	}
+
+	/**
+	 * Executes a POST request to a URL with a number of multipart parts.
+	 * 
+	 * @param url
+	 *            the URL to POST to
+	 * @param parts
+	 *            the parts to send as multipart request entity
+	 * @return the Java object returned by the server
+	 * @throws IOException
+	 */
+	private static Object execute(final String url, final Part[] parts) throws IOException {
+		final PostMethod post = new PostMethod(url);
+		try {
+			final MultipartRequestEntity requestEntity = new MultipartRequestEntity(parts, post.getParams());
 			post.setRequestEntity(requestEntity);
 
-			// Provide custom retry handler is necessary
-			post.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
-
-			// Execute the method.
-			int statusCode = client.executeMethod(post);
-
+			final int statusCode = client.executeMethod(post);
 			if (statusCode != HttpStatus.SC_OK) {
-				System.err.println("Method failed: " + post.getStatusLine());
+				throw new IOException(post.getStatusLine().toString());
 			}
 
-			// Read the response body.
-			byte[] responseBody = post.getResponseBody();
-			// Deal with the response.
-			// Use caution: ensure correct character encoding and is not binary
-			// data
-			System.out.println(new String(responseBody));
-		} catch (HttpException e) {
-			System.err.println("Fatal protocol violation: " + e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("Fatal transport error: " + e.getMessage());
-			e.printStackTrace();
+			return parseResponse(post);
 		} finally {
-			// Release the connection.
 			post.releaseConnection();
 		}
 	}
 
-	public static void main(String[] args) {
-		Person p = new Person(52121L);
-		p.setName("blubbaaaa");
-		p.setPlace("Lernuf");
-		p.setSex(Person.Sex.MALE);
-		Calendar gc = new GregorianCalendar(86 + 1900, 8, 1);
-		p.setDateOfBirth(new Date(gc.getTimeInMillis()));
-		
-		Question q = new Question();
-		q.setText("blubberbla");
-		Answer a = new Answer(q, 1);
-		
-		List<Answer> answers = new ArrayList<Answer>();
-		answers.add(a);
-		GameRound r = new GameRound();
-		r.setAnswers(answers);
-		
-		GameSession gs = new GameSession();
-		gs.setPlayer(p);
-		gs.getRounds().add(r);
-		
-		Client client = new Client();
-		client.update(p);
-		client.update(gs);
+	/**
+	 * Serializes an Object into a byte array.
+	 * 
+	 * @param obj
+	 *            the object to serialize
+	 * @return a byte array
+	 * @throws IOException
+	 */
+	private static byte[] objectToBytes(final Object obj) throws IOException {
+		final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		final ObjectOutputStream oos = new ObjectOutputStream(bos);
+		oos.writeObject(obj);
+		oos.close();
+		return bos.toByteArray();
+	}
+
+	/**
+	 * Parses the response body by trying to deserialize it into a Java Object.
+	 * 
+	 * @param post
+	 *            the already executed POST method
+	 * @return the deserialized Java Object
+	 * @throws IOException
+	 */
+	private static Object parseResponse(final PostMethod post) throws IOException {
+		final InputStream in = post.getResponseBodyAsStream();
+		try {
+			final ObjectInputStream ois = new ObjectInputStream(in);
+			final Object obj = ois.readObject();
+
+			if (obj instanceof String) {
+				// TODO use HTTP status codes for errors so we can actually use
+				// String payloads
+				throw new IOException("Server reported error: " + obj);
+			} else {
+				return obj;
+			}
+		} catch (final ClassNotFoundException ex) {
+			throw new IOException(ex);
+		} finally {
+			IOUtils.closeQuietly(in);
+		}
 	}
 
 }
