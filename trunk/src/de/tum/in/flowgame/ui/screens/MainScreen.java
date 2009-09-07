@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import de.tum.in.flowgame.ui.GameMenu;
 
@@ -37,7 +38,7 @@ public class MainScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title("Flowgame"), play, highscores, settings);
+		return centered(title("Flowgame"), new JLabel("Welcome " + menu.getLogic().getPlayer().getName() + "!"), play, highscores, settings);
 	}
 
 }
