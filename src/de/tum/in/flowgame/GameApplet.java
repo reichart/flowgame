@@ -8,6 +8,10 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JOptionPane;
+
+import de.tum.in.flowgame.client.Client;
+import de.tum.in.flowgame.client.DownloadPerson;
 import de.tum.in.flowgame.model.Person;
 
 public class GameApplet extends Applet {
@@ -53,22 +57,24 @@ public class GameApplet extends Applet {
 		System.out.println("GameApplet.GameApplet()");
 		setLayout(new BorderLayout());
 
-		//TODO: make player accessible via httpclient
-//		String name = JOptionPane.showInputDialog("Bitte Name eingeben");
-//		PersonDAO pdao = new PersonDAOImpl();
-//		Person player = null;
-//		for (Person person : pdao.findAll()) {
-//			if (name.equals(person.getName())) {
-//				player = person;
-//			}
-//		}
-//		if (player == null) {
-//			//TODO: take facebook id
-//			player = new Person(1234L);
-//			player.setName(name);
-//			pdao.create(player);
-//		}
-		Person player = new Person(123456L);
+		//TODO: get id from facebook
+		String sid = JOptionPane.showInputDialog("Bitte id eingeben");
+		Long id = Long.decode(sid);
+		
+		//download person information from server
+		DownloadPerson dp = new DownloadPerson();
+		Person player = dp.download(id);
+	
+		//player did not exist, create new profile
+		if (player == null) {
+			//TODO: take information from facebook
+			player = new Person(id);
+			String name = JOptionPane.showInputDialog("Bitte Name eingeben");
+			player.setName(name);
+			Client client = new Client();
+			client.updatePerson(player);
+		}
+
 		this.game = new Game3D(new GameLogic(player));
 		add(BorderLayout.CENTER, game);
 	}

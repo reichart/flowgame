@@ -17,6 +17,7 @@ import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Collision.Item;
 
 public class CreateCollidablesBehavior extends Behavior implements GameListener {
@@ -29,12 +30,7 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 	 * on the speed (to create equidistant collidables).
 	 */
 	private double factor = 1;
-	private final long baseSpeed = 100;
 	private final long baseTime = 400;
-	private long speed = (long) (baseSpeed * factor);
-	private long time = (long) (baseTime / factor);
-	// number of asteroids compared to fuel cans, number between 0 and 1
-	private float ratioAsteroids;
 
 	private boolean pause;
 
@@ -45,6 +41,10 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 	private final BranchGroup collidableBranchGroup;
 	private final SharedGroup asteroid;
 	private final SharedGroup fuelcan;
+
+	private long startTime;
+	private long pauseBegin;
+	private DifficultyFunction difficultyFunction;
 
 	// private final boolean showSceneGraph = false;
 	// private final com.tornadolabs.j3dtree.Java3dTree tree = new
@@ -57,8 +57,7 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 		this.collidableBranchGroup.setCapability(Group.ALLOW_CHILDREN_EXTEND);
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
-		this.elapsedTime = new WakeupOnElapsedTime(time);
-		ratioAsteroids = 0.2f;
+		this.elapsedTime = new WakeupOnElapsedTime(baseTime);
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
@@ -83,8 +82,6 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 
 	@Override
 	public void initialize() {
-		// if (showSceneGraph)
-		// tree.setVisible(true);
 		wakeupOn(elapsedTime);
 	}
 
@@ -94,16 +91,28 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 		if (!pause)	createCollidable();
 		wakeupOn(elapsedTime);
 	}
+	
+	private long getElapsedTime() {
+		final long newTime = System.currentTimeMillis();
+		long deltaTime = newTime - startTime;
+		return deltaTime;
+	}
 
 	private void createCollidable() {
 		Collidable c;
-		if (ratioAsteroids < Math.random()) {
+		
+		long speed = (long) difficultyFunction.getSpeed().getValue(getElapsedTime());
+		double ratioAsteroids = difficultyFunction.getRatio().getValue(getElapsedTime());
+		long interval = (long) difficultyFunction.getInterval().getValue(getElapsedTime());
+		
+		this.elapsedTime = new WakeupOnElapsedTime(interval);
+		if (ratioAsteroids  < Math.random()) {
 			double testValue = Math.random();
 			float scale;
 			if (testValue > 0.66) scale = 3f;
 			else if (testValue < 0.66 && testValue >= 0.33) scale = 2f;
 			else scale = 1f;
-			c = new Collidable(asteroid, speed, scale, gameLogic);
+			c = new Collidable(asteroid, speed , scale, gameLogic);
 		} else {
 			c = new Collidable(fuelcan, speed, 1f, gameLogic);
 		}
@@ -112,50 +121,8 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 		c.setCapability(Node.ALLOW_AUTO_COMPUTE_BOUNDS_READ);
 		c.setCapability(Node.ALLOW_AUTO_COMPUTE_BOUNDS_WRITE);
 		c.setBoundsAutoCompute(true);
-		// BranchGroup t = new BranchGroup();
-		// BoundsBehavior b = new BoundsBehavior(c);
-		// b.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		// b.addBehaviorToParentGroup(t);
-		// collidableBranchGroup.addChild(t);
 		collidableBranchGroup.addChild(c);
 
-		// if (showSceneGraph) showSceneGraphTree();
-	}
-
-	// private void showSceneGraphTree() {
-	// Node node = this;
-	// while (node.getParent() != null) {
-	// node = node.getParent();
-	// }
-	// final SimpleUniverse su = (SimpleUniverse) this.getLocale()
-	// .getVirtualUniverse();
-	// tree.recursiveApplyCapability(node);
-	// tree.updateNodes(su);
-	// }
-
-	public long getTime() {
-		return time;
-	}
-
-	public void setTime(final long time) {
-		this.time = time;
-		elapsedTime = new WakeupOnElapsedTime(this.time);
-	}
-
-	public float getRatioAsteroids() {
-		return ratioAsteroids;
-	}
-
-	public void setRatioAsteroids(final long ratioAsteroids) {
-		this.ratioAsteroids = ratioAsteroids;
-	}
-
-	public long getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(final long speed) {
-		this.speed = speed;
 	}
 
 	@Override
@@ -167,17 +134,20 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 	@Override
 	public void gamePaused(GameLogic game) {
 		this.pause = true;
+		pauseBegin = System.currentTimeMillis();
 	}
 	
 	@Override
 	public void gameResumed(GameLogic game) {
-		this.pause = false;
+		pause = false;
+		startTime = startTime + (System.currentTimeMillis() - pauseBegin);
 	}
 
 	@Override
 	public void gameStarted(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+		difficultyFunction = gameLogic.getCurrentScenarioRound().getDifficutyFunction();
+		startTime = System.currentTimeMillis();
 	}
 
 	@Override

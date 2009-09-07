@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.mysql.jdbc.Driver;
+
 import de.tum.in.flowgame.functions.ConstantFunction;
 import de.tum.in.flowgame.functions.LinearFunction;
 import de.tum.in.flowgame.model.Answer;
@@ -19,6 +21,9 @@ import de.tum.in.flowgame.model.ScenarioSession;
 public class DDLGenerator {
 
 	public static void main(String[] args) {
+		
+		Driver.class.getName();
+		
 		try {
 			EntityManagerFactory emf = Persistence
 					.createEntityManagerFactory("IDP");
@@ -35,13 +40,14 @@ public class DDLGenerator {
 			p.setName("Ballala");
 			Difficulty d = new Difficulty();
 
-			Function f1 = new ConstantFunction(3.0f);
-			Function f2 = new LinearFunction();
+			Function intervalFunction = new ConstantFunction(400);
+			Function ratioFunction = new ConstantFunction(0.6);
+			LinearFunction speedFunction = new LinearFunction(100D,4.0d/600);
 
 			DifficultyFunction df = new DifficultyFunction();
-			df.setIntervald(f1);
-			df.setRatio(f2);
-			df.setSpeed(f1);
+			df.setIntervald(intervalFunction);
+			df.setRatio(ratioFunction);
+			df.setSpeed(speedFunction);
 			
 			ScenarioRound sr = new ScenarioRound();
 			sr.setBaselineModifier(1);
@@ -58,8 +64,8 @@ public class DDLGenerator {
 			em.persist(ans);
 			em.persist(p);
 			em.persist(d);
-			em.persist(f1);
-			em.persist(f2);
+			em.persist(intervalFunction);
+			em.persist(speedFunction);
 			em.persist(df);
 			em.persist(ss);
 			em.getTransaction().commit();

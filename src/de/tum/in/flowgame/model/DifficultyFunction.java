@@ -15,7 +15,7 @@ public class DifficultyFunction extends AbstractEntity implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	Function ratio;
 
-	public Function getIntervald() {
+	public Function getInterval() {
 		return intervald;
 	}
 

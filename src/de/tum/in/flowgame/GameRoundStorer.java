@@ -2,8 +2,8 @@ package de.tum.in.flowgame;
 
 import de.tum.in.flowgame.model.AbstractEntity;
 import de.tum.in.flowgame.model.Collision;
-import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.model.GameRound;
+import de.tum.in.flowgame.model.Collision.Item;
 
 public class GameRoundStorer extends AbstractEntity implements GameListener {
 	
@@ -25,7 +25,7 @@ public class GameRoundStorer extends AbstractEntity implements GameListener {
 
 	@Override
 	public void gamePaused(final GameLogic game) {
-		// TODO impl
+		// TODO implement
 	}
 
 	public void gameStopped(final GameLogic game) {
@@ -34,9 +34,7 @@ public class GameRoundStorer extends AbstractEntity implements GameListener {
 		System.out.println(gameRound.getActualPlaytime());
 		System.out.println("stop GameRound");
 		
-		//TODO: Save GameRound in database via httpclient
-//		GameRoundDAO gdao = new GameRoundDAOImpl();
-//		gdao.update(gameRound);
+		//TODO: Think about whether we should save GameRound of only GameSession at the end of whole game
 	}
 	
 	@Override

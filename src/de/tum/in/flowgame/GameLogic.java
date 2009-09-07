@@ -5,48 +5,39 @@ import java.util.List;
 
 import javax.media.j3d.Node;
 
-import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.client.Client;
+import de.tum.in.flowgame.client.DownloadScenarioSession;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
+import de.tum.in.flowgame.model.ScenarioRound;
+import de.tum.in.flowgame.model.Collision.Item;
 
 public class GameLogic implements GameLogicMBean, Runnable {
 
-//	public enum Item {
-//		FUELCAN(Sounds.FUELCAN), ASTEROID(Sounds.ASTEROID);
-//
-//		private final Sounds snd;
-//
-//		private Item(final Sounds snd) {
-//			this.snd = snd;
-//		}
-//
-//		void play() {
-//			snd.play();
-//		}
-//	}
-
 	public final static int MAX_ASTEROIDS = 10;
 	public final static int MAX_FUEL = 10;
-	
-	private GameSession session;
-	
+
+	private GameSession gameSession;
+	private Person player;
+
 	private final List<GameListener> listeners;
 
 	private volatile int fuel;
 	private volatile int asteroids;
-	
+
 	private Thread thread;
 	private boolean paused;
 	
+	private boolean baseline = false;
+
 	private GameRoundStorer gameRoundStorer;
 
 	public GameLogic(final Person player) {
 		this.listeners = new ArrayList<GameListener>();
-		
-		session = new GameSession();
-		session.setPlayer(player);
 
+		this.player = player;
+		
 		Utils.export(this);
 		gameRoundStorer = new GameRoundStorer();
 	}
@@ -70,12 +61,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			Sounds.ASTEROID.play();
 			break;
 		}
-	
+
 	}
 
 	@Override
 	public void run() {
 		System.out.println("GameLogic.run() starting");
+
 		fireGameStarted();
 
 		while (asteroids < MAX_ASTEROIDS && fuel > 0) {
@@ -95,6 +87,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 
 		fireGameStopped();
+		
+		Client client = new Client();
+		client.updateGameSession(gameSession);
+		
 		System.out.println("GameLogic.run() stopped");
 	}
 
@@ -111,7 +107,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			this.listeners.add(listener);
 		}
 	}
-	
+
 	/**
 	 * @return <code>true</code> if a game is running, <code>false</code>
 	 *         otherwise
@@ -124,40 +120,62 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 	
+	private void loadNewScenarioSession() {
+		try {
+			gameSession = new GameSession();
+			// download Scenario that should be played next
+			DownloadScenarioSession ds = new DownloadScenarioSession();
+			gameSession.setScenarioSession(ds.download(player));
+			gameSession.setPlayer(player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void start() {
 		System.out.println("GameLogic.start()");
-		
+
 		if (isRunning()) {
 			throw new IllegalStateException("A game is still running.");
 		}
 		
-		GameRound round = new GameRound();
-		session.addRound(round);
-		gameRoundStorer.setGameRound(round);
+		if (gameSession == null) {
+			loadNewScenarioSession();	
+		}
+
+		ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
+		if (sessionRound == null) {
+			Client client = new Client();
+			client.updateGameSession(gameSession);
+			loadNewScenarioSession();
+		}
 		
+		GameRound gameRound = new GameRound();
+		
+		gameSession.addRound(gameRound);
+		gameRoundStorer.setGameRound(gameRound);
+
 		// reset internal state
 		fuel = 10;
 		asteroids = 0;
 		paused = false;
-		
+
 		// spawn new thread for game updates
 		this.thread = new Thread(this, GameLogic.class.getSimpleName());
 		thread.setDaemon(true);
 		thread.start();
 	}
-	
-	
-	
+
 	public void pause() {
 		this.paused = true;
 		fireGamePaused();
 	}
-	
+
 	public void unpause() {
 		this.paused = false;
 		fireGameResumed();
 	}
-	
+
 	private void fireGameStarted() {
 		synchronized (listeners) {
 			for (final GameListener listener : listeners) {
@@ -173,7 +191,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			}
 		}
 	}
-	
+
 	private void fireGameResumed() {
 		synchronized (listeners) {
 			for (final GameListener listener : listeners) {
@@ -197,4 +215,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			}
 		}
 	}
+	
+	public ScenarioRound getCurrentScenarioRound() {
+		//TODO: iterate those
+		return gameSession.getScenarioSession().getRounds().get(0);
+	}
+	
 }
