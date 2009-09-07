@@ -1,5 +1,6 @@
 package de.tum.in.flowgame.ui.screens;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -8,19 +9,35 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import de.tum.in.flowgame.ui.GameMenu;
 
-public abstract class MenuScreen {
+public abstract class MenuScreen extends JPanel {
 
 	protected final GameMenu menu; // for subclasses
 
 	public MenuScreen(final GameMenu menu) {
+		setLayout(new BorderLayout());
+		setDoubleBuffered(false);
+		setOpaque(false);
+
 		this.menu = menu;
 	}
 
-	public abstract Container getContents();
+	public void build() {
+		add(BorderLayout.CENTER, getContents());
+	}
 	
+	public abstract Container getContents();
+
+	/**
+	 * Called before every time this screen will be shown.
+	 */
+	public void update() {
+		// for subclasses to override
+	}
+
 	/**
 	 * Centers components both vertically and horizontically on the screen.
 	 */

@@ -105,9 +105,9 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	private void add(final MenuScreen screen) {
-		final Container contents = screen.getContents();
-		setTransparent(contents);
-		screens.add(screen.getClass().getName(), contents);
+		screen.build();
+		setTransparent(screen);
+		screens.add(screen.getClass().getName(), screen);
 	}
 
 	/**
@@ -128,8 +128,15 @@ public class GameMenu implements Sprite, GameListener {
 		}
 	}
 
-	public void show(final Class<? extends MenuScreen> screen) {
-		layout.show(screens, screen.getName());
+	public void show(final Class<? extends MenuScreen> screenClass) {
+		for (final Component component : screens.getComponents()) {
+			if (component.getClass().equals(screenClass)) {
+				final MenuScreen screen = (MenuScreen) component;
+				screen.update();
+			}
+		}
+
+		layout.show(screens, screenClass.getName());
 		panel.revalidate();
 	}
 
