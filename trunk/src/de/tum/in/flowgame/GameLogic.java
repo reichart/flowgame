@@ -35,7 +35,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public GameLogic(final Person player) {
 		this.listeners = new ArrayList<GameListener>();
-
 		this.player = player;
 		
 		Utils.export(this);
@@ -222,4 +221,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return gameSession.getScenarioSession().getRounds().get(0);
 	}
 	
+	public Person getPlayer() {
+		return player;
+	}
 }
