@@ -25,7 +25,6 @@ import de.tum.in.flowgame.ui.GameMenu;
 public class SettingsScreen extends MenuScreen {
 
 	private final Box steeringbox = new Box(BoxLayout.X_AXIS);
-	private final JLabel steering = new JLabel("Steering: ");
 	private final ButtonGroup steeringgroup = new ButtonGroup();
 
 	private final JRadioButton normal = new JRadioButton(new AbstractAction("normal") {
@@ -49,7 +48,7 @@ public class SettingsScreen extends MenuScreen {
 		}
 	});
 	
-	private final JSlider accSlider = new JSlider(500, 10000);	
+	private final JSlider accSlider = new JSlider(500, 30000);	
 	private final JSlider maxSpeedSlider = new JSlider(500, 10000);
 	
 	private final JButton back = new JButton(new AbstractAction("Back") {
@@ -84,7 +83,7 @@ public class SettingsScreen extends MenuScreen {
 		airplane.setSelected(!menu.getGame().getShip().getControls().getNormalSteering());
 		steeringgroup.add(normal);
 		steeringgroup.add(airplane);
-		steeringbox.add(steering);
+		steeringbox.setBorder(BorderFactory.createTitledBorder("Steering"));
 		steeringbox.add(normal);
 		steeringbox.add(airplane);
 	}
