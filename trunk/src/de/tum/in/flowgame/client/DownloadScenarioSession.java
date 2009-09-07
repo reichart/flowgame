@@ -1,14 +1,12 @@
 package de.tum.in.flowgame.client;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
@@ -25,7 +23,7 @@ public class DownloadScenarioSession {
 
 	public static String url = "http://localhost:8080/flowgame/communicate/scenarioSessionDownload.action";
 
-	public ScenarioSession download(Person person) {
+	public ScenarioSession download(Person person) throws Exception {
 		PostMethod post = new PostMethod(url);
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -63,7 +61,7 @@ public class DownloadScenarioSession {
 					System.out.println(round.getBaselineModifier());
 					System.out.println(round.getExpectedPlaytime());
 					
-					round.getDifficutyFunction().getIntervald().getId();
+					round.getDifficutyFunction().getInterval().getId();
 					round.getDifficutyFunction().getRatio().getId();
 					round.getDifficutyFunction().getSpeed().getId();
 					
@@ -80,23 +78,13 @@ public class DownloadScenarioSession {
 			in.close();
 
 			return scenarioSession;
-		} catch (HttpException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Throwable t) {
-			t.printStackTrace();
 		} finally {
 			// release the connection
 			post.releaseConnection();
 		}
-		return null;
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	public static void main(String[] args) throws Exception {
 		DownloadScenarioSession dp = new DownloadScenarioSession();
 		dp.download(new Person(12345L));
 	}

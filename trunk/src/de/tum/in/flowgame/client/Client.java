@@ -28,10 +28,18 @@ import de.tum.in.flowgame.model.Question;
 
 public class Client {
 
-	private static String url = "http://localhost:8080/FlowGameServlet/upload.action";
+	private static String url = "http://localhost:8080/flowgame/upload.action";
+	
+	public void updatePerson(Person person) {
+		update(person);
+	}
+	
+	public void updateGameSession(GameSession gameSession) {
+		update(gameSession);
+	}
 	
 	/*!allows to update either a person or a gameSession */
-	public void update(Object entity) {
+	private void update(Object entity) {
 		PostMethod post = new PostMethod(url);
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();

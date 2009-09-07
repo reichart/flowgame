@@ -1,12 +1,10 @@
 package de.tum.in.flowgame.client;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
@@ -19,7 +17,7 @@ public class DownloadPerson {
 
 	public static String url = "http://localhost:8080/flowgame/communicate/personDownload.action";
 
-	public Person download(Long id) {
+	public Person download(Long id) throws Exception {
 		PostMethod post = new PostMethod(url);
 		try {
 			Part[] parts = { new StringPart("id", id.toString()) };
@@ -57,21 +55,13 @@ public class DownloadPerson {
 			in.close();
 
 			return person;
-		} catch (HttpException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			// release the connection
 			post.releaseConnection();
 		}
-		return null;
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	public static void main(String[] args) throws Exception {
 		DownloadPerson dp = new DownloadPerson();
 		dp.download(new Long(12345L));
 	}
