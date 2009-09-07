@@ -154,6 +154,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		
 		gameSession.addRound(gameRound);
 		gameRoundStorer.setGameRound(gameRound);
+		addListener(gameRoundStorer);
 
 		// reset internal state
 		fuel = 10;
