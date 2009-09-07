@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
-import de.tum.in.flowgame.client.DownloadScenarioSession;
+import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioRound;
@@ -34,8 +34,7 @@ public class QuestionnaireScreen extends MenuScreen {
 
 		// TODO load Questionnaire from server
 		try {
-			final DownloadScenarioSession dss = new DownloadScenarioSession();
-			final ScenarioSession session = dss.download(new Person(0xCAFEBABEL));
+			final ScenarioSession session = Client.downloadScenarioSession(new Person(0xCAFEBABEL));
 			final List<ScenarioRound> rounds = session.getRounds();
 			this.q = rounds.get(0).getQuestionnaire();
 		} catch (Exception e) {
