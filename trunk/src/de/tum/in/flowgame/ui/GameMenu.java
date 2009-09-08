@@ -88,6 +88,11 @@ public class GameMenu implements Sprite, GameListener {
 	public void gamePaused(final GameLogic game) {
 		show(PauseScreen.class);
 	}
+	
+	@Override
+	public void sessionFinished(GameLogic game) {
+		show(GameOverScreen.class);
+	}
 
 	@Override
 	public void gameResumed(final GameLogic game) {
@@ -101,7 +106,9 @@ public class GameMenu implements Sprite, GameListener {
 
 	@Override
 	public void gameStopped(final GameLogic game) {
-		show(GameOverScreen.class);
+		if (game.getCurrentScenarioRound().getQuestionnaire() != null) {
+			show(QuestionnaireScreen.class);		
+		}
 	}
 
 	private void add(final MenuScreen screen) {
@@ -133,6 +140,7 @@ public class GameMenu implements Sprite, GameListener {
 			if (component.getClass().equals(screenClass)) {
 				final MenuScreen screen = (MenuScreen) component;
 				screen.update();
+				setTransparent(screen);
 			}
 		}
 
@@ -151,4 +159,5 @@ public class GameMenu implements Sprite, GameListener {
 	public Game3D getGame (){
 		return this.game;
 	}
+
 }

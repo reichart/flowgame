@@ -31,10 +31,18 @@ public class ScenarioSession extends AbstractEntity implements Serializable{
 	// returns next round and counts how many rounds have been played
 	public ScenarioRound getNextRound() {
 		ScenarioRound round = null;
+		roundsPlayed++;
 		if (rounds.size() > roundsPlayed) {
 			round = rounds.get(roundsPlayed);
 		}
-		roundsPlayed++;
+		return round;
+	}
+	
+	public ScenarioRound getCurrentRound() {
+		ScenarioRound round = null;
+		if (rounds.size() > roundsPlayed) {
+			round = rounds.get(roundsPlayed);
+		}
 		return round;
 	}
 	

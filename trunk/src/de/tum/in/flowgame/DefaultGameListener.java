@@ -31,5 +31,11 @@ public abstract class DefaultGameListener implements GameListener {
 	public void gameStopped(final GameLogic game) {
 		// TODO empty
 	}
+	
+	@Override
+	public void sessionFinished(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

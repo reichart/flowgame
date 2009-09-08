@@ -137,15 +137,17 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		
 		if (gameSession == null) {
 			loadNewScenarioSession();	
-		}
-
-		ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
-		if (sessionRound == null) {
-			Client.uploadQuietly(gameSession);
-			loadNewScenarioSession();
+		} else {
+			ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
+			if (sessionRound == null) {
+				Client.uploadQuietly(gameSession);
+				gameSession = null;
+				fireSessionFinished();
+			}			
 		}
 		
 		GameRound gameRound = new GameRound();
+		gameRound.setScenarioRound(getCurrentScenarioRound());
 		
 		gameSession.addRound(gameRound);
 		gameRoundStorer.setGameRound(gameRound);
@@ -212,9 +214,16 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 	
+	public void fireSessionFinished() {
+		synchronized (listeners) {
+			for (final GameListener listener : listeners) {
+				listener.sessionFinished(this);
+			}
+		}
+	}
+	
 	public ScenarioRound getCurrentScenarioRound() {
-		//TODO: iterate those
-		return gameSession.getScenarioSession().getRounds().get(0);
+		return gameSession.getScenarioSession().getCurrentRound();
 	}
 	
 	public Person getPlayer() {

@@ -471,4 +471,10 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		setPhysics(this.maxSpeed, this.acceleration);
 	}
 
+	@Override
+	public void sessionFinished(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

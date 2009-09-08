@@ -12,5 +12,7 @@ public interface GameListener {
 
 	void gameStopped(GameLogic game);
 	
+	void sessionFinished(GameLogic game);
+	
 	void collided(GameLogic logic, Item item);
 }
