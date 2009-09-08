@@ -129,7 +129,6 @@ public class Ship extends TransformGroup implements GameListener {
 		final BranchGroup ship = Java3DUtils.loadScene("/res/SFighter.obj");
 		ship.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
 		shape1 = (Shape3D) ship.getChild(0);
-		tex1 = shape1.getAppearance().getTexture();
 		shape1.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
 		shape1.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		shape1.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
@@ -138,6 +137,10 @@ public class Ship extends TransformGroup implements GameListener {
 		shape2.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
 		shape2.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		shape2.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
+		Material cockpit = new Material();
+		cockpit.setAmbientColor(new Color3f(Color.CYAN));
+		cockpit.setDiffuseColor(new Color3f(Color.BLUE));
+		shape1.getAppearance().setMaterial(cockpit);
 
 		rotateShip.addChild(ship);
 
@@ -159,9 +162,7 @@ public class Ship extends TransformGroup implements GameListener {
 			mat.setAmbientColor(new Color3f(Color.ORANGE));
 			mat.setDiffuseColor(new Color3f(Color.RED));
 		}
-		shape1.getAppearance().setTexture(null);
 		shape2.getAppearance().setTexture(null);
-		shape1.getAppearance().setMaterial(mat);
 		shape2.getAppearance().setMaterial(mat);
 
 		flashTimer.schedule(new FlashTimer(), 150);
@@ -203,7 +204,6 @@ public class Ship extends TransformGroup implements GameListener {
 
 		@Override
 		public void run() {
-			shape1.getAppearance().setTexture(tex1);
 			shape2.getAppearance().setTexture(tex2);
 		}
 	}
