@@ -10,10 +10,11 @@
 	<constant name="struts.custom.i18n.resources" value="messages" />
 
 	<package name="default" namespace="/" extends="struts-default">
-		<default-action-ref name="upload" />
 
 		<action name="upload" class="de.tum.in.flowgame.server.UploadAction">
-			<result>/upload.jsp</result>
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
 		</action>
 
 		<action name="scenarioSessionDownload" class="de.tum.in.flowgame.server.ScenarioSessionDownloadAction">
@@ -21,13 +22,12 @@
 				<param name="contentType">application/octet-stream</param>
 			</result>
 		</action>
-		
-		<action name="personDownload" class="de.tum.in.flowgame.server.PersonDownloadAction">
-            <result name="success" type="stream">
-                <param name="contentType">application/octet-stream</param>
-            </result>
-        </action>
 
+		<action name="personDownload" class="de.tum.in.flowgame.server.PersonDownloadAction">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
 	</package>
 
 	<!-- Add packages here -->
