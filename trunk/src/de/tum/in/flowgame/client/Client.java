@@ -21,9 +21,11 @@ public class Client {
 
 	private static final Log log = LogFactory.getLog(Client.class);
 
-	private static String UPLOAD_URL = "http://localhost:8080/flowgame/upload.action";
-	private static String DOWNLOAD_PERSON_URL = "http://localhost:8080/flowgame/communicate/personDownload.action";
-	private static String DOWNLOAD_SCENARIOSESSION = "http://localhost:8080/flowgame/communicate/scenarioSessionDownload.action";
+	private static String BASE_URL = "http://localhost:8080/flowgame/";
+
+	private static String UPLOAD_URL = BASE_URL + "upload.action";
+	private static String DOWNLOAD_PERSON_URL = BASE_URL + "personDownload.action";
+	private static String DOWNLOAD_SCENARIOSESSION = BASE_URL + "scenarioSessionDownload.action";
 
 	private final static HttpClient client = new HttpClient();
 
