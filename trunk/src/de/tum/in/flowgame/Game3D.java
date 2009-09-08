@@ -123,6 +123,7 @@ public class Game3D extends Canvas3D {
 
 		final Ship ship = new Ship(logic, viewTG);
 		this.ship = ship;
+		this.logic.addListener(this.ship);
 		collidables.addChild(ship);
 		collidables.addChild(ccb);
 		
