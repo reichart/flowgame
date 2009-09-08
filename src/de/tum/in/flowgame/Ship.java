@@ -1,19 +1,28 @@
 package de.tum.in.flowgame;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Material;
 import javax.media.j3d.Node;
+import javax.media.j3d.Shape3D;
+import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
+import de.tum.in.flowgame.model.Collision.Item;
 
-public class Ship extends TransformGroup {
+public class Ship extends TransformGroup implements GameListener {
 	
 	public static final float INITIAL_SHIP_PLACEMENT_X = 0;
 	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
@@ -22,9 +31,17 @@ public class Ship extends TransformGroup {
 	
 	private final Transform3D staticTransforms;
 	
+	private Shape3D shape1;
+	private Texture tex1;
+	private Shape3D shape2;
+	private Texture tex2;
+	
+	private Timer flashTimer;
+	
 	public Ship(final GameLogic logic, TransformGroup viewTG) throws IOException {
 		super();
 		
+		this.flashTimer = new Timer("FlashTimer", true);
 		this.setBoundsAutoCompute(false);
 		
 		final Transform3D t3d = new Transform3D();
@@ -92,7 +109,7 @@ public class Ship extends TransformGroup {
 		}
 	}
 	
-	private static TransformGroup loadShip() throws IOException {
+	private TransformGroup loadShip() throws IOException {
 
 		final Transform3D rotX = new Transform3D();
 		rotX.rotX(Math.toRadians(90));
@@ -106,7 +123,18 @@ public class Ship extends TransformGroup {
 		rotateShip.setTransform(rotX);
 
 		final BranchGroup ship = Java3DUtils.loadScene("/res/SFighter.obj");
-
+		ship.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+		shape1 = (Shape3D)ship.getChild(0);
+		tex1 = shape1.getAppearance().getTexture();
+		shape1.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		shape1.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
+		shape1.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
+		shape2 = (Shape3D)ship.getChild(1);
+		tex2 = shape2.getAppearance().getTexture();
+		shape2.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		shape2.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
+		shape2.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
+		
 		rotateShip.addChild(ship);
 
 		return rotateShip;
@@ -114,6 +142,56 @@ public class Ship extends TransformGroup {
 	
 	public KeyShipBehavior getControls() {
 		return keyShipBehavior;
+	}
+
+	@Override
+	public void collided(GameLogic logic, Item item) {
+		Material mat = new Material();
+		mat.setAmbientColor(new Color3f(Color.RED));
+		mat.setDiffuseColor(new Color3f(Color.MAGENTA));
+		
+		shape1.getAppearance().setTexture(null);
+		shape2.getAppearance().setTexture(null);
+		shape1.getAppearance().setMaterial(mat);
+		shape2.getAppearance().setMaterial(mat);
+		
+		flashTimer.schedule(new FlashTimer(), 200);
+	}
+
+	@Override
+	public void gamePaused(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gameResumed(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gameStarted(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gameStopped(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private class FlashTimer extends TimerTask {
+
+		public FlashTimer() {
+		}
+
+		@Override
+		public void run() {
+			shape1.getAppearance().setTexture(tex1);
+			shape2.getAppearance().setTexture(tex2);
+		}
 	}
 
 }
