@@ -20,20 +20,16 @@
 		<class>de.tum.in.flowgame.functions.ConstantFunction</class>
 		<class>de.tum.in.flowgame.model.ScenarioSession</class>
 		<class>de.tum.in.flowgame.model.GameSession</class>
-		<!-- <class>de.tum.in.flowgame.model.</class>
-		<class>de.tum.in.flowgame.model.</class>
-		<class>de.tum.in.flowgame.model.</class> -->
 
 		<properties>
 		
-		<!-- MySQL -->
 		<property name="toplink.jdbc.driver" value="com.mysql.jdbc.Driver" />
 		<property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/idp" />
-		<property name="toplink.jdbc.user" value="root" />
+		<property name="toplink.jdbc.user" value="idp" />
+		<property name="toplink.jdbc.password" value="idp" />
 							
 		<!-- <property name="toplink.ddl-generation" value="drop-and-create-tables" /> -->
-        <!-- <property name="toplink.ddl-generation" value="create-tables" /> -->
-        <property name="toplink.ddl-generation.output-mode" value="both" />
+        <property name="toplink.ddl-generation.output-mode" value="database" />
 		</properties>
 	</persistence-unit>
 </persistence>
