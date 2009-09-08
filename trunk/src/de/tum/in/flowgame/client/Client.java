@@ -45,8 +45,13 @@ public class Client {
 	}
 
 	public static Person downloadPerson(final long id) throws IOException {
-		final Part[] parts = { new StringPart("id", String.valueOf(id)) };
-		return (Person) execute(DOWNLOAD_PERSON_URL, parts);
+		try {
+			final Part[] parts = { new StringPart("id", String.valueOf(id)) };
+			return (Person) execute(DOWNLOAD_PERSON_URL, parts);
+		} catch (final Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 
 	public static ScenarioSession downloadScenarioSession(final Person person) throws IOException {
