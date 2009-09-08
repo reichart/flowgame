@@ -155,4 +155,10 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void sessionFinished(GameLogic game) {
+		// empty
+		
+	}
 }

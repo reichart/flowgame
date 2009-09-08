@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -19,8 +20,8 @@ import de.tum.in.flowgame.model.Questionnaire;
 
 public class QuestionnairePanel extends JPanel {
 
-	private final Questionnaire questionnaire;
-	private final List<JSlider> sliders;
+	private Questionnaire questionnaire;
+	private List<JSlider> sliders;
 	private List<Answer> answers;
 
 	/**
@@ -37,13 +38,14 @@ public class QuestionnairePanel extends JPanel {
 		protected void scrollDueToClickInTrack(final int direction) {
 			final int value;
 
+			final Point mouse = slider.getMousePosition();
 			switch (slider.getOrientation()) {
 			case SwingConstants.HORIZONTAL:
-				value = valueForXPosition(slider.getMousePosition().x);
+				value = valueForXPosition(mouse.x);
 				break;
 
 			case SwingConstants.VERTICAL:
-				value = valueForYPosition(slider.getMousePosition().y);
+				value = valueForYPosition(mouse.y);
 				break;
 
 			default:
@@ -54,17 +56,30 @@ public class QuestionnairePanel extends JPanel {
 		}
 	}
 
-	public QuestionnairePanel(final Questionnaire questionnaire) {
+	public QuestionnairePanel() {
 		super(new BorderLayout());
+	}
 
+	public List<Answer> getAnswers() {
+		answers = new ArrayList<Answer>();
+		final List<Question> questions = questionnaire.getQuestions();
+		for (int i = 0; i < questions.size(); i++) {
+			answers.add(new Answer(questions.get(i), sliders.get(i).getValue()));
+		}
+		return answers;
+	}
+	
+	public void setQuestionnaire(Questionnaire questionnaire) {
+		this.removeAll();
+		
 		this.questionnaire = questionnaire;
-
+		
 		// Create the label table
 		final Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put(new Integer(0), new JLabel("Low"));
 		labelTable.put(new Integer(100), new JLabel("High"));
 
-		final JPanel questions = new JPanel(new SpringLayout());
+		JPanel questions = new JPanel(new SpringLayout());
 
 		sliders = new ArrayList<JSlider>();
 		// boolean first = true;
@@ -102,14 +117,5 @@ public class QuestionnairePanel extends JPanel {
 
 		this.add(questions, BorderLayout.CENTER);
 		this.add(titlePanel, BorderLayout.NORTH);
-	}
-
-	public List<Answer> getAnswers() {
-		answers = new ArrayList<Answer>();
-		final List<Question> questions = questionnaire.getQuestions();
-		for (int i = 0; i < questions.size(); i++) {
-			answers.add(new Answer(questions.get(i), sliders.get(i).getValue()));
-		}
-		return answers;
 	}
 }

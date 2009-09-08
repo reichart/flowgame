@@ -53,10 +53,16 @@ public class DDLGenerator {
 			sr.setBaselineModifier(1);
 			sr.setDifficutyFunction(df);
 			sr.setExpectedPlaytime(2000L);
-			sr.setQuestionnaire(qn);
+			
+			ScenarioRound sr2 = new ScenarioRound();
+			sr2.setBaselineModifier(5);
+			sr2.setDifficutyFunction(df);
+			sr2.setExpectedPlaytime(2000L);
+			sr2.setQuestionnaire(qn);
 			
 			ScenarioSession ss = new ScenarioSession();
 			ss.getRounds().add(sr);
+			ss.getRounds().add(sr2);
 
 			em.getTransaction().begin();
 			em.persist(q);

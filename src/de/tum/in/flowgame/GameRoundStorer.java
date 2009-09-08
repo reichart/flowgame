@@ -39,7 +39,7 @@ public class GameRoundStorer extends AbstractEntity implements GameListener {
 	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		//TODO: implement item properly
-		gameRound.getCollisions().add(new Collision(null));
+		gameRound.getCollisions().add(new Collision(item));
 	}
 
 	@Override
@@ -53,6 +53,11 @@ public class GameRoundStorer extends AbstractEntity implements GameListener {
 
 	public void setGameRound(GameRound gameRound) {
 		this.gameRound = gameRound;
+	}
+
+	@Override
+	public void sessionFinished(GameLogic game) {
+		// empty		
 	}
 	
 }

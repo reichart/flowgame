@@ -79,4 +79,10 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 
 	}
 
+	@Override
+	public void sessionFinished(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

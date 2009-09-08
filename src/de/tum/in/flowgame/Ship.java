@@ -190,6 +190,11 @@ public class Ship extends TransformGroup implements GameListener {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void sessionFinished(GameLogic game) {
+		// empty		
+	}
 
 	private class FlashTimer extends TimerTask {
 
