@@ -38,8 +38,7 @@ public class Client {
 	}
 
 	private static void upload(final Object entity) throws IOException {
-		final Object execute = execute(UPLOAD_URL, entity);
-		System.out.println("Client.upload() response " + execute);
+		execute(UPLOAD_URL, entity);
 	}
 
 	public static Person downloadPerson(final long id) throws IOException {
