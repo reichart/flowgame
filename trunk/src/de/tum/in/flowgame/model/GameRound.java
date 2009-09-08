@@ -8,8 +8,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import de.tum.in.flowgame.GameListener;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.model.Collision.Item;
+
 @Entity
-public class GameRound extends AbstractEntity implements Serializable {
+public class GameRound extends AbstractEntity implements Serializable, GameListener {
 	ScenarioRound scenarioRound;
 	Long actualPlaytime;
 	List<TimeDifficultyPair> difficultyByTime;
@@ -33,7 +37,7 @@ public class GameRound extends AbstractEntity implements Serializable {
 		return scenarioRound;
 	}
 
-	public void setScenarioRound(ScenarioRound scenarioRound) {
+	public void setScenarioRound(final ScenarioRound scenarioRound) {
 		this.scenarioRound = scenarioRound;
 	}
 
@@ -41,7 +45,7 @@ public class GameRound extends AbstractEntity implements Serializable {
 		return difficultyByTime;
 	}
 
-	public void setDifficultyByTime(List<TimeDifficultyPair> difficultyByTime) {
+	public void setDifficultyByTime(final List<TimeDifficultyPair> difficultyByTime) {
 		this.difficultyByTime = difficultyByTime;
 	}
 
@@ -49,7 +53,7 @@ public class GameRound extends AbstractEntity implements Serializable {
 		return collisions;
 	}
 
-	public void setCollisions(List<Collision> collisions) {
+	public void setCollisions(final List<Collision> collisions) {
 		this.collisions = collisions;
 	}
 
@@ -57,7 +61,7 @@ public class GameRound extends AbstractEntity implements Serializable {
 		return answers;
 	}
 
-	public void setAnswers(List<Answer> answers) {
+	public void setAnswers(final List<Answer> answers) {
 		this.answers = answers;
 	}
 
@@ -65,11 +69,11 @@ public class GameRound extends AbstractEntity implements Serializable {
 		return startTime;
 	}
 
-	public void setStartTime(long startTime) {
+	public void setStartTime(final long startTime) {
 		this.startTime = startTime;
 	}
 
-	public void setActualPlaytime(Long actualPlaytime) {
+	public void setActualPlaytime(final Long actualPlaytime) {
 		this.actualPlaytime = actualPlaytime;
 	}
 
@@ -77,8 +81,38 @@ public class GameRound extends AbstractEntity implements Serializable {
 		return score;
 	}
 
-	public void setScore(Long score) {
+	public void setScore(final Long score) {
 		this.score = score;
 	}
-	
+
+	@Override
+	public void collided(final GameLogic logic, final Item item) {
+		getCollisions().add(new Collision(item));
+	}
+
+	@Override
+	public void gamePaused(final GameLogic game) {
+		// empty
+	}
+
+	@Override
+	public void gameResumed(final GameLogic game) {
+		// empty
+	}
+
+	@Override
+	public void gameStarted(final GameLogic game) {
+		setStartTime(System.currentTimeMillis());
+	}
+
+	@Override
+	public void gameStopped(final GameLogic game) {
+		setActualPlaytime(System.currentTimeMillis() - getStartTime());
+		game.removeListener(this);
+	}
+
+	@Override
+	public void sessionFinished(final GameLogic game) {
+		// empty
+	}
 }
