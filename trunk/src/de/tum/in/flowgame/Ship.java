@@ -23,29 +23,31 @@ import de.tum.in.flowgame.behavior.KeyShipBehavior;
 import de.tum.in.flowgame.model.Collision.Item;
 
 public class Ship extends TransformGroup implements GameListener {
-	
+
 	public static final float INITIAL_SHIP_PLACEMENT_X = 0;
 	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
 	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
 	private final KeyShipBehavior keyShipBehavior;
-	
+
 	private final Transform3D staticTransforms;
-	
+
 	private Shape3D shape1;
 	private Texture tex1;
 	private Shape3D shape2;
 	private Texture tex2;
-	
+
 	private Timer flashTimer;
-	
-	public Ship(final GameLogic logic, TransformGroup viewTG) throws IOException {
+
+	public Ship(final GameLogic logic, TransformGroup viewTG)
+			throws IOException {
 		super();
-		
+
 		this.flashTimer = new Timer("FlashTimer", true);
 		this.setBoundsAutoCompute(false);
-		
+
 		final Transform3D t3d = new Transform3D();
-		t3d.setTranslation(new Vector3d(INITIAL_SHIP_PLACEMENT_X, INITIAL_SHIP_PLACEMENT_Y, INITIAL_SHIP_PLACEMENT_Z));
+		t3d.setTranslation(new Vector3d(INITIAL_SHIP_PLACEMENT_X,
+				INITIAL_SHIP_PLACEMENT_Y, INITIAL_SHIP_PLACEMENT_Z));
 
 		this.setTransform(t3d);
 
@@ -60,16 +62,18 @@ public class Ship extends TransformGroup implements GameListener {
 
 		TransformGroup ship = loadShip();
 
-		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f, -0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
+		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f,
+				-0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
 		// Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
 		// box.setCollidable(false);
 		rotationGroup.addChild(ship);
 		System.out.println("Ship " + ship.getBounds());
-		
-//		KeyShipEllipseBehavior keyShipBehavior = new KeyShipEllipseBehavior(moveGroup, rotationGroup);
-//		ship.addChild(keyShipBehavior);
-//		keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
-		
+
+		// KeyShipEllipseBehavior keyShipBehavior = new
+		// KeyShipEllipseBehavior(moveGroup, rotationGroup);
+		// ship.addChild(keyShipBehavior);
+		// keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
+
 		// Alternative KeyBehavior
 		keyShipBehavior = new KeyShipBehavior(moveGroup, viewTG, logic);
 		logic.addListener(keyShipBehavior);
@@ -77,38 +81,38 @@ public class Ship extends TransformGroup implements GameListener {
 		keyShipBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 
 		staticTransforms = new Transform3D();
-		
+
 		Node node = this;
-		while(node.getParent() != null){
-			if(node.getParent() instanceof TransformGroup){
-				TransformGroup tg = (TransformGroup)node.getParent();
+		while (node.getParent() != null) {
+			if (node.getParent() instanceof TransformGroup) {
+				TransformGroup tg = (TransformGroup) node.getParent();
 				Transform3D trans = new Transform3D();
 				tg.getTransform(trans);
 				staticTransforms.mul(trans);
 			}
-			node=node.getParent();
+			node = node.getParent();
 		}
-		
-		//the following call multiplies the staticTransforms with all the transforms of the children of this node
+
+		// the following call multiplies the staticTransforms with all the
+		// transforms of the children of this node
 		getTransformsOfChildren(this);
-		
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private void getTransformsOfChildren(TransformGroup tg){
+	private void getTransformsOfChildren(TransformGroup tg) {
 		Enumeration<Node> children = tg.getAllChildren();
-		while(children.hasMoreElements()){
+		while (children.hasMoreElements()) {
 			Node n = children.nextElement();
-			if(n instanceof TransformGroup){
+			if (n instanceof TransformGroup) {
 				Transform3D trans = new Transform3D();
-				((TransformGroup)n).getTransform(trans);
+				((TransformGroup) n).getTransform(trans);
 				this.staticTransforms.mul(trans);
-				getTransformsOfChildren((TransformGroup)n);
+				getTransformsOfChildren((TransformGroup) n);
 			}
 		}
 	}
-	
+
 	private TransformGroup loadShip() throws IOException {
 
 		final Transform3D rotX = new Transform3D();
@@ -124,22 +128,22 @@ public class Ship extends TransformGroup implements GameListener {
 
 		final BranchGroup ship = Java3DUtils.loadScene("/res/SFighter.obj");
 		ship.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
-		shape1 = (Shape3D)ship.getChild(0);
+		shape1 = (Shape3D) ship.getChild(0);
 		tex1 = shape1.getAppearance().getTexture();
 		shape1.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
 		shape1.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		shape1.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
-		shape2 = (Shape3D)ship.getChild(1);
+		shape2 = (Shape3D) ship.getChild(1);
 		tex2 = shape2.getAppearance().getTexture();
 		shape2.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
 		shape2.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		shape2.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
-		
+
 		rotateShip.addChild(ship);
 
 		return rotateShip;
 	}
-	
+
 	public KeyShipBehavior getControls() {
 		return keyShipBehavior;
 	}
@@ -147,41 +151,46 @@ public class Ship extends TransformGroup implements GameListener {
 	@Override
 	public void collided(GameLogic logic, Item item) {
 		Material mat = new Material();
-		mat.setAmbientColor(new Color3f(Color.RED));
-		mat.setDiffuseColor(new Color3f(Color.MAGENTA));
-		
+
+		if (item == Item.ASTEROID) {
+			mat.setAmbientColor(new Color3f(Color.RED));
+			mat.setDiffuseColor(new Color3f(Color.MAGENTA));
+		} else {
+			mat.setAmbientColor(new Color3f(Color.ORANGE));
+			mat.setDiffuseColor(new Color3f(Color.RED));
+		}
 		shape1.getAppearance().setTexture(null);
 		shape2.getAppearance().setTexture(null);
 		shape1.getAppearance().setMaterial(mat);
 		shape2.getAppearance().setMaterial(mat);
-		
-		flashTimer.schedule(new FlashTimer(), 200);
+
+		flashTimer.schedule(new FlashTimer(), 150);
 	}
 
 	@Override
 	public void gamePaused(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void gameResumed(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void gameStarted(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private class FlashTimer extends TimerTask {
 
 		public FlashTimer() {
