@@ -23,7 +23,7 @@ public class UploadAction extends GameDataAction {
 			throw new IllegalArgumentException("Invalid content type: " + o.getClass().getName());
 		}
 
-		return new Object();
+		return null;
 	}
 
 }
