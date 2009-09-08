@@ -17,13 +17,13 @@ public class Space extends BranchGroup {
 
 	public Space() {
 		final TransformGroup stars = sphere(1f, new AppearanceBuilder()
-			.texture(Utils.getTexture("/res/stars.png"), TextureMode.MODULATE, Helper.scale(4, 8, 0))
+			.texture(Java3DUtils.getTexture("/res/stars.png"), TextureMode.MODULATE, Helper.scale(4, 8, 0))
 			.transparency(Transparency.NICEST, 0)
 			.fin()
 			);
 
 		final TransformGroup nebula = sphere(1f, new AppearanceBuilder()
-			.texture(Utils.getTexture("/res/nebula.png"), TextureMode.MODULATE)
+			.texture(Java3DUtils.getTexture("/res/nebula.png"), TextureMode.MODULATE)
 			.transparency(Transparency.NICEST, 0.5f)
 			.fin()
 			);

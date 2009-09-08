@@ -33,7 +33,7 @@ public class Tunnel extends TransformGroup {
 		setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 
 		final Appearance appearance = new AppearanceBuilder()
-			.texture(Utils.getTexture("/res/tunnel.png"), TextureMode.MODULATE)
+			.texture(Java3DUtils.getTexture("/res/tunnel.png"), TextureMode.MODULATE)
 			.transparency(Transparency.NICEST, 0.5f)
 			.fin();
 
