@@ -51,7 +51,8 @@ public class QuestionnaireScreen extends MenuScreen {
 				final List<ScenarioRound> rounds = session.getRounds();
 				this.q = rounds.get(0).getQuestionnaire();
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				this.q = new Questionnaire();
+				q.setName("dummy");
 			}			
 		}
 		qpanel.setQuestionnaire(q);
