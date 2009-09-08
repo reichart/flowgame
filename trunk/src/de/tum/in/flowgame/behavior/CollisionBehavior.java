@@ -14,6 +14,7 @@ import javax.vecmath.Vector3d;
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Ship;
+import de.tum.in.flowgame.model.Collision.Item;
 
 public class CollisionBehavior extends Behavior {
 	private final WakeupCondition condition;
@@ -85,7 +86,7 @@ public class CollisionBehavior extends Behavior {
 						// System.out.println("colX: " + xPos + " - colY: " +
 						// yPos
 						// + " - colZ: " + zPos);
-						gameLogic.collide(child);
+						gameLogic.collide((Item) child.getUserData());
 					}
 					((BranchGroup) child).detach();
 				}

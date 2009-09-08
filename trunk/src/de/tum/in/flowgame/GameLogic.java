@@ -3,8 +3,6 @@ package de.tum.in.flowgame;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.media.j3d.Node;
-
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
@@ -40,9 +38,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		gameRoundStorer = new GameRoundStorer();
 	}
 
-	public void collide(final Node node) {
-		final Item item = (Item) node.getUserData();
-
+	public void collide(final Item item) {
+		
 		fireCollided(item);
 
 		switch (item) {
