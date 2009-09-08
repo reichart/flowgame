@@ -33,5 +33,8 @@ public class SVGSprite implements Sprite {
 		icon.setPreferredSize(size);
 		icon.paintIcon(null, g, x, y);
 	}
-
+	
+	public SVGIcon getIcon() {
+		return icon;
+	}
 }
