@@ -1,5 +1,6 @@
 package de.tum.in.flowgame.ui.screens;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
@@ -12,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -71,14 +73,20 @@ public class SettingsScreen extends MenuScreen {
 			}
 		});
 		accSlider.setValue((int) menu.getGame().getShip().getControls().getAcceleration()*100);
-		accSlider.setBorder(BorderFactory.createTitledBorder("Acceleration"));
+		final TitledBorder accBorder = BorderFactory.createTitledBorder("Acceleration");
+		accSlider.setBorder(accBorder);
+		accBorder.setTitleColor(Color.WHITE);
 		maxSpeedSlider.setValue((int) menu.getGame().getShip().getControls().getMax_speed()*100);
-		maxSpeedSlider.setBorder(BorderFactory.createTitledBorder("Max Speed"));
+		final TitledBorder speedBorder = BorderFactory.createTitledBorder("Max Speed");
+		maxSpeedSlider.setBorder(speedBorder);
+		speedBorder.setTitleColor(Color.WHITE);
 		normal.setSelected(menu.getGame().getShip().getControls().getNormalSteering());
 		airplane.setSelected(!menu.getGame().getShip().getControls().getNormalSteering());
 		steeringgroup.add(normal);
 		steeringgroup.add(airplane);
-		steeringbox.setBorder(BorderFactory.createTitledBorder("Steering"));
+		final TitledBorder steeringborder = BorderFactory.createTitledBorder("Steering");
+		steeringbox.setBorder(steeringborder);
+		steeringborder.setTitleColor(Color.WHITE);
 		steeringbox.add(normal);
 		steeringbox.add(airplane);
 	}
