@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -88,6 +90,12 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final String controls = "Pause/continue: SPACE";
 			final int controlsW = fm.stringWidth(controls);
 			g.drawString(controls, width - controlsW - 20, height - stringH);
+			
+			final NumberFormat fmt = new DecimalFormat("0.000");
+			
+			final String ratios = fmt.format(logic.getFuelRatio()) + " fuel, " + fmt.format(logic.getAsteroidRatio()) + " astr.";
+			final int ratiosW = fm.stringWidth(ratios);
+			g.drawString(ratios, width - ratiosW - 20, stringH + 50);
 			
 			fuel.setValue(logic.getFuel());
 			damage.setValue(logic.getAsteroids());
