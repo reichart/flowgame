@@ -9,18 +9,13 @@ import de.tum.in.flowgame.model.ScenarioSession;
 
 public class ScenarioSessionDownloadAction extends GameDataAction {
 
-	private final ScenarioSessionDAO dao;
-
-	public ScenarioSessionDownloadAction() {
-		this.dao = new ScenarioSessionDAOImpl();
-	}
-
 	@Override
 	public Object execute(final Object o) throws Exception {
 		if (o instanceof Person) {
 			final Person p = (Person) o;
 
 			// TODO select depending on player
+			final ScenarioSessionDAO dao = new ScenarioSessionDAOImpl();
 			final List<ScenarioSession> scenarioSessions = dao.findAll();
 			final Integer id = 0;
 			ScenarioSession session = null;
