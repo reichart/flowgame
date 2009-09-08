@@ -1,7 +1,7 @@
 package de.tum.in.flowgame;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.model.GameRound;
@@ -22,20 +22,23 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private volatile int fuel;
 	private volatile int asteroids;
-
+	
+	private volatile int fuelcansCollected;
+	private volatile int asteroidsCollected;
+	
+	private volatile int fuelcansSeen;
+	private volatile int asteroidsSeen;
+	
 	private Thread thread;
 	private boolean paused;
 	
 	private boolean baseline = false;
 
-	private GameRoundStorer gameRoundStorer;
-
 	public GameLogic(final Person player) {
-		this.listeners = new ArrayList<GameListener>();
+		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
 		
 		Utils.export(this);
-		gameRoundStorer = new GameRoundStorer();
 	}
 
 	public void collide(final Item item) {
@@ -47,18 +50,31 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			if (fuel < MAX_FUEL) {
 				fuel++;
 			}
+			fuelcansCollected++;
 			Sounds.FUELCAN.play();
 			break;
 		case ASTEROID:
 			if (asteroids < MAX_ASTEROIDS) {
 				asteroids++;
 			}
+			asteroidsCollected++;
 			Sounds.ASTEROID.play();
 			break;
 		}
 
 	}
 
+	public void seen(final Item item) {
+		switch (item) {
+		case FUELCAN:
+			fuelcansSeen++;
+			break;
+		case ASTEROID:
+			asteroidsSeen++;
+			break;
+		}
+	}
+	
 	@Override
 	public void run() {
 		System.out.println("GameLogic.run() starting");
@@ -99,6 +115,12 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	public void addListener(final GameListener listener) {
 		synchronized (listeners) {
 			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeListener(final GameListener listener) {
+		synchronized (listeners) {
+			this.listeners.remove(listener);
 		}
 	}
 
@@ -147,12 +169,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		gameRound.setScenarioRound(getCurrentScenarioRound());
 		
 		gameSession.addRound(gameRound);
-		gameRoundStorer.setGameRound(gameRound);
-		addListener(gameRoundStorer);
+		addListener(gameRound);
 
 		// reset internal state
-		fuel = 10;
+		fuel = MAX_FUEL;
 		asteroids = 0;
+		fuelcansSeen = 0;
+		asteroidsSeen = 0;
 		paused = false;
 
 		// spawn new thread for game updates
@@ -225,5 +248,21 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	
 	public Person getPlayer() {
 		return player;
+	}
+	
+	public int getAsteroidsSeen() {
+		return asteroidsSeen;
+	}
+	
+	public int getFuelcansSeen() {
+		return fuelcansSeen;
+	}
+	
+	public float getFuelRatio() {
+		return fuelcansSeen == 0 ? 0 : fuelcansCollected / (float)fuelcansSeen;
+	}
+
+	public float getAsteroidRatio() {
+		return asteroidsSeen == 0 ? 0 : asteroidsCollected / (float)asteroidsSeen;
 	}
 }

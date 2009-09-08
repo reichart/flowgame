@@ -77,6 +77,8 @@ public class CollisionBehavior extends Behavior {
 					shipBounds.setUpper(colX + 0.6, colY + 0.15, zPos);
 					// ship.setBounds(shipBounds);
 
+					final Item item = (Item) child.getUserData();
+					
 					if (collidableBounds.intersect(shipBounds)) {
 						// System.out.println("COLLISION! BAAAAM!" + oldz + ", "
 						// + zPos + child.getUserData());
@@ -86,9 +88,10 @@ public class CollisionBehavior extends Behavior {
 						// System.out.println("colX: " + xPos + " - colY: " +
 						// yPos
 						// + " - colZ: " + zPos);
-						gameLogic.collide((Item) child.getUserData());
+						gameLogic.collide(item);
 					}
 					((BranchGroup) child).detach();
+					gameLogic.seen(item);
 				}
 
 				collidable.setOldZPos(zPos);
