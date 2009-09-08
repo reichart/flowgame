@@ -132,11 +132,11 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	@Override
 	public void collided(final GameLogic logic, final Item item) {
-		if (item == Item.ASTEROID) {
-			message("Oh noes! Evil asteroidz!");
-		} else if (item == Item.FUELCAN) {
-			message("Yay! Fuel FTW!");
-		}
+//		if (item == Item.ASTEROID) {
+//			message("Oh noes! Evil asteroidz!");
+//		} else if (item == Item.FUELCAN) {
+//			message("Yay! Fuel FTW!");
+//		}
 	}
 
 	@Override
@@ -153,12 +153,12 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	 *            the time to display the message in milliseconds
 	 */
 	public void message(final String message, final Integer seconds) {
-//		this.message = message;
-//		this.drawMessage = true;
-//
-//		if (seconds != null) {
-//			timer.schedule(new MessageTimer(message), seconds * 1000);
-//		}
+		this.message = message;
+		this.drawMessage = true;
+
+		if (seconds != null) {
+			timer.schedule(new MessageTimer(message), seconds * 1000);
+		}
 	}
 
 	/**
