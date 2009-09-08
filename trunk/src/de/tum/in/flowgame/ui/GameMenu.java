@@ -2,13 +2,17 @@ package de.tum.in.flowgame.ui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
@@ -127,6 +131,19 @@ public class GameMenu implements Sprite, GameListener {
 				final JComponent jcomp = (JComponent) comp;
 				jcomp.setDoubleBuffered(false);
 				jcomp.setOpaque(false);
+			}
+			
+			if (comp instanceof JLabel) {
+				final JLabel label = (JLabel) comp;
+				label.setForeground(Color.WHITE);
+			}
+			
+			if (comp instanceof JCheckBox) {
+				((JCheckBox) comp).setForeground(Color.WHITE);
+			}
+
+			if (comp instanceof JRadioButton) {
+				((JRadioButton) comp).setForeground(Color.WHITE);
 			}
 
 			if (comp instanceof Container) {
