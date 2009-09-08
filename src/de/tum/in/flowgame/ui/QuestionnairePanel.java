@@ -24,37 +24,37 @@ public class QuestionnairePanel extends JPanel {
 	private List<JSlider> sliders;
 	private List<Answer> answers;
 
-	/**
-	 * Scrolls directly to the clicked value instead of only moving the knob
-	 * slightly in the direction.
-	 */
-	private static class DirectClickSliderUI extends BasicSliderUI {
-
-		private DirectClickSliderUI(final JSlider slider) {
-			super(slider);
-		}
-
-		@Override
-		protected void scrollDueToClickInTrack(final int direction) {
-			final int value;
-
-			final Point mouse = slider.getMousePosition();
-			switch (slider.getOrientation()) {
-			case SwingConstants.HORIZONTAL:
-				value = valueForXPosition(mouse.x);
-				break;
-
-			case SwingConstants.VERTICAL:
-				value = valueForYPosition(mouse.y);
-				break;
-
-			default:
-				value = slider.getValue();
-				break;
-			}
-			slider.setValue(value);
-		}
-	}
+//	/**
+//	 * Scrolls directly to the clicked value instead of only moving the knob
+//	 * slightly in the direction.
+//	 */
+//	private static class DirectClickSliderUI extends BasicSliderUI {
+//
+//		private DirectClickSliderUI(final JSlider slider) {
+//			super(slider);
+//		}
+//
+//		@Override
+//		protected void scrollDueToClickInTrack(final int direction) {
+//			final int value;
+//
+//			final Point mouse = slider.getMousePosition();
+//			switch (slider.getOrientation()) {
+//			case SwingConstants.HORIZONTAL:
+//				value = valueForXPosition(mouse.x);
+//				break;
+//
+//			case SwingConstants.VERTICAL:
+//				value = valueForYPosition(mouse.y);
+//				break;
+//
+//			default:
+//				value = slider.getValue();
+//				break;
+//			}
+//			slider.setValue(value);
+//		}
+//	}
 
 	public QuestionnairePanel() {
 		super(new BorderLayout());
@@ -94,7 +94,7 @@ public class QuestionnairePanel extends JPanel {
 			slider.setPaintLabels(true);
 			// first = false;
 			// }
-			slider.setUI(new DirectClickSliderUI(slider));
+//			slider.setUI(new DirectClickSliderUI(slider));
 			sliders.add(slider);
 			questions.add(slider);
 		}
