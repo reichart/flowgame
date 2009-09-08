@@ -18,7 +18,7 @@ import de.tum.in.flowgame.ui.QuestionnairePanel;
 public class QuestionnaireScreen extends MenuScreen {
 
 	private final QuestionnairePanel qpanel;
-	private final Questionnaire q;
+	private Questionnaire q;
 
 	private final JButton play = new JButton(new AbstractAction("Play!") {
 
@@ -31,24 +31,30 @@ public class QuestionnaireScreen extends MenuScreen {
 
 	public QuestionnaireScreen(final GameMenu menu) {
 		super(menu);
-
-		// TODO load Questionnaire from server
-		try {
-			final ScenarioSession session = Client.downloadScenarioSession(new Person(0xCAFEBABEL));
-			final List<ScenarioRound> rounds = session.getRounds();
-			this.q = rounds.get(0).getQuestionnaire();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		
-//		this.q = new Questionnaire();
-//		q.setName("dummy questionnaire");
-
-		this.qpanel = new QuestionnairePanel(q);
+		this.qpanel = new QuestionnairePanel();
+		update();
 	}
 
 	@Override
 	public Container getContents() {
 		return centered(title(q.getName()), qpanel, play);
 	}
+	
+	@Override
+	public void update() {
+		try {
+			this.q = menu.getLogic().getCurrentScenarioRound().getQuestionnaire();
+		} catch (NullPointerException ne) {
+			// TODO load Questionnaire from server
+			try {
+				final ScenarioSession session = Client.downloadScenarioSession(new Person(0xCAFEBABEL));
+				final List<ScenarioRound> rounds = session.getRounds();
+				this.q = rounds.get(0).getQuestionnaire();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}			
+		}
+		qpanel.setQuestionnaire(q);
+	}
+	
 }
