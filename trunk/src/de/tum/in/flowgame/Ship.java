@@ -105,7 +105,7 @@ public class Ship extends TransformGroup {
 		TransformGroup rotateShip = new TransformGroup();
 		rotateShip.setTransform(rotX);
 
-		final BranchGroup ship = Utils.loadScene("/res/SFighter.obj");
+		final BranchGroup ship = Java3DUtils.loadScene("/res/SFighter.obj");
 
 		rotateShip.addChild(ship);
 
