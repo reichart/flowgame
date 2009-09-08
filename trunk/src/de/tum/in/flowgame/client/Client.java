@@ -10,6 +10,7 @@ import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.PartSource;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -78,7 +79,7 @@ public class Client {
 				throw new IOException(post.getStatusLine().toString());
 			}
 
-			return Utils.bytesToObject(post.getResponseBody());
+			return Utils.bytesToObject(IOUtils.toByteArray(post.getResponseBodyAsStream()));
 		} finally {
 			post.releaseConnection();
 		}
