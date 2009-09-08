@@ -1,10 +1,6 @@
 package de.tum.in.flowgame.client;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -13,11 +9,11 @@ import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.httpclient.methods.multipart.PartSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioSession;
 
@@ -40,14 +36,13 @@ public class Client {
 	}
 
 	private static void upload(final Object entity) throws IOException {
-		final Part[] parts = { new FilePart("file", new ByteArrayPartSource("file.dat", objectToBytes(entity))) };
-		execute(UPLOAD_URL, parts);
+		final Object execute = execute(UPLOAD_URL, entity);
+		System.out.println("Client.upload() response " + execute);
 	}
 
 	public static Person downloadPerson(final long id) throws IOException {
 		try {
-			final Part[] parts = { new StringPart("id", String.valueOf(id)) };
-			return (Person) execute(DOWNLOAD_PERSON_URL, parts);
+			return (Person) execute(DOWNLOAD_PERSON_URL, id);
 		} catch (final Exception ex) {
 			ex.printStackTrace();
 			return null;
@@ -55,8 +50,7 @@ public class Client {
 	}
 
 	public static ScenarioSession downloadScenarioSession(final Person person) throws IOException {
-		final Part[] parts = { new FilePart("person", new ByteArrayPartSource("person.dat", objectToBytes(person))) };
-		return (ScenarioSession) execute(DOWNLOAD_SCENARIOSESSION, parts);
+		return (ScenarioSession) execute(DOWNLOAD_SCENARIOSESSION, person);
 	}
 
 	/**
@@ -69,9 +63,12 @@ public class Client {
 	 * @return the Java object returned by the server
 	 * @throws IOException
 	 */
-	private static Object execute(final String url, final Part[] parts) throws IOException {
+	private static Object execute(final String url, final Object parameter) throws IOException {
 		final PostMethod post = new PostMethod(url);
 		try {
+			final PartSource source = new ByteArrayPartSource("data.ser", Utils.objectToBytes(parameter));
+			final Part[] parts = { new FilePart("data", source) };
+
 			final MultipartRequestEntity requestEntity = new MultipartRequestEntity(parts, post.getParams());
 			post.setRequestEntity(requestEntity);
 
@@ -80,54 +77,9 @@ public class Client {
 				throw new IOException(post.getStatusLine().toString());
 			}
 
-			return parseResponse(post);
+			return Utils.bytesToObject(post.getResponseBody());
 		} finally {
 			post.releaseConnection();
 		}
 	}
-
-	/**
-	 * Serializes an Object into a byte array.
-	 * 
-	 * @param obj
-	 *            the object to serialize
-	 * @return a byte array
-	 * @throws IOException
-	 */
-	private static byte[] objectToBytes(final Object obj) throws IOException {
-		final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		final ObjectOutputStream oos = new ObjectOutputStream(bos);
-		oos.writeObject(obj);
-		oos.close();
-		return bos.toByteArray();
-	}
-
-	/**
-	 * Parses the response body by trying to deserialize it into a Java Object.
-	 * 
-	 * @param post
-	 *            the already executed POST method
-	 * @return the deserialized Java Object
-	 * @throws IOException
-	 */
-	private static Object parseResponse(final PostMethod post) throws IOException {
-		final InputStream in = post.getResponseBodyAsStream();
-		try {
-			final ObjectInputStream ois = new ObjectInputStream(in);
-			final Object obj = ois.readObject();
-
-			if (obj instanceof String) {
-				// TODO use HTTP status codes for errors so we can actually use
-				// String payloads
-				throw new IOException("Server reported error: " + obj);
-			} else {
-				return obj;
-			}
-		} catch (final ClassNotFoundException ex) {
-			throw new IOException(ex);
-		} finally {
-			IOUtils.closeQuietly(in);
-		}
-	}
-
 }

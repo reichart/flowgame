@@ -12,17 +12,17 @@
 	<package name="default" namespace="/" extends="struts-default">
 		<default-action-ref name="upload" />
 
-		<action name="upload" class="de.tum.in.flowgame.server.Upload">
+		<action name="upload" class="de.tum.in.flowgame.server.UploadAction">
 			<result>/upload.jsp</result>
 		</action>
 
-		<action name="scenarioSessionDownload" class="de.tum.in.flowgame.server.ScenarioSessionDownload">
+		<action name="scenarioSessionDownload" class="de.tum.in.flowgame.server.ScenarioSessionDownloadAction">
 			<result name="success" type="stream">
 				<param name="contentType">application/octet-stream</param>
 			</result>
 		</action>
 		
-		<action name="personDownload" class="de.tum.in.flowgame.server.PersonDownload">
+		<action name="personDownload" class="de.tum.in.flowgame.server.PersonDownloadAction">
             <result name="success" type="stream">
                 <param name="contentType">application/octet-stream</param>
             </result>
