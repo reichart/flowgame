@@ -25,6 +25,7 @@ public class CollisionBehavior extends Behavior {
 	private double shipY = Ship.INITIAL_SHIP_PLACEMENT_Y;
 	private double shipOldX;
 	private double shipOldY;
+	private boolean collision;
 
 	public CollisionBehavior(final BranchGroup collidables, final GameLogic gl,
 			final Ship ship) {
@@ -89,9 +90,11 @@ public class CollisionBehavior extends Behavior {
 						// yPos
 						// + " - colZ: " + zPos);
 						gameLogic.collide(item);
+						collision = true;
 					}
 					((BranchGroup) child).detach();
-					gameLogic.seen(item);
+					gameLogic.seen(item, collision);
+					collision = false;
 				}
 
 				collidable.setOldZPos(zPos);

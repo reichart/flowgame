@@ -40,7 +40,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private boolean paused;
 	
 	private boolean baseline = false;
-	private int queueLength = 10;
+	private int queueLength = 30;
 
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
@@ -58,10 +58,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			if (fuel < MAX_FUEL) {
 				fuel++;
 			}
-			if (passedFuel.size() == queueLength) {
-				passedFuel.remove();
-			}
-			passedFuel.add(true);
 			fuelcansCollected++;
 			Sounds.FUELCAN.play();
 			break;
@@ -69,10 +65,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			if (asteroids < MAX_ASTEROIDS) {
 				asteroids++;
 			}
-			if (passedAsteroids.size() == queueLength) {
-				passedAsteroids.remove();
-			}
-			passedAsteroids.add(true);
 			asteroidsCollected++;
 			Sounds.ASTEROID.play();
 			break;
@@ -80,21 +72,21 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	}
 
-	public void seen(final Item item) {
+	public void seen(final Item item, boolean collision) {
 
 		switch (item) {
 		case FUELCAN:
 			if (passedFuel.size() == queueLength) {
 				passedFuel.remove();
 			}
-			passedFuel.add(false);
+			passedFuel.add(collision);
 			fuelcansSeen++;
 			break;
 		case ASTEROID:
 			if (passedAsteroids.size() == queueLength) {
 				passedAsteroids.remove();
 			}
-			passedAsteroids.add(false);
+			passedAsteroids.add(collision);
 			asteroidsSeen++;
 			break;
 		}
@@ -300,7 +292,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 				positive++;
 			}
 		}
-		return queue.size() == 0 ? 0 : positive/(float)queue.size();
+		int length = queue.size();
+		return length == 0 ? 0 : positive/(float)length;
 	}
 	
 	public float getTotalFuelRatio() {
