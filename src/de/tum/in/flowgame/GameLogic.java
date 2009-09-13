@@ -1,6 +1,9 @@
 package de.tum.in.flowgame;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tum.in.flowgame.client.Client;
@@ -29,10 +32,15 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private volatile int fuelcansSeen;
 	private volatile int asteroidsSeen;
 	
+	Queue<Boolean> passedFuel = new LinkedList<Boolean>();
+	Queue<Boolean> passedAsteroids = new LinkedList<Boolean>();
+	
+	
 	private Thread thread;
 	private boolean paused;
 	
 	private boolean baseline = false;
+	private int queueLength = 10;
 
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
@@ -50,6 +58,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			if (fuel < MAX_FUEL) {
 				fuel++;
 			}
+			if (passedFuel.size() == queueLength) {
+				passedFuel.remove();
+			}
+			passedFuel.add(true);
 			fuelcansCollected++;
 			Sounds.FUELCAN.play();
 			break;
@@ -57,6 +69,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			if (asteroids < MAX_ASTEROIDS) {
 				asteroids++;
 			}
+			if (passedAsteroids.size() == queueLength) {
+				passedAsteroids.remove();
+			}
+			passedAsteroids.add(true);
 			asteroidsCollected++;
 			Sounds.ASTEROID.play();
 			break;
@@ -65,11 +81,20 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public void seen(final Item item) {
+
 		switch (item) {
 		case FUELCAN:
+			if (passedFuel.size() == queueLength) {
+				passedFuel.remove();
+			}
+			passedFuel.add(false);
 			fuelcansSeen++;
 			break;
 		case ASTEROID:
+			if (passedAsteroids.size() == queueLength) {
+				passedAsteroids.remove();
+			}
+			passedAsteroids.add(false);
 			asteroidsSeen++;
 			break;
 		}
@@ -258,11 +283,31 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return fuelcansSeen;
 	}
 	
-	public float getFuelRatio() {
+	public float getSlidingFuelRatio(){
+		return getRatioFromQueue(passedFuel);
+	}
+
+	public float getSlidingAsteroidRatio(){
+		return getRatioFromQueue(passedAsteroids);
+	}
+	
+	private float getRatioFromQueue(Queue<Boolean> queue) {
+		Iterator<Boolean> iterator = queue.iterator();
+		int positive = 0;
+		while (iterator.hasNext()){
+			Boolean next = iterator.next();
+			if (next==Boolean.TRUE){
+				positive++;
+			}
+		}
+		return queue.size() == 0 ? 0 : positive/(float)queue.size();
+	}
+	
+	public float getTotalFuelRatio() {
 		return fuelcansSeen == 0 ? 0 : fuelcansCollected / (float)fuelcansSeen;
 	}
 
-	public float getAsteroidRatio() {
+	public float getTotalAsteroidRatio() {
 		return asteroidsSeen == 0 ? 0 : asteroidsCollected / (float)asteroidsSeen;
 	}
 }
