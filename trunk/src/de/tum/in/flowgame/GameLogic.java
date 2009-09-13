@@ -25,32 +25,29 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private volatile int fuel;
 	private volatile int asteroids;
-	
+
 	private volatile int fuelcansCollected;
 	private volatile int asteroidsCollected;
-	
+
 	private volatile int fuelcansSeen;
 	private volatile int asteroidsSeen;
-	
-	Queue<Boolean> passedFuel = new LinkedList<Boolean>();
-	Queue<Boolean> passedAsteroids = new LinkedList<Boolean>();
-	
-	
+
 	private Thread thread;
 	private boolean paused;
-	
+
 	private boolean baseline = false;
-	private int queueLength = 30;
+	private Trend asteroidTrend = new Trend();
+	private Trend fuelTrend = new Trend();
 
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
-		
+
 		Utils.export(this);
 	}
 
 	public void collide(final Item item) {
-		
+
 		fireCollided(item);
 
 		switch (item) {
@@ -76,22 +73,16 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		switch (item) {
 		case FUELCAN:
-			if (passedFuel.size() == queueLength) {
-				passedFuel.remove();
-			}
-			passedFuel.add(collision);
+			fuelTrend.update(collision);
 			fuelcansSeen++;
 			break;
 		case ASTEROID:
-			if (passedAsteroids.size() == queueLength) {
-				passedAsteroids.remove();
-			}
-			passedAsteroids.add(collision);
+			asteroidTrend.update(collision);
 			asteroidsSeen++;
 			break;
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		System.out.println("GameLogic.run() starting");
@@ -115,9 +106,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 
 		fireGameStopped();
-		
+
 		Client.uploadQuietly(gameSession);
-		
+
 		System.out.println("GameLogic.run() stopped");
 	}
 
@@ -134,7 +125,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			this.listeners.add(listener);
 		}
 	}
-	
+
 	public void removeListener(final GameListener listener) {
 		synchronized (listeners) {
 			this.listeners.remove(listener);
@@ -152,12 +143,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			return thread.isAlive();
 		}
 	}
-	
+
 	private void loadNewScenarioSession() {
 		try {
 			gameSession = new GameSession();
 			// download Scenario that should be played next
-			gameSession.setScenarioSession(Client.downloadScenarioSession(player));
+			gameSession.setScenarioSession(Client
+					.downloadScenarioSession(player));
 			gameSession.setPlayer(player);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -170,21 +162,22 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		if (isRunning()) {
 			throw new IllegalStateException("A game is still running.");
 		}
-		
+
 		if (gameSession == null) {
-			loadNewScenarioSession();	
+			loadNewScenarioSession();
 		} else {
-			ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
+			ScenarioRound sessionRound = gameSession.getScenarioSession()
+					.getNextRound();
 			if (sessionRound == null) {
 				Client.uploadQuietly(gameSession);
 				gameSession = null;
 				fireSessionFinished();
-			}			
+			}
 		}
-		
+
 		GameRound gameRound = new GameRound();
 		gameRound.setScenarioRound(getCurrentScenarioRound());
-		
+
 		gameSession.addRound(gameRound);
 		addListener(gameRound);
 
@@ -250,7 +243,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			}
 		}
 	}
-	
+
 	public void fireSessionFinished() {
 		synchronized (listeners) {
 			for (final GameListener listener : listeners) {
@@ -258,49 +251,39 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			}
 		}
 	}
-	
+
 	public ScenarioRound getCurrentScenarioRound() {
 		return gameSession.getScenarioSession().getCurrentRound();
 	}
-	
+
 	public Person getPlayer() {
 		return player;
 	}
-	
+
 	public int getAsteroidsSeen() {
 		return asteroidsSeen;
 	}
-	
+
 	public int getFuelcansSeen() {
 		return fuelcansSeen;
 	}
-	
-	public float getSlidingFuelRatio(){
-		return getRatioFromQueue(passedFuel);
+
+	public float getSlidingFuelRatio() {
+		return fuelTrend.getMidRatio();
 	}
 
-	public float getSlidingAsteroidRatio(){
-		return getRatioFromQueue(passedAsteroids);
+	public float getSlidingAsteroidRatio() {
+		return asteroidTrend.getMidRatio();
 	}
-	
-	private float getRatioFromQueue(Queue<Boolean> queue) {
-		Iterator<Boolean> iterator = queue.iterator();
-		int positive = 0;
-		while (iterator.hasNext()){
-			Boolean next = iterator.next();
-			if (next==Boolean.TRUE){
-				positive++;
-			}
-		}
-		int length = queue.size();
-		return length == 0 ? 0 : positive/(float)length;
-	}
-	
+
+
 	public float getTotalFuelRatio() {
-		return fuelcansSeen == 0 ? 0 : fuelcansCollected / (float)fuelcansSeen;
-	}
+		return fuelcansSeen == 0 ? 0 : fuelcansCollected / (float) fuelcansSeen;
+	} 
 
 	public float getTotalAsteroidRatio() {
-		return asteroidsSeen == 0 ? 0 : asteroidsCollected / (float)asteroidsSeen;
+		return asteroidsSeen == 0 ? 0 : asteroidsCollected
+				/ (float) asteroidsSeen;
 	}
+
 }
