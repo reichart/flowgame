@@ -93,9 +93,13 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			
 			final NumberFormat fmt = new DecimalFormat("0.000");
 			
-			final String ratios = fmt.format(logic.getFuelRatio()) + " fuel, " + fmt.format(logic.getAsteroidRatio()) + " astr.";
+			final String ratios = "Total: " + fmt.format(logic.getTotalFuelRatio()) + " fuel, " + fmt.format(logic.getTotalAsteroidRatio()) + " astr.";
 			final int ratiosW = fm.stringWidth(ratios);
 			g.drawString(ratios, width - ratiosW - 20, stringH + 50);
+			
+			final String slidingRatios = "SlidingWindow: " + fmt.format(logic.getSlidingFuelRatio()) + " fuel, " + fmt.format(logic.getSlidingAsteroidRatio()) + " astr.";
+			final int slidingRatiosW = fm.stringWidth(slidingRatios);
+			g.drawString(slidingRatios, width - slidingRatiosW -20, stringH + 70);
 			
 			fuel.setValue(logic.getFuel());
 			damage.setValue(logic.getAsteroids());
