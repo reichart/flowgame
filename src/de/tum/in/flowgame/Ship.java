@@ -165,7 +165,7 @@ public class Ship extends TransformGroup implements GameListener {
 		shape2.getAppearance().setTexture(null);
 		shape2.getAppearance().setMaterial(mat);
 
-		flashTimer.schedule(new FlashTimer(), 150);
+		flashTimer.schedule(new FlashTimerTask(), 150);
 	}
 
 	@Override
@@ -197,9 +197,9 @@ public class Ship extends TransformGroup implements GameListener {
 		// empty		
 	}
 
-	private class FlashTimer extends TimerTask {
+	private class FlashTimerTask extends TimerTask {
 
-		public FlashTimer() {
+		public FlashTimerTask() {
 		}
 
 		@Override
