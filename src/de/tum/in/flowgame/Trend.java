@@ -11,10 +11,10 @@ public class Trend {
 	private int shortRange = 3;
 	private int midRange = 10;
 	private int longRange = 30;
-	private int positiveShort = 0;
-	private int positiveMid = 0;
-	private int positiveLong = 0;
-	private int positiveComplete = 0;
+	private int hitsShort = 0;
+	private int hitsMid = 0;
+	private int hitsLong = 0;
+	private int hitsComplete = 0;
 	private List<Boolean> items = new LinkedList<Boolean>();
 
 	public Trend() {
@@ -28,11 +28,11 @@ public class Trend {
 
 	public void update(boolean collision) {
 		items.add(collision);
-		positiveShort += calculateChange(shortRange, collision);
-		positiveMid += calculateChange(midRange, collision);
-		positiveLong += calculateChange(longRange, collision);
+		hitsShort += calculateChange(shortRange, collision);
+		hitsMid += calculateChange(midRange, collision);
+		hitsLong += calculateChange(longRange, collision);
 		if (collision)
-			positiveComplete++;
+			hitsComplete++;
 		int counter = items.size();
 		int sr = shortRange;
 		int mr = midRange;
@@ -43,10 +43,10 @@ public class Trend {
 			mr = counter;
 		if (counter < longRange)
 			lr = counter;
-		shortRatio = positiveShort / (float) sr;
-		midRatio = positiveMid / (float) mr;
-		longRatio = positiveLong / (float) lr;
-		completeRatio = positiveComplete / (float) counter;
+		shortRatio = hitsShort / (float) sr;
+		midRatio = hitsMid / (float) mr;
+		longRatio = hitsLong / (float) lr;
+		completeRatio = hitsComplete / (float) counter;
 	}
 
 	private int calculateChange(int range, boolean collision) {
