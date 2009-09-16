@@ -18,6 +18,7 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 
 	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
 	private final ForwardNavigator forwardNavigator;
+	private boolean paused;
 
 	public ForwardNavigatorBehavior(final TransformGroup targetTG,
 			final double speed) {
@@ -42,8 +43,12 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 	}
 
 	public void setSpeed(final double speed) {
-		this.speed = speed;
-		this.forwardNavigator.setFwdSpeed(speed);
+		if (!paused){
+			this.speed = speed;
+		} else {
+			this.speed = 0;
+		}
+		this.forwardNavigator.setFwdSpeed(this.speed);
 	}
 
 	public ForwardNavigator getForwardNavigator() {
@@ -58,12 +63,14 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 
 	@Override
 	public void gamePaused(GameLogic game) {
+		paused = true;
 		oldSpeed = getSpeed();
 		setSpeed(0);
 	}
 
 	@Override
 	public void gameResumed(GameLogic game) {
+		paused = false;
 		setSpeed(oldSpeed);
 	}
 
