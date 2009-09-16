@@ -101,11 +101,11 @@ public class CreateCollidablesBehavior extends Behavior implements GameListener 
 	private void createCollidable() {
 		Collidable c;
 		
-		long speed = (long) difficultyFunction.getSpeed().getValue(getElapsedTime());
+		long speed = 500;
 		double ratioAsteroids = difficultyFunction.getRatio().getValue(getElapsedTime());
 		long interval = (long) difficultyFunction.getInterval().getValue(getElapsedTime());
-		
 		this.elapsedTime = new WakeupOnElapsedTime(interval);
+
 		if (ratioAsteroids  < Math.random()) {
 			double testValue = Math.random();
 			float scale;

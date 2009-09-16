@@ -1,9 +1,6 @@
 package de.tum.in.flowgame;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tum.in.flowgame.client.Client;
@@ -35,9 +32,21 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private Thread thread;
 	private boolean paused;
 
+	private GameRound gameRound = new GameRound();
+	
 	private boolean baseline = false;
+//	private Function baselineInterval;
+//	private Function baselineSpeed;
+//	private Function baselineRatio;
+	
 	private Trend asteroidTrend = new Trend();
 	private Trend fuelTrend = new Trend();
+	
+	private long startTime; 
+	private long startTimeWithoutPause;
+	private long pauseStartTime;
+	
+//	private int points = 0;
 
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
@@ -175,7 +184,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			}
 		}
 
-		GameRound gameRound = new GameRound();
+		gameRound = new GameRound();
 		gameRound.setScenarioRound(getCurrentScenarioRound());
 
 		gameSession.addRound(gameRound);
@@ -187,6 +196,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
 		paused = false;
+		startTime = System.currentTimeMillis();
+		startTimeWithoutPause = startTime;
 
 		// spawn new thread for game updates
 		this.thread = new Thread(this, GameLogic.class.getSimpleName());
@@ -196,11 +207,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public void pause() {
 		this.paused = true;
+		pauseStartTime = System.currentTimeMillis();
 		fireGamePaused();
 	}
 
 	public void unpause() {
 		this.paused = false;
+		startTimeWithoutPause += (System.currentTimeMillis() - pauseStartTime);
 		fireGameResumed();
 	}
 
@@ -276,14 +289,41 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return asteroidTrend.getMidRatio();
 	}
 
-
 	public float getTotalFuelRatio() {
 		return fuelcansSeen == 0 ? 0 : fuelcansCollected / (float) fuelcansSeen;
-	} 
+	}
 
 	public float getTotalAsteroidRatio() {
 		return asteroidsSeen == 0 ? 0 : asteroidsCollected
 				/ (float) asteroidsSeen;
 	}
+
+//	private GameRound dummyRoundForBaseline() {
+//		GameRound gameRound = new GameRound();
+//		ScenarioRound scenarioRound = new ScenarioRound();
+//		DifficultyFunction difficultyFunction = new DifficultyFunction();
+//		baselineInterval = new ConstantFunction(100.0);
+//		difficultyFunction.setIntervald(baselineInterval);
+//		baselineRatio = new ConstantFunction(0.8);
+//		difficultyFunction.setRatio(baselineRatio);
+//		baselineSpeed = new LinearFunction(80.0, 0.005);
+//		difficultyFunction.setSpeed(baselineSpeed);
+//		scenarioRound.setDifficutyFunction(difficultyFunction);
+//		gameRound.setScenarioRound(scenarioRound);
+//		return gameRound;
+//	}
+//	
+//	private void calculatePoints(Item item){
+//		DifficultyFunction diff = gameSession.getScenarioSession().getCurrentRound().getDifficutyFunction();
+//		Function intervalFunction = diff.getInterval();
+//		Function speedFunction = diff.getSpeed();
+//		Function ratioFunction = diff.getRatio();
+//	}
+	
+	public long getElapsedTime(){
+		long actTime = System.currentTimeMillis();
+		return actTime - startTimeWithoutPause;
+	}
+
 
 }

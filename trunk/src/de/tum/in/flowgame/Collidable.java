@@ -9,6 +9,7 @@ import javax.vecmath.Point2d;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
 import de.tum.in.flowgame.behavior.KeyShipBehavior;
+import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.util.TransformGroupBuilder;
 
 public class Collidable extends BranchGroup {
@@ -16,6 +17,7 @@ public class Collidable extends BranchGroup {
 	private final double xPos;
 	private final double yPos;
 	final private ForwardNavigatorBehavior fwdNav;
+	private SpeedChangeBehavior speedChange;
 
 	public Collidable(final SharedGroup group, long speed, float scale,
 			GameLogic gameLogic) {
@@ -57,6 +59,9 @@ public class Collidable extends BranchGroup {
 		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		gameLogic.addListener(fwdNav);
 		tg.addChild(fwdNav);
+		speedChange = new SpeedChangeBehavior(fwdNav, gameLogic);
+		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		this.addChild(speedChange);
 
 		final TransformGroup scaleTG = new TransformGroupBuilder()
 				.add(tg)

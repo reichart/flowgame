@@ -4,29 +4,38 @@ import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.WakeupCriterion;
-import javax.media.j3d.WakeupOnElapsedTime;
+import javax.media.j3d.WakeupOnElapsedFrames;
 
-public class SpeedChangeBehavior extends Behavior{
-	
-	private final static long TIME = 1000;
-	
-	private final WakeupCriterion wakeupEvent;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.model.Function;
+
+public class SpeedChangeBehavior extends Behavior {
+
+	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
 	private final ForwardNavigatorBehavior forwardNavigator;
-	
-	public SpeedChangeBehavior (final ForwardNavigatorBehavior forwardNavigator){
-		this.wakeupEvent = new WakeupOnElapsedTime(TIME);
+	private double speed;
+	private GameLogic gameLogic;
+
+	public SpeedChangeBehavior(final ForwardNavigatorBehavior forwardNavigator,
+			final GameLogic gameLogic) {
 		this.forwardNavigator = forwardNavigator;
+		this.gameLogic = gameLogic;
 	}
-	
+
 	@Override
 	public void initialize() {
-		wakeupOn(wakeupEvent);
+		this.wakeupOn(newFrame);
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
-		forwardNavigator.setSpeed(forwardNavigator.getSpeed());
-		wakeupOn(wakeupEvent);
+		if (gameLogic.getCurrentScenarioRound().getDifficutyFunction()
+				.getSpeed() == null)
+			speed = 0;
+		else
+			speed = gameLogic.getCurrentScenarioRound().getDifficutyFunction().getSpeed().getValue(gameLogic.getElapsedTime());
+		forwardNavigator.setSpeed(speed);
+		wakeupOn(newFrame);
 	}
 }
