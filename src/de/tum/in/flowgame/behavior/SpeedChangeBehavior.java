@@ -35,6 +35,7 @@ public class SpeedChangeBehavior extends Behavior {
 			speed = 0;
 		else
 			speed = gameLogic.getCurrentScenarioRound().getDifficutyFunction().getSpeed().getValue(gameLogic.getElapsedTime());
+//		System.out.println(speed);
 		forwardNavigator.setSpeed(speed);
 		wakeupOn(newFrame);
 	}
