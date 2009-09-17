@@ -7,6 +7,7 @@ import javax.persistence.Persistence;
 import com.mysql.jdbc.Driver;
 
 import de.tum.in.flowgame.functions.ConstantFunction;
+import de.tum.in.flowgame.functions.ConstantLengthFunction;
 import de.tum.in.flowgame.functions.LinearFunction;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Difficulty;
@@ -42,10 +43,12 @@ public class DDLGenerator {
 
 			Function intervalFunction = new ConstantFunction(400);
 			Function ratioFunction = new ConstantFunction(0.6);
-			LinearFunction speedFunction = new LinearFunction(100D,4.0d/600);
+			LinearFunction speedFunction = new LinearFunction(30D,4.0d/600);
+			Function constantLengthIntervalFunction  = new ConstantLengthFunction(60.0, speedFunction);
 
 			DifficultyFunction df = new DifficultyFunction();
-			df.setIntervald(intervalFunction);
+			df.setIntervald(constantLengthIntervalFunction);
+//			df.setIntervald(intervalFunction);
 			df.setRatio(ratioFunction);
 			df.setSpeed(speedFunction);
 			
@@ -72,6 +75,7 @@ public class DDLGenerator {
 			em.persist(d);
 			em.persist(intervalFunction);
 			em.persist(speedFunction);
+			em.persist(constantLengthIntervalFunction);
 			em.persist(df);
 			em.persist(ss);
 			em.getTransaction().commit();
