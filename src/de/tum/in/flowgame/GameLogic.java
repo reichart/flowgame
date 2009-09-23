@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tum.in.flowgame.client.Client;
+import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
@@ -33,24 +34,25 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private boolean paused;
 
 	private GameRound gameRound = new GameRound();
-	
+
 	private boolean baseline = false;
-//	private Function baselineInterval;
-//	private Function baselineSpeed;
-//	private Function baselineRatio;
-	
+	// private Function baselineInterval;
+	// private Function baselineSpeed;
+	// private Function baselineRatio;
+
 	private Trend asteroidTrend = new Trend();
 	private Trend fuelTrend = new Trend();
-	
-	private long startTime; 
+
+	private long startTime;
 	private long startTimeWithoutPause;
 	private long pauseStartTime;
-	
-//	private int points = 0;
+
+	// private int points = 0;
 
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
+		this.init();
 
 		Utils.export(this);
 	}
@@ -119,6 +121,14 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		Client.uploadQuietly(gameSession);
 
 		System.out.println("GameLogic.run() stopped");
+
+		ScenarioRound sessionRound = gameSession.getScenarioSession()
+				.getNextRound();
+		if (sessionRound == null) {
+			Client.uploadQuietly(gameSession);
+			gameSession = null;
+			fireSessionFinished();
+		}
 	}
 
 	public int getFuel() {
@@ -165,13 +175,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 
-	public void start() {
-		System.out.println("GameLogic.start()");
-
-		if (isRunning()) {
-			throw new IllegalStateException("A game is still running.");
-		}
-
+	public void init() {
 		if (gameSession == null) {
 			loadNewScenarioSession();
 		} else {
@@ -182,6 +186,14 @@ public class GameLogic implements GameLogicMBean, Runnable {
 				gameSession = null;
 				fireSessionFinished();
 			}
+		}
+	}
+
+	public void start() {
+		System.out.println("GameLogic.start()");
+
+		if (isRunning()) {
+			throw new IllegalStateException("A game is still running.");
 		}
 
 		gameRound = new GameRound();
@@ -298,32 +310,36 @@ public class GameLogic implements GameLogicMBean, Runnable {
 				/ (float) asteroidsSeen;
 	}
 
-//	private GameRound dummyRoundForBaseline() {
-//		GameRound gameRound = new GameRound();
-//		ScenarioRound scenarioRound = new ScenarioRound();
-//		DifficultyFunction difficultyFunction = new DifficultyFunction();
-//		baselineInterval = new ConstantFunction(100.0);
-//		difficultyFunction.setIntervald(baselineInterval);
-//		baselineRatio = new ConstantFunction(0.8);
-//		difficultyFunction.setRatio(baselineRatio);
-//		baselineSpeed = new LinearFunction(80.0, 0.005);
-//		difficultyFunction.setSpeed(baselineSpeed);
-//		scenarioRound.setDifficutyFunction(difficultyFunction);
-//		gameRound.setScenarioRound(scenarioRound);
-//		return gameRound;
-//	}
-//	
-//	private void calculatePoints(Item item){
-//		DifficultyFunction diff = gameSession.getScenarioSession().getCurrentRound().getDifficutyFunction();
-//		Function intervalFunction = diff.getInterval();
-//		Function speedFunction = diff.getSpeed();
-//		Function ratioFunction = diff.getRatio();
-//	}
-	
-	public long getElapsedTime(){
+	// private GameRound dummyRoundForBaseline() {
+	// GameRound gameRound = new GameRound();
+	// ScenarioRound scenarioRound = new ScenarioRound();
+	// DifficultyFunction difficultyFunction = new DifficultyFunction();
+	// baselineInterval = new ConstantFunction(100.0);
+	// difficultyFunction.setIntervald(baselineInterval);
+	// baselineRatio = new ConstantFunction(0.8);
+	// difficultyFunction.setRatio(baselineRatio);
+	// baselineSpeed = new LinearFunction(80.0, 0.005);
+	// difficultyFunction.setSpeed(baselineSpeed);
+	// scenarioRound.setDifficutyFunction(difficultyFunction);
+	// gameRound.setScenarioRound(scenarioRound);
+	// return gameRound;
+	// }
+	//	
+	// private void calculatePoints(Item item){
+	// DifficultyFunction diff =
+	// gameSession.getScenarioSession().getCurrentRound().getDifficutyFunction();
+	// Function intervalFunction = diff.getInterval();
+	// Function speedFunction = diff.getSpeed();
+	// Function ratioFunction = diff.getRatio();
+	// }
+
+	public long getElapsedTime() {
 		long actTime = System.currentTimeMillis();
 		return actTime - startTimeWithoutPause;
 	}
-
+	
+	public DifficultyFunction getDifficultyFunction(){
+		return gameSession.getScenarioSession().getCurrentRound().getDifficutyFunction();
+	}
 
 }

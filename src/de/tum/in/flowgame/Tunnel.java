@@ -26,9 +26,9 @@ public class Tunnel extends TransformGroup {
 	public static final float TUNNEL_RADIUS = 8.0f;
 	public static final int TUNNEL_PARTS = 3;
 	
-	private final ForwardNavigatorBehavior fwdNav;
+//	private final ForwardNavigatorBehavior fwdNav;
 	private final GameLogic gameLogic;
-	private final SpeedChangeBehavior speedChange;
+//	private final SpeedChangeBehavior speedChange;
 
 	public Tunnel(final GameLogic gameLogic) {
 		
@@ -95,14 +95,14 @@ public class Tunnel extends TransformGroup {
 			
 			addChild(tunnelTranslationGroup);
 		}
-		fwdNav = new ForwardNavigatorBehavior(this, 100);
-		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		gameLogic.addListener(fwdNav);
-		addChild(fwdNav);
+//		fwdNav = new ForwardNavigatorBehavior(this, 100);
+//		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+//		gameLogic.addListener(fwdNav);
+//		addChild(fwdNav);
 		
-		speedChange = new SpeedChangeBehavior(fwdNav, gameLogic);
-		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		addChild(speedChange);
+//		speedChange = new SpeedChangeBehavior(fwdNav, gameLogic);
+//		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+//		addChild(speedChange);
 		
 	}
 

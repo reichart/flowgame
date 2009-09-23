@@ -20,7 +20,7 @@ public abstract class Function extends AbstractEntity implements Serializable {
 		this.initialValue = initialValue;
 	}
 	
-	public abstract double getValue(Long time);
+	public abstract double getValue(double z);
 	
 	public abstract double getInitialValue();
 		

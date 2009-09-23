@@ -71,8 +71,10 @@ public class GameApplet extends Applet {
 			player.setName(name);
 			Client.uploadQuietly(player);
 		}
+		
 
-		this.game = new Game3D(new GameLogic(player));
+		GameLogic gameLogic = new GameLogic(player);
+		this.game = new Game3D(gameLogic);
 		add(BorderLayout.CENTER, game);
 	}
 

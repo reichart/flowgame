@@ -23,8 +23,10 @@ public class CollisionBehavior extends Behavior {
 	private final Ship ship;
 	private double shipX = Ship.INITIAL_SHIP_PLACEMENT_X;
 	private double shipY = Ship.INITIAL_SHIP_PLACEMENT_Y;
+	private double shipZ = Ship.INITIAL_SHIP_PLACEMENT_Z;
 	private double shipOldX;
 	private double shipOldY;
+	private double shipOldZ;
 	private boolean collision;
 
 	public CollisionBehavior(final BranchGroup collidables, final GameLogic gl,
@@ -47,10 +49,12 @@ public class CollisionBehavior extends Behavior {
 
 		shipOldX = shipX;
 		shipOldY = shipY;
+		shipOldZ = shipZ;
 		final Vector3d shipCoords = ship.getControls().getCoords();
 		shipX = shipCoords.getX();
 		shipY = shipCoords.getY();
-		// final double shipZ = shipCoords.getZ();
+		shipZ = shipCoords.getZ();
+//		System.out.println(shipZ);
 
 		while (children.hasMoreElements()) {
 			final Node child = children.nextElement();
@@ -58,24 +62,19 @@ public class CollisionBehavior extends Behavior {
 				final Collidable collidable = (Collidable) child;
 
 				final double zPos = collidable.getZPos();
-				// final double xPos = collidable.getXPos();
-				// final double yPos = collidable.getYPos();
 
-				final double oldZ = collidable.getOldZPos();
-
-				if (zPos > Ship.INITIAL_SHIP_PLACEMENT_Z
-						&& oldZ <= Ship.INITIAL_SHIP_PLACEMENT_Z) {
+				if (shipZ < zPos && shipOldZ >= zPos) {
 
 					final Bounds collidableBounds = collidable.getBounds();
 
-					double factor = (zPos - Ship.INITIAL_SHIP_PLACEMENT_Z)/(zPos-oldZ);
+					double factor = (shipOldZ - zPos)/(zPos-shipZ);
 					double xDist = shipX - shipOldX;
 					double colX = shipOldX + xDist * factor;
 					double yDist = shipY - shipOldY;
 					double colY = shipOldY + yDist * factor;
 					final BoundingBox shipBounds = new BoundingBox();
-					shipBounds.setLower(colX - 0.6, colY - 0.15, oldZ);
-					shipBounds.setUpper(colX + 0.6, colY + 0.15, zPos);
+					shipBounds.setLower(colX - 0.6, colY - 0.15, shipZ);
+					shipBounds.setUpper(colX + 0.6, colY + 0.15, shipOldZ);
 					// ship.setBounds(shipBounds);
 
 					final Item item = (Item) child.getUserData();
@@ -96,8 +95,6 @@ public class CollisionBehavior extends Behavior {
 					gameLogic.seen(item, collision);
 					collision = false;
 				}
-
-				collidable.setOldZPos(zPos);
 			}
 		}
 		wakeupOn(condition);
