@@ -8,20 +8,21 @@ import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point2d;
 
 import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
-import de.tum.in.flowgame.behavior.KeyShipBehavior;
+import de.tum.in.flowgame.behavior.ShipNavigationBehavior;
 import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.util.TransformGroupBuilder;
 
 public class Collidable extends BranchGroup {
-	private double oldZPos;
 	private final double xPos;
 	private final double yPos;
-	final private ForwardNavigatorBehavior fwdNav;
-	private SpeedChangeBehavior speedChange;
+	private final double zPos;
+//	private final ForwardNavigatorBehavior fwdNav;
+//	private final SpeedChangeBehavior speedChange;
 
-	public Collidable(final SharedGroup group, long speed, float scale,
+	public Collidable(final SharedGroup group, long speed, float scale, double zPos,
 			GameLogic gameLogic) {
 		this.setCapability(BranchGroup.ALLOW_DETACH);
+		this.zPos = zPos;
 
 		setUserData(group.getUserData());
 
@@ -45,23 +46,23 @@ public class Collidable extends BranchGroup {
 				.computeAutoBounds(true)
 				.fin();
 
-		final int parts = Math.max(1, Tunnel.TUNNEL_PARTS - 1);
-		final float endOfTunnel = -parts * Tunnel.TUNNEL_LENGTH;
+//		final int parts = Math.max(1, Tunnel.TUNNEL_PARTS - 1);
+//		final float endOfTunnel = -parts * Tunnel.TUNNEL_LENGTH;
 
 		final TransformGroup tg = new TransformGroupBuilder()
-				.translate(0, 0, endOfTunnel)
+				.translate(0, 0, zPos)
 				.add(scaledShape)
 				.writable()
 				.computeAutoBounds(true)
 				.fin();
 
-		fwdNav = new ForwardNavigatorBehavior(tg, speed);
-		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		gameLogic.addListener(fwdNav);
-		tg.addChild(fwdNav);
-		speedChange = new SpeedChangeBehavior(fwdNav, gameLogic);
-		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		this.addChild(speedChange);
+//		fwdNav = new ForwardNavigatorBehavior(tg, speed);
+//		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+//		gameLogic.addListener(fwdNav);
+//		tg.addChild(fwdNav);
+//		speedChange = new SpeedChangeBehavior(fwdNav, gameLogic);
+//		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+//		this.addChild(speedChange);
 
 		final TransformGroup scaleTG = new TransformGroupBuilder()
 				.add(tg)
@@ -71,12 +72,12 @@ public class Collidable extends BranchGroup {
 		scaleTG.setBoundsAutoCompute(true);
 		
 		Point2d position = new Point2d(Math.random()
-				* KeyShipBehavior.MOV_RADIUS * 2 - KeyShipBehavior.MOV_RADIUS,
-				Math.random() * KeyShipBehavior.MOV_RADIUS * 2
-						- KeyShipBehavior.MOV_RADIUS);
+				* ShipNavigationBehavior.MOV_RADIUS * 2 - ShipNavigationBehavior.MOV_RADIUS,
+				Math.random() * ShipNavigationBehavior.MOV_RADIUS * 2
+						- ShipNavigationBehavior.MOV_RADIUS);
 		while (!withinCircle(position)) {
-			position = new Point2d(Math.random() * KeyShipBehavior.MOV_RADIUS,
-					Math.random() * KeyShipBehavior.MOV_RADIUS);
+			position = new Point2d(Math.random() * ShipNavigationBehavior.MOV_RADIUS,
+					Math.random() * ShipNavigationBehavior.MOV_RADIUS);
 		}
 
 		xPos = position.getX();
@@ -102,22 +103,14 @@ public class Collidable extends BranchGroup {
 	private boolean withinCircle(Point2d position) {
 		double radius = Math.sqrt(Math.pow(position.getX(), 2)
 				+ Math.pow(position.getY(), 2));
-		if (radius <= KeyShipBehavior.MOV_RADIUS)
+		if (radius <= ShipNavigationBehavior.MOV_RADIUS)
 			return true;
 		else
 			return false;
 	}
 
-	public double getOldZPos() {
-		return oldZPos;
-	}
-
-	public void setOldZPos(double oldZPos) {
-		this.oldZPos = oldZPos;
-	}
-
 	public double getZPos() {
-		return fwdNav.getForwardNavigator().getPos().getZ();
+		return zPos;
 	}
 
 	public double getXPos() {

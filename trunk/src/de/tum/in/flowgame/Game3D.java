@@ -30,7 +30,7 @@ import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
 import de.tum.in.flowgame.behavior.CollisionBehavior;
-import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
+import de.tum.in.flowgame.behavior.CreateNewCollidablesBehavior;
 import de.tum.in.flowgame.ui.GameOverlay;
 
 public class Game3D extends Canvas3D {
@@ -40,7 +40,7 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
-	private final GameLogic logic;
+	private final GameLogic gameLogic;
 	private final GameOverlay overlay;
 	
 	private Ship ship;
@@ -54,8 +54,8 @@ public class Game3D extends Canvas3D {
 	public Game3D(final GameLogic logic) throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		this.logic = logic;
-		this.logic.addListener(new DefaultGameListener() {
+		this.gameLogic = logic;
+		this.gameLogic.addListener(new DefaultGameListener() {
 
 			@Override
 			public void gameStarted(final GameLogic game) {
@@ -72,17 +72,18 @@ public class Game3D extends Canvas3D {
 
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
+
+		final BranchGroup scene = new BranchGroup();
+		scene.addChild(createScene(logic));
 		
 		// allow switching the game contents on/off at runtime
 		this.switsch = new Switch();
 		switsch.setCapability(Switch.ALLOW_SWITCH_READ);
 		switsch.setCapability(Switch.ALLOW_SWITCH_WRITE);
-		switsch.addChild(createCollidables(logic, viewTG));
+		switsch.addChild(createCollidables(logic, viewTG));		
 		
-		final BranchGroup scene = new BranchGroup();
-		scene.addChild(createScene(logic));
 		scene.addChild(switsch);
-
+		
 		this.overlay = new GameOverlay(logic, this);
 		this.addComponentListener(overlay);
 		
@@ -117,15 +118,17 @@ public class Game3D extends Canvas3D {
 		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
 		collidables.setCapability(Group.ALLOW_CHILDREN_WRITE);
 
-		final CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, logic);
-		ccb.setSchedulingBounds(WORLD_BOUNDS);
-		logic.addListener(ccb);
-
 		final Ship ship = new Ship(logic, viewTG);
 		this.ship = ship;
-		this.logic.addListener(this.ship);
+		this.gameLogic.addListener(this.ship);
 		collidables.addChild(ship);
-		collidables.addChild(ccb);
+		
+		final CreateCollidables cc = new CreateCollidables(collidables, logic);
+		final CreateNewCollidablesBehavior cncb = new CreateNewCollidablesBehavior(cc, ship);
+		cncb.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		logic.addListener(cc);
+		
+		collidables.addChild(cncb);
 		
 		final CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);

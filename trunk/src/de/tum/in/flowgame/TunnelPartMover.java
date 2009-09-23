@@ -21,11 +21,6 @@ public class TunnelPartMover {
 		dp.z = -zDist*(parts); 
 	}
 
-	/**
-	 * Computes a new transform for the next frame based on the current
-	 * transform and elapsed time. This new transform is written into the target
-	 * transform group. This method should be called once per frame.
-	 */
 	public void integrateTransformChanges() {
 
 		// Get the current TransformGroup transform into a transform3D object.

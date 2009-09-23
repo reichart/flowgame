@@ -23,7 +23,8 @@ import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class KeyShipBehavior extends Behavior implements GameListener {
+public class ShipNavigationBehavior extends Behavior implements GameListener,
+		SpeedChange {
 
 	private float acceleration = 30f;
 	private float maxSpeed = 18f;
@@ -77,8 +78,9 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 
 	private long time;
 	private boolean firstPerson = false;
+	private double fwdSpeed;
 
-	public KeyShipBehavior(final TransformGroup translationGroup,
+	public ShipNavigationBehavior(final TransformGroup translationGroup,
 			TransformGroup viewTG, GameLogic gameLogic) {
 
 		this.gameLogic = gameLogic;
@@ -315,6 +317,7 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		// System.out.println("DistUp: " + distToRadiusUp);
 		// System.out.println("DistDown: " + distToRadiusDown);
 
+		mov.z = fwdSpeed;
 		/* Integration of velocity to distance */
 		dp.scale(deltaTime, mov);
 
@@ -415,14 +418,14 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 		return vec;
 	}
 
-	public void setNormalSteering (final boolean normal){
+	public void setNormalSteering(final boolean normal) {
 		this.normalSteering = normal;
 	}
-	
-	public boolean getNormalSteering (){
+
+	public boolean getNormalSteering() {
 		return this.normalSteering;
 	}
-	
+
 	@Override
 	public void collided(GameLogic logic, Item item) {
 		// TODO Auto-generated method stub
@@ -474,7 +477,16 @@ public class KeyShipBehavior extends Behavior implements GameListener {
 	@Override
 	public void sessionFinished(GameLogic game) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	public void setFwdSpeed(final double fwdSpeed) {
+		this.fwdSpeed = fwdSpeed;
+	}
+
+	@Override
+	public double getZCoordinate() {
+		return getCoords().getZ();
 	}
 
 }

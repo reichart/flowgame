@@ -23,7 +23,7 @@ public class ConstantFunction extends Function implements Serializable{
 	}
 
 	@Override
-	public double getValue(Long time) {
+	public double getValue(double z) {
 		return initialValue;
 	}
 

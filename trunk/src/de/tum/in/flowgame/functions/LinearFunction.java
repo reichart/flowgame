@@ -20,8 +20,8 @@ public class LinearFunction extends Function implements Serializable{
 	}
 
 	@Override
-	public double getValue(Long time) {
-		return slope * time + initialValue;
+	public double getValue(double z) {
+		return slope * z + initialValue;
 	}
 
 	@Override

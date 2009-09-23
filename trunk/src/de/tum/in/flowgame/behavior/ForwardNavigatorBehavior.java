@@ -11,7 +11,7 @@ import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class ForwardNavigatorBehavior extends Behavior implements GameListener {
+public class ForwardNavigatorBehavior extends Behavior implements GameListener, SpeedChange {
 
 	private double oldSpeed;
 	private double speed;
@@ -42,7 +42,7 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 		return speed;
 	}
 
-	public void setSpeed(final double speed) {
+	public void setFwdSpeed(final double speed) {
 		if (!paused){
 			this.speed = speed;
 		} else {
@@ -65,13 +65,13 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 	public void gamePaused(GameLogic game) {
 		paused = true;
 		oldSpeed = getSpeed();
-		setSpeed(0);
+		setFwdSpeed(0);
 	}
 
 	@Override
 	public void gameResumed(GameLogic game) {
 		paused = false;
-		setSpeed(oldSpeed);
+		setFwdSpeed(oldSpeed);
 	}
 
 	@Override
@@ -90,6 +90,10 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener {
 	public void sessionFinished(GameLogic game) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public double getZCoordinate(){
+		return forwardNavigator.getZCoordinate();
 	}
 
 }

@@ -12,11 +12,11 @@ import de.tum.in.flowgame.model.Function;
 public class SpeedChangeBehavior extends Behavior {
 
 	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
-	private final ForwardNavigatorBehavior forwardNavigator;
+	private final SpeedChange forwardNavigator;
 	private double speed;
 	private GameLogic gameLogic;
 
-	public SpeedChangeBehavior(final ForwardNavigatorBehavior forwardNavigator,
+	public SpeedChangeBehavior(final SpeedChange forwardNavigator,
 			final GameLogic gameLogic) {
 		this.forwardNavigator = forwardNavigator;
 		this.gameLogic = gameLogic;
@@ -34,9 +34,10 @@ public class SpeedChangeBehavior extends Behavior {
 				.getSpeed() == null)
 			speed = 0;
 		else
-			speed = gameLogic.getCurrentScenarioRound().getDifficutyFunction().getSpeed().getValue(gameLogic.getElapsedTime());
+			speed = - gameLogic.getCurrentScenarioRound().getDifficutyFunction().getSpeed().getValue(gameLogic.getElapsedTime());
 //		System.out.println(speed);
-		forwardNavigator.setSpeed(speed);
+		
+		forwardNavigator.setFwdSpeed(speed);
 		wakeupOn(newFrame);
 	}
 }
