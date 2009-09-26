@@ -48,12 +48,7 @@ public class SettingsScreen extends MenuScreen {
 	private final JSlider accSlider = new JSlider(500, 30000);	
 	private final JSlider maxSpeedSlider = new JSlider(500, 10000);
 	
-	private final JButton back = new JButton(new AbstractAction("Back") {
-		@Override
-		public void actionPerformed(final ActionEvent e) {
-			menu.show(MainScreen.class);
-		}
-	});
+	private final JButton back = goTo("Back", MainScreen.class);
 	
 
 	public SettingsScreen(final GameMenu menu) {

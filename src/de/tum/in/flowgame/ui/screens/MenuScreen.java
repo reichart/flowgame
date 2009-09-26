@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +20,7 @@ public abstract class MenuScreen extends JPanel {
 
 	protected final GameMenu menu; // for subclasses
 
-	public MenuScreen(final GameMenu menu) {
+	protected MenuScreen(final GameMenu menu) {
 		setLayout(new BorderLayout());
 		setDoubleBuffered(false);
 		setOpaque(false);
@@ -28,7 +31,7 @@ public abstract class MenuScreen extends JPanel {
 	public void build() {
 		add(BorderLayout.CENTER, getContents());
 	}
-	
+
 	public abstract Container getContents();
 
 	/**
@@ -41,7 +44,7 @@ public abstract class MenuScreen extends JPanel {
 	/**
 	 * Centers components both vertically and horizontically on the screen.
 	 */
-	public static Container centered(final JComponent... components) {
+	protected static Container centered(final JComponent... components) {
 		final Box column = new Box(BoxLayout.Y_AXIS);
 		column.setOpaque(false);
 		column.add(Box.createVerticalGlue());
@@ -61,10 +64,19 @@ public abstract class MenuScreen extends JPanel {
 		return center;
 	}
 
-	public static JLabel title(final String title) {
+	protected static JLabel title(final String title) {
 		final JLabel label = new JLabel(title);
 		label.setForeground(Color.WHITE);
 		label.setFont(label.getFont().deriveFont(24f));
 		return label;
+	}
+
+	protected JButton goTo(final String label, final Class<? extends MenuScreen> screen) {
+		return new JButton(new AbstractAction(label) {
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				menu.show(screen);
+			}
+		});
 	}
 }
