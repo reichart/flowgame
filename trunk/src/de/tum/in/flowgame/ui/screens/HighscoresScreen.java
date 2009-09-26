@@ -1,10 +1,8 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Container;
-import java.awt.event.ActionEvent;
 import java.util.Random;
 
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -13,12 +11,7 @@ import de.tum.in.flowgame.ui.GameMenu;
 
 public class HighscoresScreen extends MenuScreen {
 
-	private final JButton back = new JButton(new AbstractAction("Back") {
-		@Override
-		public void actionPerformed(final ActionEvent e) {
-			menu.show(MainScreen.class);
-		}
-	});
+	private final JButton back = goTo("Back", MainScreen.class);
 	
 	private final JScrollPane highscoresScroll;
 
