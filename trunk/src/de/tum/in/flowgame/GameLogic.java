@@ -140,15 +140,11 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public void addListener(final GameListener listener) {
-		synchronized (listeners) {
-			this.listeners.add(listener);
-		}
+		this.listeners.add(listener);
 	}
 
 	public void removeListener(final GameListener listener) {
-		synchronized (listeners) {
-			this.listeners.remove(listener);
-		}
+		this.listeners.remove(listener);
 	}
 
 	/**
@@ -230,50 +226,38 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	private void fireGameStarted() {
-		synchronized (listeners) {
-			for (final GameListener listener : listeners) {
-				listener.gameStarted(this);
-			}
+		for (final GameListener listener : listeners) {
+			listener.gameStarted(this);
 		}
 	}
 
 	private void fireGamePaused() {
-		synchronized (listeners) {
-			for (final GameListener listener : listeners) {
-				listener.gamePaused(this);
-			}
+		for (final GameListener listener : listeners) {
+			listener.gamePaused(this);
 		}
 	}
 
 	private void fireGameResumed() {
-		synchronized (listeners) {
-			for (final GameListener listener : listeners) {
-				listener.gameResumed(this);
-			}
+		for (final GameListener listener : listeners) {
+			listener.gameResumed(this);
 		}
 	}
 
 	private void fireGameStopped() {
-		synchronized (listeners) {
-			for (final GameListener listener : listeners) {
-				listener.gameStopped(this);
-			}
+		for (final GameListener listener : listeners) {
+			listener.gameStopped(this);
 		}
 	}
 
 	private void fireCollided(Item item) {
-		synchronized (listeners) {
-			for (final GameListener listener : listeners) {
-				listener.collided(this, item);
-			}
+		for (final GameListener listener : listeners) {
+			listener.collided(this, item);
 		}
 	}
 
 	public void fireSessionFinished() {
-		synchronized (listeners) {
-			for (final GameListener listener : listeners) {
-				listener.sessionFinished(this);
-			}
+		for (final GameListener listener : listeners) {
+			listener.sessionFinished(this);
 		}
 	}
 
