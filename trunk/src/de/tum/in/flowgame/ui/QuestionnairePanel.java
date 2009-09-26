@@ -76,8 +76,8 @@ public class QuestionnairePanel extends JPanel {
 		
 		// Create the label table
 		final Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		labelTable.put(new Integer(0), new JLabel("Low"));
-		labelTable.put(new Integer(100), new JLabel("High"));
+		labelTable.put(0, new JLabel("Low"));
+		labelTable.put(100, new JLabel("High"));
 
 		JPanel questions = new JPanel(new SpringLayout());
 
