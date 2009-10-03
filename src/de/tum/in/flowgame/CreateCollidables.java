@@ -2,6 +2,7 @@ package de.tum.in.flowgame;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.media.j3d.BoundingSphere;
@@ -47,7 +48,6 @@ public class CreateCollidables implements GameListener {
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
 		this.difficultyFunction = gameLogic.getDifficultyFunction();
-		addCollidable();
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
@@ -115,6 +115,9 @@ public class CreateCollidables implements GameListener {
 	}
 
 	public Collidable getLastCollidable (){
+		if (collidables.size() == 0){
+			addCollidable();
+		} 
 		return collidables.get(collidables.size()-1);
 	}
 	
@@ -137,14 +140,18 @@ public class CreateCollidables implements GameListener {
 
 	@Override
 	public void gameStarted(GameLogic game) {
-		// TODO Auto-generated method stub
+		addCollidable();
 		difficultyFunction = gameLogic.getCurrentScenarioRound().getDifficutyFunction();
 		startTime = System.currentTimeMillis();
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
-		// TODO Auto-generated method stub
+		int max = collidables.size();
+		for (int i = max-1; i >= 0; i--){
+			collidables.get(i).detach();
+			collidables.remove(i);
+		}
 		
 	}
 

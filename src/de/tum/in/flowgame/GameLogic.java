@@ -40,8 +40,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	// private Function baselineSpeed;
 	// private Function baselineRatio;
 
-	private Trend asteroidTrend = new Trend();
-	private Trend fuelTrend = new Trend();
+	private Trend asteroidTrend;
+	private Trend fuelTrend;
 
 	private long startTime;
 	private long startTimeWithoutPause;
@@ -187,6 +187,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public void start() {
 		System.out.println("GameLogic.start()");
+		
+		this.fuelTrend = new Trend();
+		this.asteroidTrend = new Trend();
+		this.fuelcansCollected = 0;
+		this.fuelcansSeen = 0;
+		this.asteroidsCollected = 0;
+		this.asteroidsSeen = 0;
 
 		if (isRunning()) {
 			throw new IllegalStateException("A game is still running.");

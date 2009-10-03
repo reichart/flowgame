@@ -30,7 +30,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 	private float maxSpeed = 18f;
 	private final Point3d dp = new Point3d();
 	private Vector3d dv = new Vector3d();
-	private final Vector3d pos = new Vector3d();
+	private Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
 
 	private final Vector3d mov = new Vector3d(0, 0, 0);
@@ -384,6 +384,8 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		}
 
 		vpTrans.set(vpPos);
+		
+//		System.out.println(vpPos);
 
 		viewTG.setTransform(vpTrans);
 
@@ -489,4 +491,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		return getCoords().getZ();
 	}
 
+	public void reset(){
+		this.pos = new Vector3d();
+	}
 }

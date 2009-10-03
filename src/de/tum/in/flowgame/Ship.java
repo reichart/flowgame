@@ -189,13 +189,11 @@ public class Ship extends TransformGroup implements GameListener {
 	@Override
 	public void gameStarted(GameLogic game) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
-		// TODO Auto-generated method stub
-
+		shipNavigationBehavior.reset();
 	}
 	
 	@Override
