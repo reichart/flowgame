@@ -31,11 +31,10 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 import de.tum.in.flowgame.behavior.CollisionBehavior;
 import de.tum.in.flowgame.behavior.CreateNewCollidablesBehavior;
-import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.ui.GameOverlay;
 
-public class Game3D extends Canvas3D implements GameListener{
-	
+public class Game3D extends Canvas3D {
+
 	public static final BoundingSphere WORLD_BOUNDS = new BoundingSphere(new Point3d(), Double.POSITIVE_INFINITY);
 
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
@@ -43,9 +42,9 @@ public class Game3D extends Canvas3D implements GameListener{
 
 	private final GameLogic gameLogic;
 	private final GameOverlay overlay;
-	private Tunnel tunnel;
-	private BranchGroup collidables;
+	private final BranchGroup collidables;
 	
+	private Tunnel tunnel;
 	private Ship ship;
 	
 	private final Switch switsch;
@@ -58,7 +57,23 @@ public class Game3D extends Canvas3D implements GameListener{
 		super(SimpleUniverse.getPreferredConfiguration());
 
 		this.gameLogic = logic;
-		this.gameLogic.addListener(this);
+		this.gameLogic.addListener(new DefaultGameListener() {
+
+			@Override
+			public void gameStarted(final GameLogic game) {
+				System.out.println("Game3D.gameStarted()");
+				switsch.setWhichChild(Switch.CHILD_ALL);
+				tunnel = new Tunnel(gameLogic);
+				collidables.addChild(tunnel);
+			}
+			
+			@Override
+			public void gameStopped(final GameLogic game) {
+				System.out.println("Game3D.gameStopped()");
+				switsch.setWhichChild(Switch.CHILD_NONE);
+				tunnel.detach();
+			}
+		});
 
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
@@ -176,44 +191,5 @@ public class Game3D extends Canvas3D implements GameListener{
 	
 	public Ship getShip(){
 		return this.ship;
-	}
-
-	@Override
-	public void collided(GameLogic logic, Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void gamePaused(GameLogic game) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void gameResumed(GameLogic game) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void gameStarted(GameLogic game) {
-		System.out.println("Game3D.gameStarted()");
-		switsch.setWhichChild(Switch.CHILD_ALL);
-		this.tunnel = new Tunnel(gameLogic);
-		this.collidables.addChild(this.tunnel);
-	}
-	
-	@Override
-	public void gameStopped(GameLogic game) {
-		System.out.println("Game3D.gameStopped()");
-		switsch.setWhichChild(Switch.CHILD_NONE);
-		this.tunnel.detach();
-	}
-
-	@Override
-	public void sessionFinished(GameLogic game) {
-		// TODO Auto-generated method stub
-		
 	}
 }
