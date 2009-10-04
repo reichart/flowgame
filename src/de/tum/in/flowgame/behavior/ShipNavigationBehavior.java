@@ -66,7 +66,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 	private boolean normalSteering = false;
 
-	private final char pauseKey = ' ';
+	private static final char PAUSE_KEY = ' ';
 	private boolean pause;
 	private long pauseBegin;
 	private GameLogic gameLogic;
@@ -171,7 +171,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
-			case pauseKey:
+			case PAUSE_KEY:
 				if (pause) {
 					gameLogic.unpause();
 					// System.out.println("resume");
@@ -238,7 +238,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		viewTG.getTransform(vpTrans);
 		vpTrans.get(vpPos);
 
-		double deltaTime = (double) getDeltaTime();
+		double deltaTime = getDeltaTime();
 		deltaTime *= 0.001;
 
 		a.x = a.y = a.z = 0;
@@ -430,8 +430,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 	@Override
 	public void collided(GameLogic logic, Item item) {
-		// TODO Auto-generated method stub
-
+		// empty
 	}
 
 	@Override
@@ -454,8 +453,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 	@Override
 	public void gameStopped(GameLogic game) {
-		// TODO Auto-generated method stub
-
+		// empty
 	}
 
 	public float getAcceleration() {
@@ -478,8 +476,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 	@Override
 	public void sessionFinished(GameLogic game) {
-		// TODO Auto-generated method stub
-
+		// empty
 	}
 
 	public void setFwdSpeed(final double fwdSpeed) {
