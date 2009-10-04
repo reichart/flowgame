@@ -48,6 +48,7 @@ public class CreateCollidables implements GameListener {
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
 		this.difficultyFunction = gameLogic.getDifficultyFunction();
+		addCollidable();
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
@@ -115,9 +116,6 @@ public class CreateCollidables implements GameListener {
 	}
 
 	public Collidable getLastCollidable (){
-		if (collidables.size() == 0){
-			addCollidable();
-		} 
 		return collidables.get(collidables.size()-1);
 	}
 	
@@ -140,7 +138,6 @@ public class CreateCollidables implements GameListener {
 
 	@Override
 	public void gameStarted(GameLogic game) {
-		addCollidable();
 		difficultyFunction = gameLogic.getCurrentScenarioRound().getDifficutyFunction();
 		startTime = System.currentTimeMillis();
 	}
@@ -152,7 +149,7 @@ public class CreateCollidables implements GameListener {
 			collidables.get(i).detach();
 			collidables.remove(i);
 		}
-		
+		addCollidable();
 	}
 
 	@Override
