@@ -3,14 +3,10 @@ package de.tum.in.flowgame.behavior;
 import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
-import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Node;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
 
-import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.CreateCollidables;
-import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Ship;
 
 public class CreateNewCollidablesBehavior extends Behavior {
@@ -36,6 +32,7 @@ public class CreateNewCollidablesBehavior extends Behavior {
 		wakeupOn(condition);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void processStimulus(Enumeration criteria) {
 //		System.out.println("Last Collidable: " + createCollidables.getLastCollidable().getZPos() + " - ShipPosition plus Offset: " + (ship.getControls().getCoords().getZ() + offset));
