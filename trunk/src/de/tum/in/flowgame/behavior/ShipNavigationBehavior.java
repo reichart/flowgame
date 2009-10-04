@@ -33,7 +33,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 	private Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
 
-	private final Vector3d mov = new Vector3d(0, 0, 0);
+	private Vector3d mov = new Vector3d(0, 0, 0);
 	// private static final double MAX_FOLLOWING_DIST = 2;
 	private Vector3d a = new Vector3d();
 
@@ -449,6 +449,9 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 	public void gameStarted(GameLogic game) {
 		trans.setIdentity();
 		translationGroup.setTransform(trans);
+		a = new Vector3d();
+		mov = new Vector3d();
+		pos = new Vector3d();
 	}
 
 	@Override
