@@ -8,20 +8,12 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Function extends AbstractEntity implements Serializable {
+public class Function extends AbstractEntity implements Serializable {
 	
-	protected double initialValue;
+	protected Double initialValue;
 	
-	public Function(){
-		//empty
+	public double getValue(Long time) {
+		return 0.5;
 	}
 	
-	public Function(double initialValue){
-		this.initialValue = initialValue;
-	}
-	
-	public abstract double getValue(double z);
-	
-	public abstract double getInitialValue();
-		
 }

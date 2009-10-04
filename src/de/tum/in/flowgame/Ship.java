@@ -19,8 +19,7 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.behavior.ShipNavigationBehavior;
-import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
+import de.tum.in.flowgame.behavior.KeyShipBehavior;
 import de.tum.in.flowgame.model.Collision.Item;
 
 public class Ship extends TransformGroup implements GameListener {
@@ -28,19 +27,18 @@ public class Ship extends TransformGroup implements GameListener {
 	public static final float INITIAL_SHIP_PLACEMENT_X = 0;
 	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
 	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
-	private final ShipNavigationBehavior shipNavigationBehavior;
-	
+	private final KeyShipBehavior keyShipBehavior;
+
 	private final Transform3D staticTransforms;
 
 	private Shape3D shape1;
-//	private Texture tex1;
+	private Texture tex1;
 	private Shape3D shape2;
 	private Texture tex2;
 
 	private Timer flashTimer;
-	private SpeedChangeBehavior speedChange;
 
-	public Ship(final GameLogic gameLogic, TransformGroup viewTG)
+	public Ship(final GameLogic logic, TransformGroup viewTG)
 			throws IOException {
 		super();
 
@@ -69,22 +67,18 @@ public class Ship extends TransformGroup implements GameListener {
 		// Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
 		// box.setCollidable(false);
 		rotationGroup.addChild(ship);
-//		System.out.println("Ship " + ship.getBounds());
+		System.out.println("Ship " + ship.getBounds());
 
-		// KeyShipEllipseBehavior shipNavigationBehavior = new
+		// KeyShipEllipseBehavior keyShipBehavior = new
 		// KeyShipEllipseBehavior(moveGroup, rotationGroup);
-		// ship.addChild(shipNavigationBehavior);
-		// shipNavigationBehavior.setSchedulingBounds(WORLD_BOUNDS);
+		// ship.addChild(keyShipBehavior);
+		// keyShipBehavior.setSchedulingBounds(WORLD_BOUNDS);
 
 		// Alternative KeyBehavior
-		shipNavigationBehavior = new ShipNavigationBehavior(moveGroup, viewTG, gameLogic);
-		gameLogic.addListener(shipNavigationBehavior);
-		ship.addChild(shipNavigationBehavior);
-		shipNavigationBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		
-		speedChange = new SpeedChangeBehavior(shipNavigationBehavior, gameLogic);
-		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		addChild(speedChange);
+		keyShipBehavior = new KeyShipBehavior(moveGroup, viewTG, logic);
+		logic.addListener(keyShipBehavior);
+		ship.addChild(keyShipBehavior);
+		keyShipBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 
 		staticTransforms = new Transform3D();
 
@@ -153,8 +147,8 @@ public class Ship extends TransformGroup implements GameListener {
 		return rotateShip;
 	}
 
-	public ShipNavigationBehavior getControls() {
-		return shipNavigationBehavior;
+	public KeyShipBehavior getControls() {
+		return keyShipBehavior;
 	}
 
 	@Override
@@ -171,7 +165,7 @@ public class Ship extends TransformGroup implements GameListener {
 		shape2.getAppearance().setTexture(null);
 		shape2.getAppearance().setMaterial(mat);
 
-		flashTimer.schedule(new FlashTimerTask(), 150);
+		flashTimer.schedule(new FlashTimer(), 150);
 	}
 
 	@Override
@@ -189,11 +183,13 @@ public class Ship extends TransformGroup implements GameListener {
 	@Override
 	public void gameStarted(GameLogic game) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
-		shipNavigationBehavior.reset();
+		// TODO Auto-generated method stub
+
 	}
 	
 	@Override
@@ -201,9 +197,9 @@ public class Ship extends TransformGroup implements GameListener {
 		// empty		
 	}
 
-	private class FlashTimerTask extends TimerTask {
+	private class FlashTimer extends TimerTask {
 
-		public FlashTimerTask() {
+		public FlashTimer() {
 		}
 
 		@Override
@@ -211,4 +207,5 @@ public class Ship extends TransformGroup implements GameListener {
 			shape2.getAppearance().setTexture(tex2);
 		}
 	}
+
 }

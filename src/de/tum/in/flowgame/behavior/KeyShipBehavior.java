@@ -23,17 +23,16 @@ import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class ShipNavigationBehavior extends Behavior implements GameListener,
-		SpeedChange {
+public class KeyShipBehavior extends Behavior implements GameListener {
 
 	private float acceleration = 30f;
 	private float maxSpeed = 18f;
 	private final Point3d dp = new Point3d();
 	private Vector3d dv = new Vector3d();
-	private Vector3d pos = new Vector3d();
+	private final Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
 
-	private Vector3d mov = new Vector3d(0, 0, 0);
+	private final Vector3d mov = new Vector3d(0, 0, 0);
 	// private static final double MAX_FOLLOWING_DIST = 2;
 	private Vector3d a = new Vector3d();
 
@@ -66,7 +65,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 	private boolean normalSteering = false;
 
-	private static final char PAUSE_KEY = ' ';
+	private final char pauseKey = ' ';
 	private boolean pause;
 	private long pauseBegin;
 	private GameLogic gameLogic;
@@ -78,9 +77,8 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 	private long time;
 	private boolean firstPerson = false;
-	private double fwdSpeed;
 
-	public ShipNavigationBehavior(final TransformGroup translationGroup,
+	public KeyShipBehavior(final TransformGroup translationGroup,
 			TransformGroup viewTG, GameLogic gameLogic) {
 
 		this.gameLogic = gameLogic;
@@ -171,7 +169,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
-			case PAUSE_KEY:
+			case pauseKey:
 				if (pause) {
 					gameLogic.unpause();
 					// System.out.println("resume");
@@ -238,7 +236,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		viewTG.getTransform(vpTrans);
 		vpTrans.get(vpPos);
 
-		double deltaTime = getDeltaTime();
+		double deltaTime = (double) getDeltaTime();
 		deltaTime *= 0.001;
 
 		a.x = a.y = a.z = 0;
@@ -317,7 +315,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		// System.out.println("DistUp: " + distToRadiusUp);
 		// System.out.println("DistDown: " + distToRadiusDown);
 
-		mov.z = fwdSpeed;
 		/* Integration of velocity to distance */
 		dp.scale(deltaTime, mov);
 
@@ -384,8 +381,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		}
 
 		vpTrans.set(vpPos);
-		
-//		System.out.println(vpPos);
 
 		viewTG.setTransform(vpTrans);
 
@@ -420,17 +415,18 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		return vec;
 	}
 
-	public void setNormalSteering(final boolean normal) {
+	public void setNormalSteering (final boolean normal){
 		this.normalSteering = normal;
 	}
-
-	public boolean getNormalSteering() {
+	
+	public boolean getNormalSteering (){
 		return this.normalSteering;
 	}
-
+	
 	@Override
 	public void collided(GameLogic logic, Item item) {
-		// empty
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -449,14 +445,12 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 	public void gameStarted(GameLogic game) {
 		trans.setIdentity();
 		translationGroup.setTransform(trans);
-		a = new Vector3d();
-		mov = new Vector3d();
-		pos = new Vector3d();
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
-		// empty
+		// TODO Auto-generated method stub
+
 	}
 
 	public float getAcceleration() {
@@ -479,19 +473,8 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 
 	@Override
 	public void sessionFinished(GameLogic game) {
-		// empty
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void setFwdSpeed(final double fwdSpeed) {
-		this.fwdSpeed = fwdSpeed;
-	}
-
-	@Override
-	public double getZCoordinate() {
-		return getCoords().getZ();
-	}
-
-	public void reset(){
-		this.pos = new Vector3d();
-	}
 }

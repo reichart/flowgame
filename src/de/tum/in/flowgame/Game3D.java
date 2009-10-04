@@ -30,7 +30,7 @@ import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
 import de.tum.in.flowgame.behavior.CollisionBehavior;
-import de.tum.in.flowgame.behavior.CreateNewCollidablesBehavior;
+import de.tum.in.flowgame.behavior.CreateCollidablesBehavior;
 import de.tum.in.flowgame.ui.GameOverlay;
 
 public class Game3D extends Canvas3D {
@@ -40,11 +40,9 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
-	private final GameLogic gameLogic;
+	private final GameLogic logic;
 	private final GameOverlay overlay;
-	private final BranchGroup collidables;
 	
-	private Tunnel tunnel;
 	private Ship ship;
 	
 	private final Switch switsch;
@@ -56,41 +54,35 @@ public class Game3D extends Canvas3D {
 	public Game3D(final GameLogic logic) throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		this.gameLogic = logic;
-		this.gameLogic.addListener(new DefaultGameListener() {
+		this.logic = logic;
+		this.logic.addListener(new DefaultGameListener() {
 
 			@Override
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
 				switsch.setWhichChild(Switch.CHILD_ALL);
-				tunnel = new Tunnel(gameLogic);
-				collidables.addChild(tunnel);
 			}
 			
 			@Override
 			public void gameStopped(final GameLogic game) {
 				System.out.println("Game3D.gameStopped()");
 				switsch.setWhichChild(Switch.CHILD_NONE);
-				tunnel.detach();
 			}
 		});
 
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
-
-		final BranchGroup scene = new BranchGroup();
-		scene.addChild(createScene(logic));
 		
 		// allow switching the game contents on/off at runtime
 		this.switsch = new Switch();
 		switsch.setCapability(Switch.ALLOW_SWITCH_READ);
 		switsch.setCapability(Switch.ALLOW_SWITCH_WRITE);
+		switsch.addChild(createCollidables(logic, viewTG));
 		
-		this.collidables = createCollidables(logic, viewTG);
-		switsch.addChild(this.collidables);		
-		
+		final BranchGroup scene = new BranchGroup();
+		scene.addChild(createScene(logic));
 		scene.addChild(switsch);
-		
+
 		this.overlay = new GameOverlay(logic, this);
 		this.addComponentListener(overlay);
 		
@@ -125,21 +117,22 @@ public class Game3D extends Canvas3D {
 		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
 		collidables.setCapability(Group.ALLOW_CHILDREN_WRITE);
 
+		final CreateCollidablesBehavior ccb = new CreateCollidablesBehavior(collidables, logic);
+		ccb.setSchedulingBounds(WORLD_BOUNDS);
+		logic.addListener(ccb);
+
 		final Ship ship = new Ship(logic, viewTG);
 		this.ship = ship;
-		this.gameLogic.addListener(this.ship);
+		this.logic.addListener(this.ship);
 		collidables.addChild(ship);
-		
-		final CreateCollidables cc = new CreateCollidables(collidables, logic);
-		final CreateNewCollidablesBehavior cncb = new CreateNewCollidablesBehavior(cc, ship);
-		cncb.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		logic.addListener(cc);
-		
-		collidables.addChild(cncb);
+		collidables.addChild(ccb);
 		
 		final CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		collidables.addChild(collisionBehavior);
+		
+		collidables.addChild(new Tunnel(logic));
+		
 		return collidables;
 	}
 

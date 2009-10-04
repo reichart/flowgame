@@ -10,23 +10,18 @@ import de.tum.in.flowgame.model.Function;
 public class LinearFunction extends Function implements Serializable{
 	Double slope;
 	
-	public LinearFunction(){
-		//empty
+	private LinearFunction() {
+		// empty
 	}
 	
 	public LinearFunction(Double initialValue, Double slope) {
-		super(initialValue);
+		this.initialValue = initialValue;
 		this.slope = slope;
 	}
 
 	@Override
-	public double getValue(double z) {
-		return slope * z + initialValue;
-	}
-
-	@Override
-	public double getInitialValue() {
-		return initialValue;
+	public double getValue(Long time) {
+		return slope * time + initialValue;
 	}
 	
 }

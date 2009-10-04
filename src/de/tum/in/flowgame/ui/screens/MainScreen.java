@@ -2,7 +2,9 @@ package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -13,11 +15,26 @@ import de.tum.in.flowgame.ui.SVGSprite;
 
 public class MainScreen extends MenuScreen {
 
-	private final JButton play = goTo("Play", QuestionnaireScreen.class);
+	private final JButton play = new JButton(new AbstractAction("Play") {
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			menu.show(QuestionnaireScreen.class);
+		}
+	});
 
-	private final JButton highscores = goTo("Highscores", HighscoresScreen.class);
+	private final JButton highscores = new JButton(new AbstractAction("Highscores") {
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			menu.show(HighscoresScreen.class);
+		}
+	});
 
-	private final JButton settings = goTo("Settings", SettingsScreen.class);
+	private final JButton settings = new JButton(new AbstractAction("Settings") {
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			menu.show(SettingsScreen.class);
+		}
+	});
 
 	private final JLabel title;
 	

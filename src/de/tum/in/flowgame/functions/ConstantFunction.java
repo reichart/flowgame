@@ -7,24 +7,19 @@ import javax.persistence.Entity;
 import de.tum.in.flowgame.model.Function;
 
 @Entity
-public class ConstantFunction extends Function implements Serializable{
-
-	public ConstantFunction(){
+public class ConstantFunction extends Function implements Serializable {
+	
+	private ConstantFunction() {
 		//empty
 	}
 	
 	public ConstantFunction(double initialValue) {
-		super(initialValue);
+		this.initialValue = initialValue;
 	}
 
 	@Override
-	public double getInitialValue() {
+	public double getValue(Long time) {
 		return initialValue;
 	}
-
-	@Override
-	public double getValue(double z) {
-		return initialValue;
-	}
-
+	
 }

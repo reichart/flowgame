@@ -3,7 +3,6 @@ package de.tum.in.flowgame;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingBox;
-import javax.media.j3d.BranchGroup;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
@@ -14,26 +13,22 @@ import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Primitive;
 
+import de.tum.in.flowgame.behavior.ForwardNavigatorBehavior;
+import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.behavior.TunnelPartMoveBehavior;
 import de.tum.in.flowgame.util.AppearanceBuilder;
 import de.tum.in.flowgame.util.AppearanceBuilder.TextureMode;
 import de.tum.in.flowgame.util.AppearanceBuilder.Transparency;
 
-public class Tunnel extends BranchGroup{
+public class Tunnel extends TransformGroup {
 
 	public static final float TUNNEL_LENGTH = 200.0f;
 	public static final float TUNNEL_RADIUS = 8.0f;
 	public static final int TUNNEL_PARTS = 3;
 	
-//	private final ForwardNavigatorBehavior fwdNav;
-	private final GameLogic gameLogic;
-//	private final SpeedChangeBehavior speedChange;
+	private final ForwardNavigatorBehavior fwdNav; 
 
-	public Tunnel(final GameLogic gameLogic) {
-		
-		this.setCapability(BranchGroup.ALLOW_DETACH);
-		this.gameLogic = gameLogic;
-		
+	public Tunnel(final GameLogic logic) {
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 
@@ -82,16 +77,12 @@ public class Tunnel extends BranchGroup{
 			tunnelTranslationGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 			tunnelTranslationGroup.addChild(layTunnel);
 			
-//			final Transform3D partTrans = new Transform3D();
-//			partTrans.set(new Vector3f(0.0f, 0.0f, -(TUNNEL_LENGTH * i)));
-//			final Transform3D part = new Transform3D();
-//			tunnelTranslationGroup.getTransform(part);
-//			part.mul(partTrans);
-//			tunnelTranslationGroup.setTransform(part);
-			final Vector3f part = new Vector3f(0.0f, 0.0f, -(TUNNEL_LENGTH * i));
-			final Transform3D t1 = new Transform3D();
-			t1.set(part);
-			tunnelTranslationGroup.setTransform(t1);
+			final Transform3D partTrans = new Transform3D();
+			partTrans.set(new Vector3f(0.0f, 0.0f, -(TUNNEL_LENGTH * i)));
+			final Transform3D part = new Transform3D();
+			tunnelTranslationGroup.getTransform(part);
+			part.mul(partTrans);
+			tunnelTranslationGroup.setTransform(part);
 			final TunnelPartMoveBehavior reUseBevahior = new TunnelPartMoveBehavior(tunnelShape, tunnelTranslationGroup,
 					TUNNEL_LENGTH, TUNNEL_PARTS);
 			reUseBevahior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
@@ -99,15 +90,15 @@ public class Tunnel extends BranchGroup{
 			
 			addChild(tunnelTranslationGroup);
 		}
-//		fwdNav = new ForwardNavigatorBehavior(this, 100);
-//		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-//		gameLogic.addListener(fwdNav);
-//		addChild(fwdNav);
+		fwdNav = new ForwardNavigatorBehavior(this, 100);
+		fwdNav.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		logic.addListener(fwdNav);
 		
-//		speedChange = new SpeedChangeBehavior(fwdNav, gameLogic);
-//		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-//		addChild(speedChange);
+		final SpeedChangeBehavior speedChange = new SpeedChangeBehavior(fwdNav);
+		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		addChild(speedChange);
 		
+		addChild(fwdNav);
 	}
 
 }

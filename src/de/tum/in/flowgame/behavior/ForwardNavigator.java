@@ -5,8 +5,6 @@ import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.Ship;
-
 /**
  * This is the ForwardNavigator class. It computes a new transformation in
  * z-axis direction.
@@ -66,10 +64,6 @@ public class ForwardNavigator {
 		
 	}
 
-	public double getZCoordinate(){
-		return vpPos.z + Ship.INITIAL_SHIP_PLACEMENT_Z;
-	}
-	
 	private long getDeltaTime() {
 		final long newTime = System.currentTimeMillis();
 		final long deltaTime = newTime - time;
