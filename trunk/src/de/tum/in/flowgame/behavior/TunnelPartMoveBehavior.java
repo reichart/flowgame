@@ -11,11 +11,6 @@ import javax.media.j3d.WakeupOnViewPlatformExit;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.GameListener;
-import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.model.Collision.Item;
-
-
 public class TunnelPartMoveBehavior extends Behavior{
 
 	private final WakeupCriterion wakeEvent;
