@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 public class ScenarioRound extends AbstractEntity implements Serializable {
 	Integer baselineModifier;
 	Long expectedPlaytime;
-	DifficultyFunction difficutyFunction;
+	DifficultyFunction difficultyFunction;
 	Questionnaire questionnaire;
 
 	public Integer getBaselineModifier() {
@@ -27,12 +27,12 @@ public class ScenarioRound extends AbstractEntity implements Serializable {
 		this.expectedPlaytime = expectedPlaytime;
 	}
 
-	public DifficultyFunction getDifficutyFunction() {
-		return difficutyFunction;
+	public DifficultyFunction getDifficultyFunction() {
+		return difficultyFunction;
 	}
 
-	public void setDifficutyFunction(DifficultyFunction difficutyFunction) {
-		this.difficutyFunction = difficutyFunction;
+	public void setDifficultyFunction(DifficultyFunction difficultyFunction) {
+		this.difficultyFunction = difficultyFunction;
 	}
 
 	public Questionnaire getQuestionnaire() {

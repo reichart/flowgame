@@ -329,8 +329,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return actTime - startTimeWithoutPause;
 	}
 	
-	public DifficultyFunction getDifficultyFunction(){
-		return gameSession.getScenarioSession().getCurrentRound().getDifficutyFunction();
+	public DifficultyFunction getDifficultyFunction() {
+		return getCurrentScenarioRound().getDifficultyFunction();
 	}
-
 }
