@@ -138,7 +138,7 @@ public class CreateCollidables implements GameListener {
 
 	@Override
 	public void gameStarted(GameLogic game) {
-		difficultyFunction = gameLogic.getCurrentScenarioRound().getDifficutyFunction();
+		difficultyFunction = gameLogic.getCurrentScenarioRound().getDifficultyFunction();
 		startTime = System.currentTimeMillis();
 	}
 
