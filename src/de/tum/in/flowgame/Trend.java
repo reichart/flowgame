@@ -52,12 +52,19 @@ public class Trend {
 
 	private int calculateChange(int range, boolean collision) {
 		if (items.size() > range) {
-			if ((items.get(items.size() - range - 1) == false) && collision) return 1;
-			if ((items.get(items.size() - range - 1) == true) && collision) return 0;
-			if ((items.get(items.size() - range - 1) == false) && !collision) return 0;
-			if ((items.get(items.size() - range - 1) == true) && !collision) return -1;
+
+			int value = 0;
+			if (collision) {
+				value++;
+			}
+			if (items.get(items.size() - range - 1)) {
+				value--;
+			}
+			return value;
 		} else {
-			if (collision) return 1;
+			if (collision) {
+				return 1;
+			}
 		}
 		return 0;
 	}
