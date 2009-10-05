@@ -1,7 +1,6 @@
 package de.tum.in.flowgame.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -12,7 +11,6 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.basic.BasicSliderUI;
 
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Question;
