@@ -15,6 +15,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public final static int MAX_ASTEROIDS = 10;
 	public final static int MAX_FUEL = 10;
+	private static final int pointsForFuel = 10;
+	private static final int pointsForAsteroid = 5;
 
 	private GameSession gameSession;
 	private Person player;
@@ -23,6 +25,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private volatile int fuel;
 	private volatile int asteroids;
+	
+	private volatile int fuelInRow;
+	private volatile int asteroidsInRow;
 
 	private volatile int fuelcansCollected;
 	private volatile int asteroidsCollected;
@@ -46,9 +51,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private long startTime;
 	private long startTimeWithoutPause;
 	private long pauseStartTime;
-
-	// private int points = 0;
-
+	
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
@@ -67,6 +70,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 				fuel++;
 			}
 			fuelcansCollected++;
+			fuelInRow++;
+			asteroidsInRow = 0;
+			
 			Sounds.FUELCAN.play();
 			break;
 		case ASTEROID:
@@ -74,10 +80,16 @@ public class GameLogic implements GameLogicMBean, Runnable {
 				asteroids++;
 			}
 			asteroidsCollected++;
+			asteroidsInRow++;
+			fuelInRow = 0;
+			
 			Sounds.ASTEROID.play();
 			break;
 		}
-
+		
+		double rating = gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
+		long increase = (long) (rating * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
+		gameRound.increaseScore(increase);
 	}
 
 	public void seen(final Item item, boolean collision) {
@@ -210,6 +222,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		asteroids = 0;
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
+		
+		fuelInRow = 0;
+		asteroidsInRow = 0;
+		
 		paused = false;
 		startTime = System.currentTimeMillis();
 		startTimeWithoutPause = startTime;
@@ -328,8 +344,17 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		long actTime = System.currentTimeMillis();
 		return actTime - startTimeWithoutPause;
 	}
+
+	public long getScore() {
+		return gameRound.getScore();
+	}
+	
+	public double getRating() {
+		return gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
+	}
 	
 	public DifficultyFunction getDifficultyFunction() {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
+	
 }
