@@ -16,12 +16,20 @@ public class ScenarioSession extends AbstractEntity implements Serializable{
 	List<ScenarioRound> rounds;
 	String name;
 	
+	public enum Type {INDIVIDUAL, SOCIAL, BASELINE};
+	Type type;
+	
 	@Transient
 	int roundsPlayed;
 	
 	public ScenarioSession() {
 		rounds = new ArrayList<ScenarioRound>();
 		roundsPlayed = 0;
+	}
+	
+	public ScenarioSession(Type type) {
+		this();
+		this.type = type;
 	}
 
 	public List<ScenarioRound> getRounds() {
@@ -44,6 +52,10 @@ public class ScenarioSession extends AbstractEntity implements Serializable{
 			round = rounds.get(roundsPlayed);
 		}
 		return round;
+	}
+
+	public Type getType() {
+		return type;
 	}
 	
 }

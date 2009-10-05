@@ -100,6 +100,14 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final String slidingRatios = "SlidingWindow: " + fmt.format(logic.getSlidingFuelRatio()) + " fuel, " + fmt.format(logic.getSlidingAsteroidRatio()) + " astr.";
 			final int slidingRatiosW = fm.stringWidth(slidingRatios);
 			g.drawString(slidingRatios, width - slidingRatiosW -20, stringH + 70);
+
+			String score = "Score " + logic.getScore();
+			final int scoreW = fm.stringWidth(score);
+			g.drawString(score, width - scoreW - 20, stringH + 120);
+			
+			String rating = "Rating " + logic.getRating();
+			final int ratingW = fm.stringWidth(rating);
+			g.drawString(rating, width - ratingW - 20, stringH + 170);
 			
 			fuel.setValue(logic.getFuel());
 			damage.setValue(logic.getAsteroids());

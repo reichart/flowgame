@@ -27,6 +27,7 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 		this.difficultyByTime = new ArrayList<TimeDifficultyPair>();
 		this.collisions = new ArrayList<Collision>();
 		this.answers = new ArrayList<Answer>();
+		score = 0L;
 	}
 
 	public Long getActualPlaytime() {
@@ -81,8 +82,11 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 		return score;
 	}
 
-	public void setScore(final Long score) {
-		this.score = score;
+	public void increaseScore(final Long points) {
+		this.score += points;
+		if (score < 0) {
+			score = 0L;
+		}
 	}
 
 	@Override
