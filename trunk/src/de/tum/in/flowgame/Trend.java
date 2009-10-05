@@ -18,6 +18,7 @@ public class Trend {
 	private List<Boolean> items = new LinkedList<Boolean>();
 
 	public Trend() {
+		// empty
 	}
 
 	public Trend(int shortRange, int midRange, int longRange) {
