@@ -50,8 +50,8 @@ public class Game3D extends Canvas3D {
 	private final Switch switsch;
 
 	// part of workaround for Java3D bug #501
-	private final Geometry glResetGeom;
-	private final Transform3D glResetTrans; 
+	private final transient Geometry glResetGeom;
+	private final transient Transform3D glResetTrans; 
 	
 	public Game3D(final GameLogic logic) throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
@@ -63,7 +63,7 @@ public class Game3D extends Canvas3D {
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
 				switsch.setWhichChild(Switch.CHILD_ALL);
-				tunnel = new Tunnel(gameLogic);
+				tunnel = new Tunnel();
 				collidables.addChild(tunnel);
 			}
 			
