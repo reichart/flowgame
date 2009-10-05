@@ -18,6 +18,7 @@ import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.ui.screens.EmptyScreen;
 import de.tum.in.flowgame.ui.screens.GameOverScreen;
 import de.tum.in.flowgame.ui.screens.HighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
@@ -50,6 +51,7 @@ public class GameMenu implements Sprite, GameListener {
 		screens.setDoubleBuffered(false); // hides white background
 		screens.setOpaque(false);
 
+		add(new EmptyScreen(this));
 		add(new MainScreen(this));
 		add(new QuestionnaireScreen(this));
 		add(new HighscoresScreen(this));
@@ -105,7 +107,7 @@ public class GameMenu implements Sprite, GameListener {
 
 	@Override
 	public void gameStarted(final GameLogic game) {
-		// empty
+		show(EmptyScreen.class);
 	}
 
 	@Override
