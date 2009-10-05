@@ -14,10 +14,9 @@ public class SpeedChangeBehavior extends Behavior {
 	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
 	private final SpeedChange forwardNavigator;
 	private double speed;
-	private GameLogic gameLogic;
+	private final GameLogic gameLogic;
 
-	public SpeedChangeBehavior(final SpeedChange forwardNavigator,
-			final GameLogic gameLogic) {
+	public SpeedChangeBehavior(final SpeedChange forwardNavigator, final GameLogic gameLogic) {
 		this.forwardNavigator = forwardNavigator;
 		this.gameLogic = gameLogic;
 	}
@@ -30,13 +29,9 @@ public class SpeedChangeBehavior extends Behavior {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
-		if (gameLogic.getCurrentScenarioRound().getDifficutyFunction()
-				.getSpeed() == null)
-			speed = 0;
-		else
-			speed = - gameLogic.getCurrentScenarioRound().getDifficutyFunction().getSpeed().getValue(gameLogic.getElapsedTime());
-//		System.out.println(speed);
-		
+		final Function fun = gameLogic.getDifficultyFunction().getSpeed();
+		speed = (fun == null) ? 0 : -fun.getValue(gameLogic.getElapsedTime());
+
 		forwardNavigator.setFwdSpeed(speed);
 		wakeupOn(newFrame);
 	}
