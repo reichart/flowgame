@@ -66,6 +66,8 @@ public class GameMenu implements Sprite, GameListener {
 		panel.add(screens, BorderLayout.CENTER);
 		
 		logic.addListener(this);
+		
+		show(MainScreen.class);
 	}
 
 	@Override
