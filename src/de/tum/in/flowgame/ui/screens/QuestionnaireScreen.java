@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.GameMenu;
@@ -14,6 +15,7 @@ public class QuestionnaireScreen extends MenuScreen {
 
 	private final QuestionnairePanel qpanel;
 	private Questionnaire q;
+	private final JScrollPane qscrollpane;
 
 	private final JButton play = new JButton(new AbstractAction("Play!") {
 
@@ -27,12 +29,13 @@ public class QuestionnaireScreen extends MenuScreen {
 	public QuestionnaireScreen(final GameMenu menu) {
 		super(menu);
 		this.qpanel = new QuestionnairePanel();
+		this.qscrollpane = new JScrollPane(this.qpanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		update();
 	}
 
 	@Override
 	public Container getContents() {
-		return centered(title(q.getName()), qpanel, play);
+		return centered(title(q.getName()), qscrollpane, play);
 	}
 
 	@Override
