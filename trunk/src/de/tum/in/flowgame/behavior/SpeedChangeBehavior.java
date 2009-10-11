@@ -30,8 +30,15 @@ public class SpeedChangeBehavior extends Behavior {
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
 		final Function fun = gameLogic.getDifficultyFunction().getSpeed();
-		speed = (fun == null) ? 0 : -fun.getValue(gameLogic.getElapsedTime());
-
+		if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
+			speed = -fun.getValue(gameLogic.getPosition());
+			if (speed > -30D) {
+				speed = -30D;
+			}
+		} else {
+			speed = (fun == null) ? 0 : -fun.getValue(gameLogic.getElapsedTime());
+		}
+		
 		forwardNavigator.setFwdSpeed(speed);
 		wakeupOn(newFrame);
 	}

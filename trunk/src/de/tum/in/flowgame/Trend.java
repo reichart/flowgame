@@ -52,7 +52,6 @@ public class Trend {
 
 	private int calculateChange(int range, boolean collision) {
 		if (items.size() > range) {
-
 			int value = 0;
 			if (collision) {
 				value++;

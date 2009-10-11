@@ -97,10 +97,10 @@ public class GameMenu implements Sprite, GameListener {
 		show(PauseScreen.class);
 	}
 	
-	@Override
-	public void sessionFinished(GameLogic game) {
-		show(GameOverScreen.class);
-	}
+//	@Override
+//	public void sessionFinished(GameLogic game) {
+//		show(GameOverScreen.class);
+//	}
 
 	@Override
 	public void gameResumed(final GameLogic game) {

@@ -81,20 +81,30 @@ public class CreateCollidables implements GameListener {
 	private Collidable createCollidable(double zPos) {
 		Collidable c;
 		
-		double ratioAsteroids = difficultyFunction.getRatio().getValue(getElapsedTime());
-		long interval = (long) difficultyFunction.getInterval().getValue(getElapsedTime());
-//		System.out.println(interval);
+		long interval = 1000;
+		
+		double value = 0;
+		
+		if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
+			//TODO: value in Abhängigkeit von Leistung des Spielers	
+		} else {
+			value = getElapsedTime();
+		}
+		
+		double ratioAsteroids = difficultyFunction.getRatio().getValue(value);
+		interval = (long) difficultyFunction.getInterval().getValue(value);
+		
 		this.elapsedTime = new WakeupOnElapsedTime(interval);
 
 		if (ratioAsteroids  < Math.random()) {
 			double testValue = Math.random();
 			float scale;
-			if (testValue > 0.66) scale = 3f;
-			else if (testValue < 0.66 && testValue >= 0.33) scale = 2f;
-			else scale = 1f;
+			if (testValue > 0.66) scale = 5f;
+			else if (testValue < 0.66 && testValue >= 0.33) scale = 4f;
+			else scale = 3f;
 			c = new Collidable(asteroid, 0 , scale, zPos, gameLogic);
 		} else {
-			c = new Collidable(fuelcan, 0, 1f, zPos, gameLogic);
+			c = new Collidable(fuelcan, 0, 2f, zPos, gameLogic);
 		}
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_READ);
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_WRITE);
@@ -152,9 +162,9 @@ public class CreateCollidables implements GameListener {
 		addCollidable();
 	}
 
-	@Override
-	public void sessionFinished(GameLogic game) {
-		// empty
-		
-	}
+//	@Override
+//	public void sessionFinished(GameLogic game) {
+//		// empty
+//		
+//	}
 }

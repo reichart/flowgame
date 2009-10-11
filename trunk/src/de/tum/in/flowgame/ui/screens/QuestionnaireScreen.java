@@ -22,14 +22,20 @@ public class QuestionnaireScreen extends MenuScreen {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
 			qpanel.getAnswers(); // TODO put into GameRound
-			menu.getLogic().start();
+			if (menu.getLogic().getCurrentScenarioRound() != null) {
+				menu.getLogic().start();
+			} else {
+				menu.show(GameOverScreen.class);
+			}
 		}
 	});
 
 	public QuestionnaireScreen(final GameMenu menu) {
 		super(menu);
 		this.qpanel = new QuestionnairePanel();
-		this.qscrollpane = new JScrollPane(this.qpanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.qscrollpane = new JScrollPane(this.qpanel,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		update();
 	}
 

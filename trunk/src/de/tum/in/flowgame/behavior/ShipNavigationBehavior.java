@@ -477,10 +477,10 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		setPhysics(this.maxSpeed, this.acceleration);
 	}
 
-	@Override
-	public void sessionFinished(GameLogic game) {
-		// empty
-	}
+//	@Override
+//	public void sessionFinished(GameLogic game) {
+//		// empty
+//	}
 
 	public void setFwdSpeed(final double fwdSpeed) {
 		this.fwdSpeed = fwdSpeed;

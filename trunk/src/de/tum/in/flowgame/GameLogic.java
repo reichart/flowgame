@@ -25,7 +25,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private volatile int fuel;
 	private volatile int asteroids;
-
+	
 	private volatile int fuelInRow;
 	private volatile int asteroidsInRow;
 
@@ -40,18 +40,16 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private GameRound gameRound = new GameRound();
 
-	private boolean baseline = false;
-	// private Function baselineInterval;
-	// private Function baselineSpeed;
-	// private Function baselineRatio;
-
 	private Trend asteroidTrend;
 	private Trend fuelTrend;
 
 	private long startTime;
 	private long startTimeWithoutPause;
 	private long pauseStartTime;
-
+	
+	private double currentPosition;
+	private double previousTrend;
+	
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
@@ -72,7 +70,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			fuelcansCollected++;
 			fuelInRow++;
 			asteroidsInRow = 0;
-
+			
 			Sounds.FUELCAN.play();
 			break;
 		case ASTEROID:
@@ -82,7 +80,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			asteroidsCollected++;
 			asteroidsInRow++;
 			fuelInRow = 0;
-
+			
 			if (asteroids == MAX_ASTEROIDS) {
 				thread.interrupt();
 			}
@@ -90,14 +88,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			Sounds.ASTEROID.play();
 			break;
 		}
-
+		
 		double rating = gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
 		long increase = (long) (rating * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
 	}
 
 	public void seen(final Item item, boolean collision) {
-
 		switch (item) {
 		case FUELCAN:
 			fuelTrend.update(collision);
@@ -115,17 +112,17 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		System.out.println("GameLogic.run() starting");
 
 		fireGameStarted();
-
 		while (asteroids < MAX_ASTEROIDS && fuel > 0) {
 			try {
 				Thread.sleep(4000);
 			} catch (final InterruptedException ex) {
 				// ignore
 			}
-
+			
 			if (!paused) {
 				fuel--;
-
+				previousTrend = getTrendRating();
+				
 				if (fuel == 0) {
 					break;
 				}
@@ -138,12 +135,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		System.out.println("GameLogic.run() stopped");
 
-		ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
-		if (sessionRound == null) {
-			Client.uploadQuietly(gameSession);
-			gameSession = null;
-			fireSessionFinished();
-		}
+		init();
 	}
 
 	public int getFuel() {
@@ -193,14 +185,15 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			if (sessionRound == null) {
 				Client.uploadQuietly(gameSession);
 				gameSession = null;
-				fireSessionFinished();
+//				fireSessionFinished();
 			}
 		}
+		currentPosition = 0;
 	}
 
 	public void start() {
 		System.out.println("GameLogic.start()");
-
+		
 		this.fuelTrend = new Trend();
 		this.asteroidTrend = new Trend();
 		this.fuelcansCollected = 0;
@@ -223,10 +216,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		asteroids = 0;
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
-
+		
 		fuelInRow = 0;
 		asteroidsInRow = 0;
-
+		
 		paused = false;
 		startTime = System.currentTimeMillis();
 		startTimeWithoutPause = startTime;
@@ -279,13 +272,16 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 
-	public void fireSessionFinished() {
-		for (final GameListener listener : listeners) {
-			listener.sessionFinished(this);
-		}
-	}
+//	public void fireSessionFinished() {
+//		for (final GameListener listener : listeners) {
+//			listener.sessionFinished(this);
+//		}
+//	}
 
 	public ScenarioRound getCurrentScenarioRound() {
+		if (gameSession == null) {
+			return null;
+		}
 		return gameSession.getScenarioSession().getCurrentRound();
 	}
 
@@ -348,13 +344,29 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	public long getScore() {
 		return gameRound.getScore();
 	}
-
+	
 	public double getRating() {
 		return gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
 	}
-
+	
 	public DifficultyFunction getDifficultyFunction() {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
 
+	public double getTrendRating() {
+		double asteroidTrendRating = asteroidTrend.getShortRatio() + 3/4.0 * asteroidTrend.getMidRatio() + 1/4.0 * asteroidTrend.getLongRatio();
+		double fuelTrendRating = fuelTrend.getShortRatio() + 3/4.0 * fuelTrend.getMidRatio() + 1/4.0 * fuelTrend.getLongRatio();
+		return 2 * fuelTrendRating - asteroidTrendRating;
+	}
+	
+	public double getPosition() {
+		double trendRating = getTrendRating();
+		if (trendRating < previousTrend) {
+			currentPosition -= 1;
+		} else {
+			currentPosition += 1;
+		}
+		return currentPosition;
+	}
+	
 }
