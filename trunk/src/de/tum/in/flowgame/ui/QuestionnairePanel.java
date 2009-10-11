@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -83,7 +84,11 @@ public class QuestionnairePanel extends JPanel {
 		// boolean first = true;
 		// Create Labels with Questions and add sliders to them
 		for (final Question question : this.questionnaire.getQuestions()) {
-			questions.add(new JLabel(question.getText()));
+			JTextArea text = new JTextArea(question.getText());
+			text.setLineWrap(true);
+			text.setWrapStyleWord(true);
+			text.setForeground(Color.WHITE);
+			questions.add(text);
 			final JSlider slider = new JSlider(SwingConstants.HORIZONTAL);
 			// if (first) {
 			slider.setMinorTickSpacing(50);
@@ -107,6 +112,7 @@ public class QuestionnairePanel extends JPanel {
 		textArea.setEditable(false);
 		textArea.setEnabled(false);
 		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
 		textArea.setOpaque(false);
 		
 		final JPanel titlePanel = new JPanel(new BorderLayout());
