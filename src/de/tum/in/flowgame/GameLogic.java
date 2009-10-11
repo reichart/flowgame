@@ -84,7 +84,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			fuelInRow = 0;
 
 			if (asteroids == MAX_ASTEROIDS) {
-				System.err.println("interrtuping");
 				thread.interrupt();
 			}
 
