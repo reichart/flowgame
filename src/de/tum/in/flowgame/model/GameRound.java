@@ -125,8 +125,8 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 		game.removeListener(this);
 	}
 
-	@Override
-	public void sessionFinished(final GameLogic game) {
-		// empty
-	}
+//	@Override
+//	public void sessionFinished(final GameLogic game) {
+//		// empty
+//	}
 }

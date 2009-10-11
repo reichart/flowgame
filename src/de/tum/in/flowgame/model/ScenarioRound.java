@@ -10,6 +10,11 @@ public class ScenarioRound extends AbstractEntity implements Serializable {
 	Long expectedPlaytime;
 	DifficultyFunction difficultyFunction;
 	Questionnaire questionnaire;
+	Boolean baseline;
+	
+	public ScenarioRound() {
+		baseline = false;
+	}
 
 	public Integer getBaselineModifier() {
 		return baselineModifier;
@@ -42,5 +47,12 @@ public class ScenarioRound extends AbstractEntity implements Serializable {
 	public void setQuestionnaire(Questionnaire questionnaire) {
 		this.questionnaire = questionnaire;
 	}
+	
+	public Boolean isBaselineRound() {
+		return baseline;
+	}
 
+	public void setBaselineRound(Boolean baseline) {
+		this.baseline = baseline;
+	}
 }

@@ -32,10 +32,10 @@ public abstract class DefaultGameListener implements GameListener {
 		// TODO empty
 	}
 	
-	@Override
-	public void sessionFinished(GameLogic game) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void sessionFinished(GameLogic game) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }

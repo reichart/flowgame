@@ -16,6 +16,8 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
+import javax.vecmath.Matrix3d;
+import javax.vecmath.Matrix3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
@@ -64,8 +66,8 @@ public class Ship extends TransformGroup implements GameListener {
 
 		TransformGroup ship = loadShip();
 
-		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f,
-				-0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
+//		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f,
+//				-0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
 		// Box box = new Box(0.7f, 0.19f, 1.0f, new Appearance());
 		// box.setCollidable(false);
 		rotationGroup.addChild(ship);
@@ -126,14 +128,22 @@ public class Ship extends TransformGroup implements GameListener {
 
 		final Transform3D rotY = new Transform3D();
 		rotY.rotY(Math.toRadians(180));
-
+		
+		final Transform3D scale = new Transform3D();
+		scale.setScale(1.5f);
+		
 		rotX.mul(rotY);
+		rotX.mul(scale);
 
 		TransformGroup rotateShip = new TransformGroup();
 		rotateShip.setTransform(rotX);
 
 		final BranchGroup ship = Java3DUtils.loadScene("/res/SFighter.obj");
 		ship.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+		
+		ship.setCollisionBounds(new BoundingBox(new Point3d(-0.35f, -0.15f,
+				-0.5f), new Point3d(0.35f, 0.06f, 0.5f)));
+		
 		shape1 = (Shape3D) ship.getChild(0);
 		shape1.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
 		shape1.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
@@ -196,10 +206,10 @@ public class Ship extends TransformGroup implements GameListener {
 		shipNavigationBehavior.reset();
 	}
 	
-	@Override
-	public void sessionFinished(GameLogic game) {
-		// empty		
-	}
+//	@Override
+//	public void sessionFinished(GameLogic game) {
+//		// empty		
+//	}
 
 	private class FlashTimerTask extends TimerTask {
 

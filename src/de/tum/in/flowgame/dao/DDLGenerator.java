@@ -80,7 +80,7 @@ public class DDLGenerator {
 			Difficulty d = new Difficulty();
 
 			Function intervalFunction = new ConstantFunction(80.0);
-			Function ratioFunction = new ConstantFunction(0.6);
+			Function ratioFunction = new ConstantFunction(0.3);
 			LinearFunction speedFunction = new LinearFunction(30D,4.0d/600);
 
 			DifficultyFunction df = new DifficultyFunction();
@@ -93,6 +93,7 @@ public class DDLGenerator {
 			sr.setDifficultyFunction(df);
 			sr.setExpectedPlaytime(2000L);
 			sr.setQuestionnaire(qn);
+			sr.setBaselineRound(true);
 			
 			ScenarioRound sr2 = new ScenarioRound();
 			sr2.setBaselineModifier(5);

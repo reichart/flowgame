@@ -229,8 +229,8 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		this.drawFPS = drawFPS;
 	}
 
-	@Override
-	public void sessionFinished(GameLogic game) {
-		// empty		
-	}
+//	@Override
+//	public void sessionFinished(GameLogic game) {
+//		// empty		
+//	}
 }

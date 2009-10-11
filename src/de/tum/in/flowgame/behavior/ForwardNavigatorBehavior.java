@@ -86,11 +86,11 @@ public class ForwardNavigatorBehavior extends Behavior implements GameListener, 
 
 	}
 
-	@Override
-	public void sessionFinished(GameLogic game) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void sessionFinished(GameLogic game) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 	
 	public double getZCoordinate(){
 		return forwardNavigator.getZCoordinate();
