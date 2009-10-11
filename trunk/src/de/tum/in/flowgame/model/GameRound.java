@@ -22,12 +22,22 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 	List<Answer> answers;
 	private transient long startTime;
 	Long score;
+	Integer rank;
 
 	public GameRound() {
 		this.difficultyByTime = new ArrayList<TimeDifficultyPair>();
 		this.collisions = new ArrayList<Collision>();
 		this.answers = new ArrayList<Answer>();
 		score = 0L;
+		rank = 0;
+	}
+
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
 	}
 
 	public Long getActualPlaytime() {
