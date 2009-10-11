@@ -25,7 +25,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private volatile int fuel;
 	private volatile int asteroids;
-	
+
 	private volatile int fuelInRow;
 	private volatile int asteroidsInRow;
 
@@ -51,7 +51,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private long startTime;
 	private long startTimeWithoutPause;
 	private long pauseStartTime;
-	
+
 	public GameLogic(final Person player) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
@@ -72,7 +72,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			fuelcansCollected++;
 			fuelInRow++;
 			asteroidsInRow = 0;
-			
+
 			Sounds.FUELCAN.play();
 			break;
 		case ASTEROID:
@@ -82,11 +82,16 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			asteroidsCollected++;
 			asteroidsInRow++;
 			fuelInRow = 0;
-			
+
+			if (asteroids == MAX_ASTEROIDS) {
+				System.err.println("interrtuping");
+				thread.interrupt();
+			}
+
 			Sounds.ASTEROID.play();
 			break;
 		}
-		
+
 		double rating = gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
 		long increase = (long) (rating * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
@@ -134,8 +139,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		System.out.println("GameLogic.run() stopped");
 
-		ScenarioRound sessionRound = gameSession.getScenarioSession()
-				.getNextRound();
+		ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
 		if (sessionRound == null) {
 			Client.uploadQuietly(gameSession);
 			gameSession = null;
@@ -175,8 +179,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		try {
 			gameSession = new GameSession();
 			// download Scenario that should be played next
-			gameSession.setScenarioSession(Client
-					.downloadScenarioSession(player));
+			gameSession.setScenarioSession(Client.downloadScenarioSession(player));
 			gameSession.setPlayer(player);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,8 +190,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		if (gameSession == null) {
 			loadNewScenarioSession();
 		} else {
-			ScenarioRound sessionRound = gameSession.getScenarioSession()
-					.getNextRound();
+			ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
 			if (sessionRound == null) {
 				Client.uploadQuietly(gameSession);
 				gameSession = null;
@@ -199,7 +201,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public void start() {
 		System.out.println("GameLogic.start()");
-		
+
 		this.fuelTrend = new Trend();
 		this.asteroidTrend = new Trend();
 		this.fuelcansCollected = 0;
@@ -222,10 +224,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		asteroids = 0;
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
-		
+
 		fuelInRow = 0;
 		asteroidsInRow = 0;
-		
+
 		paused = false;
 		startTime = System.currentTimeMillis();
 		startTimeWithoutPause = startTime;
@@ -313,8 +315,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public float getTotalAsteroidRatio() {
-		return asteroidsSeen == 0 ? 0 : asteroidsCollected
-				/ (float) asteroidsSeen;
+		return asteroidsSeen == 0 ? 0 : asteroidsCollected / (float) asteroidsSeen;
 	}
 
 	// private GameRound dummyRoundForBaseline() {
@@ -348,13 +349,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	public long getScore() {
 		return gameRound.getScore();
 	}
-	
+
 	public double getRating() {
 		return gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
 	}
-	
+
 	public DifficultyFunction getDifficultyFunction() {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
-	
+
 }
