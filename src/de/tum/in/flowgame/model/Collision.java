@@ -18,6 +18,7 @@ public class Collision extends AbstractEntity {
 
 	private final Item object;
 
+	@SuppressWarnings("unused") // for JPA
 	private Collision() {
 		this.object = null;
 		this.time = new Date();
