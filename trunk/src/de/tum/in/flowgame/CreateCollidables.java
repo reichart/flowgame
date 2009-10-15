@@ -48,7 +48,6 @@ public class CreateCollidables implements GameListener {
 		this.asteroid = loadAsteroid();
 		this.fuelcan = loadFuelcan();
 		this.difficultyFunction = gameLogic.getDifficultyFunction();
-		addCollidable();
 	}
 
 	private SharedGroup loadFuelcan() throws IOException {
@@ -162,7 +161,6 @@ public class CreateCollidables implements GameListener {
 			collidables.get(i).detach();
 			collidables.remove(i);
 		}
-		addCollidable();
 	}
 
 //	@Override
