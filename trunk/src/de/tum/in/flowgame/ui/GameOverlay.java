@@ -126,6 +126,16 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	}
 
 	@Override
+	public void added(final GameLogic game) {
+		// empty
+	}
+	
+	@Override
+	public void removed(final GameLogic game) {
+		// empty
+	}
+	
+	@Override
 	public void gameStarted(final GameLogic game) {
 		drawHUD = true;
 		drawMenu = false;

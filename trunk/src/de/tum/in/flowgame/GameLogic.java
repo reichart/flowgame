@@ -151,10 +151,12 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public void addListener(final GameListener listener) {
 		this.listeners.add(listener);
+		listener.added(this);
 	}
 
 	public void removeListener(final GameListener listener) {
 		this.listeners.remove(listener);
+		listener.removed(this);
 	}
 
 	/**
