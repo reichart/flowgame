@@ -11,6 +11,16 @@
 
 	<package name="default" namespace="/" extends="struts-default">
 
+		<default-action-ref name="applet" />
+
+		<action name="applet">
+			<result>/WEB-INF/applet.jsp</result>
+		</action>
+
+		<action name="fbproxy" class="de.tum.in.flowgame.server.FacebookProxyAction">
+			<result>/WEB-INF/fbproxy.jsp</result>
+		</action>
+
 		<action name="upload" class="de.tum.in.flowgame.server.UploadAction">
 			<result type="stream">
 				<param name="contentType">application/octet-stream</param>
