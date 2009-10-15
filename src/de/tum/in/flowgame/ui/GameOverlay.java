@@ -104,7 +104,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				final int scoreW = fm.stringWidth(score);
 				g.drawString(score, width - scoreW - 20, stringH + 120);
 				
-				String rating = "Rating " + logic.getRating();
+				String rating = "Rating " + fmt.format(logic.getRating());
 				final int ratingW = fm.stringWidth(rating);
 				g.drawString(rating, width - ratingW - 20, stringH + 170);
 				
