@@ -12,11 +12,11 @@ import de.tum.in.flowgame.model.Function;
 public class SpeedChangeBehavior extends Behavior {
 
 	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
-	private final SpeedChange forwardNavigator;
+	private final ShipNavigationBehavior forwardNavigator;
 	private double speed;
 	private final GameLogic gameLogic;
 
-	public SpeedChangeBehavior(final SpeedChange forwardNavigator, final GameLogic gameLogic) {
+	public SpeedChangeBehavior(final ShipNavigationBehavior forwardNavigator, final GameLogic gameLogic) {
 		this.forwardNavigator = forwardNavigator;
 		this.gameLogic = gameLogic;
 	}
