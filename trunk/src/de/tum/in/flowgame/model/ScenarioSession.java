@@ -11,23 +11,26 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
-public class ScenarioSession extends AbstractEntity implements Serializable{
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+public class ScenarioSession extends AbstractEntity implements Serializable {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	List<ScenarioRound> rounds;
 	String name;
-	
-	public enum Type {INDIVIDUAL, SOCIAL, BASELINE};
+
+	public enum Type {
+		INDIVIDUAL, SOCIAL, BASELINE
+	}
+
 	Type type;
-	
+
 	@Transient
 	int roundsPlayed;
-	
+
 	public ScenarioSession() {
 		rounds = new ArrayList<ScenarioRound>();
 		roundsPlayed = 0;
 	}
-	
-	public ScenarioSession(Type type) {
+
+	public ScenarioSession(final Type type) {
 		this();
 		this.type = type;
 	}
@@ -35,7 +38,7 @@ public class ScenarioSession extends AbstractEntity implements Serializable{
 	public List<ScenarioRound> getRounds() {
 		return rounds;
 	}
-	
+
 	// returns next round and counts how many rounds have been played
 	public ScenarioRound getNextRound() {
 		ScenarioRound round = null;
@@ -45,7 +48,7 @@ public class ScenarioSession extends AbstractEntity implements Serializable{
 		}
 		return round;
 	}
-	
+
 	public ScenarioRound getCurrentRound() {
 		ScenarioRound round = null;
 		if (rounds.size() > roundsPlayed) {
@@ -57,5 +60,5 @@ public class ScenarioSession extends AbstractEntity implements Serializable{
 	public Type getType() {
 		return type;
 	}
-	
+
 }
