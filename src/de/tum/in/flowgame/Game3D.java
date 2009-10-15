@@ -40,7 +40,6 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
-	private final GameLogic gameLogic;
 	private final GameOverlay overlay;
 	private final BranchGroup collidables;
 	
@@ -51,13 +50,12 @@ public class Game3D extends Canvas3D {
 
 	// part of workaround for Java3D bug #501
 	private final transient Geometry glResetGeom;
-	private final transient Transform3D glResetTrans; 
-	
+	private final transient Transform3D glResetTrans;
+
 	public Game3D(final GameLogic logic) throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		this.gameLogic = logic;
-		this.gameLogic.addListener(new DefaultGameListener() {
+		logic.addListener(new DefaultGameListener() {
 
 			@Override
 			public void gameStarted(final GameLogic game) {
@@ -79,7 +77,7 @@ public class Game3D extends Canvas3D {
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
 
 		final BranchGroup scene = new BranchGroup();
-		scene.addChild(createScene(logic));
+		scene.addChild(createScene());
 		
 		// allow switching the game contents on/off at runtime
 		this.switsch = new Switch();
@@ -125,9 +123,8 @@ public class Game3D extends Canvas3D {
 		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
 		collidables.setCapability(Group.ALLOW_CHILDREN_WRITE);
 
-		final Ship ship = new Ship(logic, viewTG);
-		this.ship = ship;
-		this.gameLogic.addListener(this.ship);
+		ship = new Ship(logic, viewTG);
+		logic.addListener(ship);
 		collidables.addChild(ship);
 		
 		final CreateCollidables cc = new CreateCollidables(collidables, logic);
@@ -143,7 +140,7 @@ public class Game3D extends Canvas3D {
 		return collidables;
 	}
 
-	private static BranchGroup createScene(final GameLogic logic) {
+	private static BranchGroup createScene() {
 		final BranchGroup scene = new BranchGroup();
 
 		final Fog fog = new LinearFog(BLACK, 0, Tunnel.TUNNEL_LENGTH);
@@ -189,7 +186,8 @@ public class Game3D extends Canvas3D {
 		return new SimpleUniverse(vp, viewer);
 	}
 	
-	public Ship getShip(){
+	public Ship getShip() {
 		return this.ship;
 	}
+	
 }
