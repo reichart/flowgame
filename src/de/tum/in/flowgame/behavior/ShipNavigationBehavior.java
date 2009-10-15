@@ -23,8 +23,7 @@ import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class ShipNavigationBehavior extends Behavior implements GameListener,
-		SpeedChange {
+public class ShipNavigationBehavior extends Behavior implements GameListener {
 
 	private float acceleration = 30f;
 	private float maxSpeed = 18f;
@@ -34,7 +33,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 	private final Transform3D trans = new Transform3D();
 
 	private Vector3d mov = new Vector3d(0, 0, 0);
-	// private static final double MAX_FOLLOWING_DIST = 2;
 	private Vector3d a = new Vector3d();
 
 	private Vector3d leftAcc;
@@ -72,7 +70,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 	private GameLogic gameLogic;
 
 	public static final double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
-	// private double MOV_RADIUS = 300;
 
 	private long lastKeyEventTime;
 
@@ -487,16 +484,10 @@ public class ShipNavigationBehavior extends Behavior implements GameListener,
 		setPhysics(this.maxSpeed, this.acceleration);
 	}
 
-//	@Override
-//	public void sessionFinished(GameLogic game) {
-//		// empty
-//	}
-
 	public void setFwdSpeed(final double fwdSpeed) {
 		this.fwdSpeed = fwdSpeed;
 	}
 
-	@Override
 	public double getZCoordinate() {
 		return getCoords().getZ();
 	}
