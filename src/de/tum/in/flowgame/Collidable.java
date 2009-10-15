@@ -19,8 +19,7 @@ public class Collidable extends BranchGroup {
 //	private final ForwardNavigatorBehavior fwdNav;
 //	private final SpeedChangeBehavior speedChange;
 
-	public Collidable(final SharedGroup group, long speed, float scale, double zPos,
-			GameLogic gameLogic) {
+	public Collidable(final SharedGroup group, long speed, float scale, double zPos) {
 		this.setCapability(BranchGroup.ALLOW_DETACH);
 		this.zPos = zPos;
 
