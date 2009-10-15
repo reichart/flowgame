@@ -168,6 +168,16 @@ public class Ship extends TransformGroup implements GameListener {
 	}
 
 	@Override
+	public void added(final GameLogic game) {
+		// empty
+	}
+	
+	@Override
+	public void removed(final GameLogic game) {
+		// empty
+	}
+	
+	@Override
 	public void collided(GameLogic logic, Item item) {
 		Material mat = new Material();
 
