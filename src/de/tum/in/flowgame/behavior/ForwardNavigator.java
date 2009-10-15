@@ -46,7 +46,7 @@ public class ForwardNavigator {
 		// Extract the position, quaterion, and scale from the transform3D.
 		vpTrans.get(vpPos);
 
-		double deltaTime = (double) getDeltaTime();
+		double deltaTime = getDeltaTime();
 		deltaTime *= 0.001;
 		
 //		fwdSpeed = fwdSpeed + deltaTime;
