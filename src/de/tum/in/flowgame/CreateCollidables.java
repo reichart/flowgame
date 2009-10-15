@@ -116,17 +116,20 @@ public class CreateCollidables implements GameListener {
 		return c;
 	}
 	
-	public void addCollidable(){
-		if (collidables.size() > 0){
-		double interval = -difficultyFunction.getInterval().getValue(-getLastCollidable().getZPos());	
-		collidables.add(createCollidable(getLastCollidable().getZPos() + interval));
+	public void addCollidable() {
+		if (collidables.size() > 0) {
+			double interval = -difficultyFunction.getInterval().getValue(getLastCollidableZPos());
+			collidables.add(createCollidable(getLastCollidableZPos() + interval));
 		} else {
 			collidables.add(createCollidable(initialZPos));
 		}
 	}
 
-	public Collidable getLastCollidable (){
-		return collidables.get(collidables.size()-1);
+	public double getLastCollidableZPos() {
+		if (!collidables.isEmpty()) {
+			return collidables.get(collidables.size() - 1).getZPos();
+		}
+		return initialZPos;
 	}
 	
 	@Override
