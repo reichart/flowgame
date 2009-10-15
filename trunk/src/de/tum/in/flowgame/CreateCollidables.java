@@ -102,9 +102,9 @@ public class CreateCollidables implements GameListener {
 			if (testValue > 0.66) scale = 5f;
 			else if (testValue < 0.66 && testValue >= 0.33) scale = 4f;
 			else scale = 3f;
-			c = new Collidable(asteroid, 0 , scale, zPos, gameLogic);
+			c = new Collidable(asteroid, 0 , scale, zPos);
 		} else {
-			c = new Collidable(fuelcan, 0, 2f, zPos, gameLogic);
+			c = new Collidable(fuelcan, 0, 2f, zPos);
 		}
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_READ);
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_WRITE);
