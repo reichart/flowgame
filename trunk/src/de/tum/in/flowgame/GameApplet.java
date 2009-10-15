@@ -42,39 +42,25 @@ public class GameApplet extends Applet {
 		app.start();
 	}
 
-	@Override
-	public void init() {
-		System.out.println("GameApplet.init()");
-	}
-
-	@Override
-	public void destroy() {
-		System.out.println("GameApplet.destroy()");
-	}
-
 	public GameApplet() throws Exception {
-		System.out.println("GameApplet.GameApplet()");
-		setLayout(new BorderLayout());
-
 		//TODO: get id from facebook
-		String sid = JOptionPane.showInputDialog("Bitte id eingeben");
-		Long id = Long.decode(sid);
+		final String sid = JOptionPane.showInputDialog("Bitte id eingeben");
+		final Long id = Long.decode(sid);
 		
-		//download person information from server
-		Person player = Client.downloadPerson(id);
-	
-		//player did not exist, create new profile
+		final Client client = new Client("INSERT SERVER HERE");
+		
+		// download person information from server
+		Person player = client.downloadPerson(id);
 		if (player == null) {
-			//TODO: take information from facebook
 			player = new Person(id);
 			String name = JOptionPane.showInputDialog("Bitte Name eingeben");
 			player.setName(name);
-			Client.uploadQuietly(player);
+			client.uploadQuietly(player);
 		}
-		
 
-		GameLogic gameLogic = new GameLogic(player);
-		this.game = new Game3D(gameLogic);
+		this.game = new Game3D(new GameLogic(player, client));
+		
+		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, game);
 	}
 

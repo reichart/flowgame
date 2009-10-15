@@ -18,6 +18,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private static final int pointsForFuel = 10;
 	private static final int pointsForAsteroid = 5;
 
+	private final Client client;
+	
 	private GameSession gameSession;
 	private Person player;
 
@@ -50,9 +52,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private double currentPosition;
 	private double previousTrend;
 	
-	public GameLogic(final Person player) {
+	public GameLogic(final Person player, final Client client) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
+		this.client = client;
 		this.init();
 
 		Utils.export(this);
@@ -131,7 +134,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		fireGameStopped();
 
-		Client.uploadQuietly(gameSession);
+		client.uploadQuietly(gameSession);
 
 		System.out.println("GameLogic.run() stopped");
 
@@ -170,7 +173,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		try {
 			gameSession = new GameSession();
 			// download Scenario that should be played next
-			gameSession.setScenarioSession(Client.downloadScenarioSession(player));
+			gameSession.setScenarioSession(client.downloadScenarioSession(player));
 			gameSession.setPlayer(player);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -183,7 +186,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		} else {
 			ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
 			if (sessionRound == null) {
-				Client.uploadQuietly(gameSession);
+				client.uploadQuietly(gameSession);
 				gameSession = null;
 //				fireSessionFinished();
 			}

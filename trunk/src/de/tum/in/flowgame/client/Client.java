@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
@@ -22,15 +23,21 @@ public class Client {
 
 	private static final Log log = LogFactory.getLog(Client.class);
 
-	private static String BASE_URL = "http://localhost:8080/flowgame/";
+	private final String UPLOAD_URL;
+	private final String DOWNLOAD_PERSON_URL;
+	private final String DOWNLOAD_SCENARIOSESSION;
 
-	private static String UPLOAD_URL = BASE_URL + "upload.action";
-	private static String DOWNLOAD_PERSON_URL = BASE_URL + "personDownload.action";
-	private static String DOWNLOAD_SCENARIOSESSION = BASE_URL + "scenarioSessionDownload.action";
+	private final HttpClient client;
 
-	private final static HttpClient client = new HttpClient();
+	public Client(final String server) {
+		this.client = new HttpClient(new MultiThreadedHttpConnectionManager());
+		
+		this.UPLOAD_URL = server + "upload.action";
+		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
+		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
+	}
 
-	public static void uploadQuietly(final Object entity) {
+	public void uploadQuietly(final Object entity) {
 		try {
 			upload(entity);
 		} catch (final IOException ex) {
@@ -38,11 +45,11 @@ public class Client {
 		}
 	}
 
-	private static void upload(final Object entity) throws IOException {
+	private void upload(final Object entity) throws IOException {
 		execute(UPLOAD_URL, entity);
 	}
 
-	public static Person downloadPerson(final long id) throws IOException {
+	public Person downloadPerson(final long id) throws IOException {
 		try {
 			return (Person) execute(DOWNLOAD_PERSON_URL, id);
 		} catch (final Exception ex) {
@@ -51,7 +58,7 @@ public class Client {
 		}
 	}
 
-	public static ScenarioSession downloadScenarioSession(final Person person) throws IOException {
+	public ScenarioSession downloadScenarioSession(final Person person) throws IOException {
 		return (ScenarioSession) execute(DOWNLOAD_SCENARIOSESSION, person);
 	}
 
@@ -65,7 +72,7 @@ public class Client {
 	 * @return the Java object returned by the server
 	 * @throws IOException
 	 */
-	private static Object execute(final String url, final Object parameter) throws IOException {
+	private Object execute(final String url, final Object parameter) throws IOException {
 		final PostMethod post = new PostMethod(url);
 		try {
 			final PartSource source = new ByteArrayPartSource("data.ser", Utils.objectToBytes(parameter));
