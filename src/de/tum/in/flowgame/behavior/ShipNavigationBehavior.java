@@ -77,11 +77,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 	private boolean firstPerson = false;
 	private double fwdSpeed;
 
-	public ShipNavigationBehavior(final TransformGroup translationGroup,
-			TransformGroup viewTG, GameLogic gameLogic) {
-
-		this.gameLogic = gameLogic;
-
+	public ShipNavigationBehavior(final TransformGroup translationGroup, final TransformGroup viewTG) {
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
@@ -427,12 +423,12 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 
 	@Override
 	public void added(final GameLogic game) {
-		// empty
+		this.gameLogic = game;
 	}
 	
 	@Override
 	public void removed(final GameLogic game) {
-		// empty
+		this.gameLogic = null;
 	}
 	
 	@Override

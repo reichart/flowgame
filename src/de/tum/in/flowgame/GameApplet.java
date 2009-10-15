@@ -7,10 +7,6 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import com.google.code.facebookapi.ProfileField;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.model.Person;
@@ -47,19 +43,29 @@ public class GameApplet extends Applet {
 		app.start();
 	}
 
+//	public GameApplet() throws IOException {
+//		this.game = new Game3D();
+//		setLayout(new BorderLayout());
+//		add(BorderLayout.CENTER, game);
+//	}
+	
 	public GameApplet() throws Exception {
-		final String server = getParameter("server");
-		final String apiKey = getParameter("apiKey");
-		final String sessionKey = getParameter("sessionKey");
-		final String sessionSecret = getParameter("sessionSecret");
+//		final String server = getParameter("server");
+//		final String apiKey = getParameter("apiKey");
+//		final String sessionKey = getParameter("sessionKey");
+//		final String sessionSecret = getParameter("sessionSecret");
+//		
+//		try {
+//			this.facebook = new CustomFacebookClient(new URL(server + "fbproxy"), apiKey, sessionSecret, sessionKey);
+//		} catch (final MalformedURLException ex) {
+//			throw new RuntimeException("Failed to initialize Facebook client", ex);
+//		}
+//		
+//		final long id = facebook.users_getLoggedInUser();
 		
-		try {
-			this.facebook = new CustomFacebookClient(new URL(server + "fbproxy"), apiKey, sessionSecret, sessionKey);
-		} catch (final MalformedURLException ex) {
-			throw new RuntimeException("Failed to initialize Facebook client", ex);
-		}
-		
-		final long id = facebook.users_getLoggedInUser();
+		facebook = null;
+		final long id = 1337;
+		final String server = "http://localhost:8080/flowgame/";
 		
 		Client client = new Client(server);
 		
@@ -67,16 +73,18 @@ public class GameApplet extends Applet {
 		Person player = client.downloadPerson(id);
 		if (player == null) {
 			player = new Person(id);
-			final String name = facebook.users_getProfileField(id, ProfileField.FIRST_NAME);
+//			final String name = facebook.users_getProfileField(id, ProfileField.FIRST_NAME);
+			final String name = "SPIELER";
 			player.setName(name);
 			client.uploadQuietly(player);
 		}
 
-		this.game = new Game3D(new GameLogic(player, client));
+		this.game = new Game3D();
+		
+		GameLogic logic = new GameLogic(player, client);
+		logic.addListener(game.getListener());
 		
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, game);
 	}
-
-
 }

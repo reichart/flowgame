@@ -11,7 +11,6 @@ import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.vecmath.Point3d;
 
-import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Collision.Item;
 
 public class CreateCollidables implements GameListener {
@@ -20,24 +19,18 @@ public class CreateCollidables implements GameListener {
 	
 	private final List<Collidable> collidables = new ArrayList<Collidable>();
 
-	private final GameLogic gameLogic;
-	
 	private final BranchGroup collidableBranchGroup;
 	private final SharedGroup asteroid;
 	private final SharedGroup fuelcan;
 
 	private long startTime;
 	private long pauseBegin;
-	private DifficultyFunction difficultyFunction;
 
-	public CreateCollidables(final BranchGroup collidableBranchGroup, final GameLogic gameLogic)
-			throws IOException {
-		this.gameLogic = gameLogic;
+	public CreateCollidables(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.collidableBranchGroup.setCapability(Group.ALLOW_CHILDREN_EXTEND);
 		this.asteroid = loadModel(Item.ASTEROID, "/res/asteroid.obj", 0.8);
 		this.fuelcan = loadModel(Item.FUELCAN, "/res/fuelcan2.obj", 1.5);
-		this.difficultyFunction = gameLogic.getDifficultyFunction();
 	}
 
 	private SharedGroup loadModel(final Item item, final String resource, final double bounds) throws IOException {
@@ -55,17 +48,17 @@ public class CreateCollidables implements GameListener {
 		return deltaTime;
 	}
 
-	private Collidable createCollidable(final double zPos) {
+	private Collidable createCollidable(final double zPos, final GameLogic game) {
 		final double value;
-		if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
+		if (game.getCurrentScenarioRound().isBaselineRound()) {
 			//TODO: value in Abhängigkeit von Leistung des Spielers
 			value = 0;
 		} else {
 			value = getElapsedTime();
 		}
 		
-		final double ratioAsteroids = difficultyFunction.getRatio().getValue(value);
-
+		final double ratioAsteroids = game.getDifficultyFunction().getRatio().getValue(value);
+		
 		final Collidable c;
 		if (ratioAsteroids  < Math.random()) {
 			final double testValue = Math.random();
@@ -87,16 +80,16 @@ public class CreateCollidables implements GameListener {
 		return c;
 	}
 	
-	public void addCollidable() {
+	public void addCollidable(final GameLogic game) {
 		final double zPos;
 		if (!collidables.isEmpty()) {
 			final double lastZpos = getLastCollidableZPos();
-			zPos = lastZpos + -difficultyFunction.getInterval().getValue(lastZpos);
+			zPos = lastZpos - game.getDifficultyFunction().getInterval().getValue(-lastZpos);
 		} else {
 			zPos = INITIAL_Z_POS;
 		}
 		
-		collidables.add(createCollidable(zPos));
+		collidables.add(createCollidable(zPos, game));
 	}
 
 	public double getLastCollidableZPos() {
@@ -133,7 +126,6 @@ public class CreateCollidables implements GameListener {
 
 	@Override
 	public void gameStarted(final GameLogic game) {
-		difficultyFunction = gameLogic.getCurrentScenarioRound().getDifficultyFunction();
 		startTime = System.currentTimeMillis();
 	}
 

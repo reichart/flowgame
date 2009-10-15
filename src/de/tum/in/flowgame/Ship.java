@@ -40,7 +40,7 @@ public class Ship extends TransformGroup implements GameListener {
 	private final Timer flashTimer;
 	private final SpeedChangeBehavior speedChange;
 
-	public Ship(final GameLogic gameLogic, final TransformGroup viewTG) throws IOException {
+	public Ship(final TransformGroup viewTG) throws IOException {
 		this.flashTimer = new Timer("FlashTimer", true);
 		this.setBoundsAutoCompute(false);
 
@@ -62,12 +62,11 @@ public class Ship extends TransformGroup implements GameListener {
 
 		rotationGroup.addChild(ship);
 
-		shipNavigationBehavior = new ShipNavigationBehavior(moveGroup, viewTG, gameLogic);
-		gameLogic.addListener(shipNavigationBehavior);
+		shipNavigationBehavior = new ShipNavigationBehavior(moveGroup, viewTG);
 		ship.addChild(shipNavigationBehavior);
 		shipNavigationBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 
-		speedChange = new SpeedChangeBehavior(shipNavigationBehavior, gameLogic);
+		speedChange = new SpeedChangeBehavior(shipNavigationBehavior);
 		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		addChild(speedChange);
 
@@ -151,16 +150,19 @@ public class Ship extends TransformGroup implements GameListener {
 
 	@Override
 	public void added(final GameLogic game) {
-		// empty
+		game.addListener(shipNavigationBehavior);
+		speedChange.setGameLogic(game);
 	}
-
+	
 	@Override
 	public void removed(final GameLogic game) {
-		// empty
+		game.removeListener(shipNavigationBehavior);
+		speedChange.setGameLogic(null);
 	}
 
 	@Override
 	public void collided(final GameLogic logic, final Item item) {
+		// TODO don't create new objects all the time
 		final Material mat = new Material();
 
 		if (item == Item.ASTEROID) {
