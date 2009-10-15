@@ -7,14 +7,18 @@ import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
 
 import de.tum.in.flowgame.CreateCollidables;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.GameLogicConsumer;
 import de.tum.in.flowgame.Ship;
 
-public class CreateNewCollidablesBehavior extends Behavior {
+public class CreateNewCollidablesBehavior extends Behavior implements GameLogicConsumer {
 
 	private final WakeupCondition condition = new WakeupOnElapsedFrames(0);
 	private final Ship ship;
 	private double offset = -400.0;
 	private final CreateCollidables createCollidables;
+	
+	private GameLogic game;
 
 	public CreateNewCollidablesBehavior(final CreateCollidables createCollidables, final Ship ship) {
 		this.createCollidables = createCollidables;
@@ -35,14 +39,14 @@ public class CreateNewCollidablesBehavior extends Behavior {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void processStimulus(Enumeration criteria) {
-		// System.out.println("Last Collidable: " +
-		// createCollidables.getLastCollidable().getZPos() +
-		// " - ShipPosition plus Offset: " +
-		// (ship.getControls().getCoords().getZ() + offset));
 		if (createCollidables.getLastCollidableZPos() >= ship.getControls().getCoords().getZ() + offset) {
-			createCollidables.addCollidable();
+			createCollidables.addCollidable(game);
 		}
 		wakeupOn(condition);
 	}
 
+	@Override
+	public void setGameLogic(final GameLogic game) {
+		this.game = game;
+	}
 }

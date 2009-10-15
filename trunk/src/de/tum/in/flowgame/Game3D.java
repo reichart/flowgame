@@ -52,11 +52,35 @@ public class Game3D extends Canvas3D {
 	private final transient Geometry glResetGeom;
 	private final transient Transform3D glResetTrans;
 
-	public Game3D(final GameLogic logic) throws IOException {
+	private GameListener listener;
+
+	private CreateCollidables cc;
+	private CollisionBehavior collisionBehavior;
+	private CreateNewCollidablesBehavior cncb;
+
+	public Game3D() throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		logic.addListener(new DefaultGameListener() {
+		this.listener = new DefaultGameListener() {
 
+			@Override
+			public void added(final GameLogic game) {
+				game.addListener(cc);
+				game.addListener(ship);
+				game.addListener(overlay);
+				collisionBehavior.setGameLogic(game);
+				cncb.setGameLogic(game);
+			}
+			
+			@Override
+			public void removed(final GameLogic game) {
+				game.removeListener(cc);
+				game.removeListener(ship);
+				game.removeListener(overlay);
+				collisionBehavior.setGameLogic(null);
+				cncb.setGameLogic(null);
+			}
+			
 			@Override
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
@@ -71,7 +95,7 @@ public class Game3D extends Canvas3D {
 				switsch.setWhichChild(Switch.CHILD_NONE);
 				tunnel.detach();
 			}
-		});
+		};
 
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
@@ -84,12 +108,12 @@ public class Game3D extends Canvas3D {
 		switsch.setCapability(Switch.ALLOW_SWITCH_READ);
 		switsch.setCapability(Switch.ALLOW_SWITCH_WRITE);
 		
-		this.collidables = createCollidables(logic, viewTG);
+		this.collidables = createCollidables(viewTG);
 		switsch.addChild(this.collidables);		
 		
 		scene.addChild(switsch);
 		
-		this.overlay = new GameOverlay(logic, this);
+		this.overlay = new GameOverlay(this);
 		this.addComponentListener(overlay);
 		
 		final FrameCounterBehavior fps = new FrameCounterBehavior(100);
@@ -117,24 +141,22 @@ public class Game3D extends Canvas3D {
 		glResetTrans.set(new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
 	}
 
-	private BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
+	private BranchGroup createCollidables(final TransformGroup viewTG) throws IOException {
 		final BranchGroup collidables = new BranchGroup();
 		collidables.setCapability(Group.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
 		collidables.setCapability(Group.ALLOW_CHILDREN_WRITE);
 
-		ship = new Ship(logic, viewTG);
-		logic.addListener(ship);
+		ship = new Ship(viewTG);
 		collidables.addChild(ship);
 		
-		final CreateCollidables cc = new CreateCollidables(collidables, logic);
-		final CreateNewCollidablesBehavior cncb = new CreateNewCollidablesBehavior(cc, ship);
+		this.cc = new CreateCollidables(collidables);
+		this.cncb = new CreateNewCollidablesBehavior(cc, ship);
 		cncb.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-		logic.addListener(cc);
 		
 		collidables.addChild(cncb);
 		
-		final CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
+		this.collisionBehavior = new CollisionBehavior(collidables, ship);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		collidables.addChild(collisionBehavior);
 		return collidables;
@@ -189,5 +211,8 @@ public class Game3D extends Canvas3D {
 	public Ship getShip() {
 		return this.ship;
 	}
-	
+
+	public GameListener getListener() {
+		return listener;
+	}
 }

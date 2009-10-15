@@ -29,7 +29,7 @@ import de.tum.in.flowgame.ui.screens.SettingsScreen;
 
 public class GameMenu implements Sprite, GameListener {
 
-	private final GameLogic logic;
+	private GameLogic logic;
 
 	private final OffscreenJPanel panel;
 
@@ -41,8 +41,7 @@ public class GameMenu implements Sprite, GameListener {
 	
 	private final Game3D game;
 
-	public GameMenu(final Component mouseTrap, final GameLogic logic, final GameOverlay overlay) {
-		this.logic = logic;
+	public GameMenu(final Component mouseTrap, final GameOverlay overlay) {
 		this.overlay = overlay;
 		this.game = (Game3D)mouseTrap;
 
@@ -51,23 +50,11 @@ public class GameMenu implements Sprite, GameListener {
 		screens.setDoubleBuffered(false); // hides white background
 		screens.setOpaque(false);
 
-		add(new EmptyScreen(this));
-		add(new MainScreen(this));
-		add(new QuestionnaireScreen(this));
-		add(new HighscoresScreen(this));
-		add(new PauseScreen(this));
-		add(new GameOverScreen(this));
-		add(new SettingsScreen(this));
-
 		panel = new OffscreenJPanel(mouseTrap);
 		panel.setLayout(new BorderLayout());
 		panel.setDoubleBuffered(false); // hides white background
 		panel.setOpaque(false);
 		panel.add(screens, BorderLayout.CENTER);
-		
-		logic.addListener(this);
-		
-		show(MainScreen.class);
 	}
 
 	@Override
@@ -89,7 +76,18 @@ public class GameMenu implements Sprite, GameListener {
 
 	@Override
 	public void added(final GameLogic game) {
-		// empty
+		this.logic = game;
+		
+		// these require the above logic to be available
+		add(new EmptyScreen(this));
+		add(new MainScreen(this));
+		add(new QuestionnaireScreen(this));
+		add(new HighscoresScreen(this));
+		add(new PauseScreen(this));
+		add(new GameOverScreen(this));
+		add(new SettingsScreen(this));
+		
+		show(MainScreen.class);
 	}
 	
 	@Override
@@ -179,8 +177,12 @@ public class GameMenu implements Sprite, GameListener {
 		panel.revalidate();
 	}
 
-	public GameLogic getLogic() {
+	public GameLogic getGameLogic() {
 		return logic;
+	}
+	
+	public GameLogic getLogic() {
+		return getGameLogic();
 	}
 	
 	public GameOverlay getOverlay() {
@@ -190,5 +192,4 @@ public class GameMenu implements Sprite, GameListener {
 	public Game3D getGame (){
 		return this.game;
 	}
-
 }

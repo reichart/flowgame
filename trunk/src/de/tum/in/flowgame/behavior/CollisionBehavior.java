@@ -13,12 +13,13 @@ import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.GameLogicConsumer;
 import de.tum.in.flowgame.Ship;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class CollisionBehavior extends Behavior {
+public class CollisionBehavior extends Behavior implements GameLogicConsumer {
 	private final WakeupCondition condition;
-	private final GameLogic gameLogic;
+	private GameLogic gameLogic;
 	private final BranchGroup branchGroup;
 	private final Ship ship;
 	private double shipX = Ship.INITIAL_SHIP_PLACEMENT_X;
@@ -29,11 +30,9 @@ public class CollisionBehavior extends Behavior {
 	private double shipOldZ;
 	private boolean collision;
 
-	public CollisionBehavior(final BranchGroup collidables, final GameLogic gl,
-			final Ship ship) {
+	public CollisionBehavior(final BranchGroup collidables, final Ship ship) {
 		condition = new WakeupOnElapsedFrames(0);
 		branchGroup = collidables;
-		gameLogic = gl;
 		this.ship = ship;
 	}
 
@@ -98,5 +97,10 @@ public class CollisionBehavior extends Behavior {
 			}
 		}
 		wakeupOn(condition);
+	}
+	
+	@Override
+	public void setGameLogic(final GameLogic logic) {
+		this.gameLogic = logic;
 	}
 }
