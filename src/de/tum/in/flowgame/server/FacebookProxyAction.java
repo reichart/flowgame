@@ -8,6 +8,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ParameterAware;
@@ -58,7 +59,7 @@ public class FacebookProxyAction extends ActionSupport implements ParameterAware
 				}
 			}
 
-			this.response = post.getResponseBodyAsString();
+			this.response = IOUtils.toString(post.getResponseBodyAsStream(), "UTF-8");
 		} finally {
 			post.releaseConnection();
 		}
