@@ -7,24 +7,20 @@ import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
 
 import de.tum.in.flowgame.CreateCollidables;
-import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.GameLogicConsumer;
 import de.tum.in.flowgame.Ship;
 
-public class CreateNewCollidablesBehavior extends Behavior implements GameLogicConsumer {
+public class CreateNewCollidablesBehavior extends Behavior {
 
 	private final WakeupCondition condition = new WakeupOnElapsedFrames(0);
 	private final Ship ship;
 	private double offset = -400.0;
 	private final CreateCollidables createCollidables;
-	
-	private GameLogic game;
 
 	public CreateNewCollidablesBehavior(final CreateCollidables createCollidables, final Ship ship) {
 		this.createCollidables = createCollidables;
 		this.ship = ship;
 	}
-
+	
 	public CreateNewCollidablesBehavior(final CreateCollidables createCollidables, final Ship ship, double offset) {
 		this.createCollidables = createCollidables;
 		this.ship = ship;
@@ -39,14 +35,11 @@ public class CreateNewCollidablesBehavior extends Behavior implements GameLogicC
 	@SuppressWarnings("unchecked")
 	@Override
 	public void processStimulus(Enumeration criteria) {
-		if (createCollidables.getLastCollidableZPos() >= ship.getControls().getCoords().getZ() + offset) {
-			createCollidables.addCollidable(game);
+//		System.out.println("Last Collidable: " + createCollidables.getLastCollidable().getZPos() + " - ShipPosition plus Offset: " + (ship.getControls().getCoords().getZ() + offset));
+		if (createCollidables.getLastCollidable().getZPos() >= ship.getControls().getCoords().getZ() + offset){
+			createCollidables.addCollidable();
 		}
 		wakeupOn(condition);
 	}
 
-	@Override
-	public void setGameLogic(final GameLogic game) {
-		this.game = game;
-	}
 }

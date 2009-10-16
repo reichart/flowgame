@@ -19,7 +19,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private static final int pointsForAsteroid = 5;
 
 	private final Client client;
-
+	
 	private GameSession gameSession;
 	private Person player;
 
@@ -27,7 +27,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private volatile int fuel;
 	private volatile int asteroids;
-
+	
 	private volatile int fuelInRow;
 	private volatile int asteroidsInRow;
 
@@ -48,10 +48,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private long startTime;
 	private long startTimeWithoutPause;
 	private long pauseStartTime;
-
+	
 	private double currentPosition;
 	private double previousTrend;
-
+	
 	public GameLogic(final Person player, final Client client) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
@@ -73,7 +73,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			fuelcansCollected++;
 			fuelInRow++;
 			asteroidsInRow = 0;
-
+			
 			Sounds.FUELCAN.play();
 			break;
 		case ASTEROID:
@@ -83,7 +83,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			asteroidsCollected++;
 			asteroidsInRow++;
 			fuelInRow = 0;
-
+			
 			if (asteroids == MAX_ASTEROIDS) {
 				thread.interrupt();
 			}
@@ -91,7 +91,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			Sounds.ASTEROID.play();
 			break;
 		}
-
+		
 		double rating = gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
 		long increase = (long) (rating * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
@@ -121,11 +121,11 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			} catch (final InterruptedException ex) {
 				// ignore
 			}
-
+			
 			if (!paused) {
 				fuel--;
 				previousTrend = getTrendRating();
-
+				
 				if (fuel == 0) {
 					break;
 				}
@@ -151,12 +151,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public void addListener(final GameListener listener) {
 		this.listeners.add(listener);
-		listener.added(this);
 	}
 
 	public void removeListener(final GameListener listener) {
 		this.listeners.remove(listener);
-		listener.removed(this);
 	}
 
 	/**
@@ -190,7 +188,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			if (sessionRound == null) {
 				client.uploadQuietly(gameSession);
 				gameSession = null;
-				// fireSessionFinished();
+//				fireSessionFinished();
 			}
 		}
 		currentPosition = 0;
@@ -198,7 +196,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public void start() {
 		System.out.println("GameLogic.start()");
-
+		
 		this.fuelTrend = new Trend();
 		this.asteroidTrend = new Trend();
 		this.fuelcansCollected = 0;
@@ -221,10 +219,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		asteroids = 0;
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
-
+		
 		fuelInRow = 0;
 		asteroidsInRow = 0;
-
+		
 		paused = false;
 		startTime = System.currentTimeMillis();
 		startTimeWithoutPause = startTime;
@@ -277,11 +275,11 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 
-	// public void fireSessionFinished() {
-	// for (final GameListener listener : listeners) {
-	// listener.sessionFinished(this);
-	// }
-	// }
+//	public void fireSessionFinished() {
+//		for (final GameListener listener : listeners) {
+//			listener.sessionFinished(this);
+//		}
+//	}
 
 	public ScenarioRound getCurrentScenarioRound() {
 		if (gameSession == null) {
@@ -318,6 +316,29 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return asteroidsSeen == 0 ? 0 : asteroidsCollected / (float) asteroidsSeen;
 	}
 
+	// private GameRound dummyRoundForBaseline() {
+	// GameRound gameRound = new GameRound();
+	// ScenarioRound scenarioRound = new ScenarioRound();
+	// DifficultyFunction difficultyFunction = new DifficultyFunction();
+	// baselineInterval = new ConstantFunction(100.0);
+	// difficultyFunction.setIntervald(baselineInterval);
+	// baselineRatio = new ConstantFunction(0.8);
+	// difficultyFunction.setRatio(baselineRatio);
+	// baselineSpeed = new LinearFunction(80.0, 0.005);
+	// difficultyFunction.setSpeed(baselineSpeed);
+	// scenarioRound.setDifficutyFunction(difficultyFunction);
+	// gameRound.setScenarioRound(scenarioRound);
+	// return gameRound;
+	// }
+	//	
+	// private void calculatePoints(Item item){
+	// DifficultyFunction diff =
+	// gameSession.getScenarioSession().getCurrentRound().getDifficutyFunction();
+	// Function intervalFunction = diff.getInterval();
+	// Function speedFunction = diff.getSpeed();
+	// Function ratioFunction = diff.getRatio();
+	// }
+
 	public long getElapsedTime() {
 		long actTime = System.currentTimeMillis();
 		return actTime - startTimeWithoutPause;
@@ -326,22 +347,21 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	public long getScore() {
 		return gameRound.getScore();
 	}
-
+	
 	public double getRating() {
 		return gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
 	}
-
+	
 	public DifficultyFunction getDifficultyFunction() {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
 
 	public double getTrendRating() {
-		double asteroidTrendRating = asteroidTrend.getShortRatio() + 3 / 4.0 * asteroidTrend.getMidRatio() + 1 / 4.0
-				* asteroidTrend.getLongRatio();
-		double fuelTrendRating = fuelTrend.getShortRatio() + 3 / 4.0 * fuelTrend.getMidRatio() + 1 / 4.0 * fuelTrend.getLongRatio();
+		double asteroidTrendRating = asteroidTrend.getShortRatio() + 3/4.0 * asteroidTrend.getMidRatio() + 1/4.0 * asteroidTrend.getLongRatio();
+		double fuelTrendRating = fuelTrend.getShortRatio() + 3/4.0 * fuelTrend.getMidRatio() + 1/4.0 * fuelTrend.getLongRatio();
 		return 2 * fuelTrendRating - asteroidTrendRating;
 	}
-
+	
 	public double getPosition() {
 		double trendRating = getTrendRating();
 		if (trendRating < previousTrend) {
@@ -351,5 +371,5 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 		return currentPosition;
 	}
-
+	
 }

@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.GameMenu;
@@ -35,8 +34,8 @@ public class QuestionnaireScreen extends MenuScreen {
 		super(menu);
 		this.qpanel = new QuestionnairePanel();
 		this.qscrollpane = new JScrollPane(this.qpanel,
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		update();
 	}
 

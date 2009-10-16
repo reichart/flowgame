@@ -27,7 +27,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	private final static Font SMALL = new Font("sans", Font.PLAIN, 16);
 
 	private final Timer timer;
-	private volatile GameLogic logic;
+	private final GameLogic logic;
 	private final Sprite cockpit;
 	private final HealthBar fuel, damage;
 
@@ -41,12 +41,14 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	private boolean drawMenu;
 	private boolean drawFPS;
 
-	private GameMenu menu;
+	private Sprite menu;
 
-	public GameOverlay(final Game3D engine) {
+	public GameOverlay(final GameLogic logic, final Game3D engine) {
 		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
+		this.logic = logic;
+		logic.addListener(this);
 
-		this.menu = new GameMenu(engine, this);
+		this.menu = new GameMenu(engine, logic, this);
 		
 		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
 				Color.YELLOW.darker(), 0, GameLogic.MAX_FUEL);
@@ -89,35 +91,33 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final int controlsW = fm.stringWidth(controls);
 			g.drawString(controls, width - controlsW - 20, height - stringH);
 			
-			if (logic != null) {
-				final NumberFormat fmt = new DecimalFormat("0.000");
-				
-				final String ratios = "Total: " + fmt.format(logic.getTotalFuelRatio()) + " fuel, " + fmt.format(logic.getTotalAsteroidRatio()) + " astr.";
-				final int ratiosW = fm.stringWidth(ratios);
-				g.drawString(ratios, width - ratiosW - 20, stringH + 50);
-				
-				final String slidingRatios = "SlidingWindow: " + fmt.format(logic.getSlidingFuelRatio()) + " fuel, " + fmt.format(logic.getSlidingAsteroidRatio()) + " astr.";
-				final int slidingRatiosW = fm.stringWidth(slidingRatios);
-				g.drawString(slidingRatios, width - slidingRatiosW -20, stringH + 70);
-	
-				String score = "Score " + logic.getScore();
-				final int scoreW = fm.stringWidth(score);
-				g.drawString(score, width - scoreW - 20, stringH + 120);
-				
-				String rating = "Rating " + fmt.format(logic.getRating());
-				final int ratingW = fm.stringWidth(rating);
-				g.drawString(rating, width - ratingW - 20, stringH + 170);
-				
-				fuel.setValue(logic.getFuel());
-				damage.setValue(logic.getAsteroids());
-	
-				final int barsWidth = Math.min(width, height) / 2;
-	
-				// cockpit.render(g, 0, 0, width, height);
-	
-				damage.render(g, 20, 20, barsWidth, -1);
-				fuel.render(g, 20, 50, barsWidth, -1);
-			}
+			final NumberFormat fmt = new DecimalFormat("0.000");
+			
+			final String ratios = "Total: " + fmt.format(logic.getTotalFuelRatio()) + " fuel, " + fmt.format(logic.getTotalAsteroidRatio()) + " astr.";
+			final int ratiosW = fm.stringWidth(ratios);
+			g.drawString(ratios, width - ratiosW - 20, stringH + 50);
+			
+			final String slidingRatios = "SlidingWindow: " + fmt.format(logic.getSlidingFuelRatio()) + " fuel, " + fmt.format(logic.getSlidingAsteroidRatio()) + " astr.";
+			final int slidingRatiosW = fm.stringWidth(slidingRatios);
+			g.drawString(slidingRatios, width - slidingRatiosW -20, stringH + 70);
+
+			String score = "Score " + logic.getScore();
+			final int scoreW = fm.stringWidth(score);
+			g.drawString(score, width - scoreW - 20, stringH + 120);
+			
+			String rating = "Rating " + logic.getRating();
+			final int ratingW = fm.stringWidth(rating);
+			g.drawString(rating, width - ratingW - 20, stringH + 170);
+			
+			fuel.setValue(logic.getFuel());
+			damage.setValue(logic.getAsteroids());
+
+			final int barsWidth = Math.min(width, height) / 2;
+
+			// cockpit.render(g, 0, 0, width, height);
+
+			damage.render(g, 20, 20, barsWidth, -1);
+			fuel.render(g, 20, 50, barsWidth, -1);
 		}
 
 		if (drawMenu) {
@@ -125,18 +125,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		}
 	}
 
-	@Override
-	public void added(final GameLogic game) {
-		this.logic = game;
-		game.addListener(menu);
-	}
-	
-	@Override
-	public void removed(final GameLogic game) {
-		this.logic = null;
-		game.removeListener(menu);
-	}
-	
 	@Override
 	public void gameStarted(final GameLogic game) {
 		drawHUD = true;

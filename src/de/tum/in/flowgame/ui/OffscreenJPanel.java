@@ -10,6 +10,8 @@ import java.awt.event.MouseWheelEvent;
 
 import javax.swing.JPanel;
 
+import sun.awt.dnd.SunDropTargetEvent;
+
 /**
  * Frankenstein's own JPanel to render regular Swing components to an offscreen
  * image and still have them react to mouse events.
@@ -109,7 +111,9 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 	private void trackMouseEnterExit(final Component currentTarget, final MouseEvent e) {
 		final int id = e.getID();
 
-		if (id != MouseEvent.MOUSE_EXITED && id != MouseEvent.MOUSE_DRAGGED && isInContainer == false) {
+		if (e instanceof SunDropTargetEvent && id == MouseEvent.MOUSE_ENTERED && isInContainer == true) {
+			targetLastEntered = null;
+		} else if (id != MouseEvent.MOUSE_EXITED && id != MouseEvent.MOUSE_DRAGGED && isInContainer == false) {
 			isInContainer = true;
 		} else if (id == MouseEvent.MOUSE_EXITED) {
 			isInContainer = false;
@@ -163,7 +167,10 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 		}
 
 		final MouseEvent retargeted;
-		if (id == MouseEvent.MOUSE_WHEEL) {
+		if (e instanceof SunDropTargetEvent) {
+			retargeted = new SunDropTargetEvent(target, id, retargetedX, retargetedY, ((SunDropTargetEvent) e)
+					.getDispatcher());
+		} else if (id == MouseEvent.MOUSE_WHEEL) {
 			retargeted = new MouseWheelEvent(target, id, e.getWhen(), e.getModifiersEx() | e.getModifiers(),
 					retargetedX, retargetedY, e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(),
 					e.isPopupTrigger(), ((MouseWheelEvent) e).getScrollType(), ((MouseWheelEvent) e).getScrollAmount(),

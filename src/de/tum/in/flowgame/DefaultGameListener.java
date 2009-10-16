@@ -8,16 +8,6 @@ import de.tum.in.flowgame.model.Collision.Item;
 public abstract class DefaultGameListener implements GameListener {
 
 	@Override
-	public void added(final GameLogic game) {
-		// empty
-	}
-	
-	@Override
-	public void removed(final GameLogic game) {
-		// empty
-	}
-	
-	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		// empty
 	}

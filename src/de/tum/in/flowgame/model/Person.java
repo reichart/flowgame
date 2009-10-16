@@ -23,7 +23,6 @@ public class Person implements Serializable {
 	Date dateOfBirth;
 	String place;
 	
-	@SuppressWarnings("unused") // for JPA
 	private Person() {
 		//empty
 	}

@@ -40,6 +40,7 @@ public class Game3D extends Canvas3D {
 	private static final Color3f WHITE = new Color3f(1, 1, 1);
 	private static final Color3f BLACK = new Color3f(0, 0, 0);
 
+	private final GameLogic gameLogic;
 	private final GameOverlay overlay;
 	private final BranchGroup collidables;
 	
@@ -50,37 +51,14 @@ public class Game3D extends Canvas3D {
 
 	// part of workaround for Java3D bug #501
 	private final transient Geometry glResetGeom;
-	private final transient Transform3D glResetTrans;
-
-	private GameListener listener;
-
-	private CreateCollidables cc;
-	private CollisionBehavior collisionBehavior;
-	private CreateNewCollidablesBehavior cncb;
-
-	public Game3D() throws IOException {
+	private final transient Transform3D glResetTrans; 
+	
+	public Game3D(final GameLogic logic) throws IOException {
 		super(SimpleUniverse.getPreferredConfiguration());
 
-		this.listener = new DefaultGameListener() {
+		this.gameLogic = logic;
+		this.gameLogic.addListener(new DefaultGameListener() {
 
-			@Override
-			public void added(final GameLogic game) {
-				game.addListener(cc);
-				game.addListener(ship);
-				game.addListener(overlay);
-				collisionBehavior.setGameLogic(game);
-				cncb.setGameLogic(game);
-			}
-			
-			@Override
-			public void removed(final GameLogic game) {
-				game.removeListener(cc);
-				game.removeListener(ship);
-				game.removeListener(overlay);
-				collisionBehavior.setGameLogic(null);
-				cncb.setGameLogic(null);
-			}
-			
 			@Override
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
@@ -95,25 +73,25 @@ public class Game3D extends Canvas3D {
 				switsch.setWhichChild(Switch.CHILD_NONE);
 				tunnel.detach();
 			}
-		};
+		});
 
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
 
 		final BranchGroup scene = new BranchGroup();
-		scene.addChild(createScene());
+		scene.addChild(createScene(logic));
 		
 		// allow switching the game contents on/off at runtime
 		this.switsch = new Switch();
 		switsch.setCapability(Switch.ALLOW_SWITCH_READ);
 		switsch.setCapability(Switch.ALLOW_SWITCH_WRITE);
 		
-		this.collidables = createCollidables(viewTG);
+		this.collidables = createCollidables(logic, viewTG);
 		switsch.addChild(this.collidables);		
 		
 		scene.addChild(switsch);
 		
-		this.overlay = new GameOverlay(this);
+		this.overlay = new GameOverlay(logic, this);
 		this.addComponentListener(overlay);
 		
 		final FrameCounterBehavior fps = new FrameCounterBehavior(100);
@@ -141,28 +119,31 @@ public class Game3D extends Canvas3D {
 		glResetTrans.set(new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
 	}
 
-	private BranchGroup createCollidables(final TransformGroup viewTG) throws IOException {
+	private BranchGroup createCollidables(final GameLogic logic, final TransformGroup viewTG) throws IOException {
 		final BranchGroup collidables = new BranchGroup();
 		collidables.setCapability(Group.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
 		collidables.setCapability(Group.ALLOW_CHILDREN_WRITE);
 
-		ship = new Ship(viewTG);
+		final Ship ship = new Ship(logic, viewTG);
+		this.ship = ship;
+		this.gameLogic.addListener(this.ship);
 		collidables.addChild(ship);
 		
-		this.cc = new CreateCollidables(collidables);
-		this.cncb = new CreateNewCollidablesBehavior(cc, ship);
+		final CreateCollidables cc = new CreateCollidables(collidables, logic);
+		final CreateNewCollidablesBehavior cncb = new CreateNewCollidablesBehavior(cc, ship);
 		cncb.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		logic.addListener(cc);
 		
 		collidables.addChild(cncb);
 		
-		this.collisionBehavior = new CollisionBehavior(collidables, ship);
+		final CollisionBehavior collisionBehavior = new CollisionBehavior(collidables, logic, ship);
 		collisionBehavior.setSchedulingBounds(WORLD_BOUNDS);
 		collidables.addChild(collisionBehavior);
 		return collidables;
 	}
 
-	private static BranchGroup createScene() {
+	private static BranchGroup createScene(final GameLogic logic) {
 		final BranchGroup scene = new BranchGroup();
 
 		final Fog fog = new LinearFog(BLACK, 0, Tunnel.TUNNEL_LENGTH);
@@ -208,11 +189,7 @@ public class Game3D extends Canvas3D {
 		return new SimpleUniverse(vp, viewer);
 	}
 	
-	public Ship getShip() {
+	public Ship getShip(){
 		return this.ship;
-	}
-
-	public GameListener getListener() {
-		return listener;
 	}
 }

@@ -100,16 +100,6 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 	}
 
 	@Override
-	public void added(final GameLogic game) {
-		// empty
-	}
-	
-	@Override
-	public void removed(final GameLogic game) {
-		// empty
-	}
-	
-	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		getCollisions().add(new Collision(item));
 	}
