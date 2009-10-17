@@ -11,7 +11,11 @@
 
 	<package name="default" namespace="/" extends="struts-default">
 
-		<default-action-ref name="applet" />
+		<default-action-ref name="canvas" />
+
+		<action name="canvas">
+			<result>/WEB-INF/canvas.jsp</result>
+		</action>
 
 		<action name="applet">
 			<result>/WEB-INF/applet.jsp</result>
