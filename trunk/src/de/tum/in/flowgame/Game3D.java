@@ -1,5 +1,7 @@
 package de.tum.in.flowgame;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.media.j3d.AmbientLight;
@@ -97,6 +99,13 @@ public class Game3D extends Canvas3D {
 			}
 		};
 
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent e) {
+				requestFocus();
+			}
+		});
+		
 		final SimpleUniverse su = createUniverse();
 		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
 
