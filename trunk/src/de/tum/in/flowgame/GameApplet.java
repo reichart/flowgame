@@ -5,8 +5,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URL;
+
+import com.google.code.facebookapi.ProfileField;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.model.Person;
@@ -16,7 +22,7 @@ public class GameApplet extends Applet {
 
 	private final Game3D game;
 
-	private final CustomFacebookClient facebook;
+	private CustomFacebookClient facebook;
 	
 	public static void main(final String[] args) throws Exception {
 		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,52 +44,61 @@ public class GameApplet extends Applet {
 		
 		final GameApplet app = new GameApplet();
 		frame.add(app);
-		frame.setVisible(true);
 		
-		app.start();
-	}
-
-//	public GameApplet() throws IOException {
-//		this.game = new Game3D();
-//		setLayout(new BorderLayout());
-//		add(BorderLayout.CENTER, game);
-//	}
-	
-	public GameApplet() throws Exception {
-//		final String server = getParameter("server");
-//		final String apiKey = getParameter("apiKey");
-//		final String sessionKey = getParameter("sessionKey");
-//		final String sessionSecret = getParameter("sessionSecret");
-//		
-//		try {
-//			this.facebook = new CustomFacebookClient(new URL(server + "fbproxy"), apiKey, sessionSecret, sessionKey);
-//		} catch (final MalformedURLException ex) {
-//			throw new RuntimeException("Failed to initialize Facebook client", ex);
-//		}
-//		
-//		final long id = facebook.users_getLoggedInUser();
+		// this initializes all the other classes
 		
-		facebook = null;
 		final long id = 1337;
-		final String server = "http://localhost:8080/flowgame/";
-		
-		Client client = new Client(server);
+		final Client client = new Client("http://localhost:8080/flowgame/");
 		
 		// download person information from server
 		Person player = client.downloadPerson(id);
 		if (player == null) {
 			player = new Person(id);
-//			final String name = facebook.users_getProfileField(id, ProfileField.FIRST_NAME);
-			final String name = "SPIELER";
+			final String name = "PLAYER";
 			player.setName(name);
 			client.uploadQuietly(player);
 		}
+		
+		new GameLogic(player, client).addListener(app.game.getListener());
+		
+		frame.setVisible(true);
+		
+		app.start();
+	}
 
+	@Override
+	public void init() {
+		final String server = getCodeBase().toString();
+		final String apiKey = getParameter("apiKey");
+		final String sessionKey = getParameter("sessionKey");
+		final String sessionSecret = getParameter("sessionSecret");
+		
+		try {
+			this.facebook = new CustomFacebookClient(new URL(server + "fbproxy"), apiKey, sessionSecret, sessionKey);
+		
+			final long id = facebook.users_getLoggedInUser();
+			
+			final Client client = new Client(server);
+			
+			// download person information from server
+			Person player = client.downloadPerson(id);
+			if (player == null) {
+				player = new Person(id);
+				final String name = facebook.users_getProfileField(id, ProfileField.FIRST_NAME);
+				player.setName(name);
+				client.uploadQuietly(player);
+			}
+			
+			// this initializes all the other classes
+			new GameLogic(player, client).addListener(game.getListener());
+			
+		} catch (final Exception ex) {
+			throw new RuntimeException("Failed to connect to " + server, ex);
+		}
+	}
+	
+	public GameApplet() throws IOException {
 		this.game = new Game3D();
-		
-		GameLogic logic = new GameLogic(player, client);
-		logic.addListener(game.getListener());
-		
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, game);
 	}
