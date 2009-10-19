@@ -28,7 +28,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	private final Timer timer;
 	private volatile GameLogic logic;
-	private final Sprite cockpit;
 	private final HealthBar fuel, damage;
 
 	private int width, height;
@@ -44,8 +43,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	private GameMenu menu;
 
 	public GameOverlay(final Game3D engine) {
-		this.cockpit = SpriteCache.getInstance().getSprite("/res/cockpit.svg");
-
 		this.menu = new GameMenu(engine, this);
 		
 		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
@@ -112,8 +109,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				damage.setValue(logic.getAsteroids());
 	
 				final int barsWidth = Math.min(width, height) / 2;
-	
-				// cockpit.render(g, 0, 0, width, height);
 	
 				damage.render(g, 20, 20, barsWidth, -1);
 				fuel.render(g, 20, 50, barsWidth, -1);
