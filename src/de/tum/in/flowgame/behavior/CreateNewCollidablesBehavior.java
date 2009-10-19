@@ -39,7 +39,7 @@ public class CreateNewCollidablesBehavior extends Behavior implements GameLogicC
 	@SuppressWarnings("unchecked")
 	@Override
 	public void processStimulus(Enumeration criteria) {
-		if (createCollidables.getLastCollidableZPos() >= ship.getControls().getCoords().getZ() + offset) {
+		if (createCollidables.getLastCollidableZPos() >= ship.getControls().getCoords().z + offset) {
 			createCollidables.addCollidable(game);
 		}
 		wakeupOn(condition);

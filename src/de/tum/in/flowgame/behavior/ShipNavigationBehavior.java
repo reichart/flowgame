@@ -407,9 +407,9 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 	public Vector3d getCoords() {
 		Vector3d vec = new Vector3d();
 		trans.get(vec);
-		vec.setX(vec.getX() + Ship.INITIAL_SHIP_PLACEMENT_X);
-		vec.setY(vec.getY() + Ship.INITIAL_SHIP_PLACEMENT_Y);
-		vec.setZ(vec.getZ() + Ship.INITIAL_SHIP_PLACEMENT_Z);
+		vec.x = vec.x + Ship.INITIAL_SHIP_PLACEMENT_X;
+		vec.y = vec.y + Ship.INITIAL_SHIP_PLACEMENT_Y;
+		vec.z = vec.z + Ship.INITIAL_SHIP_PLACEMENT_Z;
 		return vec;
 	}
 
