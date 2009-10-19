@@ -63,8 +63,8 @@ public class Collidable extends BranchGroup {
 					Math.random() * ShipNavigationBehavior.MOV_RADIUS);
 		}
 
-		xPos = position.getX();
-		yPos = position.getY();
+		xPos = position.x;
+		yPos = position.y;
 
 		TransformGroup transTG = new TransformGroupBuilder()
 				.translate(xPos, yPos, 0)
@@ -75,8 +75,8 @@ public class Collidable extends BranchGroup {
 	}
 
 	private boolean withinCircle(Point2d position) {
-		double radius = Math.sqrt(Math.pow(position.getX(), 2)
-				+ Math.pow(position.getY(), 2));
+		double radius = Math.sqrt(Math.pow(position.x, 2)
+				+ Math.pow(position.y, 2));
 		if (radius <= ShipNavigationBehavior.MOV_RADIUS)
 			return true;
 		else

@@ -22,7 +22,7 @@ public class TunnelPartMoveBehavior extends Behavior{
 	public TunnelPartMoveBehavior(final Shape3D element,
 			final TransformGroup targetTG, final double zDist, final int parts) {
 		this.targetTG = targetTG;
-		dp.setZ(-zDist*(parts));
+		dp.z = -zDist*(parts);
 		this.wakeEvent = new WakeupOnViewPlatformExit(element.getBounds());
 	}
 

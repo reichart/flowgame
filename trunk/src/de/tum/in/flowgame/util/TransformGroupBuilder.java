@@ -66,17 +66,17 @@ public class TransformGroupBuilder {
 	}
 
 	public TransformGroupBuilder rotX(final double degree) {
-		rot.setX(Math.toRadians(degree));
+		rot.x = Math.toRadians(degree);
 		return updateRotation();
 	}
 
 	public TransformGroupBuilder rotY(final double degree) {
-		rot.setY(Math.toRadians(degree));
+		rot.y = Math.toRadians(degree);
 		return updateRotation();
 	}
 
 	public TransformGroupBuilder rotZ(final double degree) {
-		rot.setZ(Math.toRadians(degree));
+		rot.z = Math.toRadians(degree);
 		return updateRotation();
 	}
 
