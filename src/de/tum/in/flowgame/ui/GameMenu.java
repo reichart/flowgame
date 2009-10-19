@@ -8,11 +8,10 @@ import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JCheckBox;
+import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 
 import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
@@ -26,6 +25,7 @@ import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.PauseScreen;
 import de.tum.in.flowgame.ui.screens.QuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.SettingsScreen;
+import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
 
 public class GameMenu implements Sprite, GameListener {
 
@@ -86,6 +86,7 @@ public class GameMenu implements Sprite, GameListener {
 		add(new PauseScreen(this));
 		add(new GameOverScreen(this));
 		add(new SettingsScreen(this));
+		add(new SystemInfoScreen(this));
 		
 		show(MainScreen.class);
 	}
@@ -145,19 +146,17 @@ public class GameMenu implements Sprite, GameListener {
 				jcomp.setOpaque(false);
 			}
 			
-			if (comp instanceof JLabel) {
-				final JLabel label = (JLabel) comp;
-				label.setForeground(Color.WHITE);
+			if (!(comp instanceof JButton)) {
+				// white text color for everything except buttons
+				comp.setForeground(Color.WHITE);
 			}
 			
-			if (comp instanceof JCheckBox) {
-				((JCheckBox) comp).setForeground(Color.WHITE);
+			if (comp instanceof JScrollPane) {
+				// transparent white bg is easier to read
+				comp.setBackground(new Color(1f, 1f, 1f, .25f));
+				((JComponent) comp).setOpaque(true);
 			}
-
-			if (comp instanceof JRadioButton) {
-				((JRadioButton) comp).setForeground(Color.WHITE);
-			}
-
+			
 			if (comp instanceof Container) {
 				setTransparent((Container) comp);
 			}
