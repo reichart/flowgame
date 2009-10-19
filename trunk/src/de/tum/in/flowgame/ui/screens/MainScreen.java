@@ -19,6 +19,8 @@ public class MainScreen extends MenuScreen {
 
 	private final JButton settings = goTo("Settings", SettingsScreen.class);
 
+	private final JButton systemInfo = goTo("System Info", SystemInfoScreen.class);
+
 	private final JLabel title;
 	
 	public MainScreen(final GameMenu menu) {
@@ -30,7 +32,7 @@ public class MainScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title, new JLabel("Welcome " + menu.getLogic().getPlayer().getName() + "!"), play, highscores, settings);
+		return centered(title, new JLabel("Welcome " + menu.getLogic().getPlayer().getName() + "!"), play, highscores, settings, systemInfo);
 	}
 
 }
