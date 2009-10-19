@@ -19,7 +19,7 @@ public class HighscoresScreen extends MenuScreen {
 		super(menu);
 		
 		final Random random = new Random();
-		final int max = 1000;
+		final int max = 100000;
 		final Object[][] rowData = {
 				{"Peter", max - random.nextInt(max)},
 				{"Paul", max - random.nextInt(max)},
@@ -29,10 +29,10 @@ public class HighscoresScreen extends MenuScreen {
 				{"Pheobe", max - random.nextInt(max)}
 		};
 		final Object[] columnNames = {"Player", "Points"};
-		JTable highscores = new JTable(rowData, columnNames);
+		final JTable highscores = new JTable(rowData, columnNames);
+		highscores.setEnabled(false);
 		
 		highscoresScroll = new JScrollPane(highscores);
-		highscores.setOpaque(false);
 	}
 
 	@Override
