@@ -78,6 +78,10 @@ public class QuestionnairePanel extends JPanel {
 		labelTable.put(0, new JLabel("Low"));
 		labelTable.put(100, new JLabel("High"));
 
+		for (final JLabel label : labelTable.values()) {
+			label.setForeground(Color.WHITE);
+		}
+		
 		JPanel questions = new JPanel(new SpringLayout());
 
 		sliders = new ArrayList<JSlider>();
