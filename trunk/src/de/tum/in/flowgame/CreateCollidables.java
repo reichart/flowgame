@@ -80,7 +80,7 @@ public class CreateCollidables implements GameListener {
 		return c;
 	}
 	
-	public void addCollidable(final GameLogic game) {
+	public synchronized void addCollidable(final GameLogic game) {
 		final double zPos;
 		if (!collidables.isEmpty()) {
 			final double lastZpos = getLastCollidableZPos();
@@ -88,7 +88,7 @@ public class CreateCollidables implements GameListener {
 		} else {
 			zPos = INITIAL_Z_POS;
 		}
-		
+//		System.out.println("add Collidable at zPos: " + zPos);
 		collidables.add(createCollidable(zPos, game));
 	}
 
@@ -130,7 +130,7 @@ public class CreateCollidables implements GameListener {
 	}
 
 	@Override
-	public void gameStopped(final GameLogic game) {
+	public synchronized void gameStopped(final GameLogic game) {
 		final int max = collidables.size();
 		for (int i = max-1; i >= 0; i--){
 			collidables.get(i).detach();
