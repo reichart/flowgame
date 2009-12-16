@@ -176,7 +176,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	 * 
 	 * @param message
 	 *            the message to display
-	 * @param delay
+	 * @param seconds
 	 *            the time to display the message in milliseconds
 	 */
 	public void message(final String message, final Integer seconds) {
