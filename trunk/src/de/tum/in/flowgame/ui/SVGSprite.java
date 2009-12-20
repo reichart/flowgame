@@ -5,6 +5,9 @@ import java.awt.Graphics2D;
 
 import com.kitfox.svg.app.beans.SVGIcon;
 
+/**
+ * A {@link Sprite} implementation to render SVG images.
+ */
 public class SVGSprite implements Sprite {
 
 	private final SVGIcon icon;

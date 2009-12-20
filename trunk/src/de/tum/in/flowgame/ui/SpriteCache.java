@@ -6,6 +6,10 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Singleton to load all sprites through one location and avoid multiple
+ * instances of the same sprite.
+ */
 public class SpriteCache {
 
 	private final static Log log = LogFactory.getLog(SpriteCache.class);
