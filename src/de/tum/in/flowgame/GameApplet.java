@@ -16,6 +16,10 @@ import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.util.CustomFacebookClient;
 
+/**
+ * This class starts the Flowgame as {@link Applet} and creates a new
+ * {@link CustomFacebookClient} that provides data from facebook.
+ */
 public class GameApplet extends Applet {
 
 	private final Game3D game;
@@ -95,6 +99,11 @@ public class GameApplet extends Applet {
 		}
 	}
 	
+	/**
+	 * Creates a new GameApplet.
+	 * 
+	 * @throws IOException
+	 */
 	public GameApplet() throws IOException {
 		this.game = new Game3D();
 		setLayout(new BorderLayout());

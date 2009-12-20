@@ -10,11 +10,30 @@ import javax.vecmath.Point2d;
 import de.tum.in.flowgame.behavior.ShipNavigationBehavior;
 import de.tum.in.flowgame.util.TransformGroupBuilder;
 
+/**
+ * A class, which represents obstacles in the tunnel.
+ */
 public class Collidable extends BranchGroup {
 	private final double xPos;
 	private final double yPos;
 	private final double zPos;
 
+	/**
+	 * Creates a new Collidable (= obstacle) in the tunnel.
+	 * 
+	 * @param group
+	 *            The parent group for the collidable.
+	 * @param speed
+	 *            The speed of the collidable towards the ship.
+	 * @param scale
+	 *            The scaling factor of the collidable.
+	 * @param zPos
+	 *            The starting position in the tunnel. Zero is the plane of the
+	 *            screen. If you want to place a collidable in front of the
+	 *            ship, virtually behind the screen plane, you have to use
+	 *            negative values. The more negative, the farer in front of the
+	 *            ship.
+	 */
 	public Collidable(final SharedGroup group, long speed, float scale, double zPos) {
 		this.setCapability(BranchGroup.ALLOW_DETACH);
 		this.zPos = zPos;
@@ -83,14 +102,26 @@ public class Collidable extends BranchGroup {
 			return false;
 	}
 
+	/**
+	 * 
+	 * @return zPosition of the collidable.
+	 */
 	public double getZPos() {
 		return zPos;
 	}
 
+	/**
+	 * 
+	 * @return xPosition of the collidable.
+	 */
 	public double getXPos() {
 		return xPos;
 	}
 
+	/**
+	 * 
+	 * @return xPosition of the collidable.
+	 */
 	public double getYPos() {
 		return yPos;
 	}
