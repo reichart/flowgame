@@ -11,10 +11,17 @@ import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.vecmath.Point3d;
 
+import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Collision.Item;
 
+/**
+ * A Class, which provides methods to add {@link Collidable}s to the tunnel.
+ */
 public class CreateCollidables implements GameListener {
 
+	/**
+	 * Initial zPosition of the collidables.
+	 */
 	private static final double INITIAL_Z_POS = -100.0;
 	
 	private final List<Collidable> collidables = new ArrayList<Collidable>();
@@ -26,6 +33,14 @@ public class CreateCollidables implements GameListener {
 	private long startTime;
 	private long pauseBegin;
 
+	/**
+	 * Creates a new CreateCollidables class, which provides methods to add
+	 * collidables in dependency to a {@link DifficultyFunction} to the tunnel.
+	 * 
+	 * @param collidableBranchGroup
+	 *            The BranchGroup, where the collidables are placed.
+	 * @throws IOException
+	 */
 	public CreateCollidables(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.collidableBranchGroup.setCapability(Group.ALLOW_CHILDREN_EXTEND);
@@ -80,6 +95,14 @@ public class CreateCollidables implements GameListener {
 		return c;
 	}
 	
+	/**
+	 * 
+	 * Use this method to add a new collidable to the tunnel.
+	 * 
+	 * @param game
+	 *            {@link GameLogic}, which references the {@link DifficultyFunction} for the
+	 *            calculation of the distance between collidables.
+	 */
 	public synchronized void addCollidable(final GameLogic game) {
 		final double zPos;
 		if (!collidables.isEmpty()) {
@@ -92,6 +115,10 @@ public class CreateCollidables implements GameListener {
 		collidables.add(createCollidable(zPos, game));
 	}
 
+	/**
+	 * 
+	 * @return zPosition of the last {@link Collidable} in the tunnel.
+	 */
 	public double getLastCollidableZPos() {
 		if (!collidables.isEmpty()) {
 			return collidables.get(collidables.size() - 1).getZPos();

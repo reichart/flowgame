@@ -8,7 +8,7 @@ public interface GameListener {
 	 * Notifies the listener that he has been added as listener.
 	 * 
 	 * @param game
-	 *            the game he has been added to
+	 *            The {@link GameLogic} he has been added to.
 	 */
 	void added(GameLogic game);
 
@@ -16,19 +16,52 @@ public interface GameListener {
 	 * Notifies the listener that he has been removed as listener.
 	 * 
 	 * @param game
-	 *            the game he has been removed from
+	 *            The {@link GameLogic} he has been removed from.
 	 */
 	void removed(GameLogic game);
-	
+
+	/**
+	 * Notifies the listener that the game has started.
+	 * 
+	 * @param game
+	 *            The {@link GameLogic} that started.
+	 */
 	void gameStarted(GameLogic game);
 
+	/**
+	 * Notifies the listener that the game has paused.
+	 * 
+	 * @param game
+	 *            The {@link GameLogic} that paused.
+	 */
 	void gamePaused(GameLogic game);
-	
+
+	/**
+	 * Notifies the listener that the game has resumed.
+	 * 
+	 * @param game
+	 *            The {@link GameLogic} that resumed.
+	 */
 	void gameResumed(GameLogic game);
 
+	/**
+	 * Notifies the listener that the game has stopped.
+	 * 
+	 * @param game
+	 *            The {@link GameLogic} that stopped.
+	 */
+
 	void gameStopped(GameLogic game);
-	
-//	void sessionFinished(GameLogic game);
-	
-	void collided(GameLogic logic, Item item);
+
+	// void sessionFinished(GameLogic game);
+
+	/**
+	 * Notifies the listener that a collision happened.
+	 * 
+	 * @param game
+	 *            The {@link GameLogic} that pilots our game.
+	 * @param item
+	 *            The {@link Collidable} that collided with our {@link Ship}.
+	 */
+	void collided(GameLogic game, Item item);
 }
