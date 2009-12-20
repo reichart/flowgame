@@ -13,6 +13,9 @@ import de.tum.in.flowgame.util.Helper;
 import de.tum.in.flowgame.util.AppearanceBuilder.TextureMode;
 import de.tum.in.flowgame.util.AppearanceBuilder.Transparency;
 
+/**
+ * This class creates an animates the background of our universe.
+ */
 public class Space extends BranchGroup {
 
 	public Space() {

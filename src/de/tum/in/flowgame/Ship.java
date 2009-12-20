@@ -24,11 +24,27 @@ import de.tum.in.flowgame.behavior.ShipNavigationBehavior;
 import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.model.Collision.Item;
 
+/**
+ * This class represents the ship in our game. It loads ({@link #loadShip()}) a
+ * 3D model and provides a method ({@link #getControls()}) that returns an
+ * object ({@link ShipNavigationBehavior}) that provides access to the steering
+ * of the ship.
+ */
 public class Ship extends TransformGroup implements GameListener {
 
+	/**
+	 * The inital position of the ship in x-direction.
+	 */
 	public static final float INITIAL_SHIP_PLACEMENT_X = 0;
+	/**
+	 * The initial position of the ship in y-direction.
+	 */
 	public static final float INITIAL_SHIP_PLACEMENT_Y = -1;
+	/**
+	 * The initial position of the ship in z-direction.
+	 */
 	public static final float INITIAL_SHIP_PLACEMENT_Z = -6f;
+
 	private final ShipNavigationBehavior shipNavigationBehavior;
 
 	private final Transform3D staticTransforms;
@@ -40,6 +56,13 @@ public class Ship extends TransformGroup implements GameListener {
 	private final Timer flashTimer;
 	private final SpeedChangeBehavior speedChange;
 
+	/**
+	 * Creates the ship.
+	 * 
+	 * @param viewTG
+	 *            The {@link TransformGroup} of our view.
+	 * @throws IOException
+	 */
 	public Ship(final TransformGroup viewTG) throws IOException {
 		this.flashTimer = new Timer("FlashTimer", true);
 		this.setBoundsAutoCompute(false);
@@ -153,13 +176,17 @@ public class Ship extends TransformGroup implements GameListener {
 		game.addListener(shipNavigationBehavior);
 		speedChange.setGameLogic(game);
 	}
-	
+
 	@Override
 	public void removed(final GameLogic game) {
 		game.removeListener(shipNavigationBehavior);
 		speedChange.setGameLogic(null);
 	}
 
+	/**
+	 * Changes the color of the ship, when a collision with a {@link Collidable}
+	 * takes place.
+	 */
 	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		// TODO don't create new objects all the time
@@ -198,6 +225,9 @@ public class Ship extends TransformGroup implements GameListener {
 		shipNavigationBehavior.reset();
 	}
 
+	/**
+	 * This class changes the {@link Texture} of the ship (changed at collison) back to normal.
+	 */
 	private class FlashTimerTask extends TimerTask {
 
 		@Override
