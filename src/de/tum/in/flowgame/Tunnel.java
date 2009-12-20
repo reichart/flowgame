@@ -19,12 +19,29 @@ import de.tum.in.flowgame.util.AppearanceBuilder;
 import de.tum.in.flowgame.util.AppearanceBuilder.TextureMode;
 import de.tum.in.flowgame.util.AppearanceBuilder.Transparency;
 
+/**
+ * This class creates the tunnel in which our ship is flying through the 3D universe.
+ */
 public class Tunnel extends BranchGroup {
 
+	/**
+	 * The length of a tunnel part.
+	 */
 	public static final float TUNNEL_LENGTH = 200.0f;
+	/** 
+	 * The radius of of all tunnel parts.
+	 */
 	public static final float TUNNEL_RADIUS = 8.0f;
+	/**
+	 * The number of tunnel parts.
+	 */
 	public static final int TUNNEL_PARTS = 3;
 	
+	/**
+	 * Creates the tunnel and adds some functionality so that the tunnelparts
+	 * are reused when the ship is moving forward. Tunnel parts that are left
+	 * behind are moved to the front ({@link TunnelPartMoveBehavior}).
+	 */
 	public Tunnel() {
 		setCapability(BranchGroup.ALLOW_DETACH);
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);

@@ -19,6 +19,15 @@ public class Utils {
 
 	private static final Log log = LogFactory.getLog(Utils.class);
 
+	/**
+	 * Generic method to convert a variable number of objects to an array.
+	 * 
+	 * @param <T>
+	 *            Type of object.
+	 * @param t
+	 *            The object(s).
+	 * @return Array of objects.
+	 */
 	public static <T> T[] asArray(final T... t) {
 		return t;
 	}
