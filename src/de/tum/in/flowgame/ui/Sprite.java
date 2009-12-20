@@ -2,6 +2,9 @@ package de.tum.in.flowgame.ui;
 
 import java.awt.Graphics2D;
 
+/**
+ * Interface for rendering graphics with defined locations and sizes.
+ */
 public interface Sprite {
 
 	/**
