@@ -6,14 +6,14 @@
 || - Kommunikation vom Spiel zum Servlet und umgekehrt || || Barbara || in progress ||  ||  ||
 || - Geschwindigkeitsfunktion aus DB ||  ||  ||  ||  ||  ||
 ||  -- Verschiedene Stufen festlegen ||  ||  ||  ||  ||  ||
-||  -- Baseline messen ||  ||  ||  ||  ||  ||
+||  -- Baseline messen ||  || Sevi ||in progress  ||  ||  ||
 || - Ablauf nach Runden aus DB ||  ||  ||  ||  ||  ||
 || HUD schneller machen ||  ||  ||  ||  ||  ||
-|| Facebookanbindung ||  ||  ||  ||  ||  ||
+|| Facebookanbindung ||  || Phil || Done ||  ||  ||
 || - Holen und anzeigen der Freunde ||  ||  ||  ||  ||  ||
 || - Einladungsbildschirm ||  ||  ||  ||  ||  ||
-|| - Social Ranking ||  ||  ||  ||  ||  ||
-|| Individuelles Ranking ||  ||  ||  ||  ||  ||
+|| - Social Ranking ||  || Barbara || in progress ||  ||  ||
+|| Individuelles Ranking ||  || Christopher || in progress ||  ||  ||
 || Punktezahl ||  ||  ||  ||  ||  ||
 || - berechnen ||  ||  ||  ||  ||  ||
 || - anzeigen ||  ||  ||  ||  ||  ||
