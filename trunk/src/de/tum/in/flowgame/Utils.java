@@ -107,7 +107,7 @@ public class Utils {
 			ois = new ObjectInputStream(bais);
 			return ois.readObject();
 		} catch (final ClassNotFoundException ex) {
-			throw new IOException(ex);
+			throw new IOException(ex.getClass().getName() + ": " + ex.getMessage());
 		} finally {
 			IOUtils.closeQuietly(ois);
 		}
