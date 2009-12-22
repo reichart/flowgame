@@ -1,5 +1,10 @@
 package de.tum.in.flowgame;
 
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Transparency;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -106,5 +111,16 @@ public class Utils {
 		} finally {
 			IOUtils.closeQuietly(ois);
 		}
+	}
+
+	public static BufferedImage createImage(final int w, final int h) {
+		final GraphicsConfiguration gc = getDefaultGraphicsConfiguration();
+		return gc.createCompatibleImage(w, h, Transparency.TRANSLUCENT);
+	}
+
+	public static GraphicsConfiguration getDefaultGraphicsConfiguration() {
+		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		final GraphicsDevice gd = ge.getDefaultScreenDevice();
+		return gd.getDefaultConfiguration();
 	}
 }

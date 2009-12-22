@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
 import de.tum.in.flowgame.ui.screens.GameOverScreen;
@@ -64,7 +65,7 @@ public class GameMenu implements Sprite, GameListener {
 
 	@Override
 	public void render(final Graphics2D g, final int x, final int y, final int w, final int h) {
-		final BufferedImage img = CachedSprite.createImage(w, h);
+		final BufferedImage img = Utils.createImage(w, h);
 
 		final Graphics2D offscreen = (Graphics2D) img.getGraphics();
 		panel.setSize(w, h);
