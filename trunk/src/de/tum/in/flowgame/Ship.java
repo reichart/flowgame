@@ -154,6 +154,7 @@ public class Ship extends TransformGroup implements GameListener {
 		shape1.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
 		shape2 = (Shape3D) ship.getChild(1);
 		tex2 = shape2.getAppearance().getTexture();
+		shape2.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
 		shape2.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
 		shape2.getAppearance().setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		shape2.getAppearance().setCapability(Appearance.ALLOW_MATERIAL_WRITE);
