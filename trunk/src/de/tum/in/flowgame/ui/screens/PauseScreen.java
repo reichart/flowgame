@@ -11,7 +11,6 @@ import de.tum.in.flowgame.ui.GameMenu;
 public class PauseScreen extends MenuScreen {
 
 	private final JButton continueButton = new JButton(new AbstractAction("Continue") {
-		@Override
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().unpause();
 		}

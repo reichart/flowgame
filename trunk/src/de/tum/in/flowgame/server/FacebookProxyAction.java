@@ -67,7 +67,6 @@ public class FacebookProxyAction extends ActionSupport implements ParameterAware
 		return SUCCESS;
 	}
 
-	@Override
 	public void setParameters(final Map<String, String[]> params) {
 		this.params = params;
 	}

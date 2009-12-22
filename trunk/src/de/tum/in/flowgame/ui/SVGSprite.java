@@ -24,13 +24,11 @@ public class SVGSprite implements Sprite {
 		icon.setScaleToFit(true);
 	}
 
-	@Override
 	public void render(final Graphics2D g, final int x, final int y) {
 		icon.setScaleToFit(false);
 		icon.paintIcon(null, g, x, y);
 	}
 
-	@Override
 	public void render(final Graphics2D g, final int x, final int y, final int w, final int h) {
 		size.setSize(w, h);
 		icon.setPreferredSize(size);

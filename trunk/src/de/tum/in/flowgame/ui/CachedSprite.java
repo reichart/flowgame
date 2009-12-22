@@ -22,7 +22,6 @@ public class CachedSprite implements Sprite {
 	/**
 	 * This just passes the call trough to the actual sprite.
 	 */
-	@Override
 	public void render(final Graphics2D g, final int x, final int y) {
 		sprite.render(g, x, y);
 	}
@@ -31,7 +30,6 @@ public class CachedSprite implements Sprite {
 	 * Renders the actual sprite to an offscreen image and then draws that
 	 * image.
 	 */
-	@Override
 	public void render(final Graphics2D g, final int x, final int y, final int w, final int h) {
 		if (currentW != w || currentH != h) {
 			// compensate for scaled graphics context

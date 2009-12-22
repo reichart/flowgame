@@ -120,44 +120,37 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		}
 	}
 
-	@Override
 	public void added(final GameLogic game) {
 		this.logic = game;
 		game.addListener(menu);
 	}
 	
-	@Override
 	public void removed(final GameLogic game) {
 		this.logic = null;
 		game.removeListener(menu);
 	}
 	
-	@Override
 	public void gameStarted(final GameLogic game) {
 		drawHUD = true;
 		drawMenu = false;
 		message("Go speed racer!");
 	}
 
-	@Override
 	public void gamePaused(final GameLogic game) {
 		drawMenu = true;
 		drawMessage = false;
 	}
 
-	@Override
 	public void gameResumed(GameLogic game) {
 		drawMenu = false;
 	}
 
-	@Override
 	public void gameStopped(final GameLogic game) {
 		drawHUD = false;
 		drawMenu = true;
 		drawMessage = false;
 	}
 
-	@Override
 	public void collided(final GameLogic logic, final Item item) {
 //		if (item == Item.ASTEROID) {
 //			message("Oh noes! Evil asteroidz!");
@@ -166,7 +159,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 //		}
 	}
 
-	@Override
 	public void updateFramesPerSecond(long fps) {
 		this.fps = fps;
 	}
@@ -211,23 +203,19 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		}
 	}
 
-	@Override
 	public void componentHidden(final ComponentEvent e) {
 		// empty
 	}
 
-	@Override
 	public void componentMoved(final ComponentEvent e) {
 		// empty
 	}
 
-	@Override
 	public void componentResized(final ComponentEvent e) {
 		this.width = e.getComponent().getWidth();
 		this.height = e.getComponent().getHeight();
 	}
 
-	@Override
 	public void componentShown(final ComponentEvent e) {
 		// empty
 	}

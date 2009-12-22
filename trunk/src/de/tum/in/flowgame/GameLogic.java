@@ -110,7 +110,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 
-	@Override
 	public void run() {
 		System.out.println("GameLogic.run() starting");
 

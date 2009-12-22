@@ -19,8 +19,6 @@ public class QuestionnaireScreen extends MenuScreen {
 	private final JScrollPane qscrollpane;
 
 	private final JButton play = new JButton(new AbstractAction("Play!") {
-
-		@Override
 		public void actionPerformed(final ActionEvent e) {
 			qpanel.getAnswers(); // TODO put into GameRound
 			if (menu.getLogic().getCurrentScenarioRound() != null) {

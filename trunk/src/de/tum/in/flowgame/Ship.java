@@ -173,13 +173,11 @@ public class Ship extends TransformGroup implements GameListener {
 		return shipNavigationBehavior;
 	}
 
-	@Override
 	public void added(final GameLogic game) {
 		game.addListener(shipNavigationBehavior);
 		speedChange.setGameLogic(game);
 	}
 
-	@Override
 	public void removed(final GameLogic game) {
 		game.removeListener(shipNavigationBehavior);
 		speedChange.setGameLogic(null);
@@ -189,7 +187,6 @@ public class Ship extends TransformGroup implements GameListener {
 	 * Changes the color of the ship, when a collision with a {@link Collidable}
 	 * takes place.
 	 */
-	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		// TODO don't create new objects all the time
 		final Material mat = new Material();
@@ -207,22 +204,18 @@ public class Ship extends TransformGroup implements GameListener {
 		flashTimer.schedule(new FlashTimerTask(), 150);
 	}
 
-	@Override
 	public void gamePaused(final GameLogic game) {
 		// empty
 	}
 
-	@Override
 	public void gameResumed(final GameLogic game) {
 		// empty
 	}
 
-	@Override
 	public void gameStarted(final GameLogic game) {
 		// empty
 	}
 
-	@Override
 	public void gameStopped(final GameLogic game) {
 		shipNavigationBehavior.reset();
 	}

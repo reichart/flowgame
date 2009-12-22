@@ -52,7 +52,6 @@ public class HealthBar implements Sprite {
 	 * @param h
 	 *            if less than zero, only w will be used
 	 */
-	@Override
 	public void render(final Graphics2D g, final int x, final int y, final int w, final int h) {
 		final float scaleX = w / 200f;
 		final float scaleY = (h < 0) ? scaleX : h / 20f;

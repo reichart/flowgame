@@ -85,7 +85,6 @@ public abstract class MenuScreen extends JPanel {
 
 	protected JButton goTo(final String label, final Class<? extends MenuScreen> screen) {
 		return new JButton(new AbstractAction(label) {
-			@Override
 			public void actionPerformed(final ActionEvent e) {
 				menu.show(screen);
 			}
