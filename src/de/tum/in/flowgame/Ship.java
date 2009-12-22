@@ -73,6 +73,7 @@ public class Ship extends TransformGroup implements GameListener {
 		this.setTransform(t3d);
 
 		final TransformGroup moveGroup = new TransformGroup();
+		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 
 		this.addChild(moveGroup);
