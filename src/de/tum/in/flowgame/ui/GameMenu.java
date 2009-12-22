@@ -58,12 +58,10 @@ public class GameMenu implements Sprite, GameListener {
 		panel.add(screens, BorderLayout.CENTER);
 	}
 
-	@Override
 	public void render(final Graphics2D g, final int x, final int y) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public void render(final Graphics2D g, final int x, final int y, final int w, final int h) {
 		final BufferedImage img = Utils.createImage(w, h);
 
@@ -75,7 +73,6 @@ public class GameMenu implements Sprite, GameListener {
 		g.drawImage(img, 0, 0, null);
 	}
 
-	@Override
 	public void added(final GameLogic game) {
 		this.logic = game;
 		
@@ -92,17 +89,14 @@ public class GameMenu implements Sprite, GameListener {
 		show(MainScreen.class);
 	}
 	
-	@Override
 	public void removed(final GameLogic game) {
 		// empty
 	}
 	
-	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		// empty
 	}
 
-	@Override
 	public void gamePaused(final GameLogic game) {
 		show(PauseScreen.class);
 	}
@@ -112,17 +106,14 @@ public class GameMenu implements Sprite, GameListener {
 //		show(GameOverScreen.class);
 //	}
 
-	@Override
 	public void gameResumed(final GameLogic game) {
 		// empty
 	}
 
-	@Override
 	public void gameStarted(final GameLogic game) {
 		show(EmptyScreen.class);
 	}
 
-	@Override
 	public void gameStopped(final GameLogic game) {
 		if (game.getCurrentScenarioRound().getQuestionnaire() != null) {
 			show(QuestionnaireScreen.class);		

@@ -11,7 +11,6 @@ import de.tum.in.flowgame.ui.GameMenu;
 public class GameOverScreen extends MenuScreen {
 
 	private final JButton backToMain = new JButton(new AbstractAction("Main Menu") {
-		@Override
 		public void actionPerformed(final ActionEvent e) {
 			menu.show(MainScreen.class);
 		}

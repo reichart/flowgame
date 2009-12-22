@@ -45,7 +45,6 @@ public class CreateNewCollidablesBehavior extends Behavior implements GameLogicC
 		wakeupOn(condition);
 	}
 
-	@Override
 	public void setGameLogic(final GameLogic game) {
 		this.game = game;
 	}

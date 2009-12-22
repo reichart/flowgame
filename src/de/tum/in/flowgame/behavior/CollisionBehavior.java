@@ -99,7 +99,6 @@ public class CollisionBehavior extends Behavior implements GameLogicConsumer {
 		wakeupOn(condition);
 	}
 	
-	@Override
 	public void setGameLogic(final GameLogic logic) {
 		this.gameLogic = logic;
 	}

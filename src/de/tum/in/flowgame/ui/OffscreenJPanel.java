@@ -212,37 +212,30 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 		return null;
 	}
 
-	@Override
 	public void mouseClicked(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}
 
-	@Override
 	public void mouseEntered(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}
 
-	@Override
 	public void mouseExited(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}
 
-	@Override
 	public void mousePressed(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}
 
-	@Override
 	public void mouseReleased(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}
 
-	@Override
 	public void mouseDragged(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}
 
-	@Override
 	public void mouseMoved(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}

@@ -126,37 +126,30 @@ public class CreateCollidables implements GameListener {
 		return INITIAL_Z_POS;
 	}
 	
-	@Override
 	public void added(final GameLogic game) {
 		// empty
 	}
 	
-	@Override
 	public void removed(final GameLogic game) {
 		// empty
 	}
 	
-	@Override
 	public void collided(final GameLogic logic, final Item item) {
 		// empty
 	}
 
-	@Override
 	public void gamePaused(final GameLogic game) {
 		pauseBegin = System.currentTimeMillis();
 	}
 	
-	@Override
 	public void gameResumed(final GameLogic game) {
 		startTime = startTime + (System.currentTimeMillis() - pauseBegin);
 	}
 
-	@Override
 	public void gameStarted(final GameLogic game) {
 		startTime = System.currentTimeMillis();
 	}
 
-	@Override
 	public synchronized void gameStopped(final GameLogic game) {
 		final int max = collidables.size();
 		for (int i = max-1; i >= 0; i--){

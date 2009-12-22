@@ -45,7 +45,6 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 		wakeupOn(newFrame);
 	}
 	
-	@Override
 	public void setGameLogic(final GameLogic gameLogic) {
 		this.gameLogic = gameLogic;
 	}

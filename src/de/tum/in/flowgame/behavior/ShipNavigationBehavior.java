@@ -421,34 +421,28 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		return this.normalSteering;
 	}
 
-	@Override
 	public void added(final GameLogic game) {
 		this.gameLogic = game;
 	}
 	
-	@Override
 	public void removed(final GameLogic game) {
 		this.gameLogic = null;
 	}
 	
-	@Override
 	public void collided(GameLogic logic, Item item) {
 		// empty
 	}
 
-	@Override
 	public void gamePaused(GameLogic game) {
 		pause = true;
 		pauseBegin = System.currentTimeMillis();
 	}
 
-	@Override
 	public void gameResumed(GameLogic game) {
 		pause = false;
 		time = time + (System.currentTimeMillis() - pauseBegin);
 	}
 
-	@Override
 	public void gameStarted(GameLogic game) {
 		trans.setIdentity();
 		translationGroup.setTransform(trans);
@@ -457,7 +451,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		pos = new Vector3d();
 	}
 
-	@Override
 	public void gameStopped(GameLogic game) {
 		// empty
 	}

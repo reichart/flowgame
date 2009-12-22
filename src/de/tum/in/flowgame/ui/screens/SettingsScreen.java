@@ -25,21 +25,18 @@ public class SettingsScreen extends MenuScreen {
 	private final ButtonGroup steeringgroup = new ButtonGroup();
 
 	private final JRadioButton normal = new JRadioButton(new AbstractAction("normal") {
-		@Override
 		public void actionPerformed(final ActionEvent e) {
 			menu.getGame().getShip().getControls().setNormalSteering(true);
 		}
 	});
 
 	private final JRadioButton airplane = new JRadioButton(new AbstractAction("airplane") {
-		@Override
 		public void actionPerformed(final ActionEvent e) {
 			menu.getGame().getShip().getControls().setNormalSteering(false);
 		}
 	});
 
 	private final JCheckBox fps = new JCheckBox(new AbstractAction("FrameCounter") {
-		@Override
 		public void actionPerformed(final ActionEvent e) {
 			menu.getOverlay().setDrawFPS(fps.isSelected());
 		}
@@ -54,14 +51,12 @@ public class SettingsScreen extends MenuScreen {
 	public SettingsScreen(final GameMenu menu) {
 		super(menu);
 		accSlider.addChangeListener(new ChangeListener() {
-			@Override
 			public void stateChanged(ChangeEvent e) {
 //				System.out.println("Acceleration: " + (float)accSlider.getValue()/100);
 				menu.getGame().getShip().getControls().setAcceleration((float)accSlider.getValue()/100);
 			}
 		});
 		maxSpeedSlider.addChangeListener(new ChangeListener() {
-			@Override
 			public void stateChanged(ChangeEvent e) {
 //				System.out.println("Max Speed: " + (float)maxSpeedSlider.getValue()/100);
 				menu.getGame().getShip().getControls().setMaxSpeed((float)maxSpeedSlider.getValue()/100);
