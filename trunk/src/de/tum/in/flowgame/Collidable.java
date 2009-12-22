@@ -3,6 +3,7 @@ package de.tum.in.flowgame;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Link;
+import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point2d;
@@ -36,6 +37,7 @@ public class Collidable extends BranchGroup {
 	 */
 	public Collidable(final SharedGroup group, long speed, float scale, double zPos) {
 		this.setCapability(BranchGroup.ALLOW_DETACH);
+		this.setCapability(Node.ALLOW_BOUNDS_READ);
 		this.zPos = zPos;
 
 		setUserData(group.getUserData());
