@@ -122,20 +122,23 @@ public class GameMenu implements Sprite, GameListener {
 
 	private void add(final MenuScreen screen) {
 		screen.build();
-		setTransparent(screen);
+		prepareForOffscreen(screen);
 		screens.add(screen.getClass().getName(), screen);
 	}
 
 	/**
-	 * Calls {@link JComponent#setOpaque(boolean)} with <code>false</code> on
-	 * all {@link JComponent}s in the tree.
+	 * Fixes various problem with rendering components offscreen outside
+	 * of the usual Swing/AWT magic.
 	 */
-	private void setTransparent(final Container root) {
+	private void prepareForOffscreen(final Container root) {
 		for (final Component comp : root.getComponents()) {
 			if (comp instanceof JComponent) {
 				final JComponent jcomp = (JComponent) comp;
 				jcomp.setDoubleBuffered(false);
 				jcomp.setOpaque(false);
+				
+				// prevent NPE when requesting focus on JRE 1.5  
+				jcomp.setRequestFocusEnabled(false);
 			}
 			
 			if (!(comp instanceof JButton)) {
@@ -150,7 +153,7 @@ public class GameMenu implements Sprite, GameListener {
 			}
 			
 			if (comp instanceof Container) {
-				setTransparent((Container) comp);
+				prepareForOffscreen((Container) comp);
 			}
 		}
 	}
@@ -160,7 +163,7 @@ public class GameMenu implements Sprite, GameListener {
 			if (component.getClass().equals(screenClass)) {
 				final MenuScreen screen = (MenuScreen) component;
 				screen.update();
-				setTransparent(screen);
+				prepareForOffscreen(screen);
 			}
 		}
 
