@@ -2,6 +2,7 @@ package de.tum.in.flowgame.ui;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.GraphicsConfiguration;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -9,6 +10,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 
 import javax.swing.JPanel;
+
+import de.tum.in.flowgame.Utils;
 
 /**
  * Frankenstein's own JPanel to render regular Swing components to an offscreen
@@ -33,6 +36,12 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 		
 		// force layout of offscreen Swing/AWT components (Sun bug #4639354)
 		addNotify();
+	}
+	
+	@Override
+	public GraphicsConfiguration getGraphicsConfiguration() {
+		// prevents NPE on JRE 1.5 somewhere in Metal LAF
+		return Utils.getDefaultGraphicsConfiguration();
 	}
 
 	private boolean isMouseGrab(final MouseEvent e) {
@@ -165,13 +174,12 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 		final MouseEvent retargeted;
 		if (id == MouseEvent.MOUSE_WHEEL) {
 			retargeted = new MouseWheelEvent(target, id, e.getWhen(), e.getModifiersEx() | e.getModifiers(),
-					retargetedX, retargetedY, e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(),
-					e.isPopupTrigger(), ((MouseWheelEvent) e).getScrollType(), ((MouseWheelEvent) e).getScrollAmount(),
-					((MouseWheelEvent) e).getWheelRotation());
+					retargetedX, retargetedY, e.getClickCount(), e.isPopupTrigger(), ((MouseWheelEvent) e)
+							.getScrollType(), ((MouseWheelEvent) e).getScrollAmount(), ((MouseWheelEvent) e)
+							.getWheelRotation());
 		} else {
 			retargeted = new MouseEvent(target, id, e.getWhen(), e.getModifiersEx() | e.getModifiers(), retargetedX,
-					retargetedY, e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(), e.isPopupTrigger(), e
-							.getButton());
+					retargetedY, e.getClickCount(), e.isPopupTrigger(), e.getButton());
 		}
 
 		target.dispatchEvent(retargeted);
