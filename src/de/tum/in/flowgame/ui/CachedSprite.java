@@ -1,11 +1,9 @@
 package de.tum.in.flowgame.ui;
 
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+
+import de.tum.in.flowgame.Utils;
 
 /**
  * Renders the actual sprite into an offscreen image and the just draws this
@@ -40,7 +38,7 @@ public class CachedSprite implements Sprite {
 			final int scaledW = (int) (w * g.getTransform().getScaleX());
 			final int scaledH = (int) (h * g.getTransform().getScaleY());
 
-			img = createImage(scaledW, scaledH);
+			img = Utils.createImage(scaledW, scaledH);
 			final Graphics2D ig = (Graphics2D) img.getGraphics();
 			sprite.render(ig, x, y, img.getWidth(), img.getHeight());
 			ig.dispose();
@@ -50,13 +48,6 @@ public class CachedSprite implements Sprite {
 		}
 
 		g.drawImage(img, x, y, w, h, null);
-	}
-
-	public static BufferedImage createImage(final int w, final int h) {
-		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		final GraphicsDevice gd = ge.getDefaultScreenDevice();
-		final GraphicsConfiguration gc = gd.getDefaultConfiguration();
-		return gc.createCompatibleImage(w, h, Transparency.TRANSLUCENT);
 	}
 
 }
