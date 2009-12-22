@@ -148,8 +148,10 @@ public class Game3D extends Canvas3D {
 		fps.getListeners().addListener(overlay);
 		scene.addChild(fps);
 
+		scene.compile();
+		
 		su.addBranchGraph(scene);
-
+		
 		/*
 		 * This is a workaround for Java3D bug #501
 		 * https://java3d.dev.java.net/issues/show_bug.cgi?id=501 from
