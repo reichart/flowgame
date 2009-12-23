@@ -174,12 +174,13 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 		final MouseEvent retargeted;
 		if (id == MouseEvent.MOUSE_WHEEL) {
 			retargeted = new MouseWheelEvent(target, id, e.getWhen(), e.getModifiersEx() | e.getModifiers(),
-					retargetedX, retargetedY, e.getClickCount(), e.isPopupTrigger(), ((MouseWheelEvent) e)
-							.getScrollType(), ((MouseWheelEvent) e).getScrollAmount(), ((MouseWheelEvent) e)
-							.getWheelRotation());
+					retargetedX, retargetedY, e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(),
+					e.isPopupTrigger(), ((MouseWheelEvent) e).getScrollType(), ((MouseWheelEvent) e).getScrollAmount(),
+					((MouseWheelEvent) e).getWheelRotation());
 		} else {
 			retargeted = new MouseEvent(target, id, e.getWhen(), e.getModifiersEx() | e.getModifiers(), retargetedX,
-					retargetedY, e.getClickCount(), e.isPopupTrigger(), e.getButton());
+					retargetedY, e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(), e.isPopupTrigger(), e
+							.getButton());
 		}
 
 		target.dispatchEvent(retargeted);
