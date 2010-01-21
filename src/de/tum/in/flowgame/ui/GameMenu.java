@@ -5,13 +5,21 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 
 import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
@@ -39,12 +47,12 @@ public class GameMenu implements Sprite, GameListener {
 	private final JPanel screens;
 
 	private final GameOverlay overlay;
-	
+
 	private final Game3D game;
 
 	public GameMenu(final Component mouseTrap, final GameOverlay overlay) {
 		this.overlay = overlay;
-		this.game = (Game3D)mouseTrap;
+		this.game = (Game3D) mouseTrap;
 
 		this.layout = new CardLayout();
 		this.screens = new JPanel(layout);
@@ -75,7 +83,7 @@ public class GameMenu implements Sprite, GameListener {
 
 	public void added(final GameLogic game) {
 		this.logic = game;
-		
+
 		// these require the above logic to be available
 		add(new EmptyScreen(this));
 		add(new MainScreen(this));
@@ -85,14 +93,14 @@ public class GameMenu implements Sprite, GameListener {
 		add(new GameOverScreen(this));
 		add(new SettingsScreen(this));
 		add(new SystemInfoScreen(this));
-		
+
 		show(MainScreen.class);
 	}
-	
+
 	public void removed(final GameLogic game) {
 		// empty
 	}
-	
+
 	public void collided(final GameLogic logic, final Item item) {
 		// empty
 	}
@@ -100,11 +108,11 @@ public class GameMenu implements Sprite, GameListener {
 	public void gamePaused(final GameLogic game) {
 		show(PauseScreen.class);
 	}
-	
-//	@Override
-//	public void sessionFinished(GameLogic game) {
-//		show(GameOverScreen.class);
-//	}
+
+	// @Override
+	// public void sessionFinished(GameLogic game) {
+	// show(GameOverScreen.class);
+	// }
 
 	public void gameResumed(final GameLogic game) {
 		// empty
@@ -116,7 +124,7 @@ public class GameMenu implements Sprite, GameListener {
 
 	public void gameStopped(final GameLogic game) {
 		if (game.getCurrentScenarioRound().getQuestionnaire() != null) {
-			show(QuestionnaireScreen.class);		
+			show(QuestionnaireScreen.class);
 		}
 	}
 
@@ -127,34 +135,49 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	/**
-	 * Fixes various problem with rendering components offscreen outside
-	 * of the usual Swing/AWT magic.
+	 * Fixes various problem with rendering components offscreen outside of the
+	 * usual Swing/AWT magic.
 	 */
 	private void prepareForOffscreen(final Container root) {
 		for (final Component comp : root.getComponents()) {
+
+			// white text color for everything
+			comp.setForeground(Color.WHITE);
+
 			if (comp instanceof JComponent) {
 				final JComponent jcomp = (JComponent) comp;
 				jcomp.setDoubleBuffered(false);
 				jcomp.setOpaque(false);
-				
-				// prevent NPE when requesting focus on JRE 1.5  
+
+				// prevent NPE when requesting focus on JRE 1.5
 				jcomp.setRequestFocusEnabled(false);
 			}
-			
-			if (!(comp instanceof JButton)) {
-				// white text color for everything except buttons
-				comp.setForeground(Color.WHITE);
+
+			if (comp instanceof JButton) {
+				comp.setForeground(Color.DARK_GRAY);
 			}
-			
+
+			if (comp instanceof JTable) {
+				comp.setForeground(Color.WHITE);
+				comp.setBackground(new Color(1f, 1f, 1f, 0f));
+				comp.setFont(comp.getFont().deriveFont(18f));
+			}
+
+			if (comp instanceof JTableHeader) {
+				comp.setForeground(Color.DARK_GRAY);
+				comp.setFont(comp.getFont().deriveFont(Font.BOLD, 20f));
+			}
+
 			if (comp instanceof JScrollPane) {
 				// transparent white bg is easier to read
 				comp.setBackground(new Color(1f, 1f, 1f, .25f));
 				((JComponent) comp).setOpaque(true);
 			}
-			
+
 			if (comp instanceof Container) {
 				prepareForOffscreen((Container) comp);
 			}
+
 		}
 	}
 
@@ -174,16 +197,16 @@ public class GameMenu implements Sprite, GameListener {
 	public GameLogic getGameLogic() {
 		return logic;
 	}
-	
+
 	public GameLogic getLogic() {
 		return getGameLogic();
 	}
-	
+
 	public GameOverlay getOverlay() {
 		return overlay;
 	}
-	
-	public Game3D getGame (){
+
+	public Game3D getGame() {
 		return this.game;
 	}
 }
