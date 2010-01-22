@@ -9,11 +9,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+
+import org.json.JSONObject;
 
 import com.google.code.facebookapi.ProfileField;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.model.Person;
+import de.tum.in.flowgame.ui.screens.MainScreen;
+import de.tum.in.flowgame.ui.screens.ProfileScreen;
 import de.tum.in.flowgame.util.CustomFacebookClient;
 
 /**
@@ -47,21 +52,7 @@ public class GameApplet extends Applet {
 		final GameApplet app = new GameApplet();
 		frame.add(app);
 		
-		// this initializes all the other classes
-		
-		final long id = 1337;
-		final Client client = new Client("http://localhost:8080/flowgame/");
-		
-		// download person information from server
-		Person player = client.downloadPerson(id);
-		if (player == null) {
-			player = new Person(id);
-			final String name = "PLAYER";
-			player.setName(name);
-			client.uploadQuietly(player);
-		}
-		
-		new GameLogic(player, client).addListener(app.game.getListener());
+		app.init();
 		
 		frame.setVisible(true);
 		
@@ -70,29 +61,54 @@ public class GameApplet extends Applet {
 
 	@Override
 	public void init() {
+		// TODO refactor this for local testability
 		final String server = getCodeBase().toString();
 		final String apiKey = getParameter("apiKey");
 		final String sessionKey = getParameter("sessionKey");
 		final String sessionSecret = getParameter("sessionSecret");
 		
 		try {
-			this.facebook = new CustomFacebookClient(new URL(server + "fbproxy"), apiKey, sessionSecret, sessionKey);
+			final URL serverUrl = new URL(server + "fbproxy");
+			this.facebook = new CustomFacebookClient(serverUrl, apiKey, sessionSecret, sessionKey);
 		
-			final long id = facebook.users_getLoggedInUser();
+			final long loggedInUser = facebook.users_getLoggedInUser();
 			
 			final Client client = new Client(server);
 			
+			final boolean newPlayer;
+			
 			// download person information from server
-			Person player = client.downloadPerson(id);
+			Person player = client.downloadPerson(loggedInUser);
 			if (player == null) {
-				player = new Person(id);
-				final String name = facebook.users_getProfileField(id, ProfileField.FIRST_NAME);
-				player.setName(name);
+				newPlayer = true;
+				
+				System.err.println("##### creating new player");
+				player = new Person(loggedInUser);
+				
+				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
+						ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
+
+				player.setName(userInfo.getString("first_name"));
+				player.setSex(userInfo.getString("sex"));
+				final SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
+				player.setDateOfBirth(fmt.parse(userInfo.getString("birthday_date")));
+				player.setPlace(userInfo.getJSONObject("hometown_location").getString("country"));
+				
 				client.uploadQuietly(player);
+				System.err.println("##### stored new player");
+			} else {
+				newPlayer = false;
+				System.err.println("##### existing player");
 			}
 			
 			// this initializes all the other classes
 			new GameLogic(player, client).addListener(game.getListener());
+			
+			if(newPlayer) {
+				game.getMenu().show(ProfileScreen.class);
+			} else {
+				game.getMenu().show(MainScreen.class);
+			}
 			
 		} catch (final Exception ex) {
 			throw new RuntimeException("Failed to connect to " + server, ex);
