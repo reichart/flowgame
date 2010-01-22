@@ -2,6 +2,7 @@ package de.tum.in.flowgame.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,23 +12,28 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Person implements Serializable {
-	public enum Sex{MALE, FEMALE}
-	
+
 	@Id
-	@Column(name="id", nullable=false)
+	@Column(name = "id", nullable = false)
 	private Long id;
-	
+
 	String name;
-	Sex sex;
+	String sex; // Facebook provides localized values, so no Enum here
 	@Temporal(TemporalType.DATE)
 	Date dateOfBirth;
 	String place;
-	
+
+	/**
+	 * Answers given to the initial profiling questionaire for first-time
+	 * players.
+	 */
+	List<Answer> profilingAnswers;
+
 	@SuppressWarnings("unused") // for JPA
 	private Person() {
-		//empty
+		// empty
 	}
-	
+
 	public Person(Long id) {
 		this.id = id;
 	}
@@ -40,11 +46,11 @@ public class Person implements Serializable {
 		this.name = name;
 	}
 
-	public Sex getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(Sex sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
@@ -71,7 +77,7 @@ public class Person implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Person) {
