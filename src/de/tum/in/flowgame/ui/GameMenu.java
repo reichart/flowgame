@@ -11,15 +11,10 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 
 import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
@@ -32,6 +27,7 @@ import de.tum.in.flowgame.ui.screens.HighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.PauseScreen;
+import de.tum.in.flowgame.ui.screens.ProfileScreen;
 import de.tum.in.flowgame.ui.screens.QuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.SettingsScreen;
 import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
@@ -93,8 +89,9 @@ public class GameMenu implements Sprite, GameListener {
 		add(new GameOverScreen(this));
 		add(new SettingsScreen(this));
 		add(new SystemInfoScreen(this));
-
-		show(MainScreen.class);
+		add(new ProfileScreen(this));
+		
+		show(EmptyScreen.class);
 	}
 
 	public void removed(final GameLogic game) {
