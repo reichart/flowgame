@@ -1,5 +1,9 @@
 package de.tum.in.flowgame.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,6 +14,8 @@ import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Difficulty;
 import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Function;
+import de.tum.in.flowgame.model.GameRound;
+import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.Question;
 import de.tum.in.flowgame.model.Questionnaire;
@@ -68,8 +74,29 @@ public class DDLGenerator {
 		qn.addQuestion(q13);
 		
 		Answer ans = new Answer(q1, 1);
-		Person p = new Person(12345L);
-		p.setName("Ballala");
+		
+		//Create 6 Players
+		Person p0 = new Person(1071363107L);
+		p0.setName("Barbara");
+		Person p1 = new Person(226900023L);
+		p1.setName("Blitz");
+		Person p2 = new Person(250900007L);
+		p2.setName("Phil");
+		Person p3 = new Person(1526292045L);
+		p3.setName("Dennis");
+		Person p4 = new Person(100000237633531L);
+		p4.setName("Christopher");
+		Person p5 = new Person(1651586484L);
+		p5.setName("Sevi");
+		
+		List<Person> players = new ArrayList<Person>();
+		players.add(p0);
+		players.add(p1);
+		players.add(p2);
+		players.add(p3);
+		players.add(p4);
+		players.add(p5);
+		
 		Difficulty d = new Difficulty();
 
 		Function intervalFunction = new ConstantFunction(80.0);
@@ -81,12 +108,12 @@ public class DDLGenerator {
 		df.setRatio(ratioFunction);
 		df.setSpeed(speedFunction);
 		
-		ScenarioRound sr = new ScenarioRound();
-		sr.setBaselineModifier(1);
-		sr.setDifficultyFunction(df);
-		sr.setExpectedPlaytime(2000L);
-		sr.setQuestionnaire(qn);
-		sr.setBaselineRound(true);
+		ScenarioRound sr1 = new ScenarioRound();
+		sr1.setBaselineModifier(1);
+		sr1.setDifficultyFunction(df);
+		sr1.setExpectedPlaytime(2000L);
+		sr1.setQuestionnaire(qn);
+		sr1.setBaselineRound(true);
 		
 		ScenarioRound sr2 = new ScenarioRound();
 		sr2.setBaselineModifier(5);
@@ -95,19 +122,45 @@ public class DDLGenerator {
 		sr2.setQuestionnaire(qn);
 		
 		ScenarioSession ss = new ScenarioSession();
-		ss.getRounds().add(sr);
+		ss.getRounds().add(sr1);
 		ss.getRounds().add(sr2);
-
+		
+		//Create 1 GameSession for each player
+		Random rnd = new Random();
+		List<GameSession> gameSessions = new ArrayList<GameSession>();
+		for (int i = 0; i < 6; i++) {
+			GameSession gs = new GameSession();
+			gs.setScenarioSession(ss);
+			gs.setPlayer(players.get(i));
+			
+			//Create 4 GameRounds for each player
+			for (int j = 0; j < 4; j++) {
+				GameRound gr = new GameRound();
+				gr.setScenarioRound(sr1);
+				gr.setScore(Math.abs(rnd.nextLong()) % 10000);
+				gs.addRound(gr);
+			}
+						
+			gameSessions.add(gs);
+		}
+		
 		em.getTransaction().begin();
 		em.persist(q1);
 		em.persist(qn);
 		em.persist(ans);
-		em.persist(p);
+		em.persist(p1);
+		em.persist(p2);
+		em.persist(p3);
+		em.persist(p4);
+		em.persist(p5);
 		em.persist(d);
 		em.persist(intervalFunction);
 		em.persist(speedFunction);
 		em.persist(df);
 		em.persist(ss);
+		for (GameSession gameSession : gameSessions) {
+			em.persist(gameSession);
+		}		
 		em.getTransaction().commit();
 	}
 }
