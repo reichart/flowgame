@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.client;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -18,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioSession;
+import de.tum.in.flowgame.model.Score;
 
 public class Client {
 
@@ -26,6 +28,7 @@ public class Client {
 	private final String UPLOAD_URL;
 	private final String DOWNLOAD_PERSON_URL;
 	private final String DOWNLOAD_SCENARIOSESSION;
+	private final String DOWNLOAD_PERSONAL_HIGHSCORE;
 
 	private final HttpClient client;
 
@@ -35,6 +38,7 @@ public class Client {
 		this.UPLOAD_URL = server + "upload.action";
 		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
 		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
+		this.DOWNLOAD_PERSONAL_HIGHSCORE = server + "personalHighscoreDownload.action";
 	}
 
 	public void uploadQuietly(final Object entity) {
@@ -60,6 +64,11 @@ public class Client {
 
 	public ScenarioSession downloadScenarioSession(final Person person) throws IOException {
 		return (ScenarioSession) execute(DOWNLOAD_SCENARIOSESSION, person);
+	}
+	
+	public List<Score> downloadPersonHighscore(long personId, int numElements) throws IOException {
+		HighscoreRequest highscoreRequest = new HighscoreRequest(personId, numElements);
+		return (List<Score>) execute(DOWNLOAD_PERSONAL_HIGHSCORE, highscoreRequest);
 	}
 
 	/**
