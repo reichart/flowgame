@@ -72,4 +72,22 @@ public class Person implements Serializable {
 		this.id = id;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Person) {
+			if (((Person) obj).getId().equals(this.id)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+	
 }
