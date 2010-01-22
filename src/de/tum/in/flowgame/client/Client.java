@@ -28,6 +28,7 @@ public class Client {
 	private final String UPLOAD_URL;
 	private final String DOWNLOAD_PERSON_URL;
 	private final String DOWNLOAD_SCENARIOSESSION;
+	private final String DOWNLOAD_HIGH_SCORE_URL;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE;
 
 	private final HttpClient client;
@@ -38,6 +39,7 @@ public class Client {
 		this.UPLOAD_URL = server + "upload.action";
 		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
 		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
+		this.DOWNLOAD_HIGH_SCORE_URL = server + "highscoreDownload.action";
 		this.DOWNLOAD_PERSONAL_HIGHSCORE = server + "personalHighscoreDownload.action";
 	}
 
@@ -56,6 +58,15 @@ public class Client {
 	public Person downloadPerson(final long id) throws IOException {
 		try {
 			return (Person) execute(DOWNLOAD_PERSON_URL, id);
+		} catch (final Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Long getHighscore(final long id) {
+		try {
+			return (Long) execute(DOWNLOAD_HIGH_SCORE_URL, id);
 		} catch (final Exception ex) {
 			ex.printStackTrace();
 			return null;
