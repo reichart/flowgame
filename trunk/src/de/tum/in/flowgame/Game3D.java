@@ -33,6 +33,7 @@ import com.sun.j3d.utils.universe.ViewingPlatform;
 
 import de.tum.in.flowgame.behavior.CollisionBehavior;
 import de.tum.in.flowgame.behavior.CreateNewCollidablesBehavior;
+import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.GameOverlay;
 
 /**
@@ -251,5 +252,9 @@ public class Game3D extends Canvas3D {
 
 	public GameListener getListener() {
 		return listener;
+	}
+	
+	public GameMenu getMenu() {
+		return overlay.getMenu();
 	}
 }
