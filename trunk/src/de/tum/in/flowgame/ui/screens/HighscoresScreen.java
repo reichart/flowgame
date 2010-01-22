@@ -2,6 +2,7 @@ package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -66,31 +67,25 @@ public class HighscoresScreen extends MenuScreen {
 		return centered(title("Highscore"), highscoresScroll, back);
 	}
 	
-	private class ScoreComparator implements Comparator<Score>{
-		  public int compare( Score a, Score b ){
-		    if (a.getId() == b.getId()) return 0;
-		    else if (a.getId() < b.getId()) return 1;
-		    else return -1;
-		  }
-		}
-	
 	@Override
 	public void update(){
-		this.menu.getGameLogic().getPlayer();
-		GameSessionDAOImpl gsImpl = new GameSessionDAOImpl();
-		List<Score> result = gsImpl.getPersonalScores(this.menu.getGameLogic().getPlayer());
-		Collections.sort(result, new ScoreComparator());
-		Iterator<Score> i = result.iterator();
-		Score s;
+		long playerId = this.menu.getGameLogic().getPlayer().getId();
+		List<Score> scores = null;
+		try {
+			scores = this.menu.getGameLogic().getClient().downloadPersonHighscore(playerId, numRounds);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		TableModel tm = highscores.getModel();
 		int j = 0;
-		while (i.hasNext()){
-			s = i.next();
+		for (Score score : scores){
 			tm.setValueAt(j+1, j, 0);
-			tm.setValueAt(s.getScore(), j, 1);
-			if (j++ > numRounds-2) break;
-//			System.out.println("Id: " + s.getId());
-//			System.out.println("Score: " + s.getScore());
+			tm.setValueAt(score.getScore(), j, 1);
+			j++;
+//			System.out.println("Id: " + score.getId());
+//			System.out.println("Score: " + score.getScore());
+
 		}
 	}
 }

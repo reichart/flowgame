@@ -1,6 +1,8 @@
 package de.tum.in.flowgame.model;
 
-public class Score {
+import java.io.Serializable;
+
+public class Score implements Serializable{
 	private int id;
 	private long score;
 	

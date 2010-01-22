@@ -351,4 +351,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return currentPosition;
 	}
 
+	public Client getClient(){
+		return client;
+	}
 }
