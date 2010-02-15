@@ -13,7 +13,8 @@
 || - Holen und anzeigen der Freunde ||  ||  ||  ||  ||  ||
 || - Einladungsbildschirm ||  ||  ||  ||  ||  ||
 || - Social Ranking ||  || Barbara || in progress ||  ||  ||
-|| - Individuelles Ranking<br/> bzw. die letzten 15 Scores||  || Christopher || done ||  ||  ||
+|| - Individuelles Ranking<br/> Liste der letzten 15 Scores||  || Christopher || done ||  ||  ||
+|| - Individuelles Ranking<br/> Chart aller Scores||  || Christopher || done ||  ||  ||
 || Punktezahl ||  ||  ||  ||  ||  ||
 || - berechnen ||  ||  ||  ||  ||  ||
 || - anzeigen ||  ||  ||  ||  ||  ||
