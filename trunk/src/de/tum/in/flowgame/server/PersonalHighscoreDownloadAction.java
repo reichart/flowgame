@@ -15,9 +15,9 @@ public class PersonalHighscoreDownloadAction extends GameDataAction {
 
 	private class ScoreComparator implements Comparator<Score> {
 		public int compare(Score a, Score b) {
-			if (a.getId() == b.getId())
+			if (a.getStartTime() == b.getStartTime())
 				return 0;
-			else if (a.getId() < b.getId())
+			else if (a.getStartTime() < b.getStartTime())
 				return 1;
 			else
 				return -1;

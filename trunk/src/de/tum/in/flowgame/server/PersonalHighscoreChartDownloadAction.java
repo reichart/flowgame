@@ -37,9 +37,9 @@ public class PersonalHighscoreChartDownloadAction extends ActionSupport {
 
 	private class ScoreComparator implements Comparator<Score> {
 		public int compare(Score a, Score b) {
-			if (a.getId() == b.getId())
+			if (a.getStartTime() == b.getStartTime())
 				return 0;
-			else if (a.getId() > b.getId())
+			else if (a.getStartTime() > b.getStartTime())
 				return 1;
 			else
 				return -1;
@@ -54,9 +54,6 @@ public class PersonalHighscoreChartDownloadAction extends ActionSupport {
 		this.personId = id;
 	}
 
-	// public String execute(Object highscoreRequest) throws Exception {
-	// long personId = ((HighscoreRequest) highscoreRequest).getPersonId();
-	// int numElements = ((HighscoreRequest) highscoreRequest).getNumElements();
 	public String execute() throws Exception {
 		GameSessionDAO gsDAO = new GameSessionDAOImpl();
 		List<Score> scores = gsDAO.getPersonalScores(personId);
