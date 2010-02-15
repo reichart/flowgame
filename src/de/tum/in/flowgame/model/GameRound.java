@@ -20,7 +20,7 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 	@OneToMany(cascade = CascadeType.ALL)
 	List<Collision> collisions;
 	List<Answer> answers;
-	private transient long startTime;
+	Long startTime;
 	Long score;
 	Integer rank;
 
@@ -43,7 +43,7 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 	public Long getActualPlaytime() {
 		return actualPlaytime;
 	}
-
+	
 	public ScenarioRound getScenarioRound() {
 		return scenarioRound;
 	}
@@ -76,7 +76,7 @@ public class GameRound extends AbstractEntity implements Serializable, GameListe
 		this.answers = answers;
 	}
 
-	public long getStartTime() {
+	public Long getStartTime() {
 		return startTime;
 	}
 

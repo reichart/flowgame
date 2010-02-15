@@ -3,16 +3,16 @@ package de.tum.in.flowgame.model;
 import java.io.Serializable;
 
 public class Score implements Serializable{
-	private int id;
+	private long startTime;
 	private long score;
 	
-	public Score (int id, long score){
-		this.id = id;
+	public Score (long startTime, long score){
+		this.startTime = startTime;
 		this.score = score;
 	}
 	
-	public int getId(){
-		return id;
+	public long getStartTime(){
+		return startTime;
 	}
 	
 	public long getScore(){
