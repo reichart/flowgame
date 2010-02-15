@@ -31,12 +31,14 @@ public class PersonalHighscoreDownloadAction extends GameDataAction {
 		int numElements = ((HighscoreRequest) highscoreRequest).getNumElements();
 		GameSessionDAO gsDAO = new GameSessionDAOImpl();
 		List<Score> result = gsDAO.getPersonalScores(personId);
+		if (result.size() < numElements)
+			numElements = result.size();
 		Collections.sort(result, new ScoreComparator());
 		List<Score> returnResult = new ArrayList<Score>(result.subList(0, numElements));
-//		for (Score s : returnResult){
-//			System.out.println("id: " + s.getId());
-//			System.out.println("Score: " + s.getScore());
-//		}
+		// for (Score s : returnResult){
+		// System.out.println("id: " + s.getId());
+		// System.out.println("Score: " + s.getScore());
+		// }
 		return returnResult;
 	}
 
