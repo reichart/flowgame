@@ -23,6 +23,7 @@ import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
 import de.tum.in.flowgame.ui.screens.GameOverScreen;
+import de.tum.in.flowgame.ui.screens.HighscoresChartScreen;
 import de.tum.in.flowgame.ui.screens.HighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
@@ -85,6 +86,7 @@ public class GameMenu implements Sprite, GameListener {
 		add(new MainScreen(this));
 		add(new QuestionnaireScreen(this));
 		add(new HighscoresScreen(this));
+		add(new HighscoresChartScreen(this));
 		add(new PauseScreen(this));
 		add(new GameOverScreen(this));
 		add(new SettingsScreen(this));
