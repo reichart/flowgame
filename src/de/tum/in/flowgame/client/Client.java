@@ -1,7 +1,10 @@
 package de.tum.in.flowgame.client;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -30,17 +33,19 @@ public class Client {
 	private final String DOWNLOAD_SCENARIOSESSION;
 	private final String DOWNLOAD_HIGH_SCORE_URL;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE;
+	private final String DOWNLOAD_PERSONAL_HIGHSCORE_CHART;
 
 	private final HttpClient client;
 
 	public Client(final String server) {
 		this.client = new HttpClient(new MultiThreadedHttpConnectionManager());
-		
+
 		this.UPLOAD_URL = server + "upload.action";
 		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
 		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
 		this.DOWNLOAD_HIGH_SCORE_URL = server + "highscoreDownload.action";
 		this.DOWNLOAD_PERSONAL_HIGHSCORE = server + "personalHighscoreDownload.action";
+		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload.action";
 	}
 
 	public void uploadQuietly(final Object entity) {
@@ -76,10 +81,23 @@ public class Client {
 	public ScenarioSession downloadScenarioSession(final Person person) throws IOException {
 		return (ScenarioSession) execute(DOWNLOAD_SCENARIOSESSION, person);
 	}
-	
+
 	public List<Score> downloadPersonHighscore(long personId, int numElements) throws IOException {
 		HighscoreRequest highscoreRequest = new HighscoreRequest(personId, numElements);
 		return (List<Score>) execute(DOWNLOAD_PERSONAL_HIGHSCORE, highscoreRequest);
+	}
+
+	public BufferedImage downloadPersonHighscoreChart(long personId) throws IOException {
+		final PostMethod post = new PostMethod(DOWNLOAD_PERSONAL_HIGHSCORE_CHART+"?id="+personId);
+		try {
+			int statusCode = client.executeMethod(post);
+			if (statusCode != HttpStatus.SC_OK) {
+				throw new IOException(post.getStatusLine().toString());
+			}
+			return ImageIO.read(post.getResponseBodyAsStream());
+		} finally {
+			post.releaseConnection();
+		}
 	}
 
 	/**

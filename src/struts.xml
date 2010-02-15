@@ -49,6 +49,13 @@
 				<param name="contentType">application/octet-stream</param>
 		</result>
 		</action>
+
+		<action name="personalHighscoreChartDownload" class="de.tum.in.flowgame.server.PersonalHighscoreChartDownloadAction">
+			<result type="stream">
+				<param name="inputName">response</param>
+				<param name="contentType">image/png</param>
+		</result>
+		</action>
 	</package>
 
 </struts>

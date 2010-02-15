@@ -59,61 +59,118 @@ public class GameApplet extends Applet {
 		app.start();
 	}
 
-	@Override
-	public void init() {
-		// TODO refactor this for local testability
-		final String server = getCodeBase().toString();
-		final String apiKey = getParameter("apiKey");
-		final String sessionKey = getParameter("sessionKey");
-		final String sessionSecret = getParameter("sessionSecret");
-		
-		try {
-			final URL serverUrl = new URL(server + "fbproxy");
-			this.facebook = new CustomFacebookClient(serverUrl, apiKey, sessionSecret, sessionKey);
-		
-			final long loggedInUser = facebook.users_getLoggedInUser();
-			
-			final Client client = new Client(server);
-			
-			final boolean newPlayer;
-			
-			// download person information from server
-			Person player = client.downloadPerson(loggedInUser);
-			if (player == null) {
-				newPlayer = true;
-				
-				System.err.println("##### creating new player");
-				player = new Person(loggedInUser);
-				
-				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
-						ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
-
-				player.setName(userInfo.getString("first_name"));
-				player.setSex(userInfo.getString("sex"));
-				final SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
-				player.setDateOfBirth(fmt.parse(userInfo.getString("birthday_date")));
-				player.setPlace(userInfo.getJSONObject("hometown_location").getString("country"));
-				
-				client.uploadQuietly(player);
-				System.err.println("##### stored new player");
-			} else {
-				newPlayer = false;
-				System.err.println("##### existing player");
-			}
-			
-			// this initializes all the other classes
-			new GameLogic(player, client).addListener(game.getListener());
-			
-			if(newPlayer) {
-				game.getMenu().show(ProfileScreen.class);
-			} else {
-				game.getMenu().show(MainScreen.class);
-			}
-			
-		} catch (final Exception ex) {
-			throw new RuntimeException("Failed to connect to " + server, ex);
-		}
-	}
+//	@Override
+//	public void init() {
+//		// TODO refactor this for local testability
+//		final String server = getCodeBase().toString();
+//		final String apiKey = getParameter("apiKey");
+//		final String sessionKey = getParameter("sessionKey");
+//		final String sessionSecret = getParameter("sessionSecret");
+//		
+//		try {
+//			final URL serverUrl = new URL(server + "fbproxy");
+//			this.facebook = new CustomFacebookClient(serverUrl, apiKey, sessionSecret, sessionKey);
+//		
+//			final long loggedInUser = facebook.users_getLoggedInUser();
+//			
+//			final Client client = new Client(server);
+//			
+//			final boolean newPlayer;
+//			
+//			// download person information from server
+//			Person player = client.downloadPerson(loggedInUser);
+//			if (player == null) {
+//				newPlayer = true;
+//				
+//				System.err.println("##### creating new player");
+//				player = new Person(loggedInUser);
+//				
+//				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
+//						ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
+//
+//				player.setName(userInfo.getString("first_name"));
+//				player.setSex(userInfo.getString("sex"));
+//				final SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
+//				player.setDateOfBirth(fmt.parse(userInfo.getString("birthday_date")));
+//				player.setPlace(userInfo.getJSONObject("hometown_location").getString("country"));
+//				
+//				client.uploadQuietly(player);
+//				System.err.println("##### stored new player");
+//			} else {
+//				newPlayer = false;
+//				System.err.println("##### existing player");
+//			}
+//			
+//			// this initializes all the other classes
+//			new GameLogic(player, client).addListener(game.getListener());
+//			
+//			if(newPlayer) {
+//				game.getMenu().show(ProfileScreen.class);
+//			} else {
+//				game.getMenu().show(MainScreen.class);
+//			}
+//			
+//		} catch (final Exception ex) {
+//			throw new RuntimeException("Failed to connect to " + server, ex);
+//		}
+//	}
+	
+	 @Override
+	 public void init() {
+	  // TODO refactor this for local testability
+	  final String server = "http://localhost:8080/flowgame/";
+	//  final String apiKey = getParameter("apiKey");
+	//  final String sessionKey = getParameter("sessionKey");
+	//  final String sessionSecret = getParameter("sessionSecret");
+	  
+	  try {
+	//   final URL serverUrl = new URL(server + "fbproxy");
+	//   this.facebook = new CustomFacebookClient(serverUrl, apiKey, sessionSecret, sessionKey);
+	  
+	   final long loggedInUser = 1337; // facebook.users_getLoggedInUser();
+	   
+	   final Client client = new Client(server);
+	   
+	   final boolean newPlayer;
+	   
+	   // download person information from server
+	   Person player = client.downloadPerson(loggedInUser);
+	   if (player == null) {
+	    newPlayer = true;
+	    
+	    System.err.println("##### creating new player");
+	    player = new Person(loggedInUser);
+	    player.setName("Checker");
+	    
+//	    final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
+//	      ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
+	//
+//	    player.setName(userInfo.getString("first_name"));
+//	    player.setSex(userInfo.getString("sex"));
+//	    final SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
+//	    player.setDateOfBirth(fmt.parse(userInfo.getString("birthday_date")));
+//	    player.setPlace(userInfo.getJSONObject("hometown_location").getString("country"));
+	    
+	    client.uploadQuietly(player);
+	    System.err.println("##### stored new player");
+	   } else {
+	    newPlayer = false;
+	    System.err.println("##### existing player");
+	   }
+	   
+	   // this initializes all the other classes
+	   new GameLogic(player, client).addListener(game.getListener());
+	   
+	   if(newPlayer) {
+	    game.getMenu().show(ProfileScreen.class);
+	   } else {
+	    game.getMenu().show(MainScreen.class);
+	   }
+	   
+	  } catch (final Exception ex) {
+	   throw new RuntimeException("Failed to connect to " + server, ex);
+	  }
+	 }
 	
 	/**
 	 * Creates a new GameApplet.
