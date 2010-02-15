@@ -133,7 +133,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		fireGameStopped();
 
-		client.uploadQuietly(gameSession);
+		// Don't upload after each round, as it causes multiple entries for a
+		// single run in the database
+		// client.uploadQuietly(gameSession);
 
 		System.out.println("GameLogic.run() stopped");
 
@@ -351,7 +353,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return currentPosition;
 	}
 
-	public Client getClient(){
+	public Client getClient() {
 		return client;
 	}
 }
