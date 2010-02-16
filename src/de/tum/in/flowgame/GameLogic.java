@@ -340,7 +340,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		double asteroidTrendRating = asteroidTrend.getShortRatio() + 3 / 4.0 * asteroidTrend.getMidRatio() + 1 / 4.0
 				* asteroidTrend.getLongRatio();
 		double fuelTrendRating = fuelTrend.getShortRatio() + 3 / 4.0 * fuelTrend.getMidRatio() + 1 / 4.0 * fuelTrend.getLongRatio();
-		return 2 * fuelTrendRating - asteroidTrendRating;
+		return 2*fuelTrendRating - asteroidTrendRating;
 	}
 
 	public double getPosition() {
@@ -353,6 +353,23 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return currentPosition;
 	}
 
+	
+	private double speed=0;
+	public void setSpeed(double s){
+		speed = s;
+	}
+	
+	public double getSpeed(){
+		return speed;
+	}
+	private double averageTrend=0;
+	
+	public double getAverageTrend(){
+		return averageTrend;
+	}
+	public void setAverageTrend(double t){
+		averageTrend = t;
+	}
 	public Client getClient() {
 		return client;
 	}
