@@ -23,7 +23,7 @@ public class GameSessionDAOImpl extends GenericJPADAO<GameSession, Integer> impl
 		List<GameSession> sessionList = q.getResultList();
 		for (GameSession session : sessionList) {
 			for (GameRound round : session.getRounds()) {
-				result.add(new Score(round.getId(), round.getScore()));
+				result.add(new Score(round.getStartTime(), round.getScore()));
 				// System.out.println("ID: " + gr.getId());
 				// System.out.println("Score: " + gr.getScore());
 			}
