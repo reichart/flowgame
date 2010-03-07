@@ -7,7 +7,7 @@ import de.tum.in.flowgame.dao.PersonDAOImpl;
 import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
 
-public class UploadAction extends GameDataAction {
+public class UploadAction extends GameDataAction<Object, Object> {
 
 	@Override
 	public Object execute(final Object o) throws Exception {

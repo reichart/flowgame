@@ -3,7 +3,6 @@ package de.tum.in.flowgame.server;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 import de.tum.in.flowgame.client.HighscoreRequest;
@@ -11,7 +10,7 @@ import de.tum.in.flowgame.dao.GameSessionDAO;
 import de.tum.in.flowgame.dao.GameSessionDAOImpl;
 import de.tum.in.flowgame.model.Score;
 
-public class PersonalHighscoreDownloadAction extends GameDataAction {
+public class PersonalHighscoreDownloadAction extends GameDataAction<HighscoreRequest, List<Score>> {
 
 	private class ScoreComparator implements Comparator<Score> {
 		public int compare(Score a, Score b) {
@@ -25,10 +24,10 @@ public class PersonalHighscoreDownloadAction extends GameDataAction {
 	}
 
 	@Override
-	protected Object execute(Object highscoreRequest) throws Exception {
+	protected List<Score> execute(final HighscoreRequest highscoreRequest) throws Exception {
 		// System.out.println("Execute Highscore Download");
-		long personId = ((HighscoreRequest) highscoreRequest).getPersonId();
-		int numElements = ((HighscoreRequest) highscoreRequest).getNumElements();
+		long personId = highscoreRequest.getPersonId();
+		int numElements = highscoreRequest.getNumElements();
 		GameSessionDAO gsDAO = new GameSessionDAOImpl();
 		List<Score> result = gsDAO.getPersonalScores(personId);
 		if (result.size() < numElements)
