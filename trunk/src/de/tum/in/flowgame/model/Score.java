@@ -2,20 +2,21 @@ package de.tum.in.flowgame.model;
 
 import java.io.Serializable;
 
-public class Score implements Serializable{
-	private long startTime;
-	private long score;
+public class Score implements Serializable {
 	
-	public Score (long startTime, long score){
+	private final long startTime;
+	private final long score;
+
+	public Score(final long startTime, final long score) {
 		this.startTime = startTime;
 		this.score = score;
 	}
-	
-	public long getStartTime(){
+
+	public long getStartTime() {
 		return startTime;
 	}
-	
-	public long getScore(){
+
+	public long getScore() {
 		return score;
 	}
 }
