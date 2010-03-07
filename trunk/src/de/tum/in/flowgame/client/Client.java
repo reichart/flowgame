@@ -125,7 +125,12 @@ public class Client {
 				throw new IOException(post.getStatusLine().toString());
 			}
 
-			return (T) Utils.bytesToObject(IOUtils.toByteArray(post.getResponseBodyAsStream()));
+			final Object response = Utils.bytesToObject(IOUtils.toByteArray(post.getResponseBodyAsStream()));
+			if (response instanceof Throwable) {
+				throw new IOException((Throwable) response);
+			} else {
+				return (T) response;
+			}
 		} finally {
 			post.releaseConnection();
 		}

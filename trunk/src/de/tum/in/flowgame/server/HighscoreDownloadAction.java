@@ -9,12 +9,12 @@ import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
 
-public class HighscoreDownloadAction extends GameDataAction {
+public class HighscoreDownloadAction extends GameDataAction<Long, Long> {
 
 	@Override
-	public Object execute(final Object id) throws Exception {
+	public Long execute(final Long id) throws Exception {
 		final PersonDAO persons = new PersonDAOImpl();
-		final Person person = persons.find((Long) id);
+		final Person person = persons.find(id);
 		if (person == null) {
 			throw new NullPointerException("No person found for id " + id);
 		} else {
