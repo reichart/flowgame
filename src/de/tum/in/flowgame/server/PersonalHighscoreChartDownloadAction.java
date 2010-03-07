@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,7 +25,6 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 
 import de.tum.in.flowgame.dao.GameSessionDAO;
 import de.tum.in.flowgame.dao.GameSessionDAOImpl;
@@ -71,9 +71,9 @@ public class PersonalHighscoreChartDownloadAction extends ActionSupport {
 
 		JFreeChart chart = createXYLineChart(playerName, "Game", "Points", xyd, PlotOrientation.VERTICAL, false);
 		BufferedImage bi = chart.createBufferedImage(500, 300);
-		ByteOutputStream bos = new ByteOutputStream();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ImageIO.write(bi, "png", bos);
-		this.response = new ByteArrayInputStream(bos.getBytes());
+		this.response = new ByteArrayInputStream(bos.toByteArray());
 		return SUCCESS;
 	}
 
