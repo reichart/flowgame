@@ -3,9 +3,6 @@ package de.tum.in.flowgame.ui.screens;
 import java.awt.Component;
 import java.awt.Container;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -16,7 +13,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import de.tum.in.flowgame.dao.GameSessionDAOImpl;
 import de.tum.in.flowgame.model.Score;
 import de.tum.in.flowgame.ui.GameMenu;
 
@@ -30,6 +26,7 @@ public class HighscoresScreen extends MenuScreen {
 			setHorizontalAlignment(SwingConstants.CENTER);
 		}
 
+		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			return this;
