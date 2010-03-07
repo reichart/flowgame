@@ -2,21 +2,21 @@ package de.tum.in.flowgame.client;
 
 import java.io.Serializable;
 
+public class HighscoreRequest implements Serializable {
 
-public class HighscoreRequest implements Serializable{
-	private long personId;
-	private int numElements;
+	private final long personId;
+	private final int numElements;
 
-	public HighscoreRequest (long personId, int numElements){
+	public HighscoreRequest(final long personId, final int numElements) {
 		this.personId = personId;
 		this.numElements = numElements;
 	}
-	
-	public long getPersonId(){
+
+	public long getPersonId() {
 		return personId;
 	}
-	
-	public int getNumElements(){
+
+	public int getNumElements() {
 		return numElements;
 	}
 }
