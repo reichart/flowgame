@@ -62,7 +62,7 @@ public class Client {
 
 	public Person downloadPerson(final long id) throws IOException {
 		try {
-			return (Person) execute(DOWNLOAD_PERSON_URL, id);
+			return execute(DOWNLOAD_PERSON_URL, id);
 		} catch (final Exception ex) {
 			ex.printStackTrace();
 			return null;
@@ -71,7 +71,7 @@ public class Client {
 	
 	public Long getHighscore(final long id) {
 		try {
-			return (Long) execute(DOWNLOAD_HIGH_SCORE_URL, id);
+			return execute(DOWNLOAD_HIGH_SCORE_URL, id);
 		} catch (final Exception ex) {
 			ex.printStackTrace();
 			return null;
@@ -79,18 +79,18 @@ public class Client {
 	}
 
 	public ScenarioSession downloadScenarioSession(final Person person) throws IOException {
-		return (ScenarioSession) execute(DOWNLOAD_SCENARIOSESSION, person);
+		return execute(DOWNLOAD_SCENARIOSESSION, person);
 	}
 
 	public List<Score> downloadPersonHighscore(long personId, int numElements) throws IOException {
 		HighscoreRequest highscoreRequest = new HighscoreRequest(personId, numElements);
-		return (List<Score>) execute(DOWNLOAD_PERSONAL_HIGHSCORE, highscoreRequest);
+		return execute(DOWNLOAD_PERSONAL_HIGHSCORE, highscoreRequest);
 	}
 
-	public BufferedImage downloadPersonHighscoreChart(long personId) throws IOException {
-		final PostMethod post = new PostMethod(DOWNLOAD_PERSONAL_HIGHSCORE_CHART+"?id="+personId);
+	public BufferedImage downloadPersonHighscoreChart(final long personId) throws IOException {
+		final PostMethod post = new PostMethod(DOWNLOAD_PERSONAL_HIGHSCORE_CHART + "?id=" + personId);
 		try {
-			int statusCode = client.executeMethod(post);
+			final int statusCode = client.executeMethod(post);
 			if (statusCode != HttpStatus.SC_OK) {
 				throw new IOException(post.getStatusLine().toString());
 			}
@@ -110,7 +110,8 @@ public class Client {
 	 * @return the Java object returned by the server
 	 * @throws IOException
 	 */
-	private Object execute(final String url, final Object parameter) throws IOException {
+	@SuppressWarnings("unchecked")
+	private <T> T execute(final String url, final Object parameter) throws IOException {
 		final PostMethod post = new PostMethod(url);
 		try {
 			final PartSource source = new ByteArrayPartSource("data.ser", Utils.objectToBytes(parameter));
@@ -124,7 +125,7 @@ public class Client {
 				throw new IOException(post.getStatusLine().toString());
 			}
 
-			return Utils.bytesToObject(IOUtils.toByteArray(post.getResponseBodyAsStream()));
+			return (T) Utils.bytesToObject(IOUtils.toByteArray(post.getResponseBodyAsStream()));
 		} finally {
 			post.releaseConnection();
 		}
