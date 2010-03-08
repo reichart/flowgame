@@ -16,10 +16,10 @@ public class AverageTrendStrategy implements FlowStrategy{
 		if(delta<0) delta = -delta;
 		if(delta<0.1) delta = 0.1;
 		logic.setAverageTrend(averageTrend);
-		if(Math.round(trendRating*1000) < Math.round(averageTrend*1000) ){
+		if(Math.round(trendRating*1000) < Math.round(averageTrend*1000-averageTrend*5ltsm0) ){
 			speed += delta*0.25;
 		}
-		if(Math.round(trendRating*1000) > Math.round(averageTrend*1000) ){
+		if(Math.round(trendRating*1000) > Math.round(averageTrend*1000+averageTrend*50) ){
 			speed -= delta*0.25;
 		}
 		if(speed > -60D){
