@@ -6,8 +6,12 @@ import javax.media.j3d.Behavior;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedFrames;
 
+import strategy.AverageTrendStrategy;
+import strategy.FlowStrategy;
+import strategy.FunctionStrategy;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.GameLogicConsumer;
+import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Function;
 
 public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
@@ -16,7 +20,8 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 	private final ShipNavigationBehavior forwardNavigator;
 	private double speed;
 	private GameLogic gameLogic;
-
+	private FlowStrategy strategy;
+	
 	public SpeedChangeBehavior(final ShipNavigationBehavior forwardNavigator) {
 		this.forwardNavigator = forwardNavigator;
 	}
@@ -24,22 +29,23 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 	@Override
 	public void initialize() {
 		this.wakeupOn(newFrame);
+		this.strategy = new AverageTrendStrategy();
+		//this.strategy = new FunctionStrategy(gameLogic, gameLogic.getDifficultyFunction().getSpeed());
 	}
-
+	private double averageTrend;
+	private double speedIncrease = 0.3D;
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
 		if (gameLogic != null) {
 			final Function fun = gameLogic.getDifficultyFunction().getSpeed();
 			if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
-				speed = -fun.getValue(gameLogic.getPosition());
-				if (speed > -30D) {
-					speed = -30D;
-				}
+				speed = strategy.calculateSpeed(gameLogic.getTrendRating(), speed);
+				
 			} else {
 				speed = (fun == null) ? 0 : -fun.getValue(gameLogic.getElapsedTime());
 			}
-			
+			gameLogic.setSpeed(speed);
 			forwardNavigator.setFwdSpeed(speed);
 		}
 		wakeupOn(newFrame);
@@ -47,5 +53,6 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 	
 	public void setGameLogic(final GameLogic gameLogic) {
 		this.gameLogic = gameLogic;
+		if(this.strategy instanceof AverageTrendStrategy) ((AverageTrendStrategy)strategy).setGameLogic(gameLogic);
 	}
 }
