@@ -14,15 +14,18 @@ import de.tum.in.flowgame.model.Collision.Item;
 
 @Entity
 public class GameRound extends AbstractEntity implements Serializable, GameListener {
-	ScenarioRound scenarioRound;
-	Long actualPlaytime;
-	List<TimeDifficultyPair> difficultyByTime;
+	private ScenarioRound scenarioRound;
+	private Long actualPlaytime;
+	private List<TimeDifficultyPair> difficultyByTime;
 	@OneToMany(cascade = CascadeType.ALL)
-	List<Collision> collisions;
-	List<Answer> answers;
-	Long startTime;
-	Long score;
-	Integer rank;
+	private List<Collision> collisions;
+	private List<Answer> answers;
+	private long startTime;
+	private Long score;
+	/**
+	 * rank within friends at the time the round was played
+	 */
+	private Integer rank;
 
 	public GameRound() {
 		this.difficultyByTime = new ArrayList<TimeDifficultyPair>();

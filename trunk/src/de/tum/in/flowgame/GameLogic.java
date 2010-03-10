@@ -10,6 +10,7 @@ import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.util.CustomFacebookClient;
 
 public class GameLogic implements GameLogicMBean, Runnable {
 
@@ -51,12 +52,14 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private double currentPosition;
 	private double previousTrend;
+	private final CustomFacebookClient facebook;
 
-	public GameLogic(final Person player, final Client client) {
+	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
 		this.client = client;
 		this.init();
+		this.facebook = facebook;		
 
 		Utils.export(this);
 	}
@@ -372,5 +375,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 	public Client getClient() {
 		return client;
+	}
+	
+	public CustomFacebookClient getFacebookClient() {
+		return facebook;
 	}
 }

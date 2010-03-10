@@ -46,7 +46,6 @@ public class PersonalHighscoreChartDownloadAction extends ActionSupport {
 		}
 	}
 	
-	private final static Log log = LogFactory.getLog(PersonalHighscoreChartDownloadAction.class);
 	public InputStream response;
 	private long personId;
 
@@ -54,6 +53,7 @@ public class PersonalHighscoreChartDownloadAction extends ActionSupport {
 		this.personId = id;
 	}
 
+	@Override
 	public String execute() throws Exception {
 		GameSessionDAO gsDAO = new GameSessionDAOImpl();
 		List<Score> scores = gsDAO.getPersonalScores(personId);

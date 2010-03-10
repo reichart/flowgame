@@ -43,7 +43,13 @@
 				<param name="contentType">application/octet-stream</param>
 			</result>
 		</action>
-
+		
+		<action name="highscoresDownload" class="de.tum.in.flowgame.server.HighscoresDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+		
 		<action name="personalHighscoreDownload" class="de.tum.in.flowgame.server.PersonalHighscoreDownloadAction">
 			<result type="stream">
 				<param name="contentType">application/octet-stream</param>
