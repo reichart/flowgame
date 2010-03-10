@@ -6,13 +6,11 @@ import javax.media.j3d.Behavior;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnElapsedFrames;
 
-import strategy.AverageTrendStrategy;
-import strategy.FlowStrategy;
-import strategy.FunctionStrategy;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.GameLogicConsumer;
-import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Function;
+import de.tum.in.flowgame.strategy.AverageTrendStrategy;
+import de.tum.in.flowgame.strategy.FlowStrategy;
 
 public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 
