@@ -10,7 +10,7 @@
 || - Ablauf nach Runden aus DB ||  ||  ||  ||  ||  ||
 || HUD schneller machen ||  ||  ||  ||  ||  ||
 || Facebookanbindung ||  || Phil || Done ||  ||  ||
-|| - Holen und anzeigen der Freunde || Barbara || Done(FriendsBar) ||  ||  ||  ||
+|| - Holen und anzeigen der Freunde ||  || Barbara || Done(FriendsBar) ||  ||  ||
 || - Einladungsbildschirm ||  ||  ||  ||  ||  ||
 || - Social Ranking ||  || Barbara || Done ||  ||  ||
 || - Individuelles Ranking<br/> Liste der letzten 15 Scores||  || Christopher || done ||  ||  ||
