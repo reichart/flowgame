@@ -10,14 +10,14 @@
 || - Ablauf nach Runden aus DB ||  ||  ||  ||  ||  ||
 || HUD schneller machen ||  ||  ||  ||  ||  ||
 || Facebookanbindung ||  || Phil || Done ||  ||  ||
-|| - Holen und anzeigen der Freunde ||  ||  ||  ||  ||  ||
+|| - Holen und anzeigen der Freunde || Barbara || Done(FriendsBar) ||  ||  ||  ||
 || - Einladungsbildschirm ||  ||  ||  ||  ||  ||
-|| - Social Ranking ||  || Barbara || in progress ||  ||  ||
+|| - Social Ranking ||  || Barbara || Done ||  ||  ||
 || - Individuelles Ranking<br/> Liste der letzten 15 Scores||  || Christopher || done ||  ||  ||
 || - Individuelles Ranking<br/> Chart aller Scores||  || Christopher || done ||  ||  ||
 || Punktezahl ||  ||  ||  ||  ||  ||
-|| - berechnen ||  ||  ||  ||  ||  ||
-|| - anzeigen ||  ||  ||  ||  ||  ||
+|| - berechnen ||  || Barbara || Done(noch Feinschliff nötig) ||  ||  ||
+|| - anzeigen ||  ||  || Done ||  ||  ||
 || Boni für spielen mehrerer Missionen ||  ||  ||  ||  ||  ||
 || Missionen ||  ||  ||  ||  || ||
 || - Missionsbildschirm gestalten ||  ||  ||  ||  ||  ||
