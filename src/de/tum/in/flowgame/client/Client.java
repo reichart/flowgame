@@ -20,6 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.model.Highscore;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Score;
@@ -31,10 +32,10 @@ public class Client {
 	private final String UPLOAD_URL;
 	private final String DOWNLOAD_PERSON_URL;
 	private final String DOWNLOAD_SCENARIOSESSION;
-	private final String DOWNLOAD_HIGH_SCORE_URL;
+	private final String DOWNLOAD_HIGHSCORES_URL;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE_CHART;
-
+	
 	private final HttpClient client;
 
 	public Client(final String server) {
@@ -43,7 +44,7 @@ public class Client {
 		this.UPLOAD_URL = server + "upload.action";
 		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
 		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
-		this.DOWNLOAD_HIGH_SCORE_URL = server + "highscoreDownload.action";
+		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload.action";
 		this.DOWNLOAD_PERSONAL_HIGHSCORE = server + "personalHighscoreDownload.action";
 		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload.action";
 	}
@@ -69,15 +70,16 @@ public class Client {
 		}
 	}
 	
-	public Long getHighscore(final long id) {
+	//Return highscore of a list of persons depending on their id
+	public List<Highscore> getHighscores(final List<Long> persons) {
 		try {
-			return execute(DOWNLOAD_HIGH_SCORE_URL, id);
+			return execute(DOWNLOAD_HIGHSCORES_URL, persons);
 		} catch (final Exception ex) {
 			ex.printStackTrace();
 			return null;
 		}
 	}
-
+	
 	public ScenarioSession downloadScenarioSession(final Person person) throws IOException {
 		return execute(DOWNLOAD_SCENARIOSESSION, person);
 	}

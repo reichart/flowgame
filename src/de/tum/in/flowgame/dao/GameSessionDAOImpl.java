@@ -20,10 +20,17 @@ public class GameSessionDAOImpl extends GenericJPADAO<GameSession, Integer> impl
 		List<Score> result = new LinkedList<Score>();
 		Query q = getEntityManager().createQuery("SELECT gs FROM GameSession gs WHERE gs.player.id=:id");
 		q.setParameter("id", personId);
+		
+		System.err.println("person " + personId);
+		
 		List<GameSession> sessionList = q.getResultList();
 		for (GameSession session : sessionList) {
+			System.err.println("session " + session.getId());
+			System.err.println("rounds " + session.getRounds());
 			for (GameRound round : session.getRounds()) {
-				result.add(new Score(round.getStartTime(), round.getScore()));
+				Long startTime = round.getStartTime();
+				Long score = round.getScore();
+				result.add(new Score(startTime, score));
 				// System.out.println("ID: " + gr.getId());
 				// System.out.println("Score: " + gr.getScore());
 			}

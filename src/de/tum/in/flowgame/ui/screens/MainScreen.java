@@ -18,6 +18,8 @@ public class MainScreen extends MenuScreen {
 	private final JButton highscores = goTo("Highscores", HighscoresScreen.class);
 	
 	private final JButton highscoresChart = goTo("Highscores Chart", HighscoresChartScreen.class);
+	
+	private final JButton personalHighscore = goTo("Social Highscore", SocialHighscoresScreen.class);
 
 	private final JButton settings = goTo("Settings", SettingsScreen.class);
 
@@ -34,7 +36,7 @@ public class MainScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title, new JLabel("Welcome " + menu.getLogic().getPlayer().getName() + "!"), play, highscores, highscoresChart, settings, systemInfo);
+		return centered(title, new JLabel("Welcome " + menu.getLogic().getPlayer().getName() + "!"), play, highscores, highscoresChart, personalHighscore, settings, systemInfo);
 	}
 
 }
