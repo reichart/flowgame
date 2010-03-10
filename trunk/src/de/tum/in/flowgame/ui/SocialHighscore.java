@@ -20,8 +20,6 @@ import de.tum.in.flowgame.model.Highscore;
 
 public class SocialHighscore extends JPanel {
 
-	private final static Color TRANSPARENT = new Color(255, 0, 0, 0);
-
 	private static final boolean STRAIGHT = true;
 	
 	private final FaceBookFriendCash friendCash;
