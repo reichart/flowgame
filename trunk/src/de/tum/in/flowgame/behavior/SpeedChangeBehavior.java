@@ -30,8 +30,7 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 		this.strategy = new AverageTrendStrategy();
 		//this.strategy = new FunctionStrategy(gameLogic, gameLogic.getDifficultyFunction().getSpeed());
 	}
-	private double averageTrend;
-	private double speedIncrease = 0.3D;
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public void processStimulus(final Enumeration criteria) {
