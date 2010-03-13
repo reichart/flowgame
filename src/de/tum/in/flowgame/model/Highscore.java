@@ -44,7 +44,7 @@ public class Highscore implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		return new Long(personid).hashCode();
+		return Long.valueOf(personid).hashCode();
 	}
 
 	@Override
