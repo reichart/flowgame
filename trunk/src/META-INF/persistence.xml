@@ -16,8 +16,8 @@
 		<class>de.tum.in.flowgame.model.DifficultyFunction</class>
 		<class>de.tum.in.flowgame.model.ScenarioRound</class>
 		<class>de.tum.in.flowgame.model.Function</class>
-		<class>de.tum.in.flowgame.functions.LinearFunction</class>
-		<class>de.tum.in.flowgame.functions.ConstantFunction</class>
+		<class>de.tum.in.flowgame.model.functions.LinearFunction</class>
+		<class>de.tum.in.flowgame.model.functions.ConstantFunction</class>
 		<class>de.tum.in.flowgame.model.ScenarioSession</class>
 		<class>de.tum.in.flowgame.model.GameSession</class>
 
