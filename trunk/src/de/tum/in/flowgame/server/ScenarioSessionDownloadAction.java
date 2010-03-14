@@ -2,8 +2,6 @@ package de.tum.in.flowgame.server;
 
 import java.util.List;
 
-import de.tum.in.flowgame.dao.ScenarioSessionDAO;
-import de.tum.in.flowgame.dao.ScenarioSessionDAOImpl;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioSession;
 
@@ -12,8 +10,7 @@ public class ScenarioSessionDownloadAction extends GameDataAction<Person, Scenar
 	@Override
 	public ScenarioSession execute(final Person p) throws Exception {
 		// TODO select depending on player
-		final ScenarioSessionDAO dao = new ScenarioSessionDAOImpl();
-		final List<ScenarioSession> scenarioSessions = dao.findAll();
+		final List<ScenarioSession> scenarioSessions = list(ScenarioSession.class);
 		final Integer id = 0;
 		ScenarioSession session = null;
 		if (id < scenarioSessions.size()) {

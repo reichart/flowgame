@@ -9,15 +9,13 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 import de.tum.in.flowgame.Utils;
 
 /**
  * Abstract base class for invoking server-side code with a serialized object as
  * parameter and return value.
  */
-public abstract class GameDataAction<I, O> extends ActionSupport {
+public abstract class GameDataAction<I, O> extends DatabaseAction {
 
 	private final static Log log = LogFactory.getLog(GameDataAction.class);
 
