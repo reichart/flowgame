@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.util;
+package de.tum.in.flowgame.facebook;
 
 import java.net.URL;
 import java.util.Arrays;

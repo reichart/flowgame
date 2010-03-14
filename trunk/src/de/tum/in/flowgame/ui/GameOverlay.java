@@ -12,10 +12,10 @@ import java.text.NumberFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.FrameCounterBehavior.FrameCounterListener;
+import de.tum.in.flowgame.engine.Game3D;
+import de.tum.in.flowgame.engine.behavior.FrameCounterBehavior.FrameCounterListener;
 import de.tum.in.flowgame.model.Collision.Item;
 
 /**

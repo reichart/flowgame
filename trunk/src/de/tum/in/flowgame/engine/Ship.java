@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -20,8 +20,11 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.behavior.ShipNavigationBehavior;
-import de.tum.in.flowgame.behavior.SpeedChangeBehavior;
+import de.tum.in.flowgame.GameListener;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.engine.behavior.ShipNavigationBehavior;
+import de.tum.in.flowgame.engine.behavior.SpeedChangeBehavior;
+import de.tum.in.flowgame.engine.util.Java3DUtils;
 import de.tum.in.flowgame.model.Collision.Item;
 
 /**

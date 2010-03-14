@@ -19,10 +19,10 @@ import javax.swing.table.JTableHeader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
 import de.tum.in.flowgame.ui.screens.GameOverScreen;

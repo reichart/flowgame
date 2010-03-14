@@ -1,7 +1,7 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine;
 
 import net.java.games.sound3d.Source;
-import de.tum.in.flowgame.util.OALUtil;
+import de.tum.in.flowgame.engine.util.OALUtil;
 
 public enum Sounds {
 

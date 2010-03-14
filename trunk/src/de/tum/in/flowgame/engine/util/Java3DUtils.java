@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine.util;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,6 +10,8 @@ import javax.media.j3d.Texture;
 import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.image.TextureLoader;
+
+import de.tum.in.flowgame.GameApplet;
 
 /**
  * This class provides some utility functions related to Java3D.

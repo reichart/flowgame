@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine;
 
 import javax.media.j3d.Alpha;
 import javax.media.j3d.BranchGroup;
@@ -8,8 +8,8 @@ import javax.media.j3d.SharedGroup;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point2d;
 
-import de.tum.in.flowgame.behavior.ShipNavigationBehavior;
-import de.tum.in.flowgame.util.TransformGroupBuilder;
+import de.tum.in.flowgame.engine.behavior.ShipNavigationBehavior;
+import de.tum.in.flowgame.engine.util.TransformGroupBuilder;
 
 /**
  * A class, which represents obstacles in the tunnel.

@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine;
 
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
@@ -14,10 +14,11 @@ import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Primitive;
 
-import de.tum.in.flowgame.behavior.TunnelPartMoveBehavior;
-import de.tum.in.flowgame.util.AppearanceBuilder;
-import de.tum.in.flowgame.util.AppearanceBuilder.TextureMode;
-import de.tum.in.flowgame.util.AppearanceBuilder.Transparency;
+import de.tum.in.flowgame.engine.behavior.TunnelPartMoveBehavior;
+import de.tum.in.flowgame.engine.util.AppearanceBuilder;
+import de.tum.in.flowgame.engine.util.Java3DUtils;
+import de.tum.in.flowgame.engine.util.AppearanceBuilder.TextureMode;
+import de.tum.in.flowgame.engine.util.AppearanceBuilder.Transparency;
 
 /**
  * This class creates the tunnel in which our ship is flying through the 3D universe.

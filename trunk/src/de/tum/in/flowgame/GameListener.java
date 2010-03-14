@@ -61,7 +61,7 @@ public interface GameListener {
 	 * @param game
 	 *            The {@link GameLogic} that pilots our game.
 	 * @param item
-	 *            The {@link Collidable} that collided with our {@link Ship}.
+	 *            The item that collided with the player.
 	 */
 	void collided(GameLogic game, Item item);
 }

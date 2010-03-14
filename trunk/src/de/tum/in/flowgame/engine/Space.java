@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine;
 
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Background;
@@ -8,10 +8,11 @@ import javax.media.j3d.TransformGroup;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Sphere;
 
-import de.tum.in.flowgame.util.AppearanceBuilder;
-import de.tum.in.flowgame.util.Helper;
-import de.tum.in.flowgame.util.AppearanceBuilder.TextureMode;
-import de.tum.in.flowgame.util.AppearanceBuilder.Transparency;
+import de.tum.in.flowgame.engine.util.AppearanceBuilder;
+import de.tum.in.flowgame.engine.util.Helper;
+import de.tum.in.flowgame.engine.util.Java3DUtils;
+import de.tum.in.flowgame.engine.util.AppearanceBuilder.TextureMode;
+import de.tum.in.flowgame.engine.util.AppearanceBuilder.Transparency;
 
 /**
  * This class creates an animates the background of our universe.

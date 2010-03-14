@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,9 @@ import javax.media.j3d.Node;
 import javax.media.j3d.SharedGroup;
 import javax.vecmath.Point3d;
 
+import de.tum.in.flowgame.GameListener;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.engine.util.Java3DUtils;
 import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Collision.Item;
 

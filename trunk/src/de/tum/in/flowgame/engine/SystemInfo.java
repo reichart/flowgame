@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.ui.screens;
+package de.tum.in.flowgame.engine;
 
 import java.io.PrintWriter;
 import java.util.Map;

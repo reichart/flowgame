@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.functions;
+package de.tum.in.flowgame.model.functions;
 
 import java.io.Serializable;
 
