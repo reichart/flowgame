@@ -1,13 +1,8 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Container;
-import java.io.IOException;
 
 import javax.swing.JButton;
-
-import org.json.JSONException;
-
-import com.google.code.facebookapi.FacebookException;
 
 import de.tum.in.flowgame.facebook.FaceBookFriendCash;
 import de.tum.in.flowgame.ui.GameMenu;
@@ -18,7 +13,7 @@ public class SocialHighscoresScreen extends MenuScreen {
 	private final JButton back = goTo("Back", MainScreen.class);
 	private SocialHighscore contentPanel;
 	
-	public SocialHighscoresScreen(final GameMenu menu) throws FacebookException, JSONException, IOException {
+	public SocialHighscoresScreen(final GameMenu menu) {
 		super(menu);
 		FaceBookFriendCash friendCash = new FaceBookFriendCash(this.menu.getGameLogic().getFacebookClient());
 		contentPanel = new SocialHighscore(this.menu.getGameLogic().getClient(), friendCash);
