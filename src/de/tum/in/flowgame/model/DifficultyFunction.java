@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
-public class DifficultyFunction extends AbstractEntity implements Serializable {
+public class DifficultyFunction extends AbstractEntity {
 	@Transient
 	private static final double intervalMaxValue = 1000;
 	
