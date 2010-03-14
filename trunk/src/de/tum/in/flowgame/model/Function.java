@@ -8,7 +8,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Function extends AbstractEntity implements Serializable {
+public abstract class Function extends AbstractEntity {
 	
 	protected double initialValue;
 	

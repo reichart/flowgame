@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class Question extends AbstractEntity implements Serializable {
+public class Question extends AbstractEntity {
 	@Column(length = 500)
 	String text;
 

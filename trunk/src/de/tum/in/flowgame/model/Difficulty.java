@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 
 @Entity
-public class Difficulty extends AbstractEntity implements Serializable {
+public class Difficulty extends AbstractEntity {
 
 	long intervald;
 	long speed;
