@@ -21,44 +21,6 @@ import de.tum.in.flowgame.util.CustomFacebookClient;
 
 public class FaceBookFriendCash {
 
-	public class Friend {
-		private long id;
-		private String name;
-		private Image picture;
-
-		public Friend(long id, String name, Image pictureURL) {
-			this.id = id;
-			this.name = name;
-			this.picture = pictureURL;
-		}
-
-		public long getId() {
-			return id;
-		}
-
-		public Image getPicture() {
-			return picture;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj instanceof Friend) {
-				if (id == ((Friend) obj).id) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
-
-		@Override
-		public int hashCode() {
-			return Long.valueOf(id).hashCode();
-		}
-	}
-
 	private final CustomFacebookClient facebook;
 	private final List<Friend> friends;
 
