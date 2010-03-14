@@ -26,10 +26,9 @@ public class FaceBookFriendCash {
 
 	private final Collection<ProfileField> fields;
 
-	private final Friend currentPlayer;
+	private Friend currentPlayer;
 
-	public FaceBookFriendCash(CustomFacebookClient facebook) throws FacebookException, NumberFormatException,
-			JSONException, MalformedURLException, IOException {
+	public FaceBookFriendCash(CustomFacebookClient facebook) {
 		this.facebook = facebook;
 		this.friends = new ArrayList<Friend>();
 
@@ -38,8 +37,6 @@ public class FaceBookFriendCash {
 		fields.add(ProfileField.NAME);
 		fields.add(ProfileField.IS_APP_USER);
 		fields.add(ProfileField.PIC_SQUARE);
-
-		currentPlayer = getCurrentPlayer();
 	}
 
 	public void updateFriends() throws FacebookException, JSONException, IOException {
@@ -104,16 +101,15 @@ public class FaceBookFriendCash {
 		return friends;
 	}
 
-	public Friend getCurrentPlayer() throws FacebookException, JSONException, MalformedURLException, IOException {
+	public Friend getCurrentPlayer() throws Exception {
 		if (currentPlayer == null) {
 			long user = facebook.users_getLoggedInUser();
 			List<Long> users = new ArrayList<Long>();
 			users.add(user);
 			JSONArray jay = (JSONArray) facebook.users_getInfo(users, fields);
-			return getFriendFromJSONObject((JSONObject) jay.get(0));
-		} else {
-			return currentPlayer;
+			currentPlayer = getFriendFromJSONObject((JSONObject) jay.get(0));
 		}
+		return currentPlayer;
 	}
 
 }
