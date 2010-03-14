@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class GameSession extends AbstractEntity implements Serializable {
+public class GameSession extends AbstractEntity {
 	ScenarioSession scenarioSession;
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	Person player;

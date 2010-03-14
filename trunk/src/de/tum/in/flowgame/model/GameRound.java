@@ -13,7 +13,7 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Collision.Item;
 
 @Entity
-public class GameRound extends AbstractEntity implements Serializable, GameListener {
+public class GameRound extends AbstractEntity implements GameListener {
 	private ScenarioRound scenarioRound;
 	private Long actualPlaytime;
 	private List<TimeDifficultyPair> difficultyByTime;

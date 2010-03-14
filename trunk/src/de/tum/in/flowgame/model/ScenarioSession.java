@@ -1,6 +1,5 @@
 package de.tum.in.flowgame.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
-public class ScenarioSession extends AbstractEntity implements Serializable {
+public class ScenarioSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	List<ScenarioRound> rounds;
 	String name;

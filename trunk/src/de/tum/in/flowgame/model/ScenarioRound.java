@@ -1,11 +1,9 @@
 package de.tum.in.flowgame.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 
 @Entity
-public class ScenarioRound extends AbstractEntity implements Serializable {
+public class ScenarioRound extends AbstractEntity {
 	Integer baselineModifier;
 	Long expectedPlaytime;
 	DifficultyFunction difficultyFunction;
