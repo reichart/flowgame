@@ -27,7 +27,7 @@ import org.json.JSONException;
 import com.google.code.facebookapi.FacebookException;
 
 import de.tum.in.flowgame.facebook.FaceBookFriendCash;
-import de.tum.in.flowgame.facebook.FaceBookFriendCash.Friend;
+import de.tum.in.flowgame.facebook.Friend;
 import de.tum.in.flowgame.model.Highscore;
 
 public class FriendsBar extends JPanel {
