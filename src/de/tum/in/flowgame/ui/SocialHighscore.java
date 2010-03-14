@@ -9,20 +9,20 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import de.tum.in.flowgame.client.Client;
-import de.tum.in.flowgame.facebook.FaceBookFriendCash;
+import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.model.Highscore;
 
 public class SocialHighscore extends JPanel {
 
 	private static final boolean STRAIGHT = true;
 	
-	private final FaceBookFriendCash friendCash;
+	private final FacebookFriendCache friendCash;
 	private final FriendsBar fb;
 	private Highscore ownScore;
 	private List<Highscore> highscores;
 	private final Client client;
 
-	public SocialHighscore(final Client client,  final FaceBookFriendCash friendCash) {
+	public SocialHighscore(final Client client,  final FacebookFriendCache friendCash) {
 		this.client = client;
 		this.friendCash = friendCash;
 		
