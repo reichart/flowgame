@@ -16,6 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
@@ -36,6 +39,8 @@ import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
 
 public class GameMenu implements Sprite, GameListener {
 
+	private static final Log log = LogFactory.getLog(GameMenu.class);
+	
 	private GameLogic logic;
 
 	private final OffscreenJPanel panel;
@@ -186,8 +191,13 @@ public class GameMenu implements Sprite, GameListener {
 		for (final Component component : screens.getComponents()) {
 			if (component.getClass().equals(screenClass)) {
 				final MenuScreen screen = (MenuScreen) component;
-				screen.update();
-				prepareForOffscreen(screen);
+				try {
+					screen.update(logic);
+					prepareForOffscreen(screen);
+				} catch (final Exception ex) {
+					log.error("failed to update screen for showing: " + screenClass.getName(), ex);
+					return; // don't show when update failed
+				}
 			}
 		}
 

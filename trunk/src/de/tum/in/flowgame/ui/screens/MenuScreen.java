@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
 public abstract class MenuScreen extends JPanel {
@@ -39,7 +40,7 @@ public abstract class MenuScreen extends JPanel {
 	/**
 	 * Called before every time this screen will be shown.
 	 */
-	public void update() {
+	public void update(GameLogic logic) throws Exception {
 		// for subclasses to override
 	}
 
@@ -52,7 +53,7 @@ public abstract class MenuScreen extends JPanel {
 		comp.setBorder(border);
 		return comp;
 	}
-	
+
 	/**
 	 * Centers components both vertically and horizontically on the screen.
 	 */
