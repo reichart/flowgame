@@ -1,13 +1,11 @@
 package de.tum.in.flowgame.model.functions;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 
 import de.tum.in.flowgame.model.Function;
 
 @Entity
-public class LinearFunction extends Function implements Serializable{
+public class LinearFunction extends Function {
 	Double slope;
 	
 	public LinearFunction(){
