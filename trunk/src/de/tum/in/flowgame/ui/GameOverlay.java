@@ -17,6 +17,8 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.engine.behavior.FrameCounterBehavior.FrameCounterListener;
 import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.ui.sprite.HealthBar;
+import de.tum.in.flowgame.ui.sprite.SpriteCache;
 
 /**
  * Displays overlay graphics like health/damage bars, cockpit, and HUD messages.

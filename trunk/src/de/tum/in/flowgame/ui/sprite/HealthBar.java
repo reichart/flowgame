@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.ui;
+package de.tum.in.flowgame.ui.sprite;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

@@ -1,10 +1,11 @@
-package de.tum.in.flowgame.ui;
+package de.tum.in.flowgame.ui.sprite;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Singleton to load all sprites through one location and avoid multiple

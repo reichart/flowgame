@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import com.kitfox.svg.app.beans.SVGIcon;
 
 import de.tum.in.flowgame.ui.GameMenu;
-import de.tum.in.flowgame.ui.SVGSprite;
+import de.tum.in.flowgame.ui.sprite.SVGSprite;
 
 public class MainScreen extends MenuScreen {
 
