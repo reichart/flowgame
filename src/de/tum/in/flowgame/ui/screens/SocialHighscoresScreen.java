@@ -4,18 +4,19 @@ import java.awt.Container;
 
 import javax.swing.JButton;
 
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.facebook.FaceBookFriendCash;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.SocialHighscore;
 
 public class SocialHighscoresScreen extends MenuScreen {
-	
+
 	private final JButton back = goTo("Back", MainScreen.class);
-	private SocialHighscore contentPanel;
-	
+	private final SocialHighscore contentPanel;
+
 	public SocialHighscoresScreen(final GameMenu menu) {
 		super(menu);
-		FaceBookFriendCash friendCash = new FaceBookFriendCash(this.menu.getGameLogic().getFacebookClient());
+		final FaceBookFriendCash friendCash = new FaceBookFriendCash(this.menu.getGameLogic().getFacebookClient());
 		contentPanel = new SocialHighscore(this.menu.getGameLogic().getClient(), friendCash);
 		add(contentPanel);
 	}
@@ -24,14 +25,9 @@ public class SocialHighscoresScreen extends MenuScreen {
 	public Container getContents() {
 		return centered(title("Highscore"), contentPanel, back);
 	}
-	
+
 	@Override
-	public void update() {
-		try {
-			contentPanel.update();
-		} catch (final Exception ex) {
-			// TODO handle exception
-			ex.printStackTrace();
-		}
+	public void update(final GameLogic logic) throws Exception {
+		contentPanel.update();
 	}
 }

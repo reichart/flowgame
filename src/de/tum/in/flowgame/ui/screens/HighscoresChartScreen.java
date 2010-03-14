@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
 public class HighscoresChartScreen extends MenuScreen {
@@ -27,15 +28,9 @@ public class HighscoresChartScreen extends MenuScreen {
 	}
 	
 	@Override
-	public void update(){
-		long playerId = this.menu.getGameLogic().getPlayer().getId();
-		BufferedImage im = null;
-		try {
-			im = this.menu.getGameLogic().getClient().downloadPersonHighscoreChart(playerId);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void update(final GameLogic logic) throws IOException {
+		final long playerId = logic.getPlayer().getId();
+		final BufferedImage im = logic.getClient().downloadPersonHighscoreChart(playerId);
 		imageIcon.setImage(im);
 	}
 }

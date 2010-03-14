@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.QuestionnairePanel;
@@ -35,7 +36,7 @@ public class QuestionnaireScreen extends MenuScreen {
 		this.qscrollpane = new JScrollPane(this.qpanel,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		update();
+		update(menu.getLogic());
 	}
 
 	@Override
@@ -44,8 +45,8 @@ public class QuestionnaireScreen extends MenuScreen {
 	}
 
 	@Override
-	public void update() {
-		q = menu.getLogic().getCurrentScenarioRound().getQuestionnaire();
+	public void update(final GameLogic logic) {
+		q = logic.getCurrentScenarioRound().getQuestionnaire();
 		if (q == null) {
 			// TODO this should never happen
 			q = new Questionnaire();
