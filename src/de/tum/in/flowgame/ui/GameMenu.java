@@ -8,7 +8,6 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -16,10 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
-
-import org.json.JSONException;
-
-import com.google.code.facebookapi.FacebookException;
 
 import de.tum.in.flowgame.Game3D;
 import de.tum.in.flowgame.GameListener;
@@ -92,18 +87,7 @@ public class GameMenu implements Sprite, GameListener {
 		add(new MainScreen(this));
 		add(new QuestionnaireScreen(this));
 		add(new HighscoresScreen(this));
-		try {
-			add(new SocialHighscoresScreen(this));
-		} catch (FacebookException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		add(new SocialHighscoresScreen(this));
 		add(new HighscoresChartScreen(this));
 		add(new PauseScreen(this));
 		add(new GameOverScreen(this));
