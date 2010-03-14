@@ -19,7 +19,7 @@ import com.google.code.facebookapi.ProfileField;
 
 import de.tum.in.flowgame.util.CustomFacebookClient;
 
-public class FaceBookFriendCash {
+public class FacebookFriendCache {
 
 	private final CustomFacebookClient facebook;
 	private final List<Friend> friends;
@@ -28,7 +28,7 @@ public class FaceBookFriendCash {
 
 	private Friend currentPlayer;
 
-	public FaceBookFriendCash(CustomFacebookClient facebook) {
+	public FacebookFriendCache(CustomFacebookClient facebook) {
 		this.facebook = facebook;
 		this.friends = new ArrayList<Friend>();
 

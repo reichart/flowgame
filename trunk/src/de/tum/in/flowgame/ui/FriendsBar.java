@@ -26,7 +26,7 @@ import org.json.JSONException;
 
 import com.google.code.facebookapi.FacebookException;
 
-import de.tum.in.flowgame.facebook.FaceBookFriendCash;
+import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.facebook.Friend;
 import de.tum.in.flowgame.model.Highscore;
 
@@ -41,7 +41,7 @@ public class FriendsBar extends JPanel {
 
 	private List<Highscore> highscores;
 	private final Image cardBackground;
-	private final FaceBookFriendCash friendCash;
+	private final FacebookFriendCache friendCash;
 
 	private final ImageIcon iconLeftSmall = new ImageIcon(ImageIO.read(FriendsBar.class
 			.getResource("/res/arrow_smaller_left.png")));
@@ -54,7 +54,7 @@ public class FriendsBar extends JPanel {
 
 	public final int cardWidth;
 
-	public FriendsBar(List<Highscore> highscores, FaceBookFriendCash friendCash) throws Exception {
+	public FriendsBar(List<Highscore> highscores, FacebookFriendCache friendCash) throws Exception {
 		this.friendCash = friendCash;
 		update(highscores);
 
