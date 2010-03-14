@@ -9,6 +9,9 @@
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.custom.i18n.resources" value="messages" />
 
+	<constant name="persistenceUnit" value="IDP" /> 
+	<bean name="persistence" class="de.tum.in.flowgame.server.PersistenceService" />
+
 	<package name="default" namespace="/" extends="struts-default">
 
 		<default-action-ref name="canvas" />
@@ -43,7 +46,7 @@
 				<param name="contentType">application/octet-stream</param>
 			</result>
 		</action>
-		
+
 		<action name="highscoresDownload" class="de.tum.in.flowgame.server.HighscoresDownloadAction">
 			<result type="stream">
 				<param name="contentType">application/octet-stream</param>
@@ -53,15 +56,15 @@
 		<action name="personalHighscoreDownload" class="de.tum.in.flowgame.server.PersonalHighscoreDownloadAction">
 			<result type="stream">
 				<param name="contentType">application/octet-stream</param>
-		</result>
+			</result>
 		</action>
 
 		<action name="personalHighscoreChartDownload" class="de.tum.in.flowgame.server.PersonalHighscoreChartDownloadAction">
 			<result type="stream">
-				<param name="inputName">response</param>
 				<param name="contentType">image/png</param>
-		</result>
+			</result>
 		</action>
+		
 	</package>
 
 </struts>

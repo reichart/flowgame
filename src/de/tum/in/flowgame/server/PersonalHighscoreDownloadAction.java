@@ -1,44 +1,37 @@
 package de.tum.in.flowgame.server;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import de.tum.in.flowgame.client.HighscoreRequest;
-import de.tum.in.flowgame.dao.GameSessionDAO;
-import de.tum.in.flowgame.dao.GameSessionDAOImpl;
+import de.tum.in.flowgame.model.GameRound;
+import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Score;
 
-public class PersonalHighscoreDownloadAction extends GameDataAction<HighscoreRequest, List<Score>> {
-
-	private class ScoreComparator implements Comparator<Score> {
-		public int compare(Score a, Score b) {
-			if (a.getStartTime() == b.getStartTime())
-				return 0;
-			else if (a.getStartTime() < b.getStartTime())
-				return 1;
-			else
-				return -1;
-		}
-	}
+public class PersonalHighscoreDownloadAction extends GameDataAction<HighscoreRequest, SortedSet<Score>> {
 
 	@Override
-	protected List<Score> execute(final HighscoreRequest highscoreRequest) throws Exception {
-		// System.out.println("Execute Highscore Download");
-		long personId = highscoreRequest.getPersonId();
-		int numElements = highscoreRequest.getNumElements();
-		GameSessionDAO gsDAO = new GameSessionDAOImpl();
-		List<Score> result = gsDAO.getPersonalScores(personId);
-		if (result.size() < numElements)
-			numElements = result.size();
-		Collections.sort(result, new ScoreComparator());
-		List<Score> returnResult = new ArrayList<Score>(result.subList(0, numElements));
-		// for (Score s : returnResult){
-		// System.out.println("id: " + s.getId());
-		// System.out.println("Score: " + s.getScore());
-		// }
-		return returnResult;
+	protected SortedSet<Score> execute(final HighscoreRequest highscoreRequest) throws Exception {
+		final long personId = highscoreRequest.getPersonId();
+		final int numElements = highscoreRequest.getNumElements();
+		return getPersonalScores(personId, numElements);
 	}
 
+	private SortedSet<Score> getPersonalScores(final long personId, int numElements) {
+		final List<GameSession> sessions = em
+			.createQuery("SELECT gs FROM GameSession gs WHERE gs.player.id=:id", GameSession.class)
+			.setParameter("id", personId)
+			.setMaxResults(numElements)
+			.getResultList();
+		
+		final SortedSet<Score> result = new TreeSet<Score>(Collections.reverseOrder());
+		for (final GameSession session : sessions) {
+			for (final GameRound round : session.getRounds()) {
+				result.add(new Score(round.getStartTime(), round.getScore()));
+			}
+		}
+		return result;
+	}
 }
