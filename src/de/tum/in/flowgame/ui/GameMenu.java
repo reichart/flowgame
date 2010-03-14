@@ -36,6 +36,7 @@ import de.tum.in.flowgame.ui.screens.QuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.SettingsScreen;
 import de.tum.in.flowgame.ui.screens.SocialHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
+import de.tum.in.flowgame.ui.sprite.Sprite;
 
 public class GameMenu implements Sprite, GameListener {
 
