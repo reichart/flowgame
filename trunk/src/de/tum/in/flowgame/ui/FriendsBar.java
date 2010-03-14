@@ -54,8 +54,7 @@ public class FriendsBar extends JPanel {
 
 	public final int cardWidth;
 
-	public FriendsBar(List<Highscore> highscores, FaceBookFriendCash friendCash) throws FacebookException,
-			JSONException, IOException {
+	public FriendsBar(List<Highscore> highscores, FaceBookFriendCash friendCash) throws Exception {
 		this.friendCash = friendCash;
 		update(highscores);
 

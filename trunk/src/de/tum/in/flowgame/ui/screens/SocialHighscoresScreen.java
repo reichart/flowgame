@@ -34,15 +34,9 @@ public class SocialHighscoresScreen extends MenuScreen {
 	public void update() {
 		try {
 			contentPanel.update();
-		} catch (FacebookException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final Exception ex) {
+			// TODO handle exception
+			ex.printStackTrace();
 		}
 	}
 }

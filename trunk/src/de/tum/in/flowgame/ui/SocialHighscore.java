@@ -3,16 +3,10 @@ package de.tum.in.flowgame.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JPanel;
-
-import org.json.JSONException;
-
-import com.google.code.facebookapi.FacebookException;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.facebook.FaceBookFriendCash;
@@ -28,23 +22,28 @@ public class SocialHighscore extends JPanel {
 	private List<Highscore> highscores;
 	private final Client client;
 
-	public SocialHighscore(final Client client,  final FaceBookFriendCash friendCash) throws FacebookException, JSONException, IOException  {
+	public SocialHighscore(final Client client,  final FaceBookFriendCash friendCash) {
 		this.client = client;
 		this.friendCash = friendCash;
 		
-		update();
-		
-		this.setLayout(new BorderLayout());		
-		fb = new FriendsBar(highscores, friendCash);
-		this.add(fb, BorderLayout.SOUTH);
+		try {
+			update();
+			
+			this.setLayout(new BorderLayout());		
+			fb = new FriendsBar(highscores, friendCash);
+			this.add(fb, BorderLayout.SOUTH);
+		} catch (Exception ex) {
+			// TODO handle exception
+			throw new RuntimeException(ex);
+		}
 	}
 	
-	public void update() throws FacebookException, JSONException, IOException {
+	public void update() throws Exception {
 		friendCash.updateFriends();
 		updateHighscores();
 	}
 	
-	private void updateHighscores() throws MalformedURLException, FacebookException, JSONException, IOException {
+	private void updateHighscores() throws Exception {
 		final List<Long> persons = friendCash.getFriendsids();
 		persons.add(friendCash.getCurrentPlayer().getId());
 		
