@@ -8,8 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import de.tum.in.flowgame.functions.ConstantFunction;
-import de.tum.in.flowgame.functions.LinearFunction;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Difficulty;
 import de.tum.in.flowgame.model.DifficultyFunction;
@@ -21,6 +19,8 @@ import de.tum.in.flowgame.model.Question;
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
+import de.tum.in.flowgame.model.functions.ConstantFunction;
+import de.tum.in.flowgame.model.functions.LinearFunction;
 
 public class DDLGenerator {
 

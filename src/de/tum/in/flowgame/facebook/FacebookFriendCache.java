@@ -17,8 +17,6 @@ import org.json.JSONObject;
 import com.google.code.facebookapi.FacebookException;
 import com.google.code.facebookapi.ProfileField;
 
-import de.tum.in.flowgame.util.CustomFacebookClient;
-
 public class FacebookFriendCache {
 
 	private final CustomFacebookClient facebook;

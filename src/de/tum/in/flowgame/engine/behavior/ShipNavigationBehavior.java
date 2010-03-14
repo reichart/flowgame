@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.behavior;
+package de.tum.in.flowgame.engine.behavior;
 
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
@@ -18,9 +18,9 @@ import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.Ship;
-import de.tum.in.flowgame.Tunnel;
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.engine.Ship;
+import de.tum.in.flowgame.engine.Tunnel;
 import de.tum.in.flowgame.model.Collision.Item;
 
 public class ShipNavigationBehavior extends Behavior implements GameListener {

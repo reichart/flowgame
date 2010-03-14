@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.behavior;
+package de.tum.in.flowgame.engine.behavior;
 
 import java.util.Enumeration;
 
@@ -11,10 +11,10 @@ import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.Collidable;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.GameLogicConsumer;
-import de.tum.in.flowgame.Ship;
+import de.tum.in.flowgame.engine.Collidable;
+import de.tum.in.flowgame.engine.Ship;
 import de.tum.in.flowgame.model.Collision.Item;
 
 public class CollisionBehavior extends Behavior implements GameLogicConsumer {

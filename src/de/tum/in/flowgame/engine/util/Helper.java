@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.util;
+package de.tum.in.flowgame.engine.util;
 
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Behavior;
@@ -9,7 +9,7 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.Game3D;
+import de.tum.in.flowgame.engine.Game3D;
 
 public class Helper {
 

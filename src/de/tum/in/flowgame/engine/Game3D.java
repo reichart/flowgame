@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,8 +31,12 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
-import de.tum.in.flowgame.behavior.CollisionBehavior;
-import de.tum.in.flowgame.behavior.CreateNewCollidablesBehavior;
+import de.tum.in.flowgame.DefaultGameListener;
+import de.tum.in.flowgame.GameListener;
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.engine.behavior.CollisionBehavior;
+import de.tum.in.flowgame.engine.behavior.CreateNewCollidablesBehavior;
+import de.tum.in.flowgame.engine.behavior.FrameCounterBehavior;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.GameOverlay;
 

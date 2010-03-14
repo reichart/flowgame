@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import de.tum.in.flowgame.engine.SystemInfo;
 import de.tum.in.flowgame.ui.GameMenu;
 
 public class SystemInfoScreen extends MenuScreen {

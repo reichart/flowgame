@@ -1,10 +1,12 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.engine.behavior;
 
 import java.util.Enumeration;
 
 import javax.media.j3d.Behavior;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
+
+import de.tum.in.flowgame.Listeners;
 
 /**
  * Measures frame rate over a number of frames and delivers them to subscribed

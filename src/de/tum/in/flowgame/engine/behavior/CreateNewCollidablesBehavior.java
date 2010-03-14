@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.behavior;
+package de.tum.in.flowgame.engine.behavior;
 
 import java.util.Enumeration;
 
@@ -6,10 +6,10 @@ import javax.media.j3d.Behavior;
 import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedFrames;
 
-import de.tum.in.flowgame.CreateCollidables;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.GameLogicConsumer;
-import de.tum.in.flowgame.Ship;
+import de.tum.in.flowgame.engine.CreateCollidables;
+import de.tum.in.flowgame.engine.Ship;
 
 public class CreateNewCollidablesBehavior extends Behavior implements GameLogicConsumer {
 

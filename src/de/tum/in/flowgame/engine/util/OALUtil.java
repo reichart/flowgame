@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.util;
+package de.tum.in.flowgame.engine.util;
 
 import java.io.InputStream;
 
