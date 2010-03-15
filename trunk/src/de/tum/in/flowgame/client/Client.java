@@ -3,6 +3,7 @@ package de.tum.in.flowgame.client;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.imageio.ImageIO;
 
@@ -84,7 +85,7 @@ public class Client {
 		return execute(DOWNLOAD_SCENARIOSESSION, person);
 	}
 
-	public List<Score> downloadPersonHighscore(long personId, int numElements) throws IOException {
+	public SortedSet<Score> downloadPersonHighscore(long personId, int numElements) throws IOException {
 		HighscoreRequest highscoreRequest = new HighscoreRequest(personId, numElements);
 		return execute(DOWNLOAD_PERSONAL_HIGHSCORE, highscoreRequest);
 	}

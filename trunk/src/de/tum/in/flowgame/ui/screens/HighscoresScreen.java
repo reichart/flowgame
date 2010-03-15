@@ -3,7 +3,7 @@ package de.tum.in.flowgame.ui.screens;
 import java.awt.Component;
 import java.awt.Container;
 import java.io.IOException;
-import java.util.List;
+import java.util.SortedSet;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -68,7 +68,7 @@ public class HighscoresScreen extends MenuScreen {
 	@Override
 	public void update(final GameLogic logic) throws IOException {
 		final long playerId = logic.getPlayer().getId();
-		final List<Score> scores = logic.getClient().downloadPersonHighscore(playerId, numRounds);
+		final SortedSet<Score> scores = logic.getClient().downloadPersonHighscore(playerId, numRounds);
 		final TableModel tm = highscores.getModel();
 		int j = 0;
 		for (final Score score : scores) {
