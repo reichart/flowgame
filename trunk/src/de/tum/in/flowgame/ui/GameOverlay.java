@@ -123,6 +123,10 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				final int sp = fm.stringWidth(speed);
 				g.drawString(speed, width - sp - 20, stringH +280);
 				
+				String averageSpeed = "Av. Speed "+fmt.format(logic.getAverageSpeed());
+				final int spAv = fm.stringWidth(averageSpeed);
+				g.drawString(averageSpeed, width - sp - 20, stringH +300);
+				
 				fuel.setValue(logic.getFuel());
 				damage.setValue(logic.getAsteroids());
 	
