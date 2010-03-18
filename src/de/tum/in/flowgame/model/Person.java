@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,11 +24,12 @@ public class Person implements Serializable {
 	@Temporal(TemporalType.DATE)
 	Date dateOfBirth;
 	String place;
-
+	
 	/**
 	 * Answers given to the initial profiling questionaire for first-time
 	 * players.
 	 */
+	@OneToMany(cascade=CascadeType.PERSIST)
 	List<Answer> profilingAnswers;
 
 	@SuppressWarnings("unused") // for JPA
@@ -78,6 +81,14 @@ public class Person implements Serializable {
 		this.id = id;
 	}
 
+	public List<Answer> getProfilingAnswers() {
+		return profilingAnswers;
+	}
+	
+	public void setProfilingAnswers(final List<Answer> profilingAnswers) {
+		this.profilingAnswers = profilingAnswers;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Person) {
