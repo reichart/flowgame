@@ -374,6 +374,15 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	public void setAverageTrend(double t){
 		averageTrend = t;
 	}
+	
+	private double averageSpeed=-60;
+	public void setAverageSpeed(double s){
+		averageSpeed = s;
+	}
+	public double getAverageSpeed(){
+		return averageSpeed;
+	}
+	
 	public Client getClient() {
 		return client;
 	}
