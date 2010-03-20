@@ -62,7 +62,7 @@ public class Client {
 		execute(UPLOAD_URL, entity);
 	}
 
-	public Person downloadPerson(final long id) throws IOException {
+	public Person downloadPerson(final long id) {
 		try {
 			return execute(DOWNLOAD_PERSON_URL, id);
 		} catch (final Exception ex) {
