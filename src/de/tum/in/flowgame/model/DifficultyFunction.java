@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -13,15 +14,15 @@ public class DifficultyFunction extends AbstractEntity {
 	@Transient
 	private static final double INTERVAL_MAX_VALUE = 1000;
 
-	@Column(nullable = false)
+	@JoinColumn(nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Function interval;
 
-	@Column(nullable = false)
+	@JoinColumn(nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Function speed;
 
-	@Column(nullable = false)
+	@JoinColumn(nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Function ratio;
 
