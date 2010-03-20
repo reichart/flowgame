@@ -1,9 +1,6 @@
 package de.tum.in.flowgame.model;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
