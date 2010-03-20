@@ -35,8 +35,6 @@ public class PersonalHighscoreChartDownloadAction extends DatabaseAction {
 		final Person player = em.find(Person.class, personId);
 		final SortedSet<Score> scores = getPersonalScores(personId);
 		
-		System.err.println(scores);
-		
 		final JFreeChart chart = new JFreeChart(player.getName(), JFreeChart.DEFAULT_TITLE_FONT, createPlot(createSeries(scores, player)), false);
 		final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ImageIO.write(chart.createBufferedImage(500, 300), "png", bos);
@@ -81,8 +79,7 @@ public class PersonalHighscoreChartDownloadAction extends DatabaseAction {
 		final SortedSet<Score> result = new TreeSet<Score>();
 		for (final GameSession session : sessions) {
 			for (final GameRound round : session.getRounds()) {
-				System.err.println(round.getStartTime() + ": " + round.getScore());
-				result.add(new Score(round.getStartTime(), round.getScore()));
+				result.add(round.getScore());
 			}
 		}
 		return result;

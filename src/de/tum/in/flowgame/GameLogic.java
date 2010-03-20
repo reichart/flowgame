@@ -329,7 +329,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public long getScore() {
-		return gameRound.getScore();
+		return gameRound.getScore().getScore();
 	}
 
 	public double getRating() {

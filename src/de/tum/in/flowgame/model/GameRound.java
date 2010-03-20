@@ -16,19 +16,17 @@ import de.tum.in.flowgame.model.Collision.Item;
 public class GameRound extends AbstractEntity implements GameListener {
 	private ScenarioRound scenarioRound;
 	private Long actualPlaytime;
-	private List<TimeDifficultyPair> difficultyByTime;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Collision> collisions;
 	private List<Answer> answers;
 	private long startTime;
-	private Long score;
+	private long score;
 	/**
 	 * rank within friends at the time the round was played
 	 */
 	private Integer rank;
 
 	public GameRound() {
-		this.difficultyByTime = new ArrayList<TimeDifficultyPair>();
 		this.collisions = new ArrayList<Collision>();
 		this.answers = new ArrayList<Answer>();
 		score = 0L;
@@ -43,10 +41,6 @@ public class GameRound extends AbstractEntity implements GameListener {
 		this.rank = rank;
 	}
 
-	public Long getActualPlaytime() {
-		return actualPlaytime;
-	}
-	
 	public ScenarioRound getScenarioRound() {
 		return scenarioRound;
 	}
@@ -55,20 +49,8 @@ public class GameRound extends AbstractEntity implements GameListener {
 		this.scenarioRound = scenarioRound;
 	}
 
-	public List<TimeDifficultyPair> getDifficultyByTime() {
-		return difficultyByTime;
-	}
-
-	public void setDifficultyByTime(final List<TimeDifficultyPair> difficultyByTime) {
-		this.difficultyByTime = difficultyByTime;
-	}
-
 	public List<Collision> getCollisions() {
 		return collisions;
-	}
-
-	public void setCollisions(final List<Collision> collisions) {
-		this.collisions = collisions;
 	}
 
 	public List<Answer> getAnswers() {
@@ -79,7 +61,7 @@ public class GameRound extends AbstractEntity implements GameListener {
 		this.answers = answers;
 	}
 
-	public Long getStartTime() {
+	public long getStartTime() {
 		return startTime;
 	}
 
@@ -91,11 +73,11 @@ public class GameRound extends AbstractEntity implements GameListener {
 		this.actualPlaytime = actualPlaytime;
 	}
 
-	public Long getScore() {
-		return score;
+	public Score getScore() {
+		return new Score(startTime, score);
 	}
 
-	public void increaseScore(final Long points) {
+	public void increaseScore(final long points) {
 		this.score += points;
 		if (score < 0) {
 			score = 0L;
