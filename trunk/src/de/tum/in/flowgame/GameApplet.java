@@ -145,8 +145,7 @@ public class GameApplet extends Applet {
 				newPlayer = true;
 
 				System.err.println("##### creating new player");
-				player = new Person(loggedInUser);
-				player.setName("Checker");
+				player = new Person(loggedInUser, "Checker");
 
 				// final JSONObject userInfo =
 				// facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,

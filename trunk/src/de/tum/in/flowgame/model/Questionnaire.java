@@ -12,29 +12,32 @@ import javax.persistence.OneToMany;
 @Entity
 public class Questionnaire extends AbstractEntity {
 
-	@Column(length=50)
-	String name;
-	@Column(length=3000)
-	String description;
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	List<Question> questions;
-	
-	public Questionnaire() {
-		questions = new ArrayList<Question>();
+	@Column(length = 50, nullable = false)
+	private String name;
+	@Column(length = 3000, nullable = false)
+	private String description;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Question> questions;
+
+	@SuppressWarnings("unused")
+	private Questionnaire() {
+		// for JPA
 	}
 	
+	public Questionnaire(final String name, final String description) {
+		this.questions = new ArrayList<Question>();
+		this.name = name;
+		this.description = description;
+	}
+
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void addQuestion(final String text) {
+		questions.add(new Question(text));
 	}
 
-	public void addQuestion(Question q) {
-		questions.add(q);		
-	}
-	
 	public List<Question> getQuestions() {
 		return questions;
 	}
@@ -43,7 +46,4 @@ public class Questionnaire extends AbstractEntity {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
 }

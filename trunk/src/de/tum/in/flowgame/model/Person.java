@@ -19,41 +19,34 @@ public class Person implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	String name;
-	String sex; // Facebook provides localized values, so no Enum here
+	private String name;
+	private String sex; // Facebook provides localized values, so no Enum here
 	@Temporal(TemporalType.DATE)
-	Date dateOfBirth;
-	String place;
-	
+	private Date dateOfBirth;
+	private String place;
+
 	/**
 	 * Answers given to the initial profiling questionaire for first-time
 	 * players.
 	 */
-	@OneToMany(cascade=CascadeType.PERSIST)
-	List<Answer> profilingAnswers;
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<Answer> profilingAnswers;
 
-	@SuppressWarnings("unused") // for JPA
+	@SuppressWarnings("unused")
 	private Person() {
-		// empty
+		// for JPA
 	}
 
-	public Person(Long id) {
+	public Person(final long id, final String name) {
 		this.id = id;
+		this.name = name;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
+	public void setSex(final String sex) {
 		this.sex = sex;
 	}
 
@@ -61,7 +54,7 @@ public class Person implements Serializable {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(final Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -69,7 +62,7 @@ public class Person implements Serializable {
 		return place;
 	}
 
-	public void setPlace(String place) {
+	public void setPlace(final String place) {
 		this.place = place;
 	}
 
@@ -77,20 +70,16 @@ public class Person implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public List<Answer> getProfilingAnswers() {
 		return profilingAnswers;
 	}
-	
+
 	public void setProfilingAnswers(final List<Answer> profilingAnswers) {
 		this.profilingAnswers = profilingAnswers;
 	}
-	
+
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj instanceof Person) {
 			if (((Person) obj).getId().equals(this.id)) {
 				return true;
@@ -101,10 +90,10 @@ public class Person implements Serializable {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return id.hashCode();
 	}
-	
+
 }

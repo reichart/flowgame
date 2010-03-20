@@ -29,7 +29,7 @@ public class PersonalHighscoreDownloadAction extends GameDataAction<HighscoreReq
 		final SortedSet<Score> result = new TreeSet<Score>(Collections.reverseOrder());
 		for (final GameSession session : sessions) {
 			for (final GameRound round : session.getRounds()) {
-				result.add(new Score(round.getStartTime(), round.getScore()));
+				result.add(round.getScore());
 			}
 		}
 		return result;

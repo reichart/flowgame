@@ -49,8 +49,7 @@ public class QuestionnaireScreen extends MenuScreen {
 		q = logic.getCurrentScenarioRound().getQuestionnaire();
 		if (q == null) {
 			// TODO this should never happen
-			q = new Questionnaire();
-			q.setName("dummy");
+			q = new Questionnaire("dummy", "dummy description");
 		}
 		qpanel.setQuestionnaire(q);
 	}

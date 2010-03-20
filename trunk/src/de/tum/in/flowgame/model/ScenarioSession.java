@@ -12,34 +12,33 @@ import javax.persistence.Transient;
 @Entity
 public class ScenarioSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	List<ScenarioRound> rounds;
-	String name;
+	private final List<ScenarioRound> rounds;
 
 	public enum Type {
 		INDIVIDUAL, SOCIAL, BASELINE
 	}
 
-	Type type;
+	private final Type type;
 
 	@Transient
-	int roundsPlayed;
+	private int roundsPlayed;
 
 	public ScenarioSession() {
-		rounds = new ArrayList<ScenarioRound>();
-		roundsPlayed = 0;
+		this(null);
 	}
 
 	public ScenarioSession(final Type type) {
-		this();
+		this.rounds = new ArrayList<ScenarioRound>();
 		this.type = type;
 	}
 
-	public List<ScenarioRound> getRounds() {
-		return rounds;
+	public void add(final ScenarioRound round) {
+		rounds.add(round);
 	}
 
 	// returns next round and counts how many rounds have been played
 	public ScenarioRound getNextRound() {
+		// TODO iterator?
 		ScenarioRound round = null;
 		roundsPlayed++;
 		if (rounds.size() > roundsPlayed) {
