@@ -50,4 +50,9 @@ public class Score implements Serializable, Comparable<Score> {
 		else
 			return -1;
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "[" + startTime + ": " + score + "]";
+	}
 }
