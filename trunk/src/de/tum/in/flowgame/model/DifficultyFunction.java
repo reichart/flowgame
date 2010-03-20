@@ -43,7 +43,7 @@ public class DifficultyFunction extends AbstractEntity {
 		this.ratio = ratio;
 	}
 	
-	public double getDifficultyRating(Long time) {
+	public double getDifficultyRating(long time) {
 		double intervalValue = interval.getValue(time);
 		double speedValue = speed.getValue(time);
 		double ratioValue = ratio.getValue(time);
