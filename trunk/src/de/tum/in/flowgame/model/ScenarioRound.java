@@ -1,15 +1,16 @@
 package de.tum.in.flowgame.model;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ScenarioRound extends AbstractEntity {
 	private Integer baselineModifier;
 	private Long expectedPlaytime;
 	private DifficultyFunction difficultyFunction;
+	@OneToOne(cascade=CascadeType.PERSIST)
 	private Questionnaire questionnaire;
-	@Column(nullable = false)
 	private boolean baseline;
 
 	@SuppressWarnings("unused")
