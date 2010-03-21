@@ -3,6 +3,8 @@ package de.tum.in.flowgame.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.CubicCurve2D;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import de.tum.in.flowgame.model.Highscore;
 
 public class SocialHighscore extends JPanel {
 
-	private static final boolean STRAIGHT = true;
+	private static final boolean CURVE = true;
 	
 	private final FacebookFriendCache friendCash;
 	private final FriendsBar fb;
@@ -73,13 +75,15 @@ public class SocialHighscore extends JPanel {
 
 		//paint percentage bar
 		g.setColor(Color.BLUE);
-		g.fillRect(25, barBorder, 550, 10);
+		g.fillRect(25, barBorder, getWidth()-(2*FriendsBar.LEFT_BORDER), 10);
 		
 		//paint own player
 		try {
-			int percentagePosition = (int) (25 +  550/100.0 * ownScore.getPercentage());
-			fb.paintFriend(percentagePosition - 35, 0, friendCash.getCurrentPlayer().getPicture(), ownScore.getScore(), g);
-			drawPercentageLine(percentagePosition, 100, percentagePosition, barBorder, g);
+			int percentagePosition = calculatePercentagePosition(ownScore.getPercentage());
+			int pictureMiddle = Math.min(percentagePosition, getWidth() - FriendsBar.LEFT_BORDER - fb.cardWidth/2);
+			pictureMiddle = Math.max(pictureMiddle, FriendsBar.LEFT_BORDER + fb.cardWidth/2);
+			fb.paintFriend(pictureMiddle - fb.cardWidth/2, 0, friendCash.getCurrentPlayer().getPicture(), ownScore.getScore(), g);
+			drawPercentageLine(pictureMiddle, 100, percentagePosition, barBorder, g);
 		} catch (final Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,17 +93,22 @@ public class SocialHighscore extends JPanel {
 		for (final Highscore highscore : highscores) {
 			final Integer xPosition = fb.getXPosition(highscore.getPersonid());
 			if (xPosition != null) {
-				drawPercentageLine(xPosition, lowerBorder, (int) (25 +  550/100.0 * highscore.getPercentage()), barBorder + 10, g);
+				drawPercentageLine(xPosition, lowerBorder, calculatePercentagePosition(highscore.getPercentage()), barBorder + 10, g);
 			}
 		}
 		
 	}
 	
+	private int calculatePercentagePosition(int percentage) {
+		return (int) (FriendsBar.LEFT_BORDER + (this.getWidth()- (2 * FriendsBar.LEFT_BORDER))/100.0 * percentage);
+	}
+	
 	private void drawPercentageLine(int x1, int y1, int x2, int y2, Graphics g) {
-		if (STRAIGHT) {
-			g.drawLine(x1, y1, x2, y2);
+		int half = y1 - (int) ((y1-y2) / 2.0);
+		if (CURVE) {
+			CubicCurve2D.Float curve = new CubicCurve2D.Float(x1, y1, x1, half, x2, half, x2, y2);
+			((Graphics2D)g).draw(curve);
 		} else {
-			int half = y1 - (int) ((y1-y2) / 2.0);
 			g.drawLine(x1, y1, x1, half);
 			g.drawLine(x1, half, x2, half);
 			g.drawLine(x2, half, x2, y2);
