@@ -42,7 +42,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private Thread thread;
 	private boolean paused;
 
-	private GameRound gameRound = new GameRound();
+	private volatile GameRound gameRound;
 
 	private Trend asteroidTrend;
 	private Trend fuelTrend;
@@ -172,20 +172,14 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 
-	private void loadNewScenarioSession() {
-		try {
-			gameSession = new GameSession();
-			// download Scenario that should be played next
-			gameSession.setScenarioSession(client.downloadScenarioSession(player));
-			gameSession.setPlayer(player);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void init() {
 		if (gameSession == null) {
-			loadNewScenarioSession();
+			try {
+				// download Scenario that should be played next
+				gameSession = new GameSession(player, client.downloadScenarioSession(player));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
 			if (sessionRound == null) {
@@ -210,10 +204,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			throw new IllegalStateException("A game is still running.");
 		}
 
-		gameRound = new GameRound();
-		gameRound.setScenarioRound(getCurrentScenarioRound());
-
-		gameSession.addRound(gameRound);
+		gameRound = gameSession.newRound();
 		addListener(gameRound);
 
 		// reset internal state

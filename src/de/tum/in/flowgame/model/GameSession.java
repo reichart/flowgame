@@ -10,47 +10,44 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class GameSession extends AbstractEntity {
-	ScenarioSession scenarioSession;
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	Person player;
-	Difficulty baseline;
-	@OneToMany(cascade=CascadeType.PERSIST)
-	List<GameRound> rounds;
+	private ScenarioSession scenarioSession;
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Person player;
+	private Difficulty baseline;
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private final List<GameRound> rounds;
 
-	public GameSession() {
-		rounds = new ArrayList<GameRound>();
+	@SuppressWarnings("unused")
+	private GameSession() { // for JPA
+		this(null, null);
 	}
 
+	public GameSession(final Person player, final ScenarioSession scenarioSession) {
+		this.rounds = new ArrayList<GameRound>();
+		this.player = player;
+		this.scenarioSession = scenarioSession;
+	}
+
+	public GameRound newRound() {
+		final GameRound round = new GameRound(getScenarioSession().getNextRound());
+		rounds.add(round);
+		return round;
+	}
+	
 	public Person getPlayer() {
 		return player;
-	}
-
-	public void setPlayer(Person player) {
-		this.player = player;
 	}
 
 	public Difficulty getBaseline() {
 		return baseline;
 	}
 
-	public void setBaseline(Difficulty baseline) {
-		this.baseline = baseline;
-	}
-	
 	public List<GameRound> getRounds() {
 		return rounds;
-	}
-
-	public void addRound(GameRound round) {
-		this.rounds.add(round);
 	}
 
 	public ScenarioSession getScenarioSession() {
 		return scenarioSession;
 	}
 
-	public void setScenarioSession(ScenarioSession scenarioSession) {
-		this.scenarioSession = scenarioSession;
-	}
-	
 }

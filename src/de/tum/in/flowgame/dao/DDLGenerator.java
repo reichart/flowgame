@@ -80,16 +80,15 @@ public class DDLGenerator {
 		Random rnd = new Random();
 		List<GameSession> gameSessions = new ArrayList<GameSession>();
 		for (int i = 0; i < 6; i++) {
-			GameSession gs = new GameSession();
-			gs.setScenarioSession(ss);
-			gs.setPlayer(players.get(i));
+			GameSession gs = new GameSession(players.get(i), ss);
 			
 			//Create 4 GameRounds for each player
 			for (int j = 0; j < 4; j++) {
-				GameRound gr = new GameRound();
-				gr.setScenarioRound(sr1);
+				final GameRound gr = new GameRound(sr1);
+				// spread start times so score charts 
+				gr.setStartTime(System.currentTimeMillis() + 60*j);
 				gr.setScore(Math.abs(rnd.nextLong()) % 10000);
-				gs.addRound(gr);
+				gs.getRounds().add(gr);
 			}
 						
 			gameSessions.add(gs);
