@@ -72,7 +72,7 @@ public class DDLGenerator {
 		ScenarioRound sr1 = new ScenarioRound(true, 1, 2000L, df, qn);
 		ScenarioRound sr2 = new ScenarioRound(false, 5, 2000L, df, qn);
 		
-		ScenarioSession ss = new ScenarioSession();
+		ScenarioSession ss = new ScenarioSession(null, qn);
 		ss.add(sr1);
 		ss.add(sr2);
 		
