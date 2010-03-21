@@ -21,7 +21,7 @@ public class Questionnaire extends AbstractEntity {
 
 	@SuppressWarnings("unused")
 	private Questionnaire() {
-		// for JPA
+		this(null, null); // for JPA
 	}
 	
 	public Questionnaire(final String name, final String description) {
