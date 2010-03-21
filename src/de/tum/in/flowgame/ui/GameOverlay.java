@@ -111,21 +111,21 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				final int ratingW = fm.stringWidth(rating);
 				g.drawString(rating, width - ratingW - 20, stringH + 170);
 				
-				String trendRating = "TrendRating " + fmt.format(logic.getTrendRating());
-				final int ratingT = fm.stringWidth(trendRating);
-				g.drawString(trendRating, width - ratingT - 20, stringH + 220);
-				
-				String averageTrend = "AverageTrend "+fmt.format(logic.getAverageTrend());
-				final int ratingAv = fm.stringWidth(averageTrend);
-				g.drawString(averageTrend, width - ratingAv - 20, stringH +250);
-				
-				String speed = "Speed "+fmt.format(logic.getSpeed());
-				final int sp = fm.stringWidth(speed);
-				g.drawString(speed, width - sp - 20, stringH +280);
-				
-				String averageSpeed = "Av. Speed "+fmt.format(logic.getAverageSpeed());
-				final int spAv = fm.stringWidth(averageSpeed);
-				g.drawString(averageSpeed, width - sp - 20, stringH +300);
+//				String trendRating = "TrendRating " + fmt.format(logic.getTrendRating());
+//				final int ratingT = fm.stringWidth(trendRating);
+//				g.drawString(trendRating, width - ratingT - 20, stringH + 220);
+//				
+//				String averageTrend = "AverageTrend "+fmt.format(logic.getAverageTrend());
+//				final int ratingAv = fm.stringWidth(averageTrend);
+//				g.drawString(averageTrend, width - ratingAv - 20, stringH +250);
+//				
+//				String speed = "Speed "+fmt.format(logic.getSpeed());
+//				final int sp = fm.stringWidth(speed);
+//				g.drawString(speed, width - sp - 20, stringH +280);
+//				
+//				String averageSpeed = "Av. Speed "+fmt.format(logic.getAverageSpeed());
+//				final int spAv = fm.stringWidth(averageSpeed);
+//				g.drawString(averageSpeed, width - sp - 20, stringH +300);
 				
 				fuel.setValue(logic.getFuel());
 				damage.setValue(logic.getAsteroids());

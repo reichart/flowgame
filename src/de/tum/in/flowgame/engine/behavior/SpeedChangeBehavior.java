@@ -37,12 +37,10 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 		if (gameLogic != null) {
 			final Function fun = gameLogic.getDifficultyFunction().getSpeed();
 			if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
-				speed = strategy.calculateSpeed(gameLogic.getTrendRating(), speed);
-				
+				speed = strategy.calculateSpeed(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend(), speed);
 			} else {
 				speed = (fun == null) ? 0 : -fun.getValue(gameLogic.getElapsedTime());
 			}
-			gameLogic.setSpeed(speed);
 			forwardNavigator.setFwdSpeed(speed);
 		}
 		wakeupOn(newFrame);
@@ -50,6 +48,5 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 	
 	public void setGameLogic(final GameLogic gameLogic) {
 		this.gameLogic = gameLogic;
-		if(this.strategy instanceof AverageTrendStrategy) ((AverageTrendStrategy)strategy).setGameLogic(gameLogic);
 	}
 }
