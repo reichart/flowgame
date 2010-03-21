@@ -51,8 +51,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private long startTimeWithoutPause;
 	private long pauseStartTime;
 
-	private double currentPosition;
-	private double previousTrend;
 	private final CustomFacebookClient facebook;
 
 	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook) {
@@ -127,8 +125,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 			if (!paused) {
 				fuel--;
-				previousTrend = getTrendRating();
-
 				if (fuel == 0) {
 					break;
 				}
@@ -198,7 +194,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 				// fireSessionFinished();
 			}
 		}
-		currentPosition = 0;
 	}
 
 	public void start() {
@@ -340,54 +335,19 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
 
-	public double getTrendRating() {
-		double asteroidTrendRating = asteroidTrend.getShortRatio() + 3 / 4.0 * asteroidTrend.getMidRatio() + 1 / 4.0
-				* asteroidTrend.getLongRatio();
-		double fuelTrendRating = fuelTrend.getShortRatio() + 3 / 4.0 * fuelTrend.getMidRatio() + 1 / 4.0 * fuelTrend.getLongRatio();
-		return 2*fuelTrendRating - asteroidTrendRating;
-	}
-
-	public double getPosition() {
-		double trendRating = getTrendRating();
-		if (trendRating < previousTrend) {
-			currentPosition -= 1;
-		} else {
-			currentPosition += 1;
-		}
-		return currentPosition;
-	}
-
-	
-	private double speed=0;
-	public void setSpeed(double s){
-		speed = s;
-	}
-	
-	public double getSpeed(){
-		return speed;
-	}
-	private double averageTrend=0;
-	
-	public double getAverageTrend(){
-		return averageTrend;
-	}
-	public void setAverageTrend(double t){
-		averageTrend = t;
-	}
-	
-	private double averageSpeed=-60;
-	public void setAverageSpeed(double s){
-		averageSpeed = s;
-	}
-	public double getAverageSpeed(){
-		return averageSpeed;
-	}
-	
 	public Client getClient() {
 		return client;
 	}
 	
 	public CustomFacebookClient getFacebookClient() {
 		return facebook;
+	}
+	
+		public Trend getAsteroidTrend() {
+		return asteroidTrend;
+	}
+
+	public Trend getFuelTrend() {
+		return fuelTrend;
 	}
 }
