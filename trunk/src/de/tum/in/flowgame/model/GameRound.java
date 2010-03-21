@@ -25,11 +25,16 @@ public class GameRound extends AbstractEntity implements GameListener {
 	 */
 	private Integer rank;
 
-	public GameRound() {
+	@SuppressWarnings("unused")
+	private GameRound() { // for JPA
+		this(null);
+	}
+
+	public GameRound(final ScenarioRound scenarioRound) {
 		this.collisions = new ArrayList<Collision>();
 		this.answers = new ArrayList<Answer>();
-		score = 0L;
-		rank = 0;
+		this.startTime = System.currentTimeMillis();
+		this.scenarioRound = scenarioRound;
 	}
 
 	public Integer getRank() {
@@ -42,10 +47,6 @@ public class GameRound extends AbstractEntity implements GameListener {
 
 	public ScenarioRound getScenarioRound() {
 		return scenarioRound;
-	}
-
-	public void setScenarioRound(final ScenarioRound scenarioRound) {
-		this.scenarioRound = scenarioRound;
 	}
 
 	public List<Collision> getCollisions() {
