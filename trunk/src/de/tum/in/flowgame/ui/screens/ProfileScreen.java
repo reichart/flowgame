@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import de.tum.in.flowgame.model.Question;
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.QuestionnairePanel;
