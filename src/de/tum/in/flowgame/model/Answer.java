@@ -1,7 +1,5 @@
 package de.tum.in.flowgame.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 
 @Entity
