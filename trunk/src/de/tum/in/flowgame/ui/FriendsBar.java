@@ -35,7 +35,7 @@ public class FriendsBar extends JPanel {
 	private static final int MAX_NUMBER_OF_FRIENDS_SHOWN = 7;
 	private static final int INNER_MARGIN = 10;
 	private static final int MARGIN = 10;
-	private static final int LEFT_BORDER = 25;
+	public static final int LEFT_BORDER = 25;
 
 	private int currentPosition;
 
