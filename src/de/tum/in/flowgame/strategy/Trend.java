@@ -1,4 +1,4 @@
-package de.tum.in.flowgame;
+package de.tum.in.flowgame.strategy;
 
 import java.util.LinkedList;
 import java.util.List;
