@@ -16,6 +16,8 @@ public class GameSession extends AbstractEntity {
 	private Difficulty baseline;
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private final List<GameRound> rounds;
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<Answer> answers;
 
 	@SuppressWarnings("unused")
 	private GameSession() { // for JPA
@@ -48,6 +50,10 @@ public class GameSession extends AbstractEntity {
 
 	public ScenarioSession getScenarioSession() {
 		return scenarioSession;
+	}
+	
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 
 }
