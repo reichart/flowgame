@@ -473,10 +473,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		setPhysics(this.maxSpeed, this.acceleration);
 	}
 
-	public void setFwdSpeed(final double fwdSpeed) {
-		this.fwdSpeed = fwdSpeed;
-	}
-
 	public double getZCoordinate() {
 		return getCoords().getZ();
 	}
