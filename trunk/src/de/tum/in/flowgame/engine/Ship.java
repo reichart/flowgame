@@ -93,7 +93,7 @@ public class Ship extends TransformGroup implements GameListener {
 		ship.addChild(shipNavigationBehavior);
 		shipNavigationBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 
-		speedChange = new SpeedChangeBehavior();
+		speedChange = new SpeedChangeBehavior(shipNavigationBehavior);
 		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		addChild(speedChange);
 
