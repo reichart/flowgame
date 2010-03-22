@@ -15,13 +15,11 @@ import de.tum.in.flowgame.strategy.FlowStrategy;
 public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 
 	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
-	private final ShipNavigationBehavior forwardNavigator;
 	private double speed;
 	private GameLogic gameLogic;
 	private FlowStrategy strategy;
 	
-	public SpeedChangeBehavior(final ShipNavigationBehavior forwardNavigator) {
-		this.forwardNavigator = forwardNavigator;
+	public SpeedChangeBehavior() {
 	}
 
 	@Override
@@ -41,7 +39,6 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer {
 			} else {
 				speed = (fun == null) ? 0 : -fun.getValue(gameLogic.getElapsedTime());
 			}
-			forwardNavigator.setFwdSpeed(speed);
 		}
 		wakeupOn(newFrame);
 	}
