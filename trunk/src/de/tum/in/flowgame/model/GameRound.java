@@ -6,15 +6,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
+import de.tum.in.flowgame.DefaultGameListener;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.model.Collision.Item;
 
 @Entity
-public class GameRound extends AbstractEntity implements GameListener {
+public class GameRound extends AbstractEntity {
 	private ScenarioRound scenarioRound;
-	private Long actualPlaytime;
+	private long actualPlaytime;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Collision> collisions;
 	private List<Answer> answers;
@@ -24,6 +25,9 @@ public class GameRound extends AbstractEntity implements GameListener {
 	 * rank within friends at the time the round was played
 	 */
 	private Integer rank;
+	
+	@Transient
+	private transient GameListener listener;
 
 	@SuppressWarnings("unused")
 	private GameRound() { // for JPA
@@ -35,6 +39,18 @@ public class GameRound extends AbstractEntity implements GameListener {
 		this.answers = new ArrayList<Answer>();
 		this.startTime = System.currentTimeMillis();
 		this.scenarioRound = scenarioRound;
+		this.listener = new DefaultGameListener() {
+			@Override
+			public void gameStarted(final GameLogic game) {
+				setStartTime(System.currentTimeMillis());
+			}
+
+			@Override
+			public void gameStopped(final GameLogic game) {
+				actualPlaytime = game.getElapsedTime();
+				game.removeListener(this);
+			}
+		};
 	}
 
 	public Integer getRank() {
@@ -69,10 +85,6 @@ public class GameRound extends AbstractEntity implements GameListener {
 		this.startTime = startTime;
 	}
 
-	public void setActualPlaytime(final Long actualPlaytime) {
-		this.actualPlaytime = actualPlaytime;
-	}
-
 	public Score getScore() {
 		return new Score(startTime, score);
 	}
@@ -84,41 +96,12 @@ public class GameRound extends AbstractEntity implements GameListener {
 		}
 	}
 
-	public void added(final GameLogic game) {
-		// empty
-	}
-	
-	public void removed(final GameLogic game) {
-		// empty
-	}
-	
-	public void collided(final GameLogic logic, final Item item) {
-		getCollisions().add(new Collision(item));
-	}
-
-	public void gamePaused(final GameLogic game) {
-		// empty
-	}
-
-	public void gameResumed(final GameLogic game) {
-		// empty
-	}
-
-	public void gameStarted(final GameLogic game) {
-		setStartTime(System.currentTimeMillis());
-	}
-
-	public void gameStopped(final GameLogic game) {
-		setActualPlaytime(System.currentTimeMillis() - getStartTime());
-		game.removeListener(this);
-	}
-
 	public void setScore(Long score) {
 		this.score = score;		
 	}
 
-//	@Override
-//	public void sessionFinished(final GameLogic game) {
-//		// empty
-//	}
+	public GameListener getListener() {
+		return listener;
+	}
+
 }
