@@ -205,7 +205,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 
 		gameRound = gameSession.newRound();
-		addListener(gameRound);
+		addListener(gameRound.getListener());
 
 		// reset internal state
 		fuel = MAX_FUEL;
