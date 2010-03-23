@@ -26,24 +26,31 @@ public class DDLGenerator {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("IDP");
 		EntityManager em = emf.createEntityManager();
 
+		// once when user first plays game
+		Questionnaire profile = new Questionnaire("Persönlichkeitsbeschreibung", "Die Folgenden eignen sich zur Beschreibung Ihrer eigenen Person (insgesamt 13 Aussagen). Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
+						+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.");
+		profile.addQuestion("Viel Leute halten mich für etwas kühl und distanziert.");
+		profile.addQuestion("Probleme, die schwierig zu lösen sind, reizen mich.");
+		profile.addQuestion("Ich bin ein fröhlicher, gut gelaunter Mensch.");
+		profile.addQuestion("Zu häufig bin ich entmutigt und will aufgeben, wenn etwas schief geht.");
+		profile.addQuestion("Ich strebe danach, alles mir Mögliche zu erreichen.");
+		profile.addQuestion("Ich bin häufig beunruhigt, über Dinge, die schief gehen könnten.");
+		profile.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine neue Idee darüber bekommen habe, wie eine Sache funktioniert.");
+		profile.addQuestion("Ich arbeite zielstrebig und effektiv.");
+		profile.addQuestion("Ich ziehe es gewöhnlich vor, Dinge allein zu tun.");
+		profile.addQuestion("Mich reizen Situationen, in denen ich meine Fähigkeiten testen kann.");
+		profile.addQuestion("Ich fühle mich oft hilflos und wünsche mir eine Person, die meine Probleme löst.");
+		profile.addQuestion("Ich habe gerne viele Leute um mich herum.");
+		profile.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine wirklich komplizierte Sache endgültig verstanden habe.");
 		
-		Questionnaire qn = new Questionnaire("Persönlichkeitsbeschreibung", "Die Folgenden eignen sich zur Beschreibung Ihrer eigenen Person (insgesamt 13 Aussagen). Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung." +
-			"Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.");
-		qn.addQuestion("Viel Leute halten mich für etwas kühl und distanziert.");
-		qn.addQuestion("Probleme, die schwierig zu lösen sind, reizen mich.");
-		qn.addQuestion("Ich bin ein fröhlicher, gut gelaunter Mensch.");
-		qn.addQuestion("Zu häufig bin ich entmutigt und will aufgeben, wenn etwas schief geht.");
-		qn.addQuestion("Ich strebe danach, alles mir Mögliche zu erreichen.");
-		qn.addQuestion("Ich bin häufig beunruhigt, über Dinge, die schief gehen könnten.");
-		qn.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine neue Idee darüber bekommen habe, wie eine Sache funktioniert.");
-		qn.addQuestion("Ich arbeite zielstrebig und effektiv.");
-		qn.addQuestion("Ich ziehe es gewöhnlich vor, Dinge allein zu tun.");
-		qn.addQuestion("Mich reizen Situationen, in denen ich meine Fähigkeiten testen kann.");
-		qn.addQuestion("Ich fühle mich oft hilflos und wünsche mir eine Person, die meine Probleme löst.");
-		qn.addQuestion("Ich habe gerne viele Leute um mich herum.");
-		qn.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine wirklich komplizierte Sache endgültig verstanden habe.");
+		// once before each session
+		Questionnaire moodAndSkills = new Questionnaire("Mood and Skills", "tbd");
+		moodAndSkills.addQuestion("dummy question about mood");
+		moodAndSkills.addQuestion("dummy question about skills");
 		
-//		Answer ans = new Answer(q1, 1);
+		// after every round
+		Questionnaire howWasIt = new Questionnaire("How was it?", "TBD mood (15q) and flow (20q)");
+		howWasIt.addQuestion("how was it question");
 		
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
@@ -69,18 +76,18 @@ public class DDLGenerator {
 
 		DifficultyFunction df = new DifficultyFunction(intervalFunction, speedFunction, ratioFunction);
 		
-		ScenarioRound sr1 = new ScenarioRound(true, 1, 2000L, df, qn);
-		ScenarioRound sr2 = new ScenarioRound(false, 5, 2000L, df, qn);
+		ScenarioRound sr1 = new ScenarioRound(true, 1, 2000L, df, howWasIt);
+		ScenarioRound sr2 = new ScenarioRound(false, 5, 2000L, df, howWasIt);
 		
-		ScenarioSession ss = new ScenarioSession(null, qn);
+		ScenarioSession ss = new ScenarioSession(null, moodAndSkills);
 		ss.add(sr1);
 		ss.add(sr2);
 		
 		//Create 1 GameSession for each player
 		Random rnd = new Random();
 		List<GameSession> gameSessions = new ArrayList<GameSession>();
-		for (int i = 0; i < 6; i++) {
-			GameSession gs = new GameSession(players.get(i), ss);
+		for (Person player : players) {
+			GameSession gs = new GameSession(player, ss);
 			
 			//Create 4 GameRounds for each player
 			for (int j = 0; j < 4; j++) {
@@ -95,9 +102,6 @@ public class DDLGenerator {
 		}
 		
 		em.getTransaction().begin();
-//		em.persist(q1);
-		em.persist(qn);
-//		em.persist(ans);
 		em.persist(p1);
 		em.persist(p2);
 		em.persist(p3);
@@ -108,6 +112,7 @@ public class DDLGenerator {
 		em.persist(speedFunction);
 		em.persist(df);
 		em.persist(ss);
+		em.persist(howWasIt);
 		for (GameSession gameSession : gameSessions) {
 			em.persist(gameSession);
 		}		
