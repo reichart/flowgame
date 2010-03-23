@@ -24,6 +24,8 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.ui.screens.AfterRoundQuestionnaireScreen;
+import de.tum.in.flowgame.ui.screens.BeforeSessionQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
 import de.tum.in.flowgame.ui.screens.GameOverScreen;
 import de.tum.in.flowgame.ui.screens.HighscoresChartScreen;
@@ -32,7 +34,6 @@ import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.PauseScreen;
 import de.tum.in.flowgame.ui.screens.ProfileScreen;
-import de.tum.in.flowgame.ui.screens.QuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.SettingsScreen;
 import de.tum.in.flowgame.ui.screens.SocialHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
@@ -91,11 +92,12 @@ public class GameMenu implements Sprite, GameListener {
 		// these require the above logic to be available
 		add(new EmptyScreen(this));
 		add(new MainScreen(this));
-		add(new QuestionnaireScreen(this));
+		add(new BeforeSessionQuestionnaireScreen(this));
 		add(new HighscoresScreen(this));
 		add(new SocialHighscoresScreen(this));
 		add(new HighscoresChartScreen(this));
 		add(new PauseScreen(this));
+		add(new AfterRoundQuestionnaireScreen(this));
 		add(new GameOverScreen(this));
 		add(new SettingsScreen(this));
 		add(new SystemInfoScreen(this));
@@ -130,9 +132,7 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	public void gameStopped(final GameLogic game) {
-		if (game.getCurrentScenarioRound().getQuestionnaire() != null) {
-			show(QuestionnaireScreen.class);
-		}
+		show(AfterRoundQuestionnaireScreen.class);
 	}
 
 	private void add(final MenuScreen screen) {

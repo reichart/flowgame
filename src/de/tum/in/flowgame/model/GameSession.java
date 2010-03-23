@@ -30,8 +30,8 @@ public class GameSession extends AbstractEntity {
 		this.scenarioSession = scenarioSession;
 	}
 
-	public GameRound newRound() {
-		final GameRound round = new GameRound(getScenarioSession().getNextRound());
+	public GameRound newRound(final ScenarioRound nextRound) {
+		final GameRound round = new GameRound(nextRound);
 		rounds.add(round);
 		return round;
 	}
@@ -51,7 +51,7 @@ public class GameSession extends AbstractEntity {
 	public ScenarioSession getScenarioSession() {
 		return scenarioSession;
 	}
-	
+
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}

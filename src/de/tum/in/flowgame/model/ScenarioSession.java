@@ -48,17 +48,8 @@ public class ScenarioSession extends AbstractEntity {
 	public ScenarioRound getNextRound() {
 		// TODO iterator?
 		ScenarioRound round = null;
-		roundsPlayed++;
 		if (rounds.size() > roundsPlayed) {
-			round = rounds.get(roundsPlayed);
-		}
-		return round;
-	}
-
-	public ScenarioRound getCurrentRound() {
-		ScenarioRound round = null;
-		if (rounds.size() > roundsPlayed) {
-			round = rounds.get(roundsPlayed);
+			round = rounds.get(roundsPlayed++);
 		}
 		return round;
 	}

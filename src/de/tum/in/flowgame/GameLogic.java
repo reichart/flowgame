@@ -1,20 +1,28 @@
 package de.tum.in.flowgame;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.facebook.CustomFacebookClient;
+import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioRound;
+import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.strategy.Trend;
 
 public class GameLogic implements GameLogicMBean, Runnable {
 
+	private final static Log log = LogFactory.getLog(GameLogic.class);
+	
 	public final static int MAX_ASTEROIDS = 10;
 	public final static int MAX_FUEL = 10;
 	private static final int pointsForFuel = 10;
@@ -23,6 +31,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private final Client client;
 
 	private GameSession gameSession;
+	private GameRound gameRound;
 	private Person player;
 
 	private final List<GameListener> listeners;
@@ -42,8 +51,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private Thread thread;
 	private boolean paused;
 
-	private volatile GameRound gameRound;
-
 	private Trend asteroidTrend;
 	private Trend fuelTrend;
 
@@ -57,8 +64,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
 		this.client = client;
-		this.init();
-		this.facebook = facebook;		
+		this.facebook = facebook;
 
 		Utils.export(this);
 	}
@@ -94,7 +100,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			break;
 		}
 
-		double rating = gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
+		double rating = getRating();
 		long increase = (long) (rating * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
 	}
@@ -113,7 +119,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public void run() {
-		System.out.println("GameLogic.run() starting");
+		log.info("running");
 
 		fireGameStarted();
 		while (asteroids < MAX_ASTEROIDS && fuel > 0) {
@@ -133,13 +139,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 		fireGameStopped();
 
-		// Don't upload after each round, as it causes multiple entries for a
-		// single run in the database
-		// client.uploadQuietly(gameSession);
-
-		System.out.println("GameLogic.run() stopped");
-
-		init();
+		log.info("stopped");
 	}
 
 	public int getFuel() {
@@ -160,39 +160,27 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		listener.removed(this);
 	}
 
-	/**
-	 * @return <code>true</code> if a game is running, <code>false</code>
-	 *         otherwise
-	 */
-	public boolean isRunning() {
-		if (thread == null) {
-			return false;
-		} else {
-			return thread.isAlive();
-		}
+	public void newSession() throws IOException {
+		final ScenarioSession scenarioSession = client.downloadScenarioSession(player);
+		this.gameSession = new GameSession(player, scenarioSession);
 	}
 
-	public void init() {
-		if (gameSession == null) {
-			try {
-				// download Scenario that should be played next
-				gameSession = new GameSession(player, client.downloadScenarioSession(player));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			ScenarioRound sessionRound = gameSession.getScenarioSession().getNextRound();
-			if (sessionRound == null) {
-				client.uploadQuietly(gameSession);
-				gameSession = null;
-				// fireSessionFinished();
-			}
-		}
+	public void uploadSession() {
+		log.info("uploading game session to server");
+		client.uploadQuietly(gameSession);
+		gameSession = null; // if this breaks stuff, that stuff is broken
 	}
 
-	public void start() {
-		System.out.println("GameLogic.start()");
+	public void start(final ScenarioRound round) {
+		if (thread != null && thread.isAlive()) {
+			throw new IllegalStateException("A game is still running.");
+		}
+		if (round == null) {
+			throw new IllegalArgumentException("scenario round is null");
+		}
 
+		log.info("starting new game round");
+		
 		this.fuelTrend = new Trend();
 		this.asteroidTrend = new Trend();
 		this.fuelcansCollected = 0;
@@ -200,11 +188,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		this.asteroidsCollected = 0;
 		this.asteroidsSeen = 0;
 
-		if (isRunning()) {
-			throw new IllegalStateException("A game is still running.");
-		}
-
-		gameRound = gameSession.newRound();
+		gameRound = gameSession.newRound(round);
 		addListener(gameRound.getListener());
 
 		// reset internal state
@@ -274,23 +258,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	// }
 	// }
 
-	public ScenarioRound getCurrentScenarioRound() {
-		if (gameSession == null) {
-			return null;
-		}
-		return gameSession.getScenarioSession().getCurrentRound();
-	}
-
 	public Person getPlayer() {
 		return player;
-	}
-
-	public int getAsteroidsSeen() {
-		return asteroidsSeen;
-	}
-
-	public int getFuelcansSeen() {
-		return fuelcansSeen;
 	}
 
 	public float getSlidingFuelRatio() {
@@ -310,8 +279,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public long getElapsedTime() {
-		long actTime = System.currentTimeMillis();
-		return actTime - startTimeWithoutPause;
+		return System.currentTimeMillis() - startTimeWithoutPause;
 	}
 
 	public long getScore() {
@@ -319,26 +287,43 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public double getRating() {
-		return gameRound.getScenarioRound().getDifficultyFunction().getDifficultyRating(getElapsedTime());
+		return getDifficultyFunction().getDifficultyRating(getElapsedTime());
 	}
 
 	public DifficultyFunction getDifficultyFunction() {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
 
+	public ScenarioSession getCurrentScenarioSession() {
+		return gameSession.getScenarioSession();
+	}
+
+	public ScenarioRound getCurrentScenarioRound() {
+		return gameRound.getScenarioRound();
+	}
+
 	public Client getClient() {
 		return client;
 	}
-	
+
 	public CustomFacebookClient getFacebookClient() {
 		return facebook;
 	}
-	
-		public Trend getAsteroidTrend() {
+
+	public Trend getAsteroidTrend() {
 		return asteroidTrend;
 	}
 
 	public Trend getFuelTrend() {
 		return fuelTrend;
+	}
+
+	public void saveRoundAnswers(final List<Answer> answers) {
+		gameRound.setAnswers(answers);
+		gameRound = null; // if this breaks stuff, the stuff is broken
+	}
+	
+	public void saveSessionAnswers(final List<Answer> answers) {
+		gameSession.setAnswers(answers);
 	}
 }

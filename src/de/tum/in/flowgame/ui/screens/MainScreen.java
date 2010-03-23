@@ -13,7 +13,7 @@ import de.tum.in.flowgame.ui.sprite.SVGSprite;
 
 public class MainScreen extends MenuScreen {
 
-	private final JButton play = goTo("Play", QuestionnaireScreen.class);
+	private final JButton play = goTo("Play", BeforeSessionQuestionnaireScreen.class);
 
 	private final JButton highscores = goTo("Highscores", HighscoresScreen.class);
 	

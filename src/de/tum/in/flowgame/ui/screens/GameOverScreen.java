@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
 public class GameOverScreen extends MenuScreen {
@@ -23,6 +24,12 @@ public class GameOverScreen extends MenuScreen {
 	@Override
 	public Container getContents() {
 		return centered(title("Game Over"), backToMain);
+	}
+
+	@Override
+	public void update(final GameLogic logic) throws Exception {
+		// TODO upload asynchronously
+		logic.uploadSession();
 	}
 
 }
