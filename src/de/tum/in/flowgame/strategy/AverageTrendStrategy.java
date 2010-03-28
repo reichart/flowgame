@@ -1,17 +1,19 @@
 package de.tum.in.flowgame.strategy;
 
+import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.model.Function;
 
-public class AverageTrendStrategy implements FlowStrategy {
+
+public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyMBean {
 
 	private double averageTrendRating;
 	private double averageSpeed;
 
 	public AverageTrendStrategy(){
-		averageTrendRating = 0;
-		averageSpeed = -60;
+		Utils.export(this);
 	}
 	
-	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speed) {
+	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue) {
 		double trendRating = getTrendRating(asteroidTrend, fuelTrend);
 		
 		averageTrendRating =  (trendRating+100*averageTrendRating)/101;
@@ -19,21 +21,19 @@ public class AverageTrendStrategy implements FlowStrategy {
 		if(delta<0) delta = -delta;
 		if(delta<0.1) delta = 0.1;
 		//TODO: allow for displaying this information 
-//		logic.setAverageTrend(averageTrend);
 		if(Math.round(trendRating*1000) < Math.round(averageTrendRating*1000-averageTrendRating*50) ){
-			speed += delta;
+			speedValue += delta;
 		}
 		if(Math.round(trendRating*1000) > Math.round(averageTrendRating*1000+averageTrendRating*50) ){
-			speed -= delta;
+			speedValue -= delta;
 		}
-		if(speed > -60D){
-			speed = -60D;
+		if(speedValue > -60D){
+			speedValue = -60D;
 		}
 		
-		averageSpeed = (350*averageSpeed+speed)/351.0;
-//		logic.setAverageSpeed(averageSpeed);
+		averageSpeed = (350*averageSpeed+speedValue)/351.0;
 		
-		return speed;
+		return speedValue;
 	}
 	
 	private double getTrendRating(Trend asteroidTrend, Trend fuelTrend) {
@@ -41,6 +41,27 @@ public class AverageTrendStrategy implements FlowStrategy {
 				* asteroidTrend.getLongRatio();
 		double fuelTrendRating = fuelTrend.getShortRatio() + 3 / 4.0 * fuelTrend.getMidRatio() + 1 / 4.0 * fuelTrend.getLongRatio();
 		return 2*fuelTrendRating - asteroidTrendRating;
+	}
+
+	public Function getFunction() {
+		return null;
+	}
+
+	public void setFunction(Function fun) {
+		
+	}
+
+	public double getAverageSpeed() {
+		return averageSpeed;
+	}
+
+	public double getAverageTrendRating() {
+		return averageTrendRating;
+	}
+
+	public void reset() {
+		averageTrendRating = 0;
+		averageSpeed = -60;		
 	}
 	
 }

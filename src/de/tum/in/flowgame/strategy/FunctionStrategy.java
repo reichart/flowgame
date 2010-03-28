@@ -1,45 +1,58 @@
 package de.tum.in.flowgame.strategy;
 
+import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Function;
 
-public class FunctionStrategy implements FlowStrategy {
+public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
 	
 	private Function function;
 	
-	private double trendRating;
-	private double previousTrend;
-	
 	private int currentPosition;
 	
-	public FunctionStrategy(Function function){
-		this.function = function;
-		currentPosition = 0;
+	public FunctionStrategy(){
+		Utils.export(this);
 	}
 	
-	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speed) {
-		speed = -function.getValue(currentPosition);
-		if (speed > -30D) {
-			speed = -30D;
+	public int getCurrentPosition() {
+		return currentPosition;
+	}
+	
+	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue) {
+		double speed = -function.getValue(getPosition(asteroidTrend, fuelTrend));
+		
+		//Prevention from driving backwards
+		if (speed > -60D) {
+			speed = -60D;
 		}
 		return speed;
 	}
 	
-	public double getPosition(Trend asteroidTrend, Trend fuelTrend) {
-		previousTrend = trendRating;
-		trendRating = getTrendRating(asteroidTrend, fuelTrend);
-		if (trendRating < previousTrend) {
-			currentPosition -= 1;
-		} else {
+	private double getPosition(Trend asteroidTrend, Trend fuelTrend) {
+		double shortTerm = -asteroidTrend.getShortRatio();
+		double midTerm = -asteroidTrend.getMidRatio();
+		double longTerm = -asteroidTrend.getLongRatio();
+		
+		//get faster if player improved
+		if (shortTerm > midTerm && shortTerm > longTerm) {
 			currentPosition += 1;
+		}
+		//get slower if player did worse
+		else if (shortTerm < midTerm && shortTerm < longTerm) {
+			currentPosition -= 1;
 		}
 		return currentPosition;
 	}
 	
-	private double getTrendRating(Trend asteroidTrend, Trend fuelTrend) {
-		double asteroidTrendRating = asteroidTrend.getShortRatio() + 3 / 4.0 * asteroidTrend.getMidRatio() + 1 / 4.0
-				* asteroidTrend.getLongRatio();
-		double fuelTrendRating = fuelTrend.getShortRatio() + 3 / 4.0 * fuelTrend.getMidRatio() + 1 / 4.0 * fuelTrend.getLongRatio();
-		return 2*fuelTrendRating - asteroidTrendRating;
+	public Function getFunction() {
+		return function;
+	}
+
+	public void setFunction(Function fun) {
+		function = fun;		
+	}
+
+	public void reset() {
+		currentPosition = 0;		
 	}
 	
 }
