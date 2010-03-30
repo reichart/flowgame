@@ -8,10 +8,10 @@ public class Friend {
 	private final String name;
 	private final Image picture;
 
-	public Friend(final long id, final String name, final Image pictureURL) {
+	public Friend(final long id, final String name, final Image picture) {
 		this.id = id;
 		this.name = name;
-		this.picture = pictureURL;
+		this.picture = picture;
 	}
 
 	public long getId() {
@@ -21,7 +21,7 @@ public class Friend {
 	public String getName() {
 		return name;
 	}
-	
+
 	public Image getPicture() {
 		return picture;
 	}
@@ -29,11 +29,7 @@ public class Friend {
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj instanceof Friend) {
-			if (id == ((Friend) obj).id) {
-				return true;
-			} else {
-				return false;
-			}
+			return id == ((Friend) obj).id;
 		} else {
 			return false;
 		}
@@ -41,6 +37,6 @@ public class Friend {
 
 	@Override
 	public int hashCode() {
-		return Long.valueOf(id).hashCode();
+		return (int) id;
 	}
 }
