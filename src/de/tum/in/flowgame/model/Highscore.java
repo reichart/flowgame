@@ -3,7 +3,7 @@ package de.tum.in.flowgame.model;
 import java.io.Serializable;
 
 public class Highscore implements Serializable {
-	
+
 	private final long personid;
 	private final long score;
 	private final Integer percentage;
@@ -29,22 +29,18 @@ public class Highscore implements Serializable {
 	public Integer getPercentage() {
 		return percentage;
 	}
-	
+
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj instanceof Highscore) {
-			if (personid == ((Highscore) obj).personid) {
-				return true;
-			} else {
-				return false;
-			}
+			return personid == ((Highscore) obj).personid;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return Long.valueOf(personid).hashCode();
+		return (int) personid;
 	}
 
 	@Override
