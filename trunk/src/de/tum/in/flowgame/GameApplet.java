@@ -68,13 +68,14 @@ public class GameApplet extends Applet {
 		final String sessionKey;
 
 		if (isActive()) {
-			server = "http://localhost:8080/flowgame/";
-			sessionSecret = "2957c00dd86887f79b3c4827157ac2ab"; // fb_sig_ss
-			sessionKey = "b09011facca373ce59cc53a6-1071363107"; // fb_sig_session_key
-		} else {
 			server = getCodeBase().toString();
 			sessionKey = getParameter("sessionKey");
 			sessionSecret = getParameter("sessionSecret");
+		} else {
+			server = "http://localhost:8080/flowgame/";
+			sessionSecret = "2957c00dd86887f79b3c4827157ac2ab"; // fb_sig_ss
+			sessionKey = "b09011facca373ce59cc53a6-1071363107"; // fb_sig_session_key
+
 		}
 
 		return new CustomFacebookClient(server, API_KEY, sessionSecret, sessionKey, this);
