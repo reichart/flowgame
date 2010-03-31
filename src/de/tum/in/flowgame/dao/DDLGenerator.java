@@ -87,7 +87,7 @@ public class DDLGenerator {
 		Random rnd = new Random();
 		List<GameSession> gameSessions = new ArrayList<GameSession>();
 		for (Person player : players) {
-			GameSession gs = new GameSession(player, ss);
+			GameSession gs = new GameSession(player.getId(), ss);
 			
 			//Create 4 GameRounds for each player
 			for (int j = 0; j < 4; j++) {

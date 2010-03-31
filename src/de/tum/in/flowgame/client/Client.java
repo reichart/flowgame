@@ -81,8 +81,8 @@ public class Client {
 		}
 	}
 	
-	public ScenarioSession downloadScenarioSession(final Person person) throws IOException {
-		return execute(DOWNLOAD_SCENARIOSESSION, person);
+	public ScenarioSession downloadScenarioSession(final long playerId) throws IOException {
+		return execute(DOWNLOAD_SCENARIOSESSION, playerId);
 	}
 
 	public SortedSet<Score> downloadPersonHighscore(long personId, int numElements) throws IOException {

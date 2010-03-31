@@ -2,13 +2,12 @@ package de.tum.in.flowgame.server;
 
 import java.util.List;
 
-import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioSession;
 
-public class ScenarioSessionDownloadAction extends GameDataAction<Person, ScenarioSession> {
+public class ScenarioSessionDownloadAction extends GameDataAction<Long, ScenarioSession> {
 
 	@Override
-	public ScenarioSession execute(final Person p) throws Exception {
+	public ScenarioSession execute(final Long playerId) throws Exception {
 		// TODO select depending on player
 		final List<ScenarioSession> scenarioSessions = list(ScenarioSession.class);
 		final Integer id = 0;
@@ -18,7 +17,7 @@ public class ScenarioSessionDownloadAction extends GameDataAction<Person, Scenar
 		}
 
 		if (session == null) {
-			throw new Exception("No valid session could be found for Person " + p.getName());
+			throw new Exception("No valid session could be found for player " + playerId);
 		} else {
 			return session;
 		}

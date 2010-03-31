@@ -67,7 +67,7 @@ public class HighscoresScreen extends MenuScreen {
 
 	@Override
 	public void update(final GameLogic logic) throws IOException {
-		final long playerId = logic.getPlayer().getId();
+		final long playerId = logic.getPlayerId();
 		final SortedSet<Score> scores = logic.getClient().downloadPersonHighscore(playerId, numRounds);
 		final TableModel tm = highscores.getModel();
 		int j = 0;

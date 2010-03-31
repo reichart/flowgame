@@ -167,7 +167,7 @@ public class GameApplet extends Applet {
 			}
 
 			// this initializes all the other classes
-			new GameLogic(player, client, facebook).addListener(game.getListener());
+			new GameLogic(loggedInUser, client, facebook).addListener(game.getListener());
 
 			if (newPlayer) {
 				game.getMenu().show(ProfileScreen.class);
