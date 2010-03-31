@@ -18,6 +18,7 @@
 		<class>de.tum.in.flowgame.model.Function</class>
 		<class>de.tum.in.flowgame.model.functions.LinearFunction</class>
 		<class>de.tum.in.flowgame.model.functions.ConstantFunction</class>
+		<class>de.tum.in.flowgame.model.functions.LnFunction</class>
 		<class>de.tum.in.flowgame.model.ScenarioSession</class>
 		<class>de.tum.in.flowgame.model.GameSession</class>
 
