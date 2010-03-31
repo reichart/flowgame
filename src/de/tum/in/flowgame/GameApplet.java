@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.net.URL;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.engine.Game3D;
@@ -26,7 +25,7 @@ public class GameApplet extends Applet {
 	private final Game3D game;
 
 	private CustomFacebookClient facebook;
-	
+
 	private final static String API_KEY = "df7823f0a4342cd09c7a8ba07a88a449";
 
 	public static void main(final String[] args) throws Exception {
@@ -57,29 +56,38 @@ public class GameApplet extends Applet {
 		app.start();
 	}
 
+	public GameApplet() throws IOException {
+		this.game = new Game3D();
+		setLayout(new BorderLayout());
+		add(BorderLayout.CENTER, game);
+	}
+	
+	public CustomFacebookClient createFacebookClient() throws IOException {
+		final String server;
+		final String sessionSecret;
+		final String sessionKey;
+
+		if (isActive()) {
+			server = "http://localhost:8080/flowgame/";
+			sessionSecret = "2957c00dd86887f79b3c4827157ac2ab"; // fb_sig_ss
+			sessionKey = "b09011facca373ce59cc53a6-1071363107"; // fb_sig_session_key
+		} else {
+			server = getCodeBase().toString();
+			sessionKey = getParameter("sessionKey");
+			sessionSecret = getParameter("sessionSecret");
+		}
+
+		return new CustomFacebookClient(server, API_KEY, sessionSecret, sessionKey, this);
+	}
+	
 	@Override
 	public void init() {
-		// Lokal:
-		 final String server = "http://localhost:8080/flowgame/";
-		 final String sessionSecret = "2957c00dd86887f79b3c4827157ac2ab"; // fb_sig_ss
-		 final String sessionKey = "b09011facca373ce59cc53a6-1071363107"; // fb_sig_session_key
-		 
-		// TODO refactor this for local testability
-		// als applet
-		// final String server = getCodeBase().toString();
-		// final String sessionKey = getParameter("sessionKey");
-		// final String sessionSecret = getParameter("sessionSecret");
-		
-
 		try {
-			final URL serverUrl = new URL("http://vxart.de:8080/flowgame/fbproxy");
-			// final URL serverUrl = new URL(server + "fbproxy");
-			
-			this.facebook = new CustomFacebookClient(serverUrl, API_KEY, sessionSecret, sessionKey);
+			this.facebook = createFacebookClient();
 
-			final long loggedInUser = 1071363107; // facebook.users_getLoggedInUser();
+			final long loggedInUser = facebook.users_getLoggedInUser();
 
-			final Client client = new Client(server);
+			final Client client = new Client(facebook.getServer());
 
 			final boolean newPlayer;
 
@@ -103,6 +111,7 @@ public class GameApplet extends Applet {
 				// player.setDateOfBirth(fmt.parse(userInfo.getString("birthday_date")));
 				// player.setPlace(userInfo.getJSONObject("hometown_location").getString("country"));
 
+				// TODO upload async
 				client.uploadQuietly(player);
 				System.err.println("##### stored new player");
 			} else {
@@ -120,18 +129,7 @@ public class GameApplet extends Applet {
 			}
 
 		} catch (final Exception ex) {
-			throw new RuntimeException("Failed to connect to " + server, ex);
+			throw new RuntimeException("Failed to connect to " + facebook.getServer(), ex);
 		}
-	}
-
-	/**
-	 * Creates a new GameApplet.
-	 * 
-	 * @throws IOException
-	 */
-	public GameApplet() throws IOException {
-		this.game = new Game3D();
-		setLayout(new BorderLayout());
-		add(BorderLayout.CENTER, game);
 	}
 }
