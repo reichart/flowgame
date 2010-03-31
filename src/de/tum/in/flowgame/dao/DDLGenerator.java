@@ -26,7 +26,8 @@ public class DDLGenerator {
 	public static void main(String[] args) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("IDP");
 		EntityManager em = emf.createEntityManager();
-
+		em.getTransaction().begin();
+		
 		// once when user first plays game
 		Questionnaire profile = new Questionnaire("Persönlichkeitsbeschreibung", "Die Folgenden eignen sich zur Beschreibung Ihrer eigenen Person (insgesamt 13 Aussagen). Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
 						+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.");
@@ -69,6 +70,10 @@ public class DDLGenerator {
 		players.add(p4);
 		players.add(p5);
 		
+		for (final Person player : players) {
+			em.persist(player);
+		}
+		
 		Difficulty d = new Difficulty();
 
 		Function intervalFunction = new ConstantFunction(80.0);
@@ -98,8 +103,9 @@ public class DDLGenerator {
 		ss.add(sr4);
 		
 		//Create 1 GameSession for each player
-		Random rnd = new Random();
-		List<GameSession> gameSessions = new ArrayList<GameSession>();
+		em.persist(ss);
+		
+		final Random rnd = new Random(0xCAFEBABE);
 		for (Person player : players) {
 			GameSession gs = new GameSession(player.getId(), ss);
 			
@@ -111,26 +117,16 @@ public class DDLGenerator {
 				gr.setScore(Math.abs(rnd.nextLong()) % 10000);
 				gs.getRounds().add(gr);
 			}
-						
-			gameSessions.add(gs);
+			em.merge(gs);
 		}
 		
-		em.getTransaction().begin();
-		em.persist(p1);
-		em.persist(p2);
-		em.persist(p3);
-		em.persist(p4);
-		em.persist(p5);
 		em.persist(d);
 		em.persist(intervalFunction);
 		em.persist(speedFunction);
 		em.persist(df1);
 		em.persist(df2);
-		em.persist(ss);
 		em.persist(howWasIt);
-		for (GameSession gameSession : gameSessions) {
-			em.persist(gameSession);
-		}		
+		
 		em.getTransaction().commit();
 	}
 }
