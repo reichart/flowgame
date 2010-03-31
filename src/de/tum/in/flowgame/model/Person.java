@@ -81,11 +81,7 @@ public class Person implements Serializable {
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj instanceof Person) {
-			if (((Person) obj).getId().equals(this.id)) {
-				return true;
-			} else {
-				return false;
-			}
+			return ((Person) obj).id.equals(this.id);
 		} else {
 			return false;
 		}
@@ -96,4 +92,8 @@ public class Person implements Serializable {
 		return id.hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "[id=" + id + ";name=" + name + "]";
+	}
 }
