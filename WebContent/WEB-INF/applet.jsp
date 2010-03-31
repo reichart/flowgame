@@ -22,6 +22,7 @@
 	<param name="noddraw.check" value="true" />
 	<param name="noddraw.check.silent" value="true" />
 
+	<param name="userId" value="${param.fb_sig_user}" />
 	<param name="apiKey" value="${param.fb_sig_api_key}" />
 	<param name="sessionKey" value="${param.fb_sig_session_key}" />
 	<param name="sessionSecret" value="${param.fb_sig_ss}" />
