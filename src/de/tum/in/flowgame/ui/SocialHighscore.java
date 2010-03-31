@@ -74,7 +74,7 @@ public class SocialHighscore extends JPanel {
 		int barBorder = lowerBorder - space;
 
 		//paint percentage bar
-		g.setColor(Color.BLUE);
+		g.setColor(Color.WHITE);
 		g.fillRect(25, barBorder, getWidth()-(2*FriendsBar.LEFT_BORDER), 10);
 		
 		//paint own player
