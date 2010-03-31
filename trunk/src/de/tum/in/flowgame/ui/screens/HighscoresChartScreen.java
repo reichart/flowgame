@@ -29,7 +29,7 @@ public class HighscoresChartScreen extends MenuScreen {
 	
 	@Override
 	public void update(final GameLogic logic) throws IOException {
-		final long playerId = logic.getPlayer().getId();
+		final long playerId = logic.getPlayerId();
 		final BufferedImage im = logic.getClient().downloadPersonHighscoreChart(playerId);
 		imageIcon.setImage(im);
 	}

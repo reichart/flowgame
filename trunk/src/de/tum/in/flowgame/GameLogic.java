@@ -13,7 +13,6 @@ import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
-import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
@@ -32,7 +31,7 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private GameSession gameSession;
 	private GameRound gameRound;
-	private Person player;
+	private final long playerId;
 
 	private final List<GameListener> listeners;
 
@@ -60,9 +59,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private final CustomFacebookClient facebook;
 
-	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook) {
+	public GameLogic(final long playerId, final Client client, final CustomFacebookClient facebook) {
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
-		this.player = player;
+		this.playerId = playerId;
 		this.client = client;
 		this.facebook = facebook;
 
@@ -161,8 +160,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public void newSession() throws IOException {
-		final ScenarioSession scenarioSession = client.downloadScenarioSession(player);
-		this.gameSession = new GameSession(player, scenarioSession);
+		final ScenarioSession scenarioSession = client.downloadScenarioSession(playerId);
+		this.gameSession = new GameSession(playerId, scenarioSession);
 	}
 
 	public void uploadSession() {
@@ -258,8 +257,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	// }
 	// }
 
-	public Person getPlayer() {
-		return player;
+	public long getPlayerId() {
+		return playerId;
 	}
 
 	public float getSlidingFuelRatio() {

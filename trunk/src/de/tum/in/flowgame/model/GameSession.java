@@ -19,14 +19,13 @@ public class GameSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Answer> answers;
 
-	@SuppressWarnings("unused")
 	private GameSession() { // for JPA
-		this(null, null);
+		this.rounds = new ArrayList<GameRound>();
 	}
 
-	public GameSession(final Person player, final ScenarioSession scenarioSession) {
-		this.rounds = new ArrayList<GameRound>();
-		this.player = player;
+	public GameSession(final long playerId, final ScenarioSession scenarioSession) {
+		this();
+		this.player = new Person(playerId, null);
 		this.scenarioSession = scenarioSession;
 	}
 

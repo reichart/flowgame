@@ -36,7 +36,7 @@ public class MainScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title, new JLabel("Welcome " + menu.getLogic().getPlayer().getName() + "!"), play, highscores, highscoresChart, personalHighscore, settings, systemInfo);
+		return centered(title, play, highscores, highscoresChart, personalHighscore, settings, systemInfo);
 	}
 
 }
