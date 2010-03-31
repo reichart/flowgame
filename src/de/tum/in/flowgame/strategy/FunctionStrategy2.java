@@ -3,7 +3,7 @@ package de.tum.in.flowgame.strategy;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Function;
 
-public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
+public class FunctionStrategy2 implements FlowStrategy, FunctionStrategy2MBean {
 
 	private Function function;
 
@@ -15,7 +15,7 @@ public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
 
 	private float shortTerm;
 
-	public FunctionStrategy() {
+	public FunctionStrategy2() {
 		Utils.export(this);
 	}
 
@@ -38,24 +38,16 @@ public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
 		midTerm = (1 - asteroidTrend.getMidRatio()) + fuelTrend.getMidRatio();
 		longTerm = (1 - asteroidTrend.getLongRatio()) + fuelTrend.getLongRatio();
 
-		// at the beginning always get faster until we have enough data
 		if (longTerm != 0) {
-			// get slower if you hit to many asteroids
-			if (asteroidTrend.getShortRatio() > 0.3) {
+			//get slower when hit by many asteroids or missed many fuel cans
+			if (asteroidTrend.getShortRatio() > 0.3 && fuelTrend.getShortRatio() < 0.3) {
 				currentPosition--;
+			//get a lot faster when player collected more than 2/3 of the fuel cans
+			} else if (fuelTrend.getShortRatio() > 0.6){
+				currentPosition+=2;
+			//get slightly slower when player is neither especially bad nor good
 			} else {
-				// the higher the shortTerm value the better plays the player
-				// get faster for high values slower for low ones
-				// shortTerm = 1 basically means the player plays neutral
-				if (shortTerm > 1.3) {
-					currentPosition += 2;
-				} else if (shortTerm >= 1) {
-					currentPosition += 1;
-				} else if (shortTerm < 0.3) {
-					currentPosition -= 2;
-				} else if (shortTerm < 1) {
-					currentPosition -= 1;
-				}
+				currentPosition++;
 			}
 		} else {
 			currentPosition++;
