@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 public class ScenarioRound extends AbstractEntity {
 	private Integer baselineModifier;
 	private Long expectedPlaytime;
+	@OneToOne(cascade=CascadeType.PERSIST)
 	private DifficultyFunction difficultyFunction;
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private Questionnaire questionnaire;
