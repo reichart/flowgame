@@ -12,10 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
-import javax.swing.JSlider;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import de.tum.in.flowgame.ui.GameMenu;
 
@@ -42,36 +39,14 @@ public class SettingsScreen extends MenuScreen {
 		}
 	});
 	
-	private final JSlider accSlider = new JSlider(500, 30000);	
-	private final JSlider maxSpeedSlider = new JSlider(500, 10000);
-	
 	private final JButton back = goTo("Back", MainScreen.class);
 	
 
 	public SettingsScreen(final GameMenu menu) {
 		super(menu);
-		accSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-//				System.out.println("Acceleration: " + (float)accSlider.getValue()/100);
-				menu.getGame().getShip().getControls().setAcceleration((float)accSlider.getValue()/100);
-			}
-		});
-		maxSpeedSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-//				System.out.println("Max Speed: " + (float)maxSpeedSlider.getValue()/100);
-				menu.getGame().getShip().getControls().setMaxSpeed((float)maxSpeedSlider.getValue()/100);
-			}
-		});
-		accSlider.setValue((int) menu.getGame().getShip().getControls().getAcceleration()*100);
-		final TitledBorder accBorder = BorderFactory.createTitledBorder("Acceleration");
-		accSlider.setBorder(accBorder);
-		accBorder.setTitleColor(Color.WHITE);
-		maxSpeedSlider.setValue((int) menu.getGame().getShip().getControls().getMax_speed()*100);
-		final TitledBorder speedBorder = BorderFactory.createTitledBorder("Max Speed");
-		maxSpeedSlider.setBorder(speedBorder);
-		speedBorder.setTitleColor(Color.WHITE);
-		normal.setSelected(menu.getGame().getShip().getControls().getNormalSteering());
-		airplane.setSelected(!menu.getGame().getShip().getControls().getNormalSteering());
+		final boolean normalSteering = menu.getGame().getShip().getControls().getNormalSteering();
+		normal.setSelected(normalSteering);
+		airplane.setSelected(!normalSteering);
 		steeringgroup.add(normal);
 		steeringgroup.add(airplane);
 		final TitledBorder steeringborder = BorderFactory.createTitledBorder("Steering");
@@ -83,7 +58,7 @@ public class SettingsScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title("Settings"), steeringbox, fps, accSlider, maxSpeedSlider, back);
+		return centered(title("Settings"), steeringbox, fps, back);
 	}
 
 }
