@@ -19,6 +19,7 @@ import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.functions.ConstantFunction;
 import de.tum.in.flowgame.model.functions.LinearFunction;
+import de.tum.in.flowgame.model.functions.LnFunction;
 
 public class DDLGenerator {
 
@@ -72,16 +73,29 @@ public class DDLGenerator {
 
 		Function intervalFunction = new ConstantFunction(80.0);
 		Function ratioFunction = new ConstantFunction(0.3);
-		LinearFunction speedFunction = new LinearFunction(30D,4.0d/600);
-
-		DifficultyFunction df = new DifficultyFunction(intervalFunction, speedFunction, ratioFunction);
+		LinearFunction speedFunction = new LinearFunction(60D,0.02);
 		
-		ScenarioRound sr1 = new ScenarioRound(true, 1, 2000L, df, howWasIt);
-		ScenarioRound sr2 = new ScenarioRound(false, 5, 2000L, df, howWasIt);
+		LnFunction speedFunction2 = new LnFunction(31.5, 6.5, 0.0);
+		
+		LnFunction speedFunction3 = new LnFunction(25.55, 1.0, 60);
+		
+		LinearFunction speedFunction4 = new LinearFunction(60D, 0.015);
+
+		DifficultyFunction df1 = new DifficultyFunction(intervalFunction, speedFunction, ratioFunction);
+		DifficultyFunction df2 = new DifficultyFunction(intervalFunction, speedFunction2, ratioFunction);
+		DifficultyFunction df3 = new DifficultyFunction(intervalFunction, speedFunction3, ratioFunction);
+		DifficultyFunction df4 = new DifficultyFunction(intervalFunction, speedFunction4, ratioFunction);
+		
+		ScenarioRound sr1 = new ScenarioRound(true, 1, 2000L, df1, howWasIt);
+		ScenarioRound sr2 = new ScenarioRound(true, 1, 2000L, df2, howWasIt);
+		ScenarioRound sr3 = new ScenarioRound(true, 1, 2000L, df3, howWasIt);
+		ScenarioRound sr4 = new ScenarioRound(true, 1, 2000L, df4, howWasIt);
 		
 		ScenarioSession ss = new ScenarioSession(null, moodAndSkills);
 		ss.add(sr1);
 		ss.add(sr2);
+		ss.add(sr3);
+		ss.add(sr4);
 		
 		//Create 1 GameSession for each player
 		Random rnd = new Random();
@@ -110,7 +124,8 @@ public class DDLGenerator {
 		em.persist(d);
 		em.persist(intervalFunction);
 		em.persist(speedFunction);
-		em.persist(df);
+		em.persist(df1);
+		em.persist(df2);
 		em.persist(ss);
 		em.persist(howWasIt);
 		for (GameSession gameSession : gameSessions) {

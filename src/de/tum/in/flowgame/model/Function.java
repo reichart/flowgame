@@ -7,19 +7,21 @@ import javax.persistence.InheritanceType;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Function extends AbstractEntity {
-	
-	protected double initialValue;
-	
-	public Function(){
-		//empty
+
+	private double initialValue;
+
+	public Function() {
+		// empty
 	}
-	
-	public Function(double initialValue){
+
+	public Function(final double initialValue) {
 		this.initialValue = initialValue;
 	}
-	
+
 	public abstract double getValue(double z);
-	
-	public abstract double getInitialValue();
-		
+
+	public final double getInitialValue() {
+		return initialValue;
+	}
+
 }

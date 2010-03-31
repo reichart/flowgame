@@ -7,22 +7,18 @@ import de.tum.in.flowgame.model.Function;
 @Entity
 public class ConstantFunction extends Function {
 
-	public ConstantFunction(){
-		//empty
+	@SuppressWarnings("unused")
+	private ConstantFunction() {
+		// JPA only
 	}
-	
-	public ConstantFunction(double initialValue) {
+
+	public ConstantFunction(final double initialValue) {
 		super(initialValue);
 	}
 
 	@Override
-	public double getInitialValue() {
-		return initialValue;
-	}
-
-	@Override
-	public double getValue(double z) {
-		return initialValue;
+	public double getValue(final double z) {
+		return getInitialValue();
 	}
 
 }
