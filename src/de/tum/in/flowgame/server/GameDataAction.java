@@ -34,6 +34,9 @@ public abstract class GameDataAction<I, O> extends DatabaseAction {
 		try {
 			input = (I) Utils.bytesToObject(IOUtils.toByteArray(new FileInputStream(data)));
 			output = execute(input);
+			
+			log.info("executed " + getClass().getSimpleName() + " with " + input + " to " + output);
+			
 			this.response = new ByteArrayInputStream(Utils.objectToBytes(output));
 		} catch (final Exception ex) {
 			log.error("failed to process " + input + " to " + output + " in " + getClass().getName(), ex);
