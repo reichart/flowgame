@@ -13,6 +13,7 @@ public class ScenarioRound extends AbstractEntity {
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private Questionnaire questionnaire;
 	private boolean baseline;
+	private int position;
 
 	@SuppressWarnings("unused")
 	private ScenarioRound() {
@@ -47,4 +48,13 @@ public class ScenarioRound extends AbstractEntity {
 	public boolean isBaselineRound() {
 		return baseline;
 	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+	
 }

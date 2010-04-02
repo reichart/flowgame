@@ -23,7 +23,8 @@ public class LnFunction extends Function {
 	
 	@Override
 	public double getValue(final double z) {
-		return multiplier * Math.log(z + offset) + getInitialValue();
+		double log = Math.log(z + offset);
+		return Double.isNaN(log) ? 0 : multiplier * log + getInitialValue();
 	}
 
 }
