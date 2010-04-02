@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,17 +42,20 @@ public class ScenarioSession extends AbstractEntity {
 	}
 
 	public void add(final ScenarioRound round) {
+		round.setPosition(rounds.size());
 		rounds.add(round);
 	}
 
 	// returns next round and counts how many rounds have been played
 	public ScenarioRound getNextRound() {
-		// TODO iterator?
-		ScenarioRound round = null;
-		if (rounds.size() > roundsPlayed) {
-			round = rounds.get(roundsPlayed++);
+		for (Iterator<ScenarioRound> iterator = rounds.iterator(); iterator.hasNext();) {
+			ScenarioRound scenarioRound = iterator.next();
+			if (scenarioRound.getPosition() == roundsPlayed) {
+				roundsPlayed++;
+				return scenarioRound;
+			}
 		}
-		return round;
+		return null;
 	}
 
 	public Type getType() {

@@ -51,15 +51,17 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 				final Function fun = gameLogic.getDifficultyFunction().getSpeed();
 				if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
 					speed = strategy.calculateSpeed(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend(), speed);
+					maxSpeed = Math.max(speed, maxSpeed);
 				} else {
-					speed = (fun == null) ? 0 : -fun.getValue(gameLogic.getElapsedTime());
+					long speedAddFromDifficulty = 0;
+					if (gameLogic.getBaseline() != null) {
+						speedAddFromDifficulty = gameLogic.getBaseline().getSpeed();
+					}
+					speed = (fun == null) ? 0 : fun.getValue(gameLogic.getElapsedTime()) + speedAddFromDifficulty;
 				}
 
-				if (speed > maxSpeed) {
-					maxSpeed = speed;
-				}
-
-				forwardNavigator.setFwdSpeed(speed);
+				forwardNavigator.setFwdSpeed(-speed);
+				//forwardNavigator.setFwdSpeed(0);
 			}
 			wakeupOn(newFrame);
 		}
@@ -75,6 +77,7 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 						strategy.reset();
 					}
 					pause = false;
+					maxSpeed = Double.MIN_VALUE;
 				}
 
 				@Override
@@ -89,14 +92,17 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 
 				@Override
 				public void gameStopped(GameLogic game) {
-					//game.removeListener(this);
-					double baseline = maxSpeed * 0.9;
+					// game.removeListener(this);
+					if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
+						long baseline = (long) (maxSpeed * 0.9);
+						gameLogic.setBaseline(baseline);
+					}
 				}
 			});
 		}
 	}
 
 	public double getSpeed() {
-		return -speed;
+		return speed;
 	}
 }

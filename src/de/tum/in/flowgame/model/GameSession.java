@@ -55,4 +55,8 @@ public class GameSession extends AbstractEntity {
 		this.answers = answers;
 	}
 
+	public void setBaseline(Difficulty baseline) {
+		this.baseline = baseline;		
+	}
+
 }

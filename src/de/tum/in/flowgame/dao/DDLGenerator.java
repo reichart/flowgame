@@ -46,9 +46,19 @@ public class DDLGenerator {
 		profile.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine wirklich komplizierte Sache endgültig verstanden habe.");
 		
 		// once before each session
-		Questionnaire moodAndSkills = new Questionnaire("Mood and Skills", "tbd");
-		moodAndSkills.addQuestion("dummy question about mood");
-		moodAndSkills.addQuestion("dummy question about skills");
+		Questionnaire moodAndSkills = new Questionnaire("Stimmung",
+				"Die Folgenden sollen feststellen, wie Sie sich gerade fühlen. Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
+				+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.");
+		moodAndSkills.addQuestion("zufrieden <-> unzufrieden");
+		moodAndSkills.addQuestion("energiegeladen <-> energielos");
+		moodAndSkills.addQuestion("gestresst <-> entspannt");
+		moodAndSkills.addQuestion("müde <-> hellwach");
+		moodAndSkills.addQuestion("friedlich <-> verärgert");
+		moodAndSkills.addQuestion("unglücklich <-> glücklich");
+		moodAndSkills.addQuestion("lustlos <-> hoch motiviert");
+		moodAndSkills.addQuestion("ruhig <-> nervös");
+		moodAndSkills.addQuestion("begeistert <-> gelangweilt");
+		moodAndSkills.addQuestion("besorgt <-> sorgenfrei");
 		
 		// after every round
 		Questionnaire howWasIt = new Questionnaire("How was it?", "TBD mood (15q) and flow (20q)");
@@ -74,44 +84,73 @@ public class DDLGenerator {
 			em.persist(player);
 		}
 		
-		Difficulty d = new Difficulty();
+		Difficulty d = new Difficulty(0, 0, 0);
 
 		Function intervalFunction = new ConstantFunction(80.0);
 		Function ratioFunction = new ConstantFunction(0.3);
-		LinearFunction speedFunction = new LinearFunction(60D,0.02);
 		
-		LnFunction speedFunction2 = new LnFunction(31.5, 6.5, 0.0);
+		//useful functions for baseline measurment
+		Function speedFunction = new LinearFunction(60D,0.02);
+		Function speedFunction2 = new LnFunction(31.5, 6.5, 0.0);
+		Function speedFunction3 = new LnFunction(25.55, 1.0, 60);
+		Function speedFunction4 = new LinearFunction(60D, 0.015);
 		
-		LnFunction speedFunction3 = new LnFunction(25.55, 1.0, 60);
-		
-		LinearFunction speedFunction4 = new LinearFunction(60D, 0.015);
-
 		DifficultyFunction df1 = new DifficultyFunction(intervalFunction, speedFunction, ratioFunction);
 		DifficultyFunction df2 = new DifficultyFunction(intervalFunction, speedFunction2, ratioFunction);
 		DifficultyFunction df3 = new DifficultyFunction(intervalFunction, speedFunction3, ratioFunction);
 		DifficultyFunction df4 = new DifficultyFunction(intervalFunction, speedFunction4, ratioFunction);
+		
+		//Create Scenario with Constant functions and previos baseline
+		Function speedFunctionConstant1 = new ConstantFunction(-60);
+		Function speedFunctionConstant2 = new ConstantFunction(-30);
+		Function speedFunctionConstant3 = new ConstantFunction(0);
+		Function speedFunctionConstant4 = new ConstantFunction(30);
+		Function speedFunctionConstant5 = new ConstantFunction(60);
+		
+		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, null, df2, howWasIt);
+		ScenarioRound cSr1 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction), howWasIt);
+		ScenarioRound cSr2 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction), howWasIt);
+		ScenarioRound cSr3 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction), howWasIt);
+		ScenarioRound cSr4 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction), howWasIt);
+		ScenarioRound cSr5 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction), howWasIt);
+		
+		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL, moodAndSkills);
+		constantScenarioSession.add(cBaselineRound);
+		constantScenarioSession.add(cSr1);
+		constantScenarioSession.add(cSr2);
+		constantScenarioSession.add(cSr3);
+		constantScenarioSession.add(cSr4);
+		constantScenarioSession.add(cSr5);
+		em.persist(constantScenarioSession);
 		
 		ScenarioRound sr1 = new ScenarioRound(true, 1, 2000L, df1, howWasIt);
 		ScenarioRound sr2 = new ScenarioRound(true, 1, 2000L, df2, howWasIt);
 		ScenarioRound sr3 = new ScenarioRound(true, 1, 2000L, df3, howWasIt);
 		ScenarioRound sr4 = new ScenarioRound(true, 1, 2000L, df4, howWasIt);
 		
-		ScenarioSession ss = new ScenarioSession(null, moodAndSkills);
-		ss.add(sr1);
-		ss.add(sr2);
-		ss.add(sr3);
-		ss.add(sr4);
+//		ScenarioRound sr5 = new ScenarioRound(false, 0, null, df5, howWasIt);
+//		ScenarioRound sr6 = new ScenarioRound(false, 0, null, df5, howWasIt);
+//		ScenarioRound sr7 = new ScenarioRound(false, 0, null, df1, howWasIt);
+		
+//		ScenarioSession ss = new ScenarioSession(null, moodAndSkills);
+//		ss.add(sr1);
+//		ss.add(sr2);
+//		ss.add(sr3);
+//		ss.add(sr4);
+//		ss.add(sr5);
+//		ss.add(sr6);
+//		ss.add(sr7);
 		
 		//Create 1 GameSession for each player
-		em.persist(ss);
+		em.persist(constantScenarioSession);
 		
 		final Random rnd = new Random(0xCAFEBABE);
 		for (Person player : players) {
-			GameSession gs = new GameSession(player.getId(), ss);
+			GameSession gs = new GameSession(player.getId(), constantScenarioSession);
 			
 			//Create 4 GameRounds for each player
 			for (int j = 0; j < 4; j++) {
-				final GameRound gr = new GameRound(sr1);
+				final GameRound gr = new GameRound(cSr1);
 				// spread start times so score charts 
 				gr.setStartTime(System.currentTimeMillis() + 60*j);
 				gr.setScore(Math.abs(rnd.nextLong()) % 10000);
@@ -122,8 +161,6 @@ public class DDLGenerator {
 		
 		em.persist(d);
 		em.persist(intervalFunction);
-		em.persist(speedFunction);
-		em.persist(df1);
 		em.persist(df2);
 		em.persist(howWasIt);
 		
