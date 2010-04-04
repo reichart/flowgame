@@ -101,7 +101,7 @@ public class PersonalHighscoreChartDownloadAction extends DatabaseAction {
 		return response;
 	}
 
-	public void setId(final int id) {
+	public void setId(final long id) {
 		this.personId = id;
 	}
 }
