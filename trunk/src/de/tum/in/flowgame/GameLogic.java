@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.facebook.CustomFacebookClient;
 import de.tum.in.flowgame.model.Answer;
+import de.tum.in.flowgame.model.Difficulty;
 import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
@@ -251,12 +252,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 	}
 
-	// public void fireSessionFinished() {
-	// for (final GameListener listener : listeners) {
-	// listener.sessionFinished(this);
-	// }
-	// }
-
 	public long getPlayerId() {
 		return playerId;
 	}
@@ -295,6 +290,14 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public ScenarioSession getCurrentScenarioSession() {
 		return gameSession.getScenarioSession();
+	}
+	
+	public void setBaseline(long baseline) {
+		gameSession.setBaseline(new Difficulty(0, baseline, 0));
+	}
+	
+	public Difficulty getBaseline() {
+		return gameSession.getBaseline();
 	}
 
 	public ScenarioRound getCurrentScenarioRound() {
