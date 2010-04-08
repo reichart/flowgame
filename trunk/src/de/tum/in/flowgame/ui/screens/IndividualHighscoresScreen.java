@@ -11,22 +11,22 @@ import javax.swing.JLabel;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
-public class HighscoresChartScreen extends MenuScreen {
-	
-    private ImageIcon imageIcon = new ImageIcon(new BufferedImage(500, 300, BufferedImage.TYPE_4BYTE_ABGR));
-    private JLabel imageLabel = new JLabel(imageIcon);
-	
+public class IndividualHighscoresScreen extends MenuScreen {
+
+	private final ImageIcon imageIcon;
+
 	private final JButton back = goTo("Back", MainScreen.class);
-	
-	public HighscoresChartScreen(final GameMenu menu) {
+
+	public IndividualHighscoresScreen(final GameMenu menu) {
 		super(menu);
+		this.imageIcon = new ImageIcon(new BufferedImage(500, 300, BufferedImage.TYPE_BYTE_BINARY));
 	}
 
 	@Override
 	public Container getContents() {
-		return centered(title("Highscore"), imageLabel, back);
+		return centered(title("Highscore"), new JLabel(imageIcon), back);
 	}
-	
+
 	@Override
 	public void update(final GameLogic logic) throws IOException {
 		final long playerId = logic.getPlayerId();
