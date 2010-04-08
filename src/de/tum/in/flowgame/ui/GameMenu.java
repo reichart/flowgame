@@ -223,12 +223,8 @@ public class GameMenu implements Sprite, GameListener {
 		return previous;
 	}
 	
-	public GameLogic getGameLogic() {
-		return logic;
-	}
-
 	public GameLogic getLogic() {
-		return getGameLogic();
+		return logic;
 	}
 
 	public GameOverlay getOverlay() {
