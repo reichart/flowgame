@@ -1,21 +1,18 @@
 package de.tum.in.flowgame.ui.screens;
 
-import java.awt.Container;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
-public class IndividualHighscoresScreen extends MenuScreen {
+public class IndividualHighscoresScreen extends HighscoresScreen {
 
 	private final ImageIcon imageIcon;
-
-	private final JButton back = goTo("Back", MainScreen.class);
 
 	public IndividualHighscoresScreen(final GameMenu menu) {
 		super(menu);
@@ -23,8 +20,8 @@ public class IndividualHighscoresScreen extends MenuScreen {
 	}
 
 	@Override
-	public Container getContents() {
-		return centered(title("Highscore"), new JLabel(imageIcon), back);
+	protected JComponent getHighscoreComponent() {
+		return new JLabel(imageIcon);
 	}
 
 	@Override
