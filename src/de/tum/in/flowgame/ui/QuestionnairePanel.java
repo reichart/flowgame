@@ -3,6 +3,7 @@ package de.tum.in.flowgame.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -87,7 +88,9 @@ public class QuestionnairePanel extends JPanel {
 		sliders = new ArrayList<JSlider>();
 		// boolean first = true;
 		// Create Labels with Questions and add sliders to them
-		for (final Question question : this.questionnaire.getQuestions()) {
+		final List<Question> qs = this.questionnaire.getQuestions();
+		Collections.shuffle(qs);
+		for (final Question question : qs) {
 			JTextArea text = new JTextArea(question.getText());
 			text.setLineWrap(true);
 			text.setWrapStyleWord(true);
@@ -108,7 +111,7 @@ public class QuestionnairePanel extends JPanel {
 
 		// Lay out the panel.
 		SpringUtilities.makeCompactGrid(questions,
-				this.questionnaire.getQuestions().size(), 2, // rows, cols
+				qs.size(), 2, // rows, cols
 				6, 6, // initX, initY
 				6, 6); // xPad, yPad
 
