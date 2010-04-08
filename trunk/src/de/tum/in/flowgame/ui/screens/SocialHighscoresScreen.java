@@ -1,29 +1,25 @@
 package de.tum.in.flowgame.ui.screens;
 
-import java.awt.Container;
-
-import javax.swing.JButton;
+import javax.swing.JComponent;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.SocialHighscore;
 
-public class SocialHighscoresScreen extends MenuScreen {
+public class SocialHighscoresScreen extends HighscoresScreen {
 
-	private final JButton back = goTo("Back", MainScreen.class);
 	private final SocialHighscore contentPanel;
 
 	public SocialHighscoresScreen(final GameMenu menu) {
 		super(menu);
 		final FacebookFriendCache friendCash = new FacebookFriendCache(this.menu.getGameLogic().getFacebookClient());
 		contentPanel = new SocialHighscore(this.menu.getGameLogic().getClient(), friendCash);
-		add(contentPanel);
 	}
 
 	@Override
-	public Container getContents() {
-		return centered(title("Highscore"), contentPanel, back);
+	protected JComponent getHighscoreComponent() {
+		return contentPanel;
 	}
 
 	@Override

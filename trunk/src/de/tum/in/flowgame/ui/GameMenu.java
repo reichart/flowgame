@@ -24,6 +24,7 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.model.ScenarioSession.Type;
 import de.tum.in.flowgame.ui.screens.AfterRoundQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.BeforeSessionQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
@@ -53,6 +54,8 @@ public class GameMenu implements Sprite, GameListener {
 	private final GameOverlay overlay;
 
 	private final Game3D game;
+	
+	private Class<? extends MenuScreen> previous, current;
 
 	public GameMenu(final Component mouseTrap, final GameOverlay overlay) {
 		this.overlay = overlay;
@@ -130,7 +133,16 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	public void gameStopped(final GameLogic game) {
-		show(AfterRoundQuestionnaireScreen.class);
+		final Type type = game.getCurrentScenarioSession().getType();
+		log.info("game stopped, showing " + type + " highscore");
+		switch (type) {
+		case INDIVIDUAL:
+			show(IndividualHighscoresScreen.class);
+			break;
+		case SOCIAL:
+			show(SocialHighscoresScreen.class);
+			break;
+		}
 	}
 
 	private void add(final MenuScreen screen) {
@@ -202,8 +214,15 @@ public class GameMenu implements Sprite, GameListener {
 
 		layout.show(screens, screenClass.getName());
 		panel.revalidate();
+		
+		this.previous = current;
+		this.current = screenClass;
 	}
 
+	public Class<? extends MenuScreen> getPreviousScreen() {
+		return previous;
+	}
+	
 	public GameLogic getGameLogic() {
 		return logic;
 	}
