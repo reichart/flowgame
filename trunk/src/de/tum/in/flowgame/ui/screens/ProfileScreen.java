@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.GameMenu;
 
@@ -17,7 +18,9 @@ public class ProfileScreen extends QuestionnaireScreen {
 
 	private final JButton createProfile = new JButton(new AbstractAction("Play!") {
 		public void actionPerformed(final ActionEvent e) {
-			// TODO save answers of profiel questionnaire
+			final Person player = menu.getLogic().getPlayer();
+			player.setProfilingAnswers(getAnswers());
+			menu.getLogic().getClient().uploadQuietly(player);
 			menu.show(MainScreen.class);
 		}
 	});

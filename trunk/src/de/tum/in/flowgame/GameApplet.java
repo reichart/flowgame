@@ -112,16 +112,14 @@ public class GameApplet extends Applet {
 				// player.setDateOfBirth(fmt.parse(userInfo.getString("birthday_date")));
 				// player.setPlace(userInfo.getJSONObject("hometown_location").getString("country"));
 
-				// TODO upload async
-				client.uploadQuietly(player);
-				System.err.println("##### stored new player");
+				System.err.println("##### created new player");
 			} else {
 				newPlayer = false;
 				System.err.println("##### existing player");
 			}
 
 			// this initializes all the other classes
-			new GameLogic(loggedInUser, client, facebook).addListener(game.getListener());
+			new GameLogic(player, client, facebook).addListener(game.getListener());
 
 			if (newPlayer) {
 				game.getMenu().show(ProfileScreen.class);
