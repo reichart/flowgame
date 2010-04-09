@@ -48,17 +48,17 @@ public class DDLGenerator {
 		// once before each session
 		Questionnaire moodAndSkills = new Questionnaire("Stimmung",
 				"Die Folgenden sollen feststellen, wie Sie sich gerade fühlen. Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
-				+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.");
-		moodAndSkills.addQuestion("zufrieden <-> unzufrieden");
-		moodAndSkills.addQuestion("energiegeladen <-> energielos");
-		moodAndSkills.addQuestion("gestresst <-> entspannt");
-		moodAndSkills.addQuestion("müde <-> hellwach");
-		moodAndSkills.addQuestion("friedlich <-> verärgert");
-		moodAndSkills.addQuestion("unglücklich <-> glücklich");
-		moodAndSkills.addQuestion("lustlos <-> hoch motiviert");
-		moodAndSkills.addQuestion("ruhig <-> nervös");
-		moodAndSkills.addQuestion("begeistert <-> gelangweilt");
-		moodAndSkills.addQuestion("besorgt <-> sorgenfrei");
+				+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.", true);
+		moodAndSkills.addLabelQuestion("zufrieden", "unzufrieden");
+		moodAndSkills.addLabelQuestion("energiegeladen", "energielos");
+		moodAndSkills.addLabelQuestion("gestresst", "entspannt");
+		moodAndSkills.addLabelQuestion("müde", "hellwach");
+		moodAndSkills.addLabelQuestion("friedlich", "verärgert");
+		moodAndSkills.addLabelQuestion("unglücklich", "glücklich");
+		moodAndSkills.addLabelQuestion("lustlos", "hoch motiviert");
+		moodAndSkills.addLabelQuestion("ruhig", "nervös");
+		moodAndSkills.addLabelQuestion("begeistert", "gelangweilt");
+		moodAndSkills.addLabelQuestion("besorgt", "sorgenfrei");
 		
 		// after every round
 		Questionnaire howWasIt = new Questionnaire("How was it?", "TBD mood (15q) and flow (20q)");
