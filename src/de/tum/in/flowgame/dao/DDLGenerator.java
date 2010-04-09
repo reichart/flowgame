@@ -60,9 +60,26 @@ public class DDLGenerator {
 		moodAndSkills.addLabelQuestion("begeistert", "gelangweilt");
 		moodAndSkills.addLabelQuestion("besorgt", "sorgenfrei");
 		
+		Questionnaire moodAndSkillsShort = new Questionnaire("Stimmung", "", true);
+		moodAndSkillsShort.addLabelQuestion("ruhig", "nervös");
+		moodAndSkillsShort.addLabelQuestion("zufrieden","unzufrieden");
+		moodAndSkillsShort.addLabelQuestion("lustlos", "hoch motiviert"); 
+		
 		// after every round
 		Questionnaire howWasIt = new Questionnaire("How was it?", "TBD mood (15q) and flow (20q)");
 		howWasIt.addQuestion("how was it question");
+		howWasIt.addQuestion("Ich fühle mich optimal beansprucht.");
+		howWasIt.addQuestion("Meine Gedanken bzw. Aktivitäten laufen flüssig und glatt.");
+		howWasIt.addQuestion("Ich merke gar nicht, wie die Zeit vergeht.");
+		howWasIt.addQuestion("Ich habe keine Mühe, mich zu konzentrieren.");
+		howWasIt.addQuestion("Mein Kopf ist völlig klar.");
+		howWasIt.addQuestion("Ich bin ganz vertieft in das was ich gerade mache.");
+		howWasIt.addQuestion("Die richtigen Gedanken/Bewegungen kommen wie von selbst.");
+		howWasIt.addQuestion("Ich weiss bei jedem Schritt, was ich zu tun habe.");
+		howWasIt.addQuestion("Ich habe das Gefühl, den Ablauf unter Kontrolle zu haben.");
+		howWasIt.addQuestion("Ich bin völlig selbstvergessen.");
+
+		
 		
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
