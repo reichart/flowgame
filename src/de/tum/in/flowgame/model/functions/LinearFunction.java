@@ -6,7 +6,7 @@ import de.tum.in.flowgame.model.Function;
 
 @Entity
 public class LinearFunction extends Function {
-	
+
 	private double slope;
 
 	@SuppressWarnings("unused")
@@ -24,4 +24,8 @@ public class LinearFunction extends Function {
 		return slope * z + getInitialValue();
 	}
 
+	@Override
+	public String toString() {
+		return "linear[iv=" + getInitialValue() + ";slope=" + slope + "]";
+	}
 }

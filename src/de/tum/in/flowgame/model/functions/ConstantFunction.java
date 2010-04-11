@@ -21,4 +21,8 @@ public class ConstantFunction extends Function {
 		return getInitialValue();
 	}
 
+	@Override
+	public String toString() {
+		return "const[iv=" + getInitialValue() + "]";
+	}
 }
