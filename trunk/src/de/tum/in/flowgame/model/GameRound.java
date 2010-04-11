@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -16,8 +17,9 @@ import de.tum.in.flowgame.GameLogic;
 public class GameRound extends AbstractEntity {
 	private ScenarioRound scenarioRound;
 	private long actualPlaytime;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Collision> collisions;
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Answer> answers;
 	private long startTime;
 	private long score;
@@ -69,6 +71,10 @@ public class GameRound extends AbstractEntity {
 		return collisions;
 	}
 
+	public long getActualPlaytime() {
+		return actualPlaytime;
+	}
+	
 	public List<Answer> getAnswers() {
 		return answers;
 	}

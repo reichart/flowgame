@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -14,9 +15,9 @@ public class GameSession extends AbstractEntity {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Person player;
 	private Difficulty baseline;
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private final List<GameRound> rounds;
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Answer> answers;
 
 	private GameSession() { // for JPA
@@ -51,6 +52,10 @@ public class GameSession extends AbstractEntity {
 		return scenarioSession;
 	}
 
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+	
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
