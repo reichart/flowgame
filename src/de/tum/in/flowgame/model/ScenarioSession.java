@@ -66,4 +66,7 @@ public class ScenarioSession extends AbstractEntity {
 		return questionnaire;
 	}
 
+	public List<ScenarioRound> getRounds() {
+		return rounds;
+	}
 }
