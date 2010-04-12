@@ -99,8 +99,8 @@ public class QuestionnairePanel extends JPanel {
 		} else {
 			// Create the label table
 			final Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-			labelTable.put(0, new JLabel("Low"));
-			labelTable.put(100, new JLabel("High"));
+			labelTable.put(0, new JLabel("Trifft nicht zu"));
+			labelTable.put(100, new JLabel("Trifft zu"));
 			for (final JLabel label : labelTable.values()) {
 				label.setForeground(Color.WHITE);
 			}
