@@ -78,8 +78,8 @@ public class DDLGenerator {
 		howWasIt.addQuestion("Ich weiss bei jedem Schritt, was ich zu tun habe.");
 		howWasIt.addQuestion("Ich habe das Gefühl, den Ablauf unter Kontrolle zu haben.");
 		howWasIt.addQuestion("Ich bin völlig selbstvergessen.");
-
 		
+		howWasIt.addQuestion("Für mich persönlich sind die jetzigen Anforderungen...");//zu gering <-> zu hoch
 		
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
