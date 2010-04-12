@@ -1,7 +1,10 @@
 package de.tum.in.flowgame;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.logging.Log;
@@ -9,11 +12,13 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.facebook.CustomFacebookClient;
+import de.tum.in.flowgame.facebook.JSONUtils;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Difficulty;
 import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.GameRound;
 import de.tum.in.flowgame.model.GameSession;
+import de.tum.in.flowgame.model.Highscore;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
@@ -138,9 +143,35 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			}
 		}
 
+		storeRank();
 		fireGameStopped();
 
 		log.info("stopped");
+	}
+
+	private void storeRank() {
+		try {
+			final CustomFacebookClient fb = getFacebookClient();
+			final Set<Long> persons = JSONUtils.toLongs(fb.friends_get());
+			persons.add(getPlayerId());
+			
+			Client client = getClient();
+			final List<Highscore> globalScores = client.getHighscores(new ArrayList<Long>(persons));
+			
+			//determine rank of player within his friends
+			int counter = 1;
+			for (final Iterator<Highscore> iterator = globalScores.iterator(); iterator.hasNext();) {
+				final Highscore highscore = iterator.next();
+				if (highscore.getPersonid() == getPlayerId()) {
+					gameRound.setSocialRank(counter);
+					gameRound.setGlobalRank(highscore.getPercentage());
+					break;
+				}
+				counter++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 	public int getFuel() {
