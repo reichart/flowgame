@@ -53,8 +53,6 @@ public interface GameListener {
 
 	void gameStopped(GameLogic game);
 
-	// void sessionFinished(GameLogic game);
-
 	/**
 	 * Notifies the listener that a collision happened.
 	 * 
