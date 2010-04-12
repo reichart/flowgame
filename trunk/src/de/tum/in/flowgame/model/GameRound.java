@@ -1,7 +1,6 @@
 package de.tum.in.flowgame.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +12,6 @@ import javax.persistence.Transient;
 import de.tum.in.flowgame.DefaultGameListener;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.client.Client;
-import de.tum.in.flowgame.facebook.FacebookFriendCache;
 
 @Entity
 public class GameRound extends AbstractEntity {
@@ -54,33 +51,6 @@ public class GameRound extends AbstractEntity {
 			@Override
 			public void gameStopped(final GameLogic game) {
 				actualPlaytime = game.getElapsedTime();
-
-				try {
-					FacebookFriendCache friendCash = new FacebookFriendCache(game.getFacebookClient());
-					final List<Long> persons = friendCash.getFriendsids();
-					persons.add(friendCash.getCurrentPlayer().getId());
-					
-					Client client = game.getClient();
-					final List<Highscore> globalScores = client.getHighscores(persons);
-					
-					final long currentID = friendCash.getCurrentPlayer().getId();
-					
-					//determine rank of player within his friends
-					int counter = 1;
-					for (final Iterator<Highscore> iterator = globalScores.iterator(); iterator.hasNext();) {
-						final Highscore highscore = iterator.next();
-						if (highscore.getPersonid() == currentID) {
-							socialRank = counter;
-							globalRank = highscore.getPercentage();
-							break;
-						}
-						counter++;
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 				game.removeListener(this);
 			}
 		};
