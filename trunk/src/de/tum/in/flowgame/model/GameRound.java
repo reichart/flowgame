@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import de.tum.in.flowgame.DefaultGameListener;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.model.Collision.Item;
 
 @Entity
 public class GameRound extends AbstractEntity {
@@ -52,6 +53,11 @@ public class GameRound extends AbstractEntity {
 			public void gameStopped(final GameLogic game) {
 				actualPlaytime = game.getElapsedTime();
 				game.removeListener(this);
+			}
+			
+			@Override
+			public void collided(GameLogic logic, Item item) {
+				collisions.add(new Collision(item));
 			}
 		};
 	}
