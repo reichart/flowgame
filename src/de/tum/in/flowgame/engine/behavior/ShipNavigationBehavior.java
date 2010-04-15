@@ -27,8 +27,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 
 	private float acceleration = 30f;
 	private float maxSpeed = 18f;
-	private final Point3d dp = new Point3d();
-	private Vector3d dv = new Vector3d();
 	private Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
 
@@ -52,9 +50,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 
 	private final TransformGroup translationGroup;
 	private final TransformGroup viewTG;
-	private Transform3D vpTrans = new Transform3D();
 	private Matrix3f shipRotation = new Matrix3f();
-	private Vector3d vpPos = new Vector3d();
 	private final WakeupCondition condition;
 
 	private boolean KEY_LEFT;
@@ -75,7 +71,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 
 	private long time;
 	private boolean firstPerson = false;
-	private double fwdSpeed;
 
 	public ShipNavigationBehavior(final TransformGroup translationGroup, final TransformGroup viewTG) {
 		this.translationGroup = translationGroup;
@@ -228,9 +223,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		// Extract the position from the transform3D.
 		trans.get(pos);
 
-		viewTG.getTransform(vpTrans);
-		vpTrans.get(vpPos);
-
 		double deltaTime = getDeltaTime();
 		deltaTime *= 0.001;
 
@@ -278,6 +270,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		}
 
 		/* Integration of acceleration to velocity */
+		Vector3d dv = new Vector3d();
 		dv.scale(deltaTime, a);
 		mov.add(dv);
 
@@ -310,8 +303,8 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		// System.out.println("DistUp: " + distToRadiusUp);
 		// System.out.println("DistDown: " + distToRadiusDown);
 
-		mov.z = fwdSpeed;
 		/* Integration of velocity to distance */
+		Point3d dp = new Point3d();
 		dp.scale(deltaTime, mov);
 
 		// add dp into current vp position.
@@ -355,8 +348,11 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		trans.set(shipRotation, pos, 1);
 		translationGroup.setTransform(trans);
 
-		vpPos = new Vector3d(pos);
-
+		Transform3D vpTrans = new Transform3D();
+		viewTG.getTransform(vpTrans);
+		Vector3d vpPos = new Vector3d();
+		vpTrans.get(vpPos);
+		
 		if (!firstPerson) {
 			double realY = pos.y + Ship.INITIAL_SHIP_PLACEMENT_Y;
 			if (realY > 0) {
@@ -378,8 +374,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 
 		vpTrans.set(vpPos);
 		
-//		System.out.println(vpPos);
-
 		viewTG.setTransform(vpTrans);
 
 	}
@@ -455,11 +449,4 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 		// empty
 	}
 
-	public void setFwdSpeed(final double fwdSpeed) {
-		this.fwdSpeed = fwdSpeed;
-	}
-
-	public void reset(){
-		this.pos = new Vector3d();
-	}
 }

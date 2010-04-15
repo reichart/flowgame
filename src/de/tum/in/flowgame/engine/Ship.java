@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.engine;
 
 import java.awt.Color;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Timer;
@@ -22,6 +23,7 @@ import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.engine.behavior.ForwardBehavior;
 import de.tum.in.flowgame.engine.behavior.ShipNavigationBehavior;
 import de.tum.in.flowgame.engine.behavior.SpeedChangeBehavior;
 import de.tum.in.flowgame.engine.util.Java3DUtils;
@@ -58,7 +60,8 @@ public class Ship extends TransformGroup implements GameListener {
 
 	private final Timer flashTimer;
 	private final SpeedChangeBehavior speedChange;
-
+	private final ForwardBehavior forwardBehavior;
+	
 	/**
 	 * Creates the ship.
 	 * 
@@ -66,7 +69,7 @@ public class Ship extends TransformGroup implements GameListener {
 	 *            The {@link TransformGroup} of our view.
 	 * @throws IOException
 	 */
-	public Ship(final TransformGroup viewTG) throws IOException {
+	public Ship(final TransformGroup viewTG, ForwardBehavior forwardBehavior) throws IOException {
 		this.flashTimer = new Timer("FlashTimer", true);
 		this.setBoundsAutoCompute(false);
 
@@ -74,11 +77,12 @@ public class Ship extends TransformGroup implements GameListener {
 		t3d.setTranslation(new Vector3d(INITIAL_SHIP_PLACEMENT_X, INITIAL_SHIP_PLACEMENT_Y, INITIAL_SHIP_PLACEMENT_Z));
 
 		this.setTransform(t3d);
-
+		
+		this.forwardBehavior = forwardBehavior;
+		
 		final TransformGroup moveGroup = new TransformGroup();
 		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		moveGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-
 		this.addChild(moveGroup);
 
 		final TransformGroup rotationGroup = new TransformGroup();
@@ -92,8 +96,8 @@ public class Ship extends TransformGroup implements GameListener {
 		shipNavigationBehavior = new ShipNavigationBehavior(moveGroup, viewTG);
 		ship.addChild(shipNavigationBehavior);
 		shipNavigationBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-
-		speedChange = new SpeedChangeBehavior(shipNavigationBehavior);
+		
+		speedChange = new SpeedChangeBehavior(forwardBehavior);
 		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		addChild(speedChange);
 
@@ -178,11 +182,13 @@ public class Ship extends TransformGroup implements GameListener {
 
 	public void added(final GameLogic game) {
 		game.addListener(shipNavigationBehavior);
+		game.addListener(forwardBehavior);
 		speedChange.setGameLogic(game);
 	}
 
 	public void removed(final GameLogic game) {
 		game.removeListener(shipNavigationBehavior);
+		game.removeListener(forwardBehavior);
 		speedChange.setGameLogic(null);
 	}
 
@@ -196,7 +202,7 @@ public class Ship extends TransformGroup implements GameListener {
 
 		if (item == Item.ASTEROID) {
 			mat.setAmbientColor(new Color3f(Color.RED));
-			mat.setDiffuseColor(new Color3f(Color.MAGENTA));
+			mat.setDiffuseColor(new Color3f(Color.RED));
 		} else {
 			mat.setAmbientColor(new Color3f(Color.ORANGE));
 			mat.setDiffuseColor(new Color3f(Color.RED));
@@ -220,7 +226,7 @@ public class Ship extends TransformGroup implements GameListener {
 	}
 
 	public void gameStopped(final GameLogic game) {
-		shipNavigationBehavior.reset();
+		// empty
 	}
 
 	/**
@@ -232,5 +238,13 @@ public class Ship extends TransformGroup implements GameListener {
 		public void run() {
 			shape2.getAppearance().setTexture(tex2);
 		}
+	}
+
+	public Vector3d getCoords() {
+		Vector3d pos = new Vector3d();
+		pos.x = shipNavigationBehavior.getCoords().x;
+		pos.y = shipNavigationBehavior.getCoords().y;
+		pos.z = forwardBehavior.getCoords().z;
+		return pos;
 	}
 }
