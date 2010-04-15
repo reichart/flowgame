@@ -88,8 +88,6 @@ public class Game3D extends Canvas3D {
 
 		this.listener = new DefaultGameListener() {
 
-			private BranchGroup tunnelBranchGroup;
-
 			@Override
 			public void added(final GameLogic game) {
 				game.addListener(cc);
