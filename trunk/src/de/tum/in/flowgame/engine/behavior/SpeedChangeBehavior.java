@@ -18,7 +18,7 @@ import de.tum.in.flowgame.strategy.FunctionStrategy2;
 public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, SpeedChangeBehaviorMBean {
 
 	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
-	private final ShipNavigationBehavior forwardNavigator;
+	private final ForwardBehavior forwardNavigator;
 	private double speed;
 	private double maxSpeed;
 	private GameLogic gameLogic;
@@ -26,7 +26,7 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 
 	private boolean pause;
 
-	public SpeedChangeBehavior(final ShipNavigationBehavior forwardNavigator) {
+	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator) {
 		this.forwardNavigator = forwardNavigator;
 		this.strategy = new FunctionStrategy2();
 		pause = false;

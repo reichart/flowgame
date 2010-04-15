@@ -49,7 +49,7 @@ public class CollisionBehavior extends Behavior implements GameLogicConsumer {
 		shipOldX = shipX;
 		shipOldY = shipY;
 		shipOldZ = shipZ;
-		final Vector3d shipCoords = ship.getControls().getCoords();
+		final Vector3d shipCoords = ship.getCoords();
 		shipX = shipCoords.x;
 		shipY = shipCoords.y;
 		shipZ = shipCoords.z;

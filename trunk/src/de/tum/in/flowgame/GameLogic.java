@@ -128,7 +128,11 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		log.info("running");
 
 		fireGameStarted();
-		while (asteroids < MAX_ASTEROIDS && fuel > 0) {
+		
+		boolean timeOver = false;
+		Long maxPlaytime = gameRound.getScenarioRound().getExpectedPlaytime();
+		
+		while (asteroids < MAX_ASTEROIDS && fuel > 0 && !timeOver) {
 			try {
 				Thread.sleep(4000);
 			} catch (final InterruptedException ex) {
@@ -140,6 +144,11 @@ public class GameLogic implements GameLogicMBean, Runnable {
 				if (fuel == 0) {
 					break;
 				}
+			}
+			
+			if (maxPlaytime != null) {
+				System.err.println(getElapsedTime());
+				timeOver = getElapsedTime() > maxPlaytime;
 			}
 		}
 

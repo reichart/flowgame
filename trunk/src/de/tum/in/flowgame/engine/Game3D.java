@@ -36,6 +36,7 @@ import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.engine.behavior.CollisionBehavior;
 import de.tum.in.flowgame.engine.behavior.CreateNewCollidablesBehavior;
+import de.tum.in.flowgame.engine.behavior.ForwardBehavior;
 import de.tum.in.flowgame.engine.behavior.FrameCounterBehavior;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.GameOverlay;
@@ -63,7 +64,6 @@ public class Game3D extends Canvas3D {
 	private final GameOverlay overlay;
 	private final BranchGroup collidables;
 
-	private Tunnel tunnel;
 	private Ship ship;
 
 	private final Switch switsch;
@@ -88,6 +88,8 @@ public class Game3D extends Canvas3D {
 
 		this.listener = new DefaultGameListener() {
 
+			private BranchGroup tunnelBranchGroup;
+
 			@Override
 			public void added(final GameLogic game) {
 				game.addListener(cc);
@@ -110,15 +112,12 @@ public class Game3D extends Canvas3D {
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
 				switsch.setWhichChild(Switch.CHILD_ALL);
-				tunnel = new Tunnel();
-				collidables.addChild(tunnel);
 			}
 
 			@Override
 			public void gameStopped(final GameLogic game) {
 				System.out.println("Game3D.gameStopped()");
 				switsch.setWhichChild(Switch.CHILD_NONE);
-				tunnel.detach();
 			}
 		};
 
@@ -181,9 +180,21 @@ public class Game3D extends Canvas3D {
 		collidables.setCapability(Group.ALLOW_CHILDREN_EXTEND);
 		collidables.setCapability(Group.ALLOW_CHILDREN_READ);
 		collidables.setCapability(Group.ALLOW_CHILDREN_WRITE);
+		
+		TransformGroup forwardGroup = new TransformGroup();
+		forwardGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		forwardGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 
-		ship = new Ship(viewTG);
-		collidables.addChild(ship);
+		ForwardBehavior forwardBehavior = new ForwardBehavior(forwardGroup, viewTG);
+		forwardBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+		
+		ship = new Ship(viewTG, forwardBehavior);
+		ship.addChild(forwardBehavior);
+		forwardGroup.addChild(ship);
+		collidables.addChild(forwardGroup);
+		
+		Tunnel tunnel = new Tunnel();
+		forwardGroup.addChild(tunnel);
 
 		this.cc = new CreateCollidables(collidables);
 		this.cncb = new CreateNewCollidablesBehavior(cc, ship);
