@@ -8,6 +8,11 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+
+import org.json.JSONObject;
+
+import com.google.code.facebookapi.ProfileField;
 
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.engine.Game3D;
@@ -61,26 +66,27 @@ public class GameApplet extends Applet {
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, game);
 	}
-	
+
 	public CustomFacebookClient createFacebookClient() throws IOException {
 		final String server;
 		final String sessionSecret;
 		final String sessionKey;
 
 		if (isActive()) {
+			System.err.println("using: applet deployment path");
 			server = getCodeBase().toString();
 			sessionKey = getParameter("sessionKey");
 			sessionSecret = getParameter("sessionSecret");
 		} else {
+			System.err.println("using: local testing path");
 			server = "http://localhost:8080/flowgame/";
 			sessionSecret = "2957c00dd86887f79b3c4827157ac2ab"; // fb_sig_ss
 			sessionKey = "b09011facca373ce59cc53a6-1071363107"; // fb_sig_session_key
-
 		}
 
 		return new CustomFacebookClient(server, API_KEY, sessionSecret, sessionKey, this);
 	}
-	
+
 	@Override
 	public void init() {
 		try {
@@ -98,24 +104,36 @@ public class GameApplet extends Applet {
 				newPlayer = true;
 
 				System.err.println("##### creating new player");
-				player = new Person(loggedInUser, "Checker");
 
-				// final JSONObject userInfo =
-				// facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
-				// ProfileField.BIRTHDAY_DATE, ProfileField.SEX,
-				// ProfileField.HOMETOWN_LOCATION);
-				//
-				// player.setName(userInfo.getString("first_name"));
-				// player.setSex(userInfo.getString("sex"));
-				// final SimpleDateFormat fmt = new
-				// SimpleDateFormat("MM/dd/yyyy");
-				// player.setDateOfBirth(fmt.parse(userInfo.getString("birthday_date")));
-				// player.setPlace(userInfo.getJSONObject("hometown_location").getString("country"));
+				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
+						ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
 
-				System.err.println("##### created new player");
+				try {
+					final String name = userInfo.getString(ProfileField.FIRST_NAME.fieldName());
+					final String birthday = userInfo.getString(ProfileField.BIRTHDAY_DATE.fieldName());
+					final String sex = userInfo.getString(ProfileField.SEX.fieldName());
+
+					final String country;
+					if (userInfo.isNull("hometown_location")) {
+						country = null;
+					} else {
+						country = userInfo.getJSONObject(ProfileField.HOMETOWN_LOCATION.fieldName()).getString(
+								"country");
+					}
+
+					player = new Person(loggedInUser, name);
+					player.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse(birthday));
+					player.setPlace(country);
+					player.setSex(sex);
+				} catch (Exception e) {
+					System.err.println(userInfo);
+					throw e;
+				}
+
+				System.err.println("##### created new player: " + player);
 			} else {
 				newPlayer = false;
-				System.err.println("##### existing player");
+				System.err.println("##### existing player: " + player);
 			}
 
 			// this initializes all the other classes
