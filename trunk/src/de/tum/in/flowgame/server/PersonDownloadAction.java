@@ -7,15 +7,11 @@ public class PersonDownloadAction extends GameDataAction<Long, Person> {
 	@Override
 	public Person execute(final Long id) throws Exception {
 		final Person person = em.find(Person.class, id);
-
-		if (person == null) {
-			throw new NullPointerException("No person found for id " + id);
-		} else {
+		if (person != null) {
 			// prevent lazily-loaded list on client side
 			person.setProfilingAnswers(null);
-
-			return person;
 		}
+		return person; // may be null
 	}
 
 }
