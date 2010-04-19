@@ -39,8 +39,12 @@ public abstract class GameDataAction<I, O> extends DatabaseAction {
 			
 			this.response = new ByteArrayInputStream(Utils.objectToBytes(output));
 		} catch (final Exception ex) {
-			log.error("failed to process " + input + " to " + output + " in " + getClass().getName(), ex);
-			this.response = new ByteArrayInputStream(Utils.objectToBytes(ex));
+			final String msg = "failed to process " + input + " to " + output + " in " + getClass().getName();
+			log.error(msg, ex);
+			
+			// only relay message to client, not full exception
+			// (not all classes available on client, security reasons)
+			this.response = new ByteArrayInputStream(Utils.objectToBytes(new Exception(msg)));
 		}
 		return SUCCESS;
 	}
