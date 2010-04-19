@@ -125,7 +125,7 @@ public class GameMenu implements Sprite, GameListener {
 	// }
 
 	public void gameResumed(final GameLogic game) {
-		// empty
+		show(EmptyScreen.class);
 	}
 
 	public void gameStarted(final GameLogic game) {
