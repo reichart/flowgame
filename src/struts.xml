@@ -65,6 +65,10 @@
 			</result>
 		</action>
 		
+		<action name="export" class="de.tum.in.flowgame.server.DataExportAction">
+			<result>/WEB-INF/export.jsp</result>
+		</action>
+		
 	</package>
 
 </struts>
