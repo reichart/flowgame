@@ -98,7 +98,6 @@
 					</tr>
 				</s:iterator>
 			</table>
-			</ul>
 			</td>
 			<td>
 			<table border="1">
