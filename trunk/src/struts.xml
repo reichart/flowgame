@@ -6,7 +6,7 @@
 <struts>
 
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 	<constant name="struts.custom.i18n.resources" value="messages" />
 
 	<constant name="persistenceUnit" value="IDP" /> 
@@ -15,6 +15,14 @@
 	<package name="default" namespace="/" extends="struts-default">
 
 		<default-action-ref name="canvas" />
+
+		<global-results>
+			<result name="exception">/WEB-INF/exception.html</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping result="exception" exception="java.lang.Exception" />
+		</global-exception-mappings>
 
 		<action name="canvas">
 			<result>/WEB-INF/canvas.jsp</result>
