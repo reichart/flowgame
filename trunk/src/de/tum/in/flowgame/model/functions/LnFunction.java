@@ -1,5 +1,6 @@
 package de.tum.in.flowgame.model.functions;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import de.tum.in.flowgame.model.Function;
@@ -8,6 +9,7 @@ import de.tum.in.flowgame.model.Function;
 public class LnFunction extends Function {
 
 	private double multiplier;
+	@Column(name="\"offset\"")
 	private double offset;
 
 	@SuppressWarnings("unused")
