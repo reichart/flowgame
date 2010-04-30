@@ -6,17 +6,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.CubicCurve2D;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import netscape.javascript.JSObject;
-
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.model.Highscore;
@@ -47,12 +42,7 @@ public class SocialHighscore extends JPanel {
 			throw new RuntimeException(ex);
 		}
 
-		try {
-			personButton = new CustomButton();
-		} catch (IOException e) {
-			personButton = null;
-			e.printStackTrace();
-		}
+		personButton = new CustomButton();
 	}
 
 	public void update() throws Exception {
