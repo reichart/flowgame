@@ -31,6 +31,14 @@
 		<action name="applet">
 			<result>/WEB-INF/applet.jsp</result>
 		</action>
+		
+		<action name="invite">
+			<result>/WEB-INF/invite.jsp</result>
+		</action>
+		
+		<action name="endinvite">
+			<result>/WEB-INF/endinvite.jsp</result>
+		</action>
 
 		<action name="fbproxy" class="de.tum.in.flowgame.server.FacebookProxyAction">
 			<result>/WEB-INF/fbproxy.jsp</result>

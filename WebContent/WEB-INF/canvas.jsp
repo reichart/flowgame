@@ -5,7 +5,7 @@
 <s:text var="appletWidth" name="applet.width" />
 <s:text var="appletHeight" name="applet.height" />
 <fb:if-is-app-user>
-	<fb:iframe src="${applet}" smartsize="false" resizable="false" width="${appletWidth}" height="${appletHeight}" frameborder="0" scrolling="no" />
+	<fb:iframe src="${applet}" smartsize="false" resizable="false" width="755" height="700" frameborder="0" scrolling="no" />
 	<fb:else>
 		<fb:redirect url="http://www.facebook.com/login.php?v=1.0&api_key=${param.fb_sig_api_key}&next=${canvas}&canvas=" />
 	</fb:else>

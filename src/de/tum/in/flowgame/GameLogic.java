@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import netscape.javascript.JSObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -66,7 +68,12 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private final CustomFacebookClient facebook;
 
-	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook) {
+	private long lastPointsAdded;
+
+	private final JSObject win;
+
+	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, JSObject win) {
+		this.win = win;
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
 		this.client = client;
@@ -76,9 +83,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public void collide(final Item item) {
-
-		fireCollided(item);
-
 		switch (item) {
 		case FUELCAN:
 			if (fuel < MAX_FUEL) {
@@ -109,6 +113,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		double rating = getRating();
 		long increase = (long) (rating * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
+		
+		lastPointsAdded = increase;
+		
+		fireCollided(item);
 	}
 
 	public void seen(final Item item, boolean collision) {
@@ -324,6 +332,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	public long getScore() {
 		return gameRound.getScore().getScore();
 	}
+	
+	public long getPointsAdded() {
+		return lastPointsAdded;
+	}
 
 	public double getRating() {
 		return getDifficultyFunction().getDifficultyRating(getElapsedTime());
@@ -372,5 +384,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	
 	public void saveSessionAnswers(final List<Answer> answers) {
 		gameSession.setAnswers(answers);
+	}
+	
+	public JSObject getWin() {
+		return win;
 	}
 }

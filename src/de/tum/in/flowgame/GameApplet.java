@@ -10,6 +10,10 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+import javax.imageio.ImageIO;
+
+import netscape.javascript.JSObject;
+
 import org.json.JSONObject;
 
 import com.google.code.facebookapi.ProfileField;
@@ -62,11 +66,13 @@ public class GameApplet extends Applet {
 	}
 
 	public GameApplet() throws IOException {
+		ImageIO.setUseCache(false); // stay in JWS sandbox
+		
 		this.game = new Game3D();
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, game);
 	}
-
+	
 	public CustomFacebookClient createFacebookClient() throws IOException {
 		final String server;
 		final String sessionSecret;
@@ -136,8 +142,13 @@ public class GameApplet extends Applet {
 				System.err.println("##### existing player: " + player);
 			}
 
+			JSObject win = null;
+			if (isActive()) {
+				win = JSObject.getWindow(this);
+			}
+			
 			// this initializes all the other classes
-			new GameLogic(player, client, facebook).addListener(game.getListener());
+			new GameLogic(player, client, facebook, win).addListener(game.getListener());
 
 			if (newPlayer) {
 				game.getMenu().show(ProfileScreen.class);

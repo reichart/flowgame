@@ -1,19 +1,12 @@
 package de.tum.in.flowgame.ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.font.TextAttribute;
 import java.io.IOException;
-import java.net.URL;
-import java.text.AttributedString;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -21,6 +14,8 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import netscape.javascript.JSObject;
 
 import org.json.JSONException;
 
@@ -33,14 +28,12 @@ import de.tum.in.flowgame.model.Highscore;
 public class FriendsBar extends JPanel {
 
 	private static final int MAX_NUMBER_OF_FRIENDS_SHOWN = 7;
-	private static final int INNER_MARGIN = 10;
-	private static final int MARGIN = 10;
+	public static final int INNER_MARGIN = 10;
 	public static final int LEFT_BORDER = 25;
 
 	private int currentPosition;
 
 	private List<Highscore> highscores;
-	private final Image cardBackground;
 	private final FacebookFriendCache friendCash;
 
 	private final ImageIcon iconLeftSmall = new ImageIcon(ImageIO.read(FriendsBar.class
@@ -52,26 +45,36 @@ public class FriendsBar extends JPanel {
 			.getResource("/res/arrow_smaller.png")));
 	private final ImageIcon iconRightLarge = new ImageIcon(ImageIO.read(FriendsBar.class.getResource("/res/arrow.png")));
 
-	public final int cardWidth;
+	private final List<CustomButton> friendButtons;
 
-	public FriendsBar(List<Highscore> highscores, FacebookFriendCache friendCash) throws Exception {
+	public FriendsBar(List<Highscore> highscores, FacebookFriendCache friendCash, JSObject win) throws Exception {
 		this.friendCash = friendCash;
+
+		friendButtons = new ArrayList<CustomButton>();
 		update(highscores);
 
-		URL url = FriendsBar.class.getResource("/res/picframe.png");
-		cardBackground = ImageIO.read(url);
-		cardWidth = cardBackground.getWidth(this) + MARGIN;
-
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(600, cardBackground.getHeight(this)));
+		this.setPreferredSize(new Dimension(600, CustomButton.CARD_HEIGHT));
 
 		currentPosition = 0;
+		
+		for (int i = 0; i < MAX_NUMBER_OF_FRIENDS_SHOWN; i++) {
+			try {
+				final CustomButton btn = new CustomButton(win);
+				btn.setLocation(calculatePosition(i), 0);
+				this.add(btn);
+				friendButtons.add(btn);
+			} catch (IOException e) {
+				System.err.println("No buttons help." + e);
+			}
+		}
 
 		final JButton leftArrow = createLeftButton();
 		this.add(leftArrow);
 
 		final JButton rightArrow = createRightButton();
 		this.add(rightArrow);
+
 	}
 
 	private JButton createLeftButton() {
@@ -81,6 +84,8 @@ public class FriendsBar extends JPanel {
 		btn.setSize(25, 25);
 		btn.setContentAreaFilled(false);
 		btn.setLocation(0, 40);
+
+		btn.setText("Invite Friends");
 
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -148,41 +153,24 @@ public class FriendsBar extends JPanel {
 				for (Friend friend : friendCash.getFriends()) {
 					if (highscore.getPersonid() == friend.getId()) {
 						f = friend;
+						break;
 					}
 				}
-				paintFriend(i - currentPosition, f.getPicture(), highscore.getScore(), g);
+				if (f != null) {
+					friendButtons.get(i).setPicture(f.getPicture());
+					friendButtons.get(i).setScore(highscore.getScore());
+				} else {
+					System.err.println("Friend Object could not be found");
+				}
 			} else {
-				paintFriend(i - currentPosition, null, null, g);
+				friendButtons.get(i).setPicture(null);
+				friendButtons.get(i).setScore(null);
 			}
 		}
 	}
 
-	private void paintFriend(int position, Image picture, Long score, Graphics g) {
-		paintFriend(calculatePosition(position), 0, picture, score, g);
-	}
-	
-	public void paintFriend(int x, int y, Image picture, Long score, Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-
-		g.drawImage(cardBackground, x, 0, this);
-		g.drawImage(picture, x + INNER_MARGIN, INNER_MARGIN, this);
-
-		if (score != null) {
-			String scoreString = String.valueOf(score);
-			AttributedString value = new AttributedString(scoreString);
-			Font scoreFont = new Font("Arial", Font.BOLD, 14);
-			value.addAttribute(TextAttribute.FONT, scoreFont);
-			value.addAttribute(TextAttribute.FOREGROUND, new GradientPaint(0, 0, Color.GRAY, 0, 10, Color.BLACK, true));
-
-			FontMetrics metrics = getFontMetrics(scoreFont);
-
-			g2d.drawString(value.getIterator(), x
-					+ (cardBackground.getWidth(this) - metrics.stringWidth(scoreString)) / 2, 85);
-		}
-	}
-
 	private int calculatePosition(int rank) {
-		return rank * cardWidth + LEFT_BORDER;
+		return rank * CustomButton.CARD_WIDTH + LEFT_BORDER;
 	}
 
 	public Integer getXPosition(long personid) {
@@ -190,7 +178,7 @@ public class FriendsBar extends JPanel {
 		for (int i = 0; i < MAX_NUMBER_OF_FRIENDS_SHOWN; i++) {
 			Highscore highscore = highscores.get(currentPosition + i);
 			if (highscore.getPersonid() == personid) {
-				return calculatePosition(i) + cardWidth / 2;
+				return calculatePosition(i) + CustomButton.CARD_WIDTH / 2;
 			}
 		}
 		return null;
