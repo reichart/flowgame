@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 @Entity
 public class Question extends AbstractEntity {
 	
-	public static String separator = "<->";
+	public static final String separator = "<->";
 
 	@Column(length = 500)
 	private String text;
