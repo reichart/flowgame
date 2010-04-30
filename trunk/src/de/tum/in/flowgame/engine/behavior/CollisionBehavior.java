@@ -53,7 +53,6 @@ public class CollisionBehavior extends Behavior implements GameLogicConsumer {
 		shipX = shipCoords.x;
 		shipY = shipCoords.y;
 		shipZ = shipCoords.z;
-//		System.out.println(shipZ);
 
 		while (children.hasMoreElements()) {
 			final Node child = children.nextElement();
