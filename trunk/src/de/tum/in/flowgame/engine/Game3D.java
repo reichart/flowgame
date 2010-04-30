@@ -80,9 +80,6 @@ public class Game3D extends Canvas3D {
 	private CollisionBehavior collisionBehavior;
 	private CreateNewCollidablesBehavior cncb;
 
-	private Point2d minPos = new Point2d();
-	private Point2d maxPos = new Point2d();
-
 	/**
 	 * Creates a new Game3D.
 	 * 
