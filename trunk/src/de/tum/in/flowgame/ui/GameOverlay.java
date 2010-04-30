@@ -9,8 +9,12 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.vecmath.Point2d;
 
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
@@ -26,6 +30,7 @@ import de.tum.in.flowgame.ui.sprite.SpriteCache;
 public class GameOverlay implements GameListener, ComponentListener, FrameCounterListener {
 
 	private final static Font LARGE = new Font("sans", Font.BOLD, 48);
+	private final static Font MEDIUM = new Font("sans", Font.BOLD, 30);
 	private final static Font SMALL = new Font("sans", Font.PLAIN, 16);
 
 	private final Timer timer;
@@ -43,6 +48,10 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	private boolean drawFPS;
 
 	private GameMenu menu;
+	
+	private List<ScreenMessage> messages;
+	
+	private final Game3D engine;
 
 	public GameOverlay(final Game3D engine) {
 		this.menu = new GameMenu(engine, this);
@@ -56,6 +65,10 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		this.timer = new Timer(GameOverlay.class.getSimpleName(), true);
 
 		this.drawMenu = true; // for testing
+		
+		this.engine = engine;
+		
+		this.messages = new ArrayList<ScreenMessage>();
 	}
 
 	public GameMenu getMenu() {
@@ -74,6 +87,12 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final int h = fm.getHeight();
 
 			g.drawString(message, (width - w) / 2, (height - h) / 2);
+		}
+		
+		g.setFont(MEDIUM);
+		for (ScreenMessage message : messages) {
+			g.setColor(message.getColor());
+			g.drawString(message.getMessage(), message.getX(), message.getY());
 		}
 
 		g.setFont(SMALL);
@@ -95,37 +114,13 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			if (logic != null) {
 				final NumberFormat fmt = new DecimalFormat("0.000");
 				
-				final String ratios = "Total: " + fmt.format(logic.getTotalFuelRatio()) + " fuel, " + fmt.format(logic.getTotalAsteroidRatio()) + " astr.";
-				final int ratiosW = fm.stringWidth(ratios);
-				g.drawString(ratios, width - ratiosW - 20, stringH + 50);
-				
-				final String slidingRatios = "SlidingWindow: " + fmt.format(logic.getSlidingFuelRatio()) + " fuel, " + fmt.format(logic.getSlidingAsteroidRatio()) + " astr.";
-				final int slidingRatiosW = fm.stringWidth(slidingRatios);
-				g.drawString(slidingRatios, width - slidingRatiosW -20, stringH + 70);
-	
 				String score = "Score " + logic.getScore();
 				final int scoreW = fm.stringWidth(score);
-				g.drawString(score, width - scoreW - 20, stringH + 120);
+				g.drawString(score, width - scoreW - 20, stringH + 20);
 				
-				String rating = "Rating " + fmt.format(logic.getRating());
-				final int ratingW = fm.stringWidth(rating);
-				g.drawString(rating, width - ratingW - 20, stringH + 170);
-				
-//				String trendRating = "TrendRating " + fmt.format(logic.getTrendRating());
-//				final int ratingT = fm.stringWidth(trendRating);
-//				g.drawString(trendRating, width - ratingT - 20, stringH + 220);
-//				
-//				String averageTrend = "AverageTrend "+fmt.format(logic.getAverageTrend());
-//				final int ratingAv = fm.stringWidth(averageTrend);
-//				g.drawString(averageTrend, width - ratingAv - 20, stringH +250);
-//				
-//				String speed = "Speed "+fmt.format(logic.getSpeed());
-//				final int sp = fm.stringWidth(speed);
-//				g.drawString(speed, width - sp - 20, stringH +280);
-//				
-//				String averageSpeed = "Av. Speed "+fmt.format(logic.getAverageSpeed());
-//				final int spAv = fm.stringWidth(averageSpeed);
-//				g.drawString(averageSpeed, width - sp - 20, stringH +300);
+//				String rating = "Rating " + fmt.format(logic.getRating());
+//				final int ratingW = fm.stringWidth(rating);
+//				g.drawString(rating, width - ratingW - 20, stringH + 170);
 				
 				fuel.setValue(logic.getFuel());
 				damage.setValue(logic.getAsteroids());
@@ -134,6 +129,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	
 				damage.render(g, 20, 20, barsWidth, -1);
 				fuel.render(g, 20, 50, barsWidth, -1);
+				
 			}
 		}
 
@@ -174,11 +170,14 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	}
 
 	public void collided(final GameLogic logic, final Item item) {
-//		if (item == Item.ASTEROID) {
-//			message("Oh noes! Evil asteroidz!");
-//		} else if (item == Item.FUELCAN) {
-//			message("Yay! Fuel FTW!");
-//		}
+		Point2d coords = engine.getShip2DCoords();
+		if (item == Item.ASTEROID) {
+			message(String.valueOf(logic.getPointsAdded()), Color.RED, coords);
+			//message("Oh noes! Evil asteroidz!");
+		} else if (item == Item.FUELCAN) {
+			message(String.valueOf(logic.getPointsAdded()), Color.YELLOW, coords);
+			//message("Yay! Fuel FTW!");
+		}
 	}
 
 	public void updateFramesPerSecond(long fps) {
@@ -200,6 +199,12 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		if (seconds != null) {
 			timer.schedule(new MessageTimer(message), seconds * 1000);
 		}
+	}
+	
+	public void message(final String message, final Color color, final Point2d position) {
+		ScreenMessage m = new ScreenMessage(message, color, position);
+		messages.add(m);
+		timer.schedule(new ScoreAnimationTask(m), 0, 20);
 	}
 
 	/**
@@ -223,6 +228,28 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				drawMessage = false;
 			}
 		}
+	}
+	
+	private class ScoreAnimationTask extends TimerTask {
+		private ScreenMessage message;
+		private int counter;
+		
+		public ScoreAnimationTask(ScreenMessage message) {
+			this.message = message;
+			this.counter = 0;
+		}
+
+		@Override
+		public void run() {
+			if (counter < 20) {
+				message.move(0, -2);
+				counter++;
+			} else {
+				messages.remove(message);
+				this.cancel();
+			}
+		}
+		
 	}
 
 	public void componentHidden(final ComponentEvent e) {

@@ -14,7 +14,7 @@ public class SocialHighscoresScreen extends HighscoresScreen {
 	public SocialHighscoresScreen(final GameMenu menu) {
 		super(menu);
 		final FacebookFriendCache friendCash = new FacebookFriendCache(this.menu.getLogic().getFacebookClient());
-		contentPanel = new SocialHighscore(this.menu.getLogic().getClient(), friendCash);
+		contentPanel = new SocialHighscore(this.menu.getLogic().getClient(), friendCash, this.menu.getLogic().getWin());
 	}
 
 	@Override
@@ -26,4 +26,5 @@ public class SocialHighscoresScreen extends HighscoresScreen {
 	public void update(final GameLogic logic) throws Exception {
 		contentPanel.update();
 	}
+	
 }

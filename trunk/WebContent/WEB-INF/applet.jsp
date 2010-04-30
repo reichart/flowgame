@@ -5,7 +5,19 @@
 <title>&nbsp;</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<body>
+<body bgcolor="pink">
+
+<script type="text/javascript">
+function toggle_invite_content() {
+	  var content = document.getElementById('content');
+	  if (content.style.display == 'none') {
+	    content.style.display = '';
+	  } else {
+	    content.style.display = 'none';
+	  }
+}
+</script>
+
 <s:text var="appletWidth" name="applet.width" />
 <s:text var="appletHeight" name="applet.height" />
 <applet code="org.jdesktop.applet.util.JNLPAppletLauncher" width="${appletWidth}" height="${appletHeight}"
@@ -13,6 +25,8 @@
 	<param name="codebase_lookup" value="false" />
 	<param name="subapplet.classname" value="de.tum.in.flowgame.GameApplet" />
 	<param name="subapplet.displayname" value="Flowgame Applet" />
+
+	<param name="mayscript" value="true" />
 
 	<param name="jnlpNumExtensions" value="2" />
 	<param name="jnlpExtension1" value="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp" />
@@ -26,7 +40,7 @@
 	<param name="apiKey" value="${param.fb_sig_api_key}" />
 	<param name="sessionKey" value="${param.fb_sig_session_key}" />
 	<param name="sessionSecret" value="${param.fb_sig_ss}" />
-
+	
 	<div class="fberrorbox" id="nojava">
 	<p>To play this game, you need Java&trade;<br />
 	but it seems to be not yet installed on your computer.</p>
@@ -42,6 +56,11 @@
 	</div>
 
 </applet>
+
+<div id="content" style="display: none; position: absolute; top:0; left:0">
+	<s:url var="invite" action="invite" includeParams="get" />
+	<iframe src="${invite}" width="755" height="670" scrolling="no">Sorry, your browser doesn't support frames.</iframe>
+</div>
 
 </body>
 </html>
