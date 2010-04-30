@@ -18,7 +18,6 @@ import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.functions.ConstantFunction;
-import de.tum.in.flowgame.model.functions.LinearFunction;
 import de.tum.in.flowgame.model.functions.LnFunction;
 
 public class DDLGenerator {
@@ -107,15 +106,8 @@ public class DDLGenerator {
 		Function ratioFunction = new ConstantFunction(0.3);
 		
 		//useful functions for baseline measurment
-		Function speedFunction = new LinearFunction(60D,0.02);
 		Function speedFunction2 = new LnFunction(31.5, 6.5, 0.0);
-		Function speedFunction3 = new LnFunction(25.55, 1.0, 60);
-		Function speedFunction4 = new LinearFunction(60D, 0.015);
-		
-		DifficultyFunction df1 = new DifficultyFunction(intervalFunction, speedFunction, ratioFunction);
 		DifficultyFunction df2 = new DifficultyFunction(intervalFunction, speedFunction2, ratioFunction);
-		DifficultyFunction df3 = new DifficultyFunction(intervalFunction, speedFunction3, ratioFunction);
-		DifficultyFunction df4 = new DifficultyFunction(intervalFunction, speedFunction4, ratioFunction);
 		
 		//Create Scenario with Constant functions and previos baseline
 		Function speedFunctionConstant1 = new ConstantFunction(-60);
@@ -139,24 +131,6 @@ public class DDLGenerator {
 		constantScenarioSession.add(cSr4);
 		constantScenarioSession.add(cSr5);
 		em.persist(constantScenarioSession);
-		
-		ScenarioRound sr1 = new ScenarioRound(true, 1, 2000L, df1, howWasIt);
-		ScenarioRound sr2 = new ScenarioRound(true, 1, 2000L, df2, howWasIt);
-		ScenarioRound sr3 = new ScenarioRound(true, 1, 2000L, df3, howWasIt);
-		ScenarioRound sr4 = new ScenarioRound(true, 1, 2000L, df4, howWasIt);
-		
-//		ScenarioRound sr5 = new ScenarioRound(false, 0, null, df5, howWasIt);
-//		ScenarioRound sr6 = new ScenarioRound(false, 0, null, df5, howWasIt);
-//		ScenarioRound sr7 = new ScenarioRound(false, 0, null, df1, howWasIt);
-		
-//		ScenarioSession ss = new ScenarioSession(null, moodAndSkills);
-//		ss.add(sr1);
-//		ss.add(sr2);
-//		ss.add(sr3);
-//		ss.add(sr4);
-//		ss.add(sr5);
-//		ss.add(sr6);
-//		ss.add(sr7);
 		
 		//Create 1 GameSession for each player
 		em.persist(constantScenarioSession);
