@@ -7,8 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -103,7 +101,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		if (drawFPS) {
 			final String frames = fps + " FPS";
 			final int framesW = fm.stringWidth(frames);
-			g.drawString(frames, width - framesW - 20, stringH + 20);
+			g.drawString(frames, width - framesW - 20, stringH);
 		}
 
 		if (drawHUD) {
@@ -112,15 +110,9 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			g.drawString(controls, width - controlsW - 20, height - stringH);
 			
 			if (logic != null) {
-				final NumberFormat fmt = new DecimalFormat("0.000");
-				
 				String score = "Score " + logic.getScore();
 				final int scoreW = fm.stringWidth(score);
 				g.drawString(score, width - scoreW - 20, stringH + 20);
-				
-//				String rating = "Rating " + fmt.format(logic.getRating());
-//				final int ratingW = fm.stringWidth(rating);
-//				g.drawString(rating, width - ratingW - 20, stringH + 170);
 				
 				fuel.setValue(logic.getFuel());
 				damage.setValue(logic.getAsteroids());
