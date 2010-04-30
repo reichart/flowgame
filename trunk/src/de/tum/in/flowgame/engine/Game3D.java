@@ -23,9 +23,11 @@ import javax.media.j3d.TransformGroup;
 import javax.media.j3d.TriangleArray;
 import javax.media.j3d.View;
 import javax.vecmath.Color3f;
+import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
+import javax.vecmath.Vector4d;
 
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
@@ -77,6 +79,9 @@ public class Game3D extends Canvas3D {
 	private CreateCollidables cc;
 	private CollisionBehavior collisionBehavior;
 	private CreateNewCollidablesBehavior cncb;
+
+	private Point2d minPos = new Point2d();
+	private Point2d maxPos = new Point2d();
 
 	/**
 	 * Creates a new Game3D.
@@ -261,6 +266,30 @@ public class Game3D extends Canvas3D {
 	 */
 	public Ship getShip() {
 		return this.ship;
+	}
+	
+	public Point2d getShip2DCoords() {
+		Point3d shipPos1 = new Point3d(getShip().getCoords());
+		
+		Vector4d v4d = new Vector4d();         
+		
+		Transform3D t = new Transform3D();
+		this.getVworldToImagePlate(t);
+//		t.transform(shipPos1);
+		
+		v4d.set(shipPos1);
+		v4d.w = 1.0;
+		t.transform(v4d);
+		shipPos1.x = v4d.x / v4d.w;
+		shipPos1.y = v4d.y / v4d.w;
+		shipPos1.z = v4d.z / v4d.w;             
+		
+		Point2d pointOnScreen = new Point2d();
+		this.getPixelLocationFromImagePlate(shipPos1, pointOnScreen);
+		
+		System.err.println(pointOnScreen);
+		
+		return pointOnScreen;
 	}
 
 	public GameListener getListener() {
