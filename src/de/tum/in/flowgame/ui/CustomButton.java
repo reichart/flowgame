@@ -16,7 +16,6 @@ import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
-import java.io.IOException;
 import java.text.AttributedString;
 
 import javax.imageio.ImageIO;
@@ -72,7 +71,7 @@ public class CustomButton extends JButton {
 		return Toolkit.getDefaultToolkit().createImage(ip);
 	}
 
-	public CustomButton(Image picture, Long score, JSObject win) throws IOException {
+	public CustomButton(Image picture, Long score, JSObject win) {
 
 		this.picture = picture;
 		this.score = score;
@@ -90,15 +89,15 @@ public class CustomButton extends JButton {
 		addMouseListener();
 	}
 
-	public CustomButton() throws IOException {
+	public CustomButton() {
 		this(null, null);
 	}
-	
-	public CustomButton(Image picture, Long score) throws IOException {
+
+	public CustomButton(Image picture, Long score) {
 		this(picture, score, null);
 	}
 
-	public CustomButton(JSObject win) throws IOException {
+	public CustomButton(JSObject win) {
 		this(null, null, win);
 	}
 

@@ -2,7 +2,6 @@ package de.tum.in.flowgame.ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -59,14 +58,10 @@ public class FriendsBar extends JPanel {
 		currentPosition = 0;
 		
 		for (int i = 0; i < MAX_NUMBER_OF_FRIENDS_SHOWN; i++) {
-			try {
-				final CustomButton btn = new CustomButton(win);
-				btn.setLocation(calculatePosition(i), 0);
-				this.add(btn);
-				friendButtons.add(btn);
-			} catch (IOException e) {
-				System.err.println("No buttons help." + e);
-			}
+			final CustomButton btn = new CustomButton(win);
+			btn.setLocation(calculatePosition(i), 0);
+			this.add(btn);
+			friendButtons.add(btn);
 		}
 
 		final JButton leftArrow = createLeftButton();
