@@ -45,6 +45,10 @@ public class Person implements Serializable {
 	public String getName() {
 		return name;
 	}
+	
+	public String getSex() {
+		return sex;
+	}
 
 	public void setSex(final String sex) {
 		this.sex = sex;
