@@ -54,10 +54,10 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	public GameOverlay(final Game3D engine) {
 		this.menu = new GameMenu(engine, this);
 		
-		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), "Fuel", Color.YELLOW,
+		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), Color.YELLOW,
 				Color.YELLOW.darker(), 0, GameLogic.MAX_FUEL);
 
-		this.damage = new HealthBar(SpriteCache.getInstance().getSprite("/res/asteroid.svg"), "Damage", Color.RED,
+		this.damage = new HealthBar(SpriteCache.getInstance().getSprite("/res/asteroid.svg"), Color.RED,
 				Color.RED.darker(), 0, GameLogic.MAX_ASTEROIDS);
 
 		this.timer = new Timer(GameOverlay.class.getSimpleName(), true);

@@ -6,17 +6,14 @@ import java.awt.Graphics2D;
 public class HealthBar implements Sprite {
 
 	private final Sprite icon;
-	private final String name;
 	private final Color valueColor;
 	private final Color maxColor;
 	private final int max;
 
 	private int value;
 
-	public HealthBar(final Sprite icon, final String name, final Color valueColor, final Color maxColor,
-			final int value, final int max) {
+	public HealthBar(final Sprite icon, final Color valueColor, final Color maxColor, final int value, final int max) {
 		this.icon = icon;
-		this.name = name;
 		this.valueColor = valueColor;
 		this.maxColor = maxColor;
 		this.value = value;
@@ -37,9 +34,6 @@ public class HealthBar implements Sprite {
 
 		g.setColor(valueColor);
 		g.fillRect(30, 0, scaledValue, HEIGHT);
-
-//		final FontMetrics fm = g.getFontMetrics();
-//		g.drawString(name + ": " + value, 130, fm.getHeight() / 5 * 4);
 	}
 
 	public void render(final Graphics2D g, final int x, final int y) {
