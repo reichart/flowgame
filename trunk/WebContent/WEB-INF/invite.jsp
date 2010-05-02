@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
-<body bgcolor="red">
+<body>
 
 <s:url var="canvas" action="canvas" forceAddSchemeHostAndPort="true" includeParams="none" />
 <s:url var="endinvite" action="endinvite" forceAddSchemeHostAndPort="true" includeParams="none" />

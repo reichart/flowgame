@@ -5,7 +5,7 @@
 <title>&nbsp;</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<body bgcolor="pink">
+<body>
 
 <script type="text/javascript">
 function toggle_invite_content() {
