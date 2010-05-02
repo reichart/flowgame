@@ -11,9 +11,7 @@
 
 </head>
 
-<body bgcolor="green" onload="load()">
-
-<p>bye bye</p>
+<body onload="load()">
 
 </body>
 </html>
