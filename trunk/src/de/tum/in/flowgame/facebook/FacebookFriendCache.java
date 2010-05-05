@@ -45,6 +45,11 @@ public class FacebookFriendCache {
 	public void updateFriends() throws FacebookException, JSONException {
 		final JSONArray fbfriends = facebook.friends_get();
 
+		if (fbfriends == null || fbfriends.length() == 0) {
+			friends.clear();
+			return;
+		}
+		
 		Object friendsInfo = facebook.users_getInfo(getFriendsIdsForUpdate(fbfriends), fields);
 		if (friendsInfo instanceof JSONArray) {
 			JSONArray jay = (JSONArray) friendsInfo;
