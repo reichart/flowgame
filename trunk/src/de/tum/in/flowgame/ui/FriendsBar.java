@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,7 +178,7 @@ public class FriendsBar extends JPanel {
 		return null;
 	}
 
-	public void update(List<Highscore> highscores) throws FacebookException, JSONException, IOException {
+	public void update(List<Highscore> highscores) throws FacebookException, JSONException {
 		friendCash.updateFriends();
 		this.highscores = highscores;
 	}
