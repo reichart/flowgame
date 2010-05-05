@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.management.ManagementFactory;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.management.MBeanServer;
@@ -122,5 +123,44 @@ public class Utils {
 		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		final GraphicsDevice gd = ge.getDefaultScreenDevice();
 		return gd.getDefaultConfiguration();
+	}
+	
+	/**
+	 * Tries to load an image from a URL string.
+	 * 
+	 * @param url
+	 *            the URL string to load an image from
+	 * @param fallback
+	 *            the fallback image when the URL can't be read
+	 * @return either the image read from the URL or the fall back image
+	 */
+	public static BufferedImage image(final String url, final BufferedImage fallback) {
+		try {
+			return image(new URL(url), fallback);
+		} catch (final Exception ex) {
+			log.warn("failed to load image from " + url, ex);
+			return fallback;
+		}
+	}
+
+	/**
+	 * Tries to load an image from a URL.
+	 * 
+	 * @param url
+	 *            the URL to load an image from
+	 * @param fallback
+	 *            the fallback image when the URL can't be read
+	 * @return either the image read from the URL or the fall back image
+	 */
+	public static BufferedImage image(final URL source, final BufferedImage fallback) {
+		if (source == null) {
+			return fallback;
+		}
+		try {
+			return ImageIO.read(source);
+		} catch (final Exception ex) {
+			log.warn("failed to load image from " + source, ex);
+			return fallback;
+		}
 	}
 }
