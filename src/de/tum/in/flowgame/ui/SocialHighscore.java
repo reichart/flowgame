@@ -84,24 +84,26 @@ public class SocialHighscore extends JPanel {
 		g.setColor(Color.WHITE);
 		g.fillRect(25, barBorder, getWidth() - (2 * FriendsBar.LEFT_BORDER), 10);
 
-		// paint own player
-		try {
-			int percentagePosition = calculatePercentagePosition(ownScore.getPercentage());
-			int pictureMiddle = Math.min(percentagePosition, getWidth() - FriendsBar.LEFT_BORDER
-					- CustomButton.CARD_WIDTH / 2);
-			pictureMiddle = Math.max(pictureMiddle, FriendsBar.LEFT_BORDER + CustomButton.CARD_WIDTH / 2);
-
-			if (personButton != null) {
-				personButton.setPicture(friendCash.getCurrentPlayer().getPicture());
-				personButton.setScore(ownScore.getScore());
-				personButton.setLocation(pictureMiddle - CustomButton.CARD_WIDTH / 2, 0);
-				this.add(personButton);
+		if (ownScore != null) {
+			// paint own player
+			try {
+				int percentagePosition = calculatePercentagePosition(ownScore.getPercentage());
+				int pictureMiddle = Math.min(percentagePosition, getWidth() - FriendsBar.LEFT_BORDER
+						- CustomButton.CARD_WIDTH / 2);
+				pictureMiddle = Math.max(pictureMiddle, FriendsBar.LEFT_BORDER + CustomButton.CARD_WIDTH / 2);
+	
+				if (personButton != null) {
+					personButton.setPicture(friendCash.getCurrentPlayer().getPicture());
+					personButton.setScore(ownScore.getScore());
+					personButton.setLocation(pictureMiddle - CustomButton.CARD_WIDTH / 2, 0);
+					this.add(personButton);
+				}
+	
+				drawPercentageLine(pictureMiddle, 100, percentagePosition, barBorder, g);
+			} catch (final Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			drawPercentageLine(pictureMiddle, 100, percentagePosition, barBorder, g);
-		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		// paint line to all friends
