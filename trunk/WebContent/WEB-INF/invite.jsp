@@ -33,12 +33,11 @@
     </fb:fbml>
 </script>
 </fb:serverfbml>
-
-<!-- Set background color and make it transparent, so that this works in IE -->
-<div style="position: absolute; left:547px; top:23px; width:54px; height:24px; background-color:#ffff00; opacity:0.0; filter:Alpha(opacity=0)" onclick="parent.toggle_invite_content();">
+<div>
+<img style="position: absolute; left:547px; top:23px; width:54px; height:24px" src="pixel.png" onclick="parent.toggle_invite_content();" />
 </div>
-
-<div style="position: absolute; left:547px; top:604px; width:54px; height:24px; background-color:#ffff00; opacity:0.0; filter:Alpha(opacity=0)" onclick="parent.toggle_invite_content();">
+<div>
+<img style="position: absolute; left:547px; top:604px; width:54px; height:24px" src="pixel.png" onclick="parent.toggle_invite_content();" />
 </div>
 
 <div id="fb-root"></div>
