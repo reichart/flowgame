@@ -286,16 +286,6 @@ public class Game3D extends Canvas3D {
 		return pointOnScreen;
 	}
 	
-	private Point2d getShip2DCoordsCheat() {
-		Point3d shipPos1 = new Point3d(getShip().getCoords());
-		int widthShip = 100;
-		int heightShip = 50;
-		final double x = (shipPos1.x + 7) * ((getWidth()-widthShip)/14) + widthShip/2;
-		final double y = getHeight() - (shipPos1.y + 7) * ((getHeight()-heightShip)/14) + heightShip/2;
-		final Point2d pointOnScreen = new Point2d(x, y);
-		return pointOnScreen;
-	}
-
 	public GameListener getListener() {
 		return listener;
 	}
