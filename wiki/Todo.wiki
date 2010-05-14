@@ -3,15 +3,15 @@
 || *Todo* || *Priorität* || *Bearbeiter* || *Status* || *Geschätzte Zeit* || *Benötigte Zeit* ||
 || Kommunikation mit der Datenbank ||  ||  ||  ||  ||  ||
 || - Servlet ||  || Barbara || done ||  ||  ||
-|| - Kommunikation vom Spiel zum Servlet und umgekehrt || || Barbara || in progress ||  ||  ||
-|| - Geschwindigkeitsfunktion aus DB ||  ||  ||  ||  ||  ||
-||  -- Verschiedene Stufen festlegen ||  ||  ||  ||  ||  ||
-||  -- Baseline messen ||  || Sevi ||in progress  ||  ||  ||
+|| - Kommunikation vom Spiel zum Servlet und umgekehrt || || Barbara || done ||  ||  ||
+|| - Geschwindigkeitsfunktion aus DB ||  || Barbara || done ||  ||  ||
+||  -- Verschiedene Stufen festlegen || Barbara || in progress ||  ||  ||  ||
+||  -- Baseline messen ||  || Sevi, Barbara || done ||  ||  ||
 || - Ablauf nach Runden aus DB ||  ||  ||  ||  ||  ||
 || HUD schneller machen ||  ||  ||  ||  ||  ||
 || Facebookanbindung ||  || Phil || Done ||  ||  ||
 || - Holen und anzeigen der Freunde ||  || Barbara || Done(FriendsBar) ||  ||  ||
-|| - Einladungsbildschirm ||  ||  ||  ||  ||  ||
+|| - Einladungsbildschirm ||  || Barbara, Phil || Done ||  ||  ||
 || - Social Ranking ||  || Barbara || Done ||  ||  ||
 || - Individuelles Ranking<br/> Liste der letzten 15 Scores||  || Christopher || done ||  ||  ||
 || - Individuelles Ranking<br/> Chart aller Scores||  || Christopher || done ||  ||  ||
