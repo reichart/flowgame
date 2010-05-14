@@ -80,6 +80,8 @@ public class Game3D extends Canvas3D {
 	private CollisionBehavior collisionBehavior;
 	private CreateNewCollidablesBehavior cncb;
 
+	private final TransformGroup viewTG;
+
 	/**
 	 * Creates a new Game3D.
 	 * 
@@ -129,7 +131,7 @@ public class Game3D extends Canvas3D {
 		});
 
 		final SimpleUniverse su = createUniverse();
-		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
+		viewTG = su.getViewingPlatform().getViewPlatformTransform();
 
 		final BranchGroup scene = new BranchGroup();
 		scene.addChild(createScene());
@@ -267,25 +269,30 @@ public class Game3D extends Canvas3D {
 	
 	public Point2d getShip2DCoords() {
 		Point3d shipPos1 = new Point3d(getShip().getCoords());
-		
-		Vector4d v4d = new Vector4d();         
-		
+		shipPos1.z = shipPos1.z + Ship.INITIAL_SHIP_PLACEMENT_Z;
+		Transform3D viewTrans = new Transform3D();
+		viewTG.getTransform(viewTrans);
+		viewTrans.invert();
+
 		Transform3D t = new Transform3D();
 		this.getVworldToImagePlate(t);
-//		t.transform(shipPos1);
+		viewTrans.add(t);
 		
-		v4d.set(shipPos1);
-		v4d.w = 1.0;
-		t.transform(v4d);
-		shipPos1.x = v4d.x / v4d.w;
-		shipPos1.y = v4d.y / v4d.w;
-		shipPos1.z = v4d.z / v4d.w;             
-		
+		t.transform(shipPos1);
+
 		Point2d pointOnScreen = new Point2d();
 		this.getPixelLocationFromImagePlate(shipPos1, pointOnScreen);
 		
-		System.err.println(pointOnScreen);
-		
+		return pointOnScreen;
+	}
+	
+	private Point2d getShip2DCoordsCheat() {
+		Point3d shipPos1 = new Point3d(getShip().getCoords());
+		int widthShip = 100;
+		int heightShip = 50;
+		final double x = (shipPos1.x + 7) * ((getWidth()-widthShip)/14) + widthShip/2;
+		final double y = getHeight() - (shipPos1.y + 7) * ((getHeight()-heightShip)/14) + heightShip/2;
+		final Point2d pointOnScreen = new Point2d(x, y);
 		return pointOnScreen;
 	}
 

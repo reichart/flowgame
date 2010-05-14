@@ -72,6 +72,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private final JSObject win;
 
+	private double rating;
+
 	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, JSObject win) {
 		this.win = win;
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
@@ -111,7 +113,8 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 
 		double rating = getRating();
-		long increase = (long) (rating * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
+		System.err.println(rating);
+		long increase = (long) (rating * 10 * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
 		
 		lastPointsAdded = increase;
@@ -155,7 +158,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			}
 			
 			if (maxPlaytime != null) {
-				System.err.println(getElapsedTime());
 				timeOver = getElapsedTime() > maxPlaytime;
 			}
 		}
@@ -338,9 +340,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public double getRating() {
-		return getDifficultyFunction().getDifficultyRating(getElapsedTime());
+		return rating;
 	}
-
+	
 	public DifficultyFunction getDifficultyFunction() {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
@@ -389,4 +391,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	public JSObject getWin() {
 		return win;
 	}
+
+	public void setRating(double difficultyRating) {
+		rating = difficultyRating;		
+	}
+
 }

@@ -43,8 +43,8 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 	public void processStimulus(final Enumeration criteria) {
 		if (!pause) {
 			if ((this.strategy instanceof FunctionStrategy || this.strategy instanceof FunctionStrategy2)
-					&& strategy.getFunction() == null) {
-				strategy.setFunction(gameLogic.getDifficultyFunction().getSpeed());
+					&& (strategy.getFunction() == null || strategy.getFunction().getSpeed() == null)) {
+				strategy.setFunction(gameLogic.getDifficultyFunction());
 			}
 
 			if (gameLogic != null) {
@@ -52,12 +52,14 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 				if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
 					speed = strategy.calculateSpeed(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend(), speed);
 					maxSpeed = Math.max(speed, maxSpeed);
+					gameLogic.setRating(strategy.getDifficultyRating(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend()));
 				} else {
 					long speedAddFromDifficulty = 0;
 					if (gameLogic.getBaseline() != null) {
 						speedAddFromDifficulty = gameLogic.getBaseline().getSpeed();
 					}
 					speed = (fun == null) ? 0 : fun.getValue(gameLogic.getElapsedTime()) + speedAddFromDifficulty;
+					gameLogic.setRating(gameLogic.getDifficultyFunction().getDifficultyRating(gameLogic.getElapsedTime()));
 				}
 
 				forwardNavigator.setFwdSpeed(-speed);

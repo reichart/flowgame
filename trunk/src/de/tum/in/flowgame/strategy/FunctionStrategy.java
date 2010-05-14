@@ -1,18 +1,15 @@
 package de.tum.in.flowgame.strategy;
 
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Function;
 
 public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
 
-	private Function function;
-
+	private DifficultyFunction function;
 	private int currentPosition;
-
 	private float longTerm;
-
 	private float midTerm;
-
 	private float shortTerm;
 
 	public FunctionStrategy() {
@@ -24,7 +21,7 @@ public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
 	}
 
 	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue) {
-		double speed = function.getValue(getPosition(asteroidTrend, fuelTrend));
+		double speed = function.getSpeed().getValue(getPosition(asteroidTrend, fuelTrend));
 
 		// Prevention from driving backwards
 		if (speed < 60D) {
@@ -64,11 +61,11 @@ public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
 		return currentPosition;
 	}
 
-	public Function getFunction() {
+	public DifficultyFunction getFunction() {
 		return function;
 	}
 
-	public void setFunction(Function fun) {
+	public void setFunction(DifficultyFunction fun) {
 		function = fun;
 	}
 
@@ -86,6 +83,10 @@ public class FunctionStrategy implements FlowStrategy, FunctionStrategyMBean {
 
 	public float getShortTerm() {
 		return shortTerm;
+	}
+
+	public double getDifficultyRating(Trend asteroidTrend, Trend fuelTrend) {
+		return function.getDifficultyRating(getPosition(asteroidTrend, fuelTrend));
 	}
 
 }
