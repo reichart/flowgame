@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.vecmath.Point2d;
 
@@ -66,7 +67,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		
 		this.engine = engine;
 		
-		this.messages = new ArrayList<ScreenMessage>();
+		this.messages = new CopyOnWriteArrayList<ScreenMessage>();
 	}
 
 	public GameMenu getMenu() {

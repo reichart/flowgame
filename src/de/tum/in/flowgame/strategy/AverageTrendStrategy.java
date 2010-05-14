@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.strategy;
 
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.Function;
 
 
@@ -43,11 +44,11 @@ public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyM
 		return 2*fuelTrendRating - asteroidTrendRating;
 	}
 
-	public Function getFunction() {
+	public DifficultyFunction getFunction() {
 		return null;
 	}
 
-	public void setFunction(Function fun) {
+	public void setFunction(DifficultyFunction fun) {
 		
 	}
 
@@ -62,6 +63,11 @@ public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyM
 	public void reset() {
 		averageTrendRating = 0;
 		averageSpeed = -60;		
+	}
+
+	public double getDifficultyRating(Trend asteroidTrend, Trend fuelTrend) {
+		// TODO Unclear
+		return 1;
 	}
 	
 }
