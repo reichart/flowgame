@@ -46,8 +46,7 @@ public class DDLGenerator {
 		
 		// once before each session
 		Questionnaire moodAndSkills = new Questionnaire("Stimmung",
-				"Die Folgenden sollen feststellen, wie Sie sich gerade fühlen. Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
-				+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.", true);
+				"Bitte geben bei den unten stehenden Adjektivpaaren an, wie Sie sich im Moment fühlen.", true);
 		moodAndSkills.addLabelQuestion("zufrieden", "unzufrieden");
 		moodAndSkills.addLabelQuestion("energiegeladen", "energielos");
 		moodAndSkills.addLabelQuestion("gestresst", "entspannt");
@@ -65,8 +64,7 @@ public class DDLGenerator {
 		moodAndSkillsShort.addLabelQuestion("lustlos", "hoch motiviert"); 
 		
 		// after every round
-		Questionnaire howWasIt = new Questionnaire("How was it?", "TBD mood (15q) and flow (20q)");
-		howWasIt.addQuestion("how was it question");
+		Questionnaire howWasIt = new Questionnaire("How was it?", "Bitte versetzen Sie sich in die gerade beendete Spielrunde und beantworten Sie die Aussagen zur Erleben beim Spielen:");
 		howWasIt.addQuestion("Ich fühle mich optimal beansprucht.");
 		howWasIt.addQuestion("Meine Gedanken bzw. Aktivitäten laufen flüssig und glatt.");
 		howWasIt.addQuestion("Ich merke gar nicht, wie die Zeit vergeht.");
