@@ -27,23 +27,6 @@ public class DDLGenerator {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		// once when user first plays game
-		Questionnaire profile = new Questionnaire("Persönlichkeitsbeschreibung", "Die Folgenden eignen sich zur Beschreibung Ihrer eigenen Person (insgesamt 13 Aussagen). Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
-						+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.");
-		profile.addQuestion("Viel Leute halten mich für etwas kühl und distanziert.");
-		profile.addQuestion("Probleme, die schwierig zu lösen sind, reizen mich.");
-		profile.addQuestion("Ich bin ein fröhlicher, gut gelaunter Mensch.");
-		profile.addQuestion("Zu häufig bin ich entmutigt und will aufgeben, wenn etwas schief geht.");
-		profile.addQuestion("Ich strebe danach, alles mir Mögliche zu erreichen.");
-		profile.addQuestion("Ich bin häufig beunruhigt, über Dinge, die schief gehen könnten.");
-		profile.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine neue Idee darüber bekommen habe, wie eine Sache funktioniert.");
-		profile.addQuestion("Ich arbeite zielstrebig und effektiv.");
-		profile.addQuestion("Ich ziehe es gewöhnlich vor, Dinge allein zu tun.");
-		profile.addQuestion("Mich reizen Situationen, in denen ich meine Fähigkeiten testen kann.");
-		profile.addQuestion("Ich fühle mich oft hilflos und wünsche mir eine Person, die meine Probleme löst.");
-		profile.addQuestion("Ich habe gerne viele Leute um mich herum.");
-		profile.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine wirklich komplizierte Sache endgültig verstanden habe.");
-		
 		// once before each session
 		Questionnaire moodAndSkills = new Questionnaire("Stimmung",
 				"Bitte geben bei den unten stehenden Adjektivpaaren an, wie Sie sich im Moment fühlen.", true);
