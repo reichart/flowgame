@@ -54,7 +54,7 @@ public class GameRound extends AbstractEntity {
 				actualPlaytime = game.getElapsedTime();
 				game.removeListener(this);
 			}
-			
+
 			@Override
 			public void collided(GameLogic logic, Item item) {
 				collisions.add(new Collision(item));
@@ -70,10 +70,33 @@ public class GameRound extends AbstractEntity {
 		return collisions;
 	}
 
+	public int getCollisionsWithFuelcans() {
+		return getCollisions(Item.FUELCAN);
+	}
+	
+	public int getCollisionsWithAsteroids() {
+		return getCollisions(Item.ASTEROID);
+	}
+	
+	/**
+	 * @param item
+	 *            the item of interest
+	 * @return the number of collisions with the item
+	 */
+	public int getCollisions(final Item item) {
+		int sum = 0;
+		for (final Collision collision : collisions) {
+			if (item.equals(collision.getObject())) {
+				sum++;
+			}
+		}
+		return sum;
+	}
+
 	public long getActualPlaytime() {
 		return actualPlaytime;
 	}
-	
+
 	public List<Answer> getAnswers() {
 		return answers;
 	}
