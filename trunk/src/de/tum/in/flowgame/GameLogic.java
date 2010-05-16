@@ -113,7 +113,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		}
 
 		double rating = getRating();
-		System.err.println(rating);
 		long increase = (long) (rating * 10 * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
 		
