@@ -2,7 +2,6 @@ package de.tum.in.flowgame.strategy;
 
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.DifficultyFunction;
-import de.tum.in.flowgame.model.Function;
 
 public class FunctionStrategy2 implements FlowStrategy, FunctionStrategy2MBean {
 
