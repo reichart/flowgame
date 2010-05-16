@@ -36,4 +36,9 @@ public class Collision extends AbstractEntity {
 	public Item getObject() {
 		return object;
 	}
+	
+	@Override
+	public String toString() {
+		return "collision with " + object + " at " + time;
+	}
 }
