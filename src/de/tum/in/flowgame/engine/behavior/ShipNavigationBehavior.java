@@ -58,7 +58,7 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
-	private boolean normalSteering = false;
+	private boolean normalSteering;
 
 	private static final char PAUSE_KEY = ' ';
 	private boolean pause;
