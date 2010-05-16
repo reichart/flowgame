@@ -22,8 +22,7 @@ public class QuestionnairePanel extends JPanel {
 
 	private Questionnaire questionnaire;
 	private List<JSlider> sliders;
-	private List<Answer> answers;
-
+	
 	// /**
 	// * Scrolls directly to the clicked value instead of only moving the knob
 	// * slightly in the direction.
@@ -61,7 +60,7 @@ public class QuestionnairePanel extends JPanel {
 	}
 
 	public List<Answer> getAnswers() {
-		answers = new ArrayList<Answer>();
+		final List<Answer> answers = new ArrayList<Answer>();
 		final List<Question> questions = questionnaire.getQuestions();
 		for (int i = 0; i < questions.size(); i++) {
 			answers.add(new Answer(questions.get(i), sliders.get(i).getValue()));
