@@ -1,0 +1,36 @@
+#Contains sketches for the Story-Pages to be displayed
+
+
+
+
+= Profile-Creation =
+
+Evtl. Je einen screen vor und nach der Charaktererstellung, auf jeden Fall aber einen danach. Szenerie: Abschluss-"Feier" nach bestandener Aufnahmeprüfung in F.L.O.W., als Bild evtl der Blick von hinten über ein sitzendes Publikum zu zwei entfernten Personen auf einem Podest- schemenhafte Personen in "Programmer-Art"-Stil, so wie das Stations-Bild würd ja reichen (trotzdem zu aufwändig?).
+Text: "Congratulations, Pilot. You are now one of the elite pilots of F.L.O.W., the Federal Lunar Operation Wing. Our task is to deliver important cargo, messages and passegers safely through dangerous hyperspace routes. While the jumps we perform are dangerous, these areas of hyperspace are the only deposit of the valuable Crystalis. Thus, our task is also to collect Crystalis on our way. You will be assigned a suitable ship and perform your first jumps soon, pilot. Welcome to FLOW!"
+
+(Zu lang?)
+
+Optional:
+Ggf. Vorher noch einen Screen mit blick auf ein Werbeplakat für FLOW (sowas wie "We want YOU for...), quasi vor der Bewerbung, mit dem Text:
+"Being an elite pilot has always been your dream. You made it so far, starting out with a rusty old cargo ship ending up piloting a fighter in combat- the time has come, FLOW awaits you. You keep thinking about the infinite glory, but also the omnipresent danger of death as you start signing your application form..."
+
+
+= Before Moods/Skills-Questionnaire: Scenario Information =
+
+"Good morning, pilot. You are about to start your first mission today, so, as always we would like you to report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots. After that, we wish you best luck with your jumps today."
+
+Hintergrund-Screen: Entweder Blick auf das Zimmer in der Raumstation, möglich wäre auch der Blick auf den Computer bzw Comm-Link, auf dem diese Nachricht erscheint.
+
+
+= "Briefing": Screen direkt vor jedem Spiel = 
+
+Als Hintergrund entweder ein Briefing-Raum mit Projektor-Wand und Offizier, der davor steht, oder eine "Sternenkarte", auf der einzelne Sterne markiert bzw verbunden sind, oder eben den launch-screen, den phil gemacht hat.
+Dazu jeweils verschiedene szenario-informationen
+
+1.
+"There has been a power failure in one of our outer-rim antimatter processing plant. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers there to repair the damage. Remember to avoid the anomalies in hyperspace at all cost and to collect as much of the valuable Crystalis as possible."
+
+2.
+"Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. Having him on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. The Grand Admiral would be very displeased if you trouble him with anomalies, which would not benefit FLOW's reputation. Instead, show him what we can do by collecting Crystalis and delivering him safe and fast."
+
+more to come.
