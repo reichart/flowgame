@@ -96,6 +96,8 @@ public class GameApplet extends Applet {
 	@Override
 	public void init() {
 		try {
+			SoundsHelper.init(this);
+			
 			this.facebook = createFacebookClient();
 
 			final long loggedInUser = facebook.users_getLoggedInUser();
