@@ -71,7 +71,7 @@ public class FacebookFriendCache {
 		final String name = info.getString(ProfileField.NAME.toString());
 
 		final String picSquare = info.getString(ProfileField.PIC_SQUARE.toString());
-		final Image picture = Utils.image(picSquare, DUMMY_PROFILE_PIC);
+		final Image picture = Utils.imageURL(picSquare, DUMMY_PROFILE_PIC);
 
 		return new Friend(uid, name, picture);
 	}
