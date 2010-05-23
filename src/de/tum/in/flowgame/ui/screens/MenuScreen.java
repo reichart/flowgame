@@ -19,6 +19,9 @@ import javax.swing.border.TitledBorder;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Abstract base class for all screens in the game.
+ */
 public abstract class MenuScreen extends JPanel {
 
 	protected final GameMenu menu; // for subclasses

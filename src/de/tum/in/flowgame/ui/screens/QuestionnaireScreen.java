@@ -14,6 +14,9 @@ import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.QuestionnairePanel;
 
+/**
+ * Abstract base class for displaying a {@link Questionnaire}.
+ */
 public abstract class QuestionnaireScreen extends MenuScreen {
 
 	private final QuestionnairePanel qpanel;

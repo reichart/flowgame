@@ -11,8 +11,7 @@ import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.GameMenu;
 
 /**
- * Empty menu to avoid artifacts when switching the menu back on after a game.
- * Without an empty menu, the previous screen could briefly be seen.
+ * Displays a profile {@link Questionnaire} to assess the player's personality. 
  */
 public class ProfileScreen extends QuestionnaireScreen {
 

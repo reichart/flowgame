@@ -7,6 +7,9 @@ import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.SocialHighscore;
 
+/**
+ * Displays a social highscore comparing the player to his friends.
+ */
 public class SocialHighscoresScreen extends HighscoresScreen {
 
 	private final SocialHighscore contentPanel;

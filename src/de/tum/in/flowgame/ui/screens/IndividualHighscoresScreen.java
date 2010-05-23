@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Displays an individual highscore comparing the player to his previous scores.
+ */
 public class IndividualHighscoresScreen extends HighscoresScreen {
 
 	private final ImageIcon imageIcon;

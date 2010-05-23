@@ -8,6 +8,9 @@ import javax.swing.JButton;
 
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Displayed when the game is paused.
+ */
 public class PauseScreen extends MenuScreen {
 
 	private final JButton continueButton = new JButton(new AbstractAction("Continue") {
