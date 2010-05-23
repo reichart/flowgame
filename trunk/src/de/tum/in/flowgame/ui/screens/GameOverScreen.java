@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Displayed after the scenario has no more rounds.
+ */
 public class GameOverScreen extends MenuScreen {
 
 	private final JButton backToMain = new JButton(new AbstractAction("Main Menu") {

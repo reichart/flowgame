@@ -18,6 +18,9 @@ import netscape.javascript.JSObject;
 
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Allows changing game settings.
+ */
 public class SettingsScreen extends MenuScreen {
 
 	private static final String AIRPLANE = "airplane";

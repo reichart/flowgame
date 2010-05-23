@@ -13,6 +13,9 @@ import javax.swing.ScrollPaneConstants;
 import de.tum.in.flowgame.engine.SystemInfo;
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Displays technical information about the system, graphics, etc.
+ */
 public class SystemInfoScreen extends MenuScreen {
 
 	private final JButton back = goTo("Back", MainScreen.class);

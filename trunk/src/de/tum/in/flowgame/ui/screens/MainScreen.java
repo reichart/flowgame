@@ -11,6 +11,9 @@ import com.kitfox.svg.app.beans.SVGIcon;
 import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.sprite.SVGSprite;
 
+/**
+ * Displays the main menu.
+ */
 public class MainScreen extends MenuScreen {
 
 	private final JButton play = goTo("Play", BeforeSessionQuestionnaireScreen.class);
