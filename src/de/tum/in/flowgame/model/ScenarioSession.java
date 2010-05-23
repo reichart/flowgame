@@ -46,12 +46,31 @@ public class ScenarioSession extends AbstractEntity {
 		rounds.add(round);
 	}
 
-	// returns next round and counts how many rounds have been played
-	public ScenarioRound getNextRound() {
+	/**
+	 * Returns the next round to be played with a flag to control wether or not
+	 * to just peek at the next round (without changing any internal state) or
+	 * actually getting the next round and incrementing the internal round
+	 * counter.
+	 * 
+	 * @param increment
+	 *            if <code>true</code>, increments the rounds played counter, if
+	 *            <code>false</code>, the next call will return the same (next)
+	 *            round
+	 * @return the next round to be played or <code>null</code> if there are no
+	 *         more rounds
+	 */
+	public ScenarioRound getNextRound(final boolean increment) {
 		for (Iterator<ScenarioRound> iterator = rounds.iterator(); iterator.hasNext();) {
 			ScenarioRound scenarioRound = iterator.next();
 			if (scenarioRound.getPosition() == roundsPlayed) {
-				roundsPlayed++;
+				System.err.println("nextRound() returns round " + roundsPlayed + "/" + rounds.size() + " -- increment: " + increment);
+				
+				// only actually change to the next round if told to do so: This
+				// allows us to "peek" at the next round without activating it
+				if (increment) {
+					roundsPlayed++;
+				}
+				
 				return scenarioRound;
 			}
 		}

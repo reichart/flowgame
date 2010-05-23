@@ -29,6 +29,8 @@ import de.tum.in.flowgame.ui.screens.AfterRoundQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.BeforeSessionQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
 import de.tum.in.flowgame.ui.screens.GameOverScreen;
+import de.tum.in.flowgame.ui.screens.GameSessionExtroScreen;
+import de.tum.in.flowgame.ui.screens.GameSessionIntroScreen;
 import de.tum.in.flowgame.ui.screens.IndividualHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
@@ -103,6 +105,8 @@ public class GameMenu implements Sprite, GameListener {
 		add(new SettingsScreen(this));
 		add(new SystemInfoScreen(this));
 		add(new ProfileScreen(this));
+		add(new GameSessionIntroScreen(this));
+		add(new GameSessionExtroScreen(this));
 		
 		show(EmptyScreen.class);
 	}

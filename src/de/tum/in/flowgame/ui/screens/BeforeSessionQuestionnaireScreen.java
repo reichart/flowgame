@@ -11,9 +11,12 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Questionnaire;
-import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Displays the mood and skills questionnaire at the beginning of a game
+ * session.
+ */
 public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final static Log log = LogFactory.getLog(BeforeSessionQuestionnaireScreen.class);
@@ -21,10 +24,7 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 	private final JButton play = new JButton(new AbstractAction("Play!") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveSessionAnswers(getAnswers());
-			
-			log.info("starting first round");
-			final ScenarioSession scenarioSession = menu.getLogic().getCurrentScenarioSession();
-			menu.getLogic().start(scenarioSession.getNextRound());
+			menu.show(GameSessionIntroScreen.class);
 		}
 	});
 

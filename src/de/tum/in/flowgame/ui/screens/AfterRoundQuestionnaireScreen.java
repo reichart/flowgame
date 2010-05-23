@@ -10,9 +10,11 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Questionnaire;
-import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Displays the "how was it" questionnaire after the highscores.
+ */
 public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final static Log log = LogFactory.getLog(AfterRoundQuestionnaireScreen.class);
@@ -20,15 +22,7 @@ public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 	private final JButton play = new JButton(new AbstractAction("Play!") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveRoundAnswers(getAnswers());
-			
-			final ScenarioRound nextRound = menu.getLogic().getCurrentScenarioSession().getNextRound();
-			if (nextRound == null) {
-				log.info("no next round, game over");
-				menu.show(GameOverScreen.class);
-			} else {
-				log.info("starting next round");
-				menu.getLogic().start(nextRound);
-			}
+			menu.show(GameSessionExtroScreen.class);
 		}
 	});
 
