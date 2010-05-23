@@ -7,8 +7,12 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
+import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.ui.GameMenu;
 
+/**
+ * Abstract base class for displaying highscores.
+ */
 public abstract class HighscoresScreen extends MenuScreen {
 
 	private final JButton next = new JButton(new AbstractAction("Continue") {
@@ -17,7 +21,13 @@ public abstract class HighscoresScreen extends MenuScreen {
 			if (MainScreen.class.equals(menu.getPreviousScreen())) {
 				menu.show(MainScreen.class); // go back
 			} else {
-				menu.show(AfterRoundQuestionnaireScreen.class); // go on
+				// don't show a qn after a baseline round
+				final ScenarioRound current = menu.getLogic().getCurrentScenarioRound();
+				if (current.isBaselineRound()) {
+					menu.show(GameSessionExtroScreen.class);
+				} else {
+					menu.show(AfterRoundQuestionnaireScreen.class);
+				}
 			}
 		}
 	});
@@ -31,5 +41,8 @@ public abstract class HighscoresScreen extends MenuScreen {
 		return centered(title("Highscore"), getHighscoreComponent(), next);
 	}
 
+	/**
+	 * Subclasses implement this to provide their actual highscore component.
+	 */
 	protected abstract JComponent getHighscoreComponent();
 }
