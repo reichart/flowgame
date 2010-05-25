@@ -1,6 +1,8 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -51,7 +53,9 @@ public class ProfileScreen extends QuestionnaireScreen {
 	}
 
 	@Override
-	protected Questionnaire updateQuestionnaire(final GameLogic logic) {
-		return qn;
+	protected List<Questionnaire> updateQuestionnaire(final GameLogic logic) {
+		List<Questionnaire> qs = new ArrayList<Questionnaire>();
+		qs.add(qn);
+		return qs;
 	}
 }

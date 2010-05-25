@@ -1,7 +1,12 @@
 package de.tum.in.flowgame.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -10,14 +15,15 @@ public class ScenarioRound extends AbstractEntity {
 	private long expectedPlaytime;
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private DifficultyFunction difficultyFunction;
-	@OneToOne(cascade=CascadeType.PERSIST)
-	private Questionnaire questionnaire;
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	private List<Questionnaire> questionnaires;
 	private boolean baseline;
 	private int position;
 
 	@SuppressWarnings("unused")
 	private ScenarioRound() {
 		// for JPA
+		questionnaires = new ArrayList<Questionnaire>();
 	}
 
 	/**
@@ -33,12 +39,12 @@ public class ScenarioRound extends AbstractEntity {
 	 *            the questionnaire to display after this round
 	 */
 	public ScenarioRound(final boolean baseline, final Integer baselineModifier, final long expectedPlaytime,
-			final DifficultyFunction f, final Questionnaire q) {
+			final DifficultyFunction f) {
 		this.baseline = baseline;
 		this.baselineModifier = baselineModifier;
 		this.expectedPlaytime = expectedPlaytime;
 		this.difficultyFunction = f;
-		this.questionnaire = q;
+		questionnaires = new ArrayList<Questionnaire>();
 	}
 
 	public Integer getBaselineModifier() {
@@ -52,9 +58,21 @@ public class ScenarioRound extends AbstractEntity {
 	public DifficultyFunction getDifficultyFunction() {
 		return difficultyFunction;
 	}
+	
+	public void addQuestionnaire(Questionnaire q) {
+		questionnaires.add(q);
+	}
 
-	public Questionnaire getQuestionnaire() {
-		return questionnaire;
+	public Questionnaire getQuestionnaire(int i) {
+		return questionnaires.get(i);
+	}
+	
+	public int getNumberOfQuestionnaires() {
+		return questionnaires.size();
+	}
+	
+	public List<Questionnaire> getQuestionnaires() {
+		return questionnaires;
 	}
 
 	public boolean isBaselineRound() {

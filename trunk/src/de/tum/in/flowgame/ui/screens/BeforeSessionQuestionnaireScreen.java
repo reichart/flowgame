@@ -2,6 +2,8 @@ package de.tum.in.flowgame.ui.screens;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -27,15 +29,21 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 		}
 	};
 
+	public BeforeSessionQuestionnaireScreen() {
+		super();
+	}
+
 	@Override
 	protected Action next() {
 		return next;
 	}
 
 	@Override
-	protected Questionnaire updateQuestionnaire(final GameLogic logic) throws IOException {
+	protected List<Questionnaire> updateQuestionnaire(final GameLogic logic) throws IOException {
 		log.info("creating new session, updating to before/scenariosession qn");
 		logic.newSession();
-		return logic.getCurrentScenarioSession().getQuestionnaire();
+		List<Questionnaire> qs = new ArrayList<Questionnaire>();
+		qs.add(logic.getCurrentScenarioSession().getQuestionnaire());
+		return qs;
 	}
 }

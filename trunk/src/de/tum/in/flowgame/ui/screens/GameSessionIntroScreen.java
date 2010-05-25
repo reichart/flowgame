@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -35,7 +36,7 @@ public class GameSessionIntroScreen extends MenuScreen {
 	});
 
 	public GameSessionIntroScreen() {
-		super(Utils.imageResource("/res/spacestation.png", null));
+		super(Utils.imageResource("/res/spacestation.png", null), BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
 	}
 
 	@Override
