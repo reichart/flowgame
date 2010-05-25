@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.ui.screens;
+package de.tum.in.flowgame.ui.screens.story;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -7,11 +7,13 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.ui.screens.MainScreen;
+import de.tum.in.flowgame.ui.screens.MenuScreen;
 
 /**
  * Displayed after the scenario has no more rounds.
  */
-public class GameOverScreen extends MenuScreen {
+public class SessionExtroScreen extends MenuScreen {
 
 	private final JButton backToMain = new JButton(new AbstractAction("Main Menu") {
 		public void actionPerformed(final ActionEvent e) {

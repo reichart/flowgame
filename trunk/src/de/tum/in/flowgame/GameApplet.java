@@ -23,7 +23,7 @@ import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.facebook.CustomFacebookClient;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.ui.screens.MainScreen;
-import de.tum.in.flowgame.ui.screens.ProfileScreen;
+import de.tum.in.flowgame.ui.screens.story.BeforeProfileScreen;
 
 /**
  * This class starts the Flowgame as {@link Applet} and creates a new
@@ -153,7 +153,7 @@ public class GameApplet extends Applet {
 			new GameLogic(player, client, facebook, win).addListener(game.getListener());
 
 			if (newPlayer) {
-				game.getMenu().show(ProfileScreen.class);
+				game.getMenu().show(BeforeProfileScreen.class);
 			} else {
 				game.getMenu().show(MainScreen.class);
 			}

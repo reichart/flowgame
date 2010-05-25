@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 
 import com.kitfox.svg.app.beans.SVGIcon;
 
+import de.tum.in.flowgame.ui.screens.story.SessionIntroScreen;
 import de.tum.in.flowgame.ui.sprite.SVGSprite;
 
 /**
@@ -15,7 +16,7 @@ import de.tum.in.flowgame.ui.sprite.SVGSprite;
  */
 public class MainScreen extends MenuScreen {
 
-	private final JButton play = goTo("Play", BeforeSessionQuestionnaireScreen.class);
+	private final JButton play = goTo("Play", SessionIntroScreen.class);
 
 	private final JButton individualHighscore = goTo("Individual Highscore", IndividualHighscoresScreen.class);
 	
