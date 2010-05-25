@@ -5,22 +5,31 @@
 
 = Profile-Creation =
 
-Evtl. Je einen screen vor und nach der Charaktererstellung, auf jeden Fall aber einen danach. Szenerie: Abschluss-"Feier" nach bestandener Aufnahmeprüfung in F.L.O.W., als Bild evtl der Blick von hinten über ein sitzendes Publikum zu zwei entfernten Personen auf einem Podest- schemenhafte Personen in "Programmer-Art"-Stil, so wie das Stations-Bild würd ja reichen (trotzdem zu aufwändig?).
-Text: "Congratulations, Pilot. You are now one of the elite pilots of F.L.O.W., the Federal Lunar Operation Wing. Our task is to deliver important cargo, messages and passegers safely through dangerous hyperspace routes. While the jumps we perform are dangerous, these areas of hyperspace are the only deposit of the valuable Crystalis. Thus, our task is also to collect Crystalis on our way. You will be assigned a suitable ship and perform your first jumps soon, pilot. Welcome to FLOW!"
+==Before Profile==
+Background-Screen-Idee: U.S.-Army Werbeplakat ("We Want You...")?
 
-(Zu lang?)
-
-Optional:
-Ggf. Vorher noch einen Screen mit blick auf ein Werbeplakat für FLOW (sowas wie "We want YOU for...), quasi vor der Bewerbung, mit dem Text:
 "Being an elite pilot has always been your dream. You made it so far, starting out with a rusty old cargo ship ending up piloting a fighter in combat- the time has come, FLOW awaits you. You keep thinking about the infinite glory, but also the omnipresent danger of death as you start signing your application form..."
 
+==After Profile==
+Szenerie: Abschluss-"Feier" nach bestandener Aufnahmeprüfung in F.L.O.W., als Bild evtl der Blick von hinten über ein sitzendes Publikum zu zwei entfernten Personen auf einem Podest- schemenhafte Personen in "Programmer-Art"-Stil
 
-==Screens==
-Hintergrund-Screen: Entweder Blick auf das Zimmer in der Raumstation, möglich wäre auch der Blick auf den Computer bzw Comm-Link, auf dem diese Nachricht erscheint.
+"Congratuations, Pilot. You are now one of the elite pilots of F.L.O.W., the Federal Lunar Operation Wing. Our task is to deliver important cargo, messages and passegers safely through dangerous hyperspace routes. While the jumps we perform are dangerous, these areas of hyperspace are the only deposit of the valuable Crystalis. Thus, our task is also to collect Crystalis on our way. You will be assigned a suitable ship and perform your first jumps soon, pilot. Welcome to FLOW!"
 
-Als Hintergrund entweder ein Briefing-Raum mit Projektor-Wand und Offizier, der davor steht, oder eine "Sternenkarte", auf der einzelne Sterne markiert bzw verbunden sind, oder eben den launch-screen, den phil gemacht hat.
-Dazu jeweils verschiedene szenario-informationen
 
+
+===Hintergrundbilder===
+
+==Session Intro==
+Entweder Blick auf das Zimmer in der Raumstation, möglich wäre auch der Blick auf den Computer bzw Comm-Link, auf dem diese Nachricht erscheint.
+
+==Round Intro==
+Sternenkarte, auf der irgendwelche Sterne markiert sind bzw routen eingezeichnet sind, oder das bereits vorhandene "launch"-Bild
+
+==Round Extro==
+Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
+
+==Session Extro==
+"Heimkomm-Bild", also Landung auf der Station
 
 
 ==Scenario 1: Antimatter Problems==
