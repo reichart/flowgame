@@ -29,10 +29,6 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 		}
 	};
 
-	public BeforeSessionQuestionnaireScreen() {
-		super();
-	}
-
 	@Override
 	protected Action next() {
 		return next;
@@ -42,7 +38,7 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 	protected List<Questionnaire> updateQuestionnaire(final GameLogic logic) throws IOException {
 		log.info("creating new session, updating to before/scenariosession qn");
 		logic.newSession();
-		List<Questionnaire> qs = new ArrayList<Questionnaire>();
+		final List<Questionnaire> qs = new ArrayList<Questionnaire>();
 		qs.add(logic.getCurrentScenarioSession().getQuestionnaire());
 		return qs;
 	}
