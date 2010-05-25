@@ -15,22 +15,69 @@ Ggf. Vorher noch einen Screen mit blick auf ein Werbeplakat für FLOW (sowas wie
 "Being an elite pilot has always been your dream. You made it so far, starting out with a rusty old cargo ship ending up piloting a fighter in combat- the time has come, FLOW awaits you. You keep thinking about the infinite glory, but also the omnipresent danger of death as you start signing your application form..."
 
 
-= Before Moods/Skills-Questionnaire: Scenario Information =
-
-"Good morning, pilot. You are about to start your first mission today, so, as always we would like you to report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots. After that, we wish you best luck with your jumps today."
-
+==Screens==
 Hintergrund-Screen: Entweder Blick auf das Zimmer in der Raumstation, möglich wäre auch der Blick auf den Computer bzw Comm-Link, auf dem diese Nachricht erscheint.
-
-
-= "Briefing": Screen direkt vor jedem Spiel = 
 
 Als Hintergrund entweder ein Briefing-Raum mit Projektor-Wand und Offizier, der davor steht, oder eine "Sternenkarte", auf der einzelne Sterne markiert bzw verbunden sind, oder eben den launch-screen, den phil gemacht hat.
 Dazu jeweils verschiedene szenario-informationen
 
-1.
-"There has been a power failure in one of our outer-rim antimatter processing plant. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers there to repair the damage. Remember to avoid the anomalies in hyperspace at all cost and to collect as much of the valuable Crystalis as possible."
 
-2.
+
+==Scenario 1: Antimatter Problems==
+
+===Session Intro===
+
+"Good morning, pilot. Your today's mission is to fix some technical problems in our Luna's industry. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
+
+
+===Round Intro 1 (Baseline)===
+"Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
+
+===Round Extro 1 (Baseline)===
+"Well done. We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
+
+===Round Intro 2===
+"There has been a power failure in one of our outer-rim antimatter processing plants. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers from this station there to repair the damage. The jump is easy, so take your chance to collect Crystalis!"
+
+===Round Extro 2===
+"Good job! The maintenance team arrived safely and is now repairing the plant. It should be resuming operation by the end of the day."
+
+===Round Intro 3===
+"A load of antimatter from the plant has been loaded into your ship. It is urgently required by one of our mining bases in the Centauri solar system which is under attack by pirates. Its defence grid ran out of ammunition, it is your job to resupply it before the pirates destroy the base."
+
+===Round Extro 3===
+"Congratulations! You just saved a lot of innocent lives there. Take a break on the asteroid base and await your next orders."
+
+===Round Intro 4===
+"Hello, pilot! Your next jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor <insert name>.
+His presence is required elsewhere, you will be briefed on take-off from Tau Ceti."
+
+===Round Extro 4===
+"Welcome to Tau Ceti. No time for breaks this time, Professor <insert name> has already boarded your ship. You have performed great so far, we have faith that you will complete the following mission successfully!"
+
+===Round Intro 5===
+"No time to lose, pilot. You will immediately commence your jump into the distant Hourglass Nebula, where at the transmitted coordinates you will find a gas harvesting station. Professor <insert name> will supervise the loading of your ship with a small amount of a special gas mix required in your final mission."
+
+===Round Extro 5===
+"Well done. The gas mix is being loaded onto your ship, but stay ready for take-off at all time! As soon as the loading finished, Professor <insert name> will board your ship and you will be required to commence your next jump."
+
+===Round Intro 6===
+"The final jump today will take you to a distant research station in deep space. The impact of dark matter on organisms is being investigated there. Sadly, an experiment went terribly wrong and the base staff hast lost control of large parts of the station to mutated organisms. Professor <insert name> will use the gas you picked up to initiate a complex process to undo the damage done there."
+
+===Round Extro 6===
+"Very well done! Your fast action saved a lot of lives today. Professor <insert name> will stay on the station for a while to monitor the process. Most of the station's staff had barricaded themselves in the control room and survived that way."
+
+===Session Extro===
+"Thank you for your excellent work today, pilot. We sorted out a safe hyperspace route for you to return to F.L.O.W.'s base in the orbit of Luna. Once you arrive, you will be debriefed and dismissed for today."
+
+
+
+
+
+==Scenario 2==
+
+to be completed
+
 "Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. Having him on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. The Grand Admiral would be very displeased if you trouble him with anomalies, which would not benefit FLOW's reputation. Instead, show him what we can do by collecting Crystalis and delivering him safe and fast."
 
 more to come.
