@@ -27,7 +27,7 @@ import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.strategy.Trend;
 
-public class GameLogic implements GameLogicMBean, Runnable {
+public class GameLogic implements Runnable {
 
 	private final static Log log = LogFactory.getLog(GameLogic.class);
 	
@@ -44,9 +44,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	private final List<GameListener> listeners;
 
-	private volatile int fuel;
-	private volatile int asteroids;
-
 	private volatile int fuelInRow;
 	private volatile int asteroidsInRow;
 
@@ -57,7 +54,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	private volatile int asteroidsSeen;
 
 	private Thread thread;
-	private boolean paused;
 
 	private Trend asteroidTrend;
 	private Trend fuelTrend;
@@ -80,16 +76,11 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		this.player = player;
 		this.client = client;
 		this.facebook = facebook;
-
-		Utils.export(this);
 	}
 
 	public void collide(final Item item) {
 		switch (item) {
 		case FUELCAN:
-			if (fuel < MAX_FUEL) {
-				fuel++;
-			}
 			fuelcansCollected++;
 			fuelInRow++;
 			asteroidsInRow = 0;
@@ -97,17 +88,9 @@ public class GameLogic implements GameLogicMBean, Runnable {
 			Sounds.FUELCAN.play();
 			break;
 		case ASTEROID:
-			if (asteroids < MAX_ASTEROIDS) {
-				asteroids++;
-			}
 			asteroidsCollected++;
 			asteroidsInRow++;
 			fuelInRow = 0;
-
-			if (asteroids == MAX_ASTEROIDS) {
-				thread.interrupt();
-			}
-
 			Sounds.ASTEROID.play();
 			break;
 		}
@@ -140,20 +123,13 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		fireGameStarted();
 		
 		boolean timeOver = false;
-		Long maxPlaytime = gameRound.getScenarioRound().getExpectedPlaytime();
+		Long maxPlaytime = getCurrentScenarioRound().getExpectedPlaytime();
 		
-		while (asteroids < MAX_ASTEROIDS && fuel > 0 && !timeOver) {
+		while (!timeOver) {
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(1000);
 			} catch (final InterruptedException ex) {
 				// ignore
-			}
-
-			if (!paused) {
-				fuel--;
-				if (fuel == 0) {
-					break;
-				}
 			}
 			
 			if (maxPlaytime != null) {
@@ -190,14 +166,6 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
-	}
-
-	public int getFuel() {
-		return fuel;
-	}
-
-	public int getAsteroids() {
-		return asteroids;
 	}
 
 	public void addListener(final GameListener listener) {
@@ -242,15 +210,12 @@ public class GameLogic implements GameLogicMBean, Runnable {
 		addListener(gameRound.getListener());
 
 		// reset internal state
-		fuel = MAX_FUEL;
-		asteroids = 0;
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
 
 		fuelInRow = 0;
 		asteroidsInRow = 0;
 
-		paused = false;
 		startTime = System.currentTimeMillis();
 		startTimeWithoutPause = startTime;
 
@@ -261,13 +226,11 @@ public class GameLogic implements GameLogicMBean, Runnable {
 	}
 
 	public void pause() {
-		this.paused = true;
 		pauseStartTime = System.currentTimeMillis();
 		fireGamePaused();
 	}
 
 	public void unpause() {
-		this.paused = false;
 		startTimeWithoutPause += (System.currentTimeMillis() - pauseStartTime);
 		fireGameResumed();
 	}
@@ -328,6 +291,10 @@ public class GameLogic implements GameLogicMBean, Runnable {
 
 	public long getElapsedTime() {
 		return System.currentTimeMillis() - startTimeWithoutPause;
+	}
+	
+	public long getRemainingTime() {
+		return getCurrentScenarioRound().getExpectedPlaytime() - getElapsedTime();
 	}
 
 	public long getScore() {
