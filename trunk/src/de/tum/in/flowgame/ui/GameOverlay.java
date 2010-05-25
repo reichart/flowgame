@@ -19,8 +19,6 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.engine.behavior.FrameCounterBehavior.FrameCounterListener;
 import de.tum.in.flowgame.model.Collision.Item;
-import de.tum.in.flowgame.ui.sprite.HealthBar;
-import de.tum.in.flowgame.ui.sprite.SpriteCache;
 
 /**
  * Displays overlay graphics like health/damage bars, cockpit, and HUD messages.
@@ -41,7 +39,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	private boolean drawMessage;
 	private boolean drawHUD;
-	private boolean drawMenu;
 	private boolean drawFPS;
 
 	private GameMenu menu;
@@ -54,8 +51,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		this.menu = new GameMenu(engine, this);
 		
 		this.timer = new Timer(GameOverlay.class.getSimpleName(), true);
-
-		this.drawMenu = true; // for testing
 		
 		this.engine = engine;
 		
@@ -113,9 +108,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			}
 		}
 
-		if (drawMenu) {
-			menu.render(g, 0, 0, width, height);
-		}
+		menu.render(g, 0, 0, width, height);
 	}
 
 	public void added(final GameLogic game) {
@@ -130,22 +123,18 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	
 	public void gameStarted(final GameLogic game) {
 		drawHUD = true;
-		drawMenu = false;
 		message("Go speed racer!");
 	}
 
 	public void gamePaused(final GameLogic game) {
-		drawMenu = true;
 		drawMessage = false;
 	}
 
 	public void gameResumed(GameLogic game) {
-		drawMenu = false;
 	}
 
 	public void gameStopped(final GameLogic game) {
 		drawHUD = false;
-		drawMenu = true;
 		drawMessage = false;
 	}
 
