@@ -36,7 +36,7 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 
 ===Session Intro===
 
-"Good morning, pilot. Your today's mission is to fix some technical problems in our Luna's industry. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
+"Good morning, pilot. Your today's mission is to fix some technical problems in Luna's industry. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
 
 
 ===Round Intro 1 (Baseline)===
@@ -85,8 +85,48 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 ==Scenario 2==
 
-to be completed
+===Session Intro===
+"Good morning, pilot. We need you to aid the terran naval forces in the shadow war today. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
 
-"Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. Having him on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. The Grand Admiral would be very displeased if you trouble him with anomalies, which would not benefit FLOW's reputation. Instead, show him what we can do by collecting Crystalis and delivering him safe and fast."
+===Round Intro 1 (Baseline)===
+"Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
+
+===Round Extro 1 (Baseline)===
+"Well done. We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
+
+===Round Intro 2===
+"Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. You will now jump to Cervesia Prima, taking one of our officers with you, who's holiday there will start today."
+
+===Round Extro 2===
+"Good flying. Now wait for the Grand Admiral to board your ship. Stand by for further orders."
+
+===Round Intro 3===
+"Having the Grand Admiral on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. You will then dock at the Terran flagship, the Achilles where the Grand Admiral will leave your ship. Our reputation with the Terran Navy is at stake, so do your best to deliver the Grand Admiral safely."
+
+===Round Extro 3===
+"Very well done. The Grand Admiral was very pleased with your flying abilities. Stand by docked at the Achilles and wait for further orders."
+
+===Round Intro 4===
+"We received a distress signal from a scouting fleet in the Horse Nebula. Unfortunately, the signal was very blurred, so we do not know exactly what happened. You will immediately perform a jump to the last known location of the fleet and report in on arrival."
+
+===Round Extro 4===
+"Good jump. The Federal Navy Command was displeased to hear the news of the fleet having been ambushed and destroyed by the shadows. It is currently arranging a counter-attack."
+
+
+===Round Intro 5===
+"Being our only pilot close to the front lines, you are assigned with the task to support the Navy's counter-attack as good as you can. The FNC will not be able to commence the attack without special gear which was just completed at the Federal assembly plant in the Wolf 1061 solar system."
+
+===Round Extro 5===
+"Good job, pilot! The special gear is being loaded onto your ship. Stand by, ready for take-off."
+
+===Round Intro 6===
+"The FNC is preparing a fleet to counter-attack the Shadows in the Horse Nebula. You will liase with the fleet close to the nebula and dock at the battleship "Athene", where the special gear you transported is going to be unloaded and assembled."
+
+===Round Extro 6===
+"Well done. The new special weapon will ensure the Athene to stand victorious against the Shadow forces."
+
+===Session Extro===
+"You performed well today, pilot. This was your final mission and a safe hyperspace route back to Luna has been transmitted to you. Once you arrive at the F.L.O.W.-base, you will be debriefed and dismissed for today."
+
 
 more to come.
