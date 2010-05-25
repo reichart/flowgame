@@ -1,12 +1,9 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.Container;
-import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
-import com.kitfox.svg.app.beans.SVGIcon;
 
 import de.tum.in.flowgame.ui.screens.story.SessionIntroScreen;
 import de.tum.in.flowgame.ui.sprite.SVGSprite;
@@ -29,9 +26,7 @@ public class MainScreen extends MenuScreen {
 	private final JLabel title;
 	
 	public MainScreen() {
-		final SVGIcon icon = new SVGSprite("/res/flowspace.svg").getIcon();
-		icon.setPreferredSize(new Dimension(480, 96));
-		title = new JLabel(icon);
+		title = new JLabel(new SVGSprite("/res/flowspace.svg").getIcon(480, 96));
 	}
 
 	@Override
