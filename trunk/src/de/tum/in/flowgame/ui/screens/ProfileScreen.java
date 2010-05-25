@@ -3,7 +3,7 @@ package de.tum.in.flowgame.ui.screens;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
+import javax.swing.Action;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Person;
@@ -15,14 +15,15 @@ import de.tum.in.flowgame.ui.GameMenu;
  */
 public class ProfileScreen extends QuestionnaireScreen {
 
-	private final JButton createProfile = new JButton(new AbstractAction("Play!") {
+	private final Action createProfile = new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
 			final Person player = menu.getLogic().getPlayer();
 			player.setProfilingAnswers(getAnswers());
 			menu.getLogic().getClient().uploadQuietly(player);
 			menu.show(MainScreen.class);
 		}
-	});
+	};
+	
 	private final Questionnaire qn;
 
 	public ProfileScreen(final GameMenu menu) {
@@ -48,7 +49,7 @@ public class ProfileScreen extends QuestionnaireScreen {
 	}
 
 	@Override
-	protected JButton nextButton() {
+	protected Action next() {
 		return createProfile;
 	}
 

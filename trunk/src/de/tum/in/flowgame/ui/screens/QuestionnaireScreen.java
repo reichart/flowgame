@@ -3,6 +3,7 @@ package de.tum.in.flowgame.ui.screens;
 import java.awt.Container;
 import java.util.List;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -34,7 +35,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title, qscrollpane, nextButton());
+		return centered(title, qscrollpane, new JButton(next()));
 	}
 
 	@Override
@@ -53,9 +54,9 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	}
 
 	/**
-	 * @return button to proceed to next screen
+	 * @return action to proceed to next screen
 	 */
-	protected abstract JButton nextButton();
+	protected abstract Action next();
 
 	/**
 	 * Called every time before the screen is displayed.
