@@ -1,9 +1,15 @@
 package de.tum.in.flowgame.ui.screens;
 
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 
 import netscape.javascript.JSObject;
@@ -19,13 +25,14 @@ import de.tum.in.flowgame.ui.sprite.SVGSprite;
 public class GameSessionScreen extends MenuScreen {
 
 	private static final String STEERING = "steering";
-
 	private static final String SOUND = "sound";
+	
+	private static final int ICON_SIZE = 32;
 
-	private static final SVGIcon SOUND_ON = new SVGSprite("/res/sound_on.svg").getIcon(32, 32);
-	private static final SVGIcon SOUND_OFF = new SVGSprite("/res/sound_off.svg").getIcon(32, 32);
-	private static final SVGIcon AIRPLANE_ICON = new SVGSprite("/res/airplane.svg").getIcon(32, 32);
-	private static final SVGIcon NORMAL_ICON = new SVGSprite("/res/normal.svg").getIcon(32, 32);
+	private static final SVGIcon SOUND_ON = new SVGSprite("/res/sound_on.svg").getIcon(ICON_SIZE, ICON_SIZE);
+	private static final SVGIcon SOUND_OFF = new SVGSprite("/res/sound_off.svg").getIcon(ICON_SIZE, ICON_SIZE);
+	private static final SVGIcon AIRPLANE_ICON = new SVGSprite("/res/airplane.svg").getIcon(ICON_SIZE, ICON_SIZE);
+	private static final SVGIcon NORMAL_ICON = new SVGSprite("/res/normal.svg").getIcon(ICON_SIZE, ICON_SIZE);
 
 	private final JToggleButton sound;
 	private final JToggleButton steering;
@@ -37,7 +44,7 @@ public class GameSessionScreen extends MenuScreen {
 		sound = new JToggleButton(new AbstractAction(null, SOUND_ON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean muted = sound.isSelected();
-				System.err.println("setting sound to " + (muted ? "off" : "on"));
+//				System.err.println("setting sound to " + (muted ? "off" : "on"));
 				setSoundMuted(muted);
 				setCookie(SOUND, muted);
 			}
@@ -54,7 +61,7 @@ public class GameSessionScreen extends MenuScreen {
 		steering = new JToggleButton(new AbstractAction(null, AIRPLANE_ICON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean normal = steering.isSelected();
-				System.err.println("setting steering to " + (normal ? "normal" : "airplane"));
+//				System.err.println("setting steering to " + (normal ? "normal" : "airplane"));
 				setSteering(normal);
 				setCookie(STEERING, normal);
 			}
@@ -98,7 +105,13 @@ public class GameSessionScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(sound, steering);
+		Container pane = new Container();
+		pane.setLayout(null);
+		pane.add(sound);
+		pane.add(steering);
+        sound.setBounds(3, 3, ICON_SIZE, ICON_SIZE);
+        steering.setBounds(ICON_SIZE + 6, 3, ICON_SIZE, ICON_SIZE);
+		return pane;
 	}
 
 }
