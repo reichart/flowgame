@@ -201,6 +201,7 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	public void show(final Class<? extends MenuScreen> screenClass) {
+		boolean found = false;
 		for (final Component component : screens.getComponents()) {
 			if (component.getClass().equals(screenClass)) {
 				final MenuScreen screen = (MenuScreen) component;
@@ -211,9 +212,14 @@ public class GameMenu implements Sprite, GameListener {
 					log.error("failed to update screen for showing: " + screenClass.getName(), ex);
 					return; // don't show when update failed
 				}
+				found = true;
 			}
 		}
 
+		if (!found) {
+			throw new IllegalArgumentException("unknown screen: " + screenClass.getName());
+		}
+		
 		layout.show(screens, screenClass.getName());
 		panel.revalidate();
 		
