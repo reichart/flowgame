@@ -10,6 +10,7 @@ import javax.swing.Action;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.Questionnaire;
+import de.tum.in.flowgame.ui.screens.story.AfterProfileScreen;
 
 /**
  * Displays a profile {@link Questionnaire} to assess the player's personality. 
@@ -21,7 +22,7 @@ public class ProfileScreen extends QuestionnaireScreen {
 			final Person player = menu.getLogic().getPlayer();
 			player.setProfilingAnswers(getAnswers());
 			menu.getLogic().getClient().uploadQuietly(player);
-			menu.show(MainScreen.class);
+			menu.show(AfterProfileScreen.class);
 		}
 	};
 	

@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Questionnaire;
+import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
 
 /**
  * Displays the "how was it" questionnaire after the highscores.
@@ -22,7 +23,7 @@ public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 	private final Action next = new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveRoundAnswers(getAnswers());
-			menu.show(GameSessionExtroScreen.class);
+			menu.show(RoundExtroScreen.class);
 		}
 	};
 

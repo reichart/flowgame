@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.ui.screens;
+package de.tum.in.flowgame.ui.screens.story;
 
 import java.awt.Container;
 import java.awt.Font;
@@ -14,13 +14,14 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioSession;
+import de.tum.in.flowgame.ui.screens.MenuScreen;
 
 /**
  * Story screen just before game play starts.
  */
-public class GameSessionIntroScreen extends MenuScreen {
+public class RoundIntroScreen extends MenuScreen {
 
-	private final static Log log = LogFactory.getLog(GameSessionIntroScreen.class);
+	private final static Log log = LogFactory.getLog(RoundIntroScreen.class);
 
 	private final static JTextArea text = new JTextArea("There has been a power failure in one of our outer-rim antimatter processing plant. " +
 			"Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers there to " +
@@ -35,7 +36,7 @@ public class GameSessionIntroScreen extends MenuScreen {
 		}
 	});
 
-	public GameSessionIntroScreen() {
+	public RoundIntroScreen() {
 		super(Utils.imageResource("/res/spacestation.png", null), BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
 	}
 

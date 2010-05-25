@@ -28,9 +28,6 @@ import de.tum.in.flowgame.model.ScenarioSession.Type;
 import de.tum.in.flowgame.ui.screens.AfterRoundQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.BeforeSessionQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
-import de.tum.in.flowgame.ui.screens.GameOverScreen;
-import de.tum.in.flowgame.ui.screens.GameSessionExtroScreen;
-import de.tum.in.flowgame.ui.screens.GameSessionIntroScreen;
 import de.tum.in.flowgame.ui.screens.IndividualHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
@@ -39,6 +36,9 @@ import de.tum.in.flowgame.ui.screens.ProfileScreen;
 import de.tum.in.flowgame.ui.screens.SettingsScreen;
 import de.tum.in.flowgame.ui.screens.SocialHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
+import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
+import de.tum.in.flowgame.ui.screens.story.RoundIntroScreen;
+import de.tum.in.flowgame.ui.screens.story.SessionExtroScreen;
 import de.tum.in.flowgame.ui.sprite.Sprite;
 
 public class GameMenu implements Sprite, GameListener {
@@ -104,12 +104,12 @@ public class GameMenu implements Sprite, GameListener {
 		add(new IndividualHighscoresScreen());
 		add(new PauseScreen());
 		add(new AfterRoundQuestionnaireScreen());
-		add(new GameOverScreen());
+		add(new SessionExtroScreen());
 		add(new SettingsScreen());
 		add(new SystemInfoScreen());
 		add(new ProfileScreen());
-		add(new GameSessionIntroScreen());
-		add(new GameSessionExtroScreen());
+		add(new RoundIntroScreen());
+		add(new RoundExtroScreen());
 		
 		show(EmptyScreen.class);
 	}
