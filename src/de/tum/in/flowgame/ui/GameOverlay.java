@@ -33,8 +33,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	private final Timer timer;
 	private volatile GameLogic logic;
-	private final HealthBar fuel, damage;
-
+	
 	private int width, height;
 
 	private String message;
@@ -54,12 +53,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	public GameOverlay(final Game3D engine) {
 		this.menu = new GameMenu(engine, this);
 		
-		this.fuel = new HealthBar(SpriteCache.getInstance().getSprite("/res/fuel.svg"), Color.YELLOW,
-				Color.YELLOW.darker(), 0, GameLogic.MAX_FUEL);
-
-		this.damage = new HealthBar(SpriteCache.getInstance().getSprite("/res/asteroid.svg"), Color.RED,
-				Color.RED.darker(), 0, GameLogic.MAX_ASTEROIDS);
-
 		this.timer = new Timer(GameOverlay.class.getSimpleName(), true);
 
 		this.drawMenu = true; // for testing
@@ -114,14 +107,9 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				final int scoreW = fm.stringWidth(score);
 				g.drawString(score, width - scoreW - 20, stringH + 20);
 				
-				fuel.setValue(logic.getFuel());
-				damage.setValue(logic.getAsteroids());
-	
-				final int barsWidth = Math.min(width, height) / 2;
-	
-				damage.render(g, 20, 20, barsWidth, -1);
-				fuel.render(g, 20, 50, barsWidth, -1);
-				
+				String remainingTime = "remaining Time: " + logic.getRemainingTime();
+				final int remTimeW = fm.stringWidth(remainingTime);
+				g.drawString(remainingTime, width - remTimeW - 20, stringH + 40);
 			}
 		}
 
