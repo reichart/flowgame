@@ -135,4 +135,51 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "You performed well today, pilot. This was your final mission and a safe hyperspace route back to Luna has been transmitted to you. Once you arrive at the F.L.O.W.-base, you will be debriefed and dismissed for today."
 
 
-more to come.
+----
+
+==Scenario 3: Exploration==
+
+===Session Intro===
+"Good morning, pilot. The Association for Exploration of Human Habitats requires our services. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
+
+===Round Intro 1 (Baseline)===
+"Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
+
+===Round Extro 1 (Baseline)===
+"Well done. We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
+
+===Round Intro 2===
+"The AEHH found a possibly habitable planet in the Spica solar system. You will jump there and run a scan so AEHH can proceed with the preparations for colonizing, if the results are positive."
+
+===Round Extro 2===
+"Very well. The scan results were positive and AEHH were very pleased with your work. Stand by in orbit to receive further orders."
+
+===Round Intro 3===
+"In order to colonize the planet, we need you to deploy a beacon relais in the orbit of the planet. We transmitted you the hyperspace route to a manufacturing plant, where you will pick up a beacon relais."
+
+===Round Extro 3===
+"That was a smooth jump, pilot! The beacon relais is being loaded onto your ship. Stand by for take-off."
+
+===Round Intro 4===
+"You will now go back to the Spica system and deploy the beacon relais in orbit of the planet you scanned before."
+
+===Round Extro 4===
+"Good job. You contributed greatly to mankinds expansion in space today. Stand by, we have more work for you to do!"
+
+===Round Intro 5===
+"There is another possibly habitable planet in the Betelguese solar system. As before, you will jump there and run a scan on this system. But be warned, Shadow activity has been detected in a nebula not far from Betelgeuse."
+
+===Round Extro 5===
+"You ran straight into trouble there, pilot! Although the scan results were positive and indicated great mineral abundancy on this planet, the whole system is infested with Shadows. Your retreat coordinates will be transmitted immediately."
+
+===Round Intro 6===
+"There you go. Retreat to the 6th Federal Naval Fleet. Jump immediately, it is only a matter of minutes until the Shadows detect your ship and will attack you. Once arrived, dock at the commanding Battleship, the "Archimedes". You will pass your intel on the Shadow forces to the commanding admiral, who will immediately initiate an attack to drive the Shadows off."
+
+===Round Extro 6===
+"That was an awesome job evading those Shadow forces. You are safe now, as soon as the admiral dismisses you, return to the F.L.O.W.-base. We will transmit a safe jump route for you."
+
+===Session Extro===
+"Great job today, pilot! Once you arrived safely at home, you will be debriefed and dismissed for today. You must be looking forward to a nice meal and your bed tonight."
+
+
+----
