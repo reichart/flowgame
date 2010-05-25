@@ -93,20 +93,23 @@ public class GameMenu implements Sprite, GameListener {
 	public void added(final GameLogic game) {
 		this.logic = game;
 
+		// TODO the ugliest way to do dependency injection
+		MenuScreen.menu = this;
+		
 		// these require the above logic to be available
-		add(new EmptyScreen(this));
-		add(new MainScreen(this));
-		add(new BeforeSessionQuestionnaireScreen(this));
-		add(new SocialHighscoresScreen(this));
-		add(new IndividualHighscoresScreen(this));
-		add(new PauseScreen(this));
-		add(new AfterRoundQuestionnaireScreen(this));
-		add(new GameOverScreen(this));
-		add(new SettingsScreen(this));
-		add(new SystemInfoScreen(this));
-		add(new ProfileScreen(this));
-		add(new GameSessionIntroScreen(this));
-		add(new GameSessionExtroScreen(this));
+		add(new EmptyScreen());
+		add(new MainScreen());
+		add(new BeforeSessionQuestionnaireScreen());
+		add(new SocialHighscoresScreen());
+		add(new IndividualHighscoresScreen());
+		add(new PauseScreen());
+		add(new AfterRoundQuestionnaireScreen());
+		add(new GameOverScreen());
+		add(new SettingsScreen());
+		add(new SystemInfoScreen());
+		add(new ProfileScreen());
+		add(new GameSessionIntroScreen());
+		add(new GameSessionExtroScreen());
 		
 		show(EmptyScreen.class);
 	}

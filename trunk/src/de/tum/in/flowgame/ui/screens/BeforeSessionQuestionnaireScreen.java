@@ -11,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Questionnaire;
-import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Displays the mood and skills questionnaire at the beginning of a game
@@ -27,10 +26,6 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 			menu.show(GameSessionIntroScreen.class);
 		}
 	};
-
-	public BeforeSessionQuestionnaireScreen(final GameMenu menu) {
-		super(menu);
-	}
 
 	@Override
 	protected Action next() {

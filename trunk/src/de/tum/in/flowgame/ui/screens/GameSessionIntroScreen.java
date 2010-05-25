@@ -13,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioSession;
-import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Story screen just before game play starts.
@@ -26,7 +25,7 @@ public class GameSessionIntroScreen extends MenuScreen {
 			"Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers there to " +
 			"repair the damage. Remember to avoid the anomalies in hyperspace at all cost and to collect as much of the valuable Crystalis as " +
 			"possible.", 5, 100);
-	
+
 	private final JButton play = new JButton(new AbstractAction("Play!") {
 		public void actionPerformed(final ActionEvent e) {
 			log.info("starting first round");
@@ -35,8 +34,8 @@ public class GameSessionIntroScreen extends MenuScreen {
 		}
 	});
 
-	public GameSessionIntroScreen(final GameMenu menu) {
-		super(menu, Utils.imageResource("/res/spacestation.png", null));
+	public GameSessionIntroScreen() {
+		super(Utils.imageResource("/res/spacestation.png", null));
 	}
 
 	@Override

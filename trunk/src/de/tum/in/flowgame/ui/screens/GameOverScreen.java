@@ -7,7 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Displayed after the scenario has no more rounds.
@@ -19,10 +18,6 @@ public class GameOverScreen extends MenuScreen {
 			menu.show(MainScreen.class);
 		}
 	});
-
-	public GameOverScreen(final GameMenu menu) {
-		super(menu);
-	}
 
 	@Override
 	public Container getContents() {
