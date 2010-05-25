@@ -8,6 +8,8 @@ public enum Sounds {
 
 	ASTEROID("crash"), FUELCAN("water-droplet-1"), DEATH("chewie");
 
+	private static boolean muted;
+	
 	private AudioClip snd;
 
 	private Sounds(final String res) {
@@ -20,9 +22,16 @@ public enum Sounds {
 	}
 
 	public void play() {
-		if (snd != null) {
+		if (snd != null && !muted) {
 			snd.play();
 		}
 	}
+	
+	public static boolean isMuted() {
+		return muted;
+	}
 
+	public static void setMuted(boolean _muted) {
+		muted = _muted;
+	}
 }
