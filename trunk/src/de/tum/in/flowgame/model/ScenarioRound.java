@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class ScenarioRound extends AbstractEntity {
 	private Integer baselineModifier;
-	private Long expectedPlaytime;
+	private long expectedPlaytime;
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private DifficultyFunction difficultyFunction;
 	@OneToOne(cascade=CascadeType.PERSIST)
@@ -20,7 +20,19 @@ public class ScenarioRound extends AbstractEntity {
 		// for JPA
 	}
 
-	public ScenarioRound(final boolean baseline, final Integer baselineModifier, final Long expectedPlaytime,
+	/**
+	 * @param baseline
+	 *            <code>true</code> if this round is a
+	 * @param baselineModifier
+	 *            the baseline modifier
+	 * @param expectedPlaytime
+	 *            the expected play time
+	 * @param f
+	 *            the difficulty function
+	 * @param q
+	 *            the questionnaire to display after this round
+	 */
+	public ScenarioRound(final boolean baseline, final Integer baselineModifier, final long expectedPlaytime,
 			final DifficultyFunction f, final Questionnaire q) {
 		this.baseline = baseline;
 		this.baselineModifier = baselineModifier;
@@ -33,7 +45,7 @@ public class ScenarioRound extends AbstractEntity {
 		return baselineModifier;
 	}
 
-	public Long getExpectedPlaytime() {
+	public long getExpectedPlaytime() {
 		return expectedPlaytime;
 	}
 

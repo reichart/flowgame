@@ -97,12 +97,14 @@ public class DDLGenerator {
 		Function speedFunctionConstant4 = new ConstantFunction(30);
 		Function speedFunctionConstant5 = new ConstantFunction(60);
 		
-		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, null, df2, howWasIt);
-		ScenarioRound cSr1 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction), howWasIt);
-		ScenarioRound cSr2 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction), howWasIt);
-		ScenarioRound cSr3 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction), howWasIt);
-		ScenarioRound cSr4 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction), howWasIt);
-		ScenarioRound cSr5 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction), howWasIt);
+		final long timeLimit = 60*1000;
+		
+		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, timeLimit, df2, howWasIt);
+		ScenarioRound cSr1 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction), howWasIt);
+		ScenarioRound cSr2 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction), howWasIt);
+		ScenarioRound cSr3 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction), howWasIt);
+		ScenarioRound cSr4 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction), howWasIt);
+		ScenarioRound cSr5 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction), howWasIt);
 		
 		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL, moodAndSkills);
 		constantScenarioSession.add(cBaselineRound);
