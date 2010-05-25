@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -26,18 +28,36 @@ public abstract class MenuScreen extends JPanel {
 
 	protected final GameMenu menu; // for subclasses
 
-	protected MenuScreen(final GameMenu menu) {
+	private final BufferedImage backgroundImage;
+	
+	/**
+	 * @param menu the game menu managing all screens
+	 * @param backgroundImage the optional background image, <code>null</code> to disable
+	 */
+	protected MenuScreen(final GameMenu menu, final BufferedImage backgroundImage) {
 		setLayout(new BorderLayout());
 		setDoubleBuffered(false);
 		setOpaque(false);
 
 		this.menu = menu;
+		this.backgroundImage = backgroundImage;
+	}
+	
+	protected MenuScreen(final GameMenu menu) {
+		this(menu, null);
 	}
 
 	public void build() {
 		add(BorderLayout.CENTER, getContents());
 	}
 
+	@Override
+	protected void paintComponent(final Graphics g) {
+		if (backgroundImage != null) {
+			g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+		}
+	}
+	
 	public abstract Container getContents();
 
 	/**

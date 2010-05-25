@@ -23,8 +23,6 @@ public class GameSessionExtroScreen extends MenuScreen {
 
 	private final static Log log = LogFactory.getLog(GameSessionExtroScreen.class);
 
-	private final static JLabel image = new JLabel(new ImageIcon(Utils.imageResource("/res/spacestation.png", null)));
-
 	private final JButton next = new JButton(new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
 			final ScenarioRound nextRound = menu.getLogic().getCurrentScenarioSession().getNextRound(false);
@@ -39,12 +37,12 @@ public class GameSessionExtroScreen extends MenuScreen {
 	});
 
 	public GameSessionExtroScreen(final GameMenu menu) {
-		super(menu);
+		super(menu, Utils.imageResource("/res/spacestation.png", null));
 	}
 
 	@Override
 	public Container getContents() {
-		return centered(title("Game Session Extro"), image, next);
+		return centered(title("Game Session Extro"), next);
 	}
 
 }
