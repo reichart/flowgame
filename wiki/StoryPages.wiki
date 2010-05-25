@@ -20,7 +20,7 @@ Szenerie: Abschluss-"Feier" nach bestandener Aufnahmeprüfung in F.L.O.W., als B
 
 "Gratulation, Pilot. Du gehörst jetzt zu den Elitepiloten von F.L.O.W., dem Federal Lunar Operation Wing. Unser Aufgabe ist es, wichtige Fracht, Nachrichten oder Passagiere sicher durch gefährliche Hyperraumrouten zu bringen. Zwar sind die Sprünge, die wir durchführen, gefährlich, aber die Gegenden des Hyperraums, die wir durchfliegen sind das einzige Vorkommen des wertvollen Crystalis. Daher ist es auch unsere Aufgabe, das Crystalis auf dem Weg einzusammeln. Dir wird ein passendes Schiff zugeteilt werden und bald wirst du deine ersten Sprünge fliegen. Willkommen bei FLOW!"
 
----
+----
 
 ==Hintergrundbilder==
 
@@ -36,7 +36,7 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 ==Session Extro==
 "Heimkomm-Bild", also Landung auf der Station
 
----
+----
 
 ==Scenario 1: Antimatter Problems==
 
@@ -87,7 +87,7 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 
 
----
+----
 
 ==Scenario 2: The Shadow war==
 
