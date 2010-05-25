@@ -28,6 +28,7 @@ import de.tum.in.flowgame.model.ScenarioSession.Type;
 import de.tum.in.flowgame.ui.screens.AfterRoundQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.BeforeSessionQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
+import de.tum.in.flowgame.ui.screens.GameSessionScreen;
 import de.tum.in.flowgame.ui.screens.IndividualHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
@@ -109,6 +110,7 @@ public class GameMenu implements Sprite, GameListener {
 		add(new PauseScreen());
 		add(new SettingsScreen());
 		add(new SystemInfoScreen());
+		add(new GameSessionScreen());
 		
 		// qn screens
 		add(new BeforeSessionQuestionnaireScreen());
@@ -140,11 +142,11 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	public void gameResumed(final GameLogic game) {
-		show(EmptyScreen.class);
+		show(GameSessionScreen.class);
 	}
 
 	public void gameStarted(final GameLogic game) {
-		show(EmptyScreen.class);
+		show(GameSessionScreen.class);
 	}
 
 	public void gameStopped(final GameLogic game) {
