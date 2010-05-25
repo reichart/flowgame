@@ -58,23 +58,23 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 "Congratulations! You just saved a lot of innocent lives there. Take a break on the asteroid base and await your next orders."
 
 ===Round Intro 4===
-"Hello, pilot! Your next jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor <insert name>.
+"Hello, pilot! Your next jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor Wilmut.
 His presence is required elsewhere, you will be briefed on take-off from Tau Ceti."
 
 ===Round Extro 4===
-"Welcome to Tau Ceti. No time for breaks this time, Professor <insert name> has already boarded your ship. You have performed great so far, we have faith that you will complete the following mission successfully!"
+"Welcome to Tau Ceti. No time for breaks this time, Professor Wilmut has already boarded your ship. You have performed great so far, we have faith that you will complete the following mission successfully!"
 
 ===Round Intro 5===
-"No time to lose, pilot. You will immediately commence your jump into the distant Hourglass Nebula, where at the transmitted coordinates you will find a gas harvesting station. Professor <insert name> will supervise the loading of your ship with a small amount of a special gas mix required in your final mission."
+"No time to lose, pilot. You will immediately commence your jump into the distant Hourglass Nebula, where at the transmitted coordinates you will find a gas harvesting station. Professor Wilmut will supervise the loading of your ship with a small amount of a special gas mix required in your final mission."
 
 ===Round Extro 5===
-"Well done. The gas mix is being loaded onto your ship, but stay ready for take-off at all time! As soon as the loading finished, Professor <insert name> will board your ship and you will be required to commence your next jump."
+"Well done. The gas mix is being loaded onto your ship, but stay ready for take-off at all time! As soon as the loading finished, Professor Wilmut will board your ship and you will be required to commence your next jump."
 
 ===Round Intro 6===
-"The final jump today will take you to a distant research station in deep space. The impact of dark matter on organisms is being investigated there. Sadly, an experiment went terribly wrong and the base staff hast lost control of large parts of the station to mutated organisms. Professor <insert name> will use the gas you picked up to initiate a complex process to undo the damage done there."
+"The final jump today will take you to a distant research station in deep space. The impact of dark matter on organisms is being investigated there. Sadly, an experiment went terribly wrong and the base staff hast lost control of large parts of the station to mutated organisms. Professor Wilmut will use the gas you picked up to initiate a complex process to undo the damage done there."
 
 ===Round Extro 6===
-"Very well done! Your fast action saved a lot of lives today. Professor <insert name> will stay on the station for a while to monitor the process. Most of the station's staff had barricaded themselves in the control room and survived that way."
+"Very well done! Your fast action saved a lot of lives today. Professor Wilmut will stay on the station for a while to monitor the process. Most of the station's staff had barricaded themselves in the control room and survived that way."
 
 ===Session Extro===
 "Thank you for your excellent work today, pilot. We sorted out a safe hyperspace route for you to return to F.L.O.W.'s base in the orbit of Luna. Once you arrive, you will be debriefed and dismissed for today."
