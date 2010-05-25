@@ -29,7 +29,7 @@ public class DDLGenerator {
 		
 		// once before each session
 		Questionnaire moodAndSkills = new Questionnaire("Stimmung",
-				"Bitte geben bei den unten stehenden Adjektivpaaren an, wie Sie sich im Moment fühlen.", true);
+				"Bitte geben Sie bei den unten stehenden Adjektivpaaren an, wie Sie sich im Moment fühlen.", true);
 		moodAndSkills.addLabelQuestion("zufrieden", "unzufrieden");
 		moodAndSkills.addLabelQuestion("energiegeladen", "energielos");
 		moodAndSkills.addLabelQuestion("gestresst", "entspannt");
@@ -41,7 +41,7 @@ public class DDLGenerator {
 		moodAndSkills.addLabelQuestion("begeistert", "gelangweilt");
 		moodAndSkills.addLabelQuestion("besorgt", "sorgenfrei");
 		
-		Questionnaire moodAndSkillsShort = new Questionnaire("Stimmung", "", true);
+		Questionnaire moodAndSkillsShort = new Questionnaire("Stimmung", "Wie fühlen Sie sich.", true);
 		moodAndSkillsShort.addLabelQuestion("ruhig", "nervös");
 		moodAndSkillsShort.addLabelQuestion("zufrieden","unzufrieden");
 		moodAndSkillsShort.addLabelQuestion("lustlos", "hoch motiviert"); 
@@ -96,15 +96,28 @@ public class DDLGenerator {
 		Function speedFunctionConstant3 = new ConstantFunction(0);
 		Function speedFunctionConstant4 = new ConstantFunction(30);
 		Function speedFunctionConstant5 = new ConstantFunction(60);
-		
+
 		final long timeLimit = 60*1000;
+				
+		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, timeLimit, df2);
+		ScenarioRound cSr1 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction));
+		ScenarioRound cSr2 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction));
+		ScenarioRound cSr3 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction));
+		ScenarioRound cSr4 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction));
+		ScenarioRound cSr5 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction));
 		
-		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, timeLimit, df2, howWasIt);
-		ScenarioRound cSr1 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction), howWasIt);
-		ScenarioRound cSr2 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction), howWasIt);
-		ScenarioRound cSr3 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction), howWasIt);
-		ScenarioRound cSr4 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction), howWasIt);
-		ScenarioRound cSr5 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction), howWasIt);
+		cBaselineRound.addQuestionnaire(howWasIt);
+		cBaselineRound.addQuestionnaire(moodAndSkillsShort);
+		cSr1.addQuestionnaire(howWasIt);
+		cSr1.addQuestionnaire(moodAndSkillsShort);
+		cSr2.addQuestionnaire(howWasIt);
+		cSr2.addQuestionnaire(moodAndSkillsShort);
+		cSr3.addQuestionnaire(howWasIt);
+		cSr3.addQuestionnaire(moodAndSkillsShort);
+		cSr4.addQuestionnaire(howWasIt);
+		cSr4.addQuestionnaire(moodAndSkillsShort);
+		cSr5.addQuestionnaire(howWasIt);
+		cSr5.addQuestionnaire(moodAndSkillsShort);
 		
 		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL, moodAndSkills);
 		constantScenarioSession.add(cBaselineRound);
@@ -136,7 +149,6 @@ public class DDLGenerator {
 		em.persist(d);
 		em.persist(intervalFunction);
 		em.persist(df2);
-		em.persist(howWasIt);
 		
 		em.getTransaction().commit();
 	}
