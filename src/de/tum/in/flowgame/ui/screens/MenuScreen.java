@@ -26,7 +26,7 @@ import de.tum.in.flowgame.ui.GameMenu;
  */
 public abstract class MenuScreen extends JPanel {
 
-	protected final GameMenu menu; // for subclasses
+	public static GameMenu menu; // for subclasses
 
 	private final BufferedImage backgroundImage;
 	
@@ -34,17 +34,16 @@ public abstract class MenuScreen extends JPanel {
 	 * @param menu the game menu managing all screens
 	 * @param backgroundImage the optional background image, <code>null</code> to disable
 	 */
-	protected MenuScreen(final GameMenu menu, final BufferedImage backgroundImage) {
+	protected MenuScreen(final BufferedImage backgroundImage) {
 		setLayout(new BorderLayout());
 		setDoubleBuffered(false);
 		setOpaque(false);
 
-		this.menu = menu;
 		this.backgroundImage = backgroundImage;
 	}
 	
-	protected MenuScreen(final GameMenu menu) {
-		this(menu, null);
+	protected MenuScreen() {
+		this(null);
 	}
 
 	public void build() {

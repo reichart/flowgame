@@ -11,7 +11,6 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import de.tum.in.flowgame.engine.SystemInfo;
-import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Displays technical information about the system, graphics, etc.
@@ -22,9 +21,7 @@ public class SystemInfoScreen extends MenuScreen {
 
 	private final JScrollPane systemInfoScroll;
 
-	public SystemInfoScreen(final GameMenu menu) {
-		super(menu);
-
+	public SystemInfoScreen() {
 		final StringWriter stringWriter = new StringWriter();
 		SystemInfo.getSystemInfo(new PrintWriter(stringWriter), menu.getGame());
 

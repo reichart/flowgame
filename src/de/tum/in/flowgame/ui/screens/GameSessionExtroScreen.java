@@ -4,16 +4,13 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioRound;
-import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Displayed after each gameplay-highscore-questionnaire block before the game
@@ -36,8 +33,8 @@ public class GameSessionExtroScreen extends MenuScreen {
 		}
 	});
 
-	public GameSessionExtroScreen(final GameMenu menu) {
-		super(menu, Utils.imageResource("/res/spacestation.png", null));
+	public GameSessionExtroScreen() {
+		super(Utils.imageResource("/res/spacestation.png", null));
 	}
 
 	@Override

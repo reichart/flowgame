@@ -8,7 +8,6 @@ import javax.swing.Action;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.Questionnaire;
-import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Displays a profile {@link Questionnaire} to assess the player's personality. 
@@ -26,9 +25,7 @@ public class ProfileScreen extends QuestionnaireScreen {
 	
 	private final Questionnaire qn;
 
-	public ProfileScreen(final GameMenu menu) {
-		super(menu);
-
+	public ProfileScreen() {
 		// TODO get this from server
 		this.qn = new Questionnaire("Persönlichkeitsbeschreibung",
 				"Die Folgenden eignen sich zur Beschreibung Ihrer eigenen Person (insgesamt 13 Aussagen). Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."

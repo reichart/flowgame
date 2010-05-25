@@ -12,7 +12,6 @@ import javax.swing.ScrollPaneConstants;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Questionnaire;
-import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.QuestionnairePanel;
 
 /**
@@ -24,8 +23,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	private final JScrollPane qscrollpane;
 	private final JLabel title;
 
-	public QuestionnaireScreen(final GameMenu menu) {
-		super(menu);
+	public QuestionnaireScreen() {
 		this.title = title("[notitle]");
 		this.qpanel = new QuestionnairePanel();
 		this.qscrollpane = new JScrollPane(qpanel,

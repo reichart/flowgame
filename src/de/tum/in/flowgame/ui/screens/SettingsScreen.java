@@ -16,8 +16,6 @@ import javax.swing.border.TitledBorder;
 
 import netscape.javascript.JSObject;
 
-import de.tum.in.flowgame.ui.GameMenu;
-
 /**
  * Allows changing game settings.
  */
@@ -72,9 +70,7 @@ public class SettingsScreen extends MenuScreen {
 		airplane.setSelected(!normalSteering);
 	}
 
-	public SettingsScreen(final GameMenu menu) {
-		super(menu);
-
+	public SettingsScreen() {
 		JSObject win = menu.getLogic().getWin();
 		if (win != null) {
 			Object[] cookieName = new Object[1];

@@ -4,7 +4,6 @@ import javax.swing.JComponent;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
-import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.SocialHighscore;
 
 /**
@@ -14,10 +13,9 @@ public class SocialHighscoresScreen extends HighscoresScreen {
 
 	private final SocialHighscore contentPanel;
 
-	public SocialHighscoresScreen(final GameMenu menu) {
-		super(menu);
-		final FacebookFriendCache friendCash = new FacebookFriendCache(this.menu.getLogic().getFacebookClient());
-		contentPanel = new SocialHighscore(this.menu.getLogic().getClient(), friendCash, this.menu.getLogic().getWin());
+	public SocialHighscoresScreen() {
+		final FacebookFriendCache friendCash = new FacebookFriendCache(menu.getLogic().getFacebookClient());
+		contentPanel = new SocialHighscore(menu.getLogic().getClient(), friendCash, menu.getLogic().getWin());
 	}
 
 	@Override

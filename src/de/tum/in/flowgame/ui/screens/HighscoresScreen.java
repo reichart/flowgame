@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import de.tum.in.flowgame.model.ScenarioRound;
-import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Abstract base class for displaying highscores.
@@ -31,10 +30,6 @@ public abstract class HighscoresScreen extends MenuScreen {
 			}
 		}
 	});
-
-	public HighscoresScreen(final GameMenu menu) {
-		super(menu);
-	}
 
 	@Override
 	public final Container getContents() {

@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
-import de.tum.in.flowgame.ui.GameMenu;
-
 /**
  * Displayed when the game is paused.
  */
@@ -18,10 +16,6 @@ public class PauseScreen extends MenuScreen {
 			menu.getLogic().unpause();
 		}
 	});
-
-	public PauseScreen(final GameMenu menu) {
-		super(menu);
-	}
 
 	@Override
 	public Container getContents() {
