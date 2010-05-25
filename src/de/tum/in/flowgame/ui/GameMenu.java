@@ -36,9 +36,12 @@ import de.tum.in.flowgame.ui.screens.ProfileScreen;
 import de.tum.in.flowgame.ui.screens.SettingsScreen;
 import de.tum.in.flowgame.ui.screens.SocialHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
+import de.tum.in.flowgame.ui.screens.story.AfterProfileScreen;
+import de.tum.in.flowgame.ui.screens.story.BeforeProfileScreen;
 import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
 import de.tum.in.flowgame.ui.screens.story.RoundIntroScreen;
 import de.tum.in.flowgame.ui.screens.story.SessionExtroScreen;
+import de.tum.in.flowgame.ui.screens.story.SessionIntroScreen;
 import de.tum.in.flowgame.ui.sprite.Sprite;
 
 public class GameMenu implements Sprite, GameListener {
@@ -97,19 +100,29 @@ public class GameMenu implements Sprite, GameListener {
 		MenuScreen.menu = this;
 		
 		// these require the above logic to be available
+		
+		// various screens
 		add(new EmptyScreen());
 		add(new MainScreen());
-		add(new BeforeSessionQuestionnaireScreen());
 		add(new SocialHighscoresScreen());
 		add(new IndividualHighscoresScreen());
 		add(new PauseScreen());
-		add(new AfterRoundQuestionnaireScreen());
-		add(new SessionExtroScreen());
 		add(new SettingsScreen());
 		add(new SystemInfoScreen());
+		
+		// qn screens
+		add(new BeforeSessionQuestionnaireScreen());
+		add(new AfterRoundQuestionnaireScreen());
 		add(new ProfileScreen());
+		
+		// story screens
+		add(new BeforeProfileScreen());
+		add(new AfterProfileScreen());
+		add(new SessionIntroScreen());
+		add(new SessionIntroScreen());
 		add(new RoundIntroScreen());
 		add(new RoundExtroScreen());
+		add(new SessionExtroScreen());
 		
 		show(EmptyScreen.class);
 	}
