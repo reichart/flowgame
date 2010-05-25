@@ -1,12 +1,23 @@
 package de.tum.in.flowgame.ui.screens;
 
+import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import de.tum.in.flowgame.GameLogic;
@@ -19,28 +30,78 @@ import de.tum.in.flowgame.ui.QuestionnairePanel;
  */
 public abstract class QuestionnaireScreen extends MenuScreen {
 
-	private final QuestionnairePanel qpanel;
-	private final JScrollPane qscrollpane;
-	private final JLabel title;
+	private final JPanel cardPanel;
+	private final JTextArea task = new JTextArea();
+	private CardLayout layout;
+	private int currentPanel;
+	private JLabel title;
+	private final JButton next = new JButton(new AbstractAction("Continue") {
+		
+		public void actionPerformed(ActionEvent e) {
+			if (currentPanel < questionnaires.size()-1) { // more questionnaires to display?
+				layout.next(cardPanel);
+				title.setText(questionnaires.get(currentPanel).getName());
+				task.setText(questionnaires.get(currentPanel).getDescription());
+				currentPanel++;
+			} else {
+				next().actionPerformed(e);
+			}
+		}
+		
+	});
+	private List<Questionnaire> questionnaires;
+	private final JPanel main;
+	
 
 	public QuestionnaireScreen() {
-		this.title = title("[notitle]");
-		this.qpanel = new QuestionnairePanel();
-		this.qscrollpane = new JScrollPane(qpanel,
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		super(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
+		layout = new CardLayout();
+		cardPanel = new JPanel(layout);
+//		cardPanel.setPreferredSize(new Dimension(500, 350));
+		currentPanel = 0;
+		main = new JPanel();
+		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+		
+		task.setWrapStyleWord(true);
+		task.setLineWrap(true);
+		Font f = new Font(Font.SANS_SERIF, Font.BOLD, 12);
+		task.setFont(f );
+		
+		main.add(task);
+		main.add(Box.createVerticalStrut(7));
+		main.add(cardPanel);
+		
+		questionnaires = new ArrayList<Questionnaire>();
 	}
 
 	@Override
 	public Container getContents() {
-		return centered(title, qscrollpane, new JButton(next()));
+		System.err.println("QuestionnaireTitle " + title);
+		title = title("");
+		return centered(title, main, next);
 	}
 
 	@Override
 	public final void update(final GameLogic logic) throws Exception {
-		final Questionnaire q = updateQuestionnaire(logic);
-		title.setText(q.getName());
-		qpanel.setQuestionnaire(q);
+		questionnaires = updateQuestionnaire(logic);
+		currentPanel = 0;
+		
+		System.err.println("QuestionnaireScreen.update() building new qn panels");
+		
+		cardPanel.removeAll();		
+		for (Questionnaire questionnaire : questionnaires) {
+			System.err.println("adding " + questionnaire.getName());
+			QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
+			
+			JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			cardPanel.add(qscrollpane, "Questionnaire" + questionnaires.indexOf(questionnaire));
+		}
+		
+		title.setText(questionnaires.get(currentPanel).getName());
+		task.setText(questionnaires.get(currentPanel).getDescription());
+		
+		System.err.println("QuestionnaireScreen.update() revalidating, viewport, position 0,0");
+		
 	}
 
 	/**
@@ -48,11 +109,21 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 *         {@link Questionnaire}
 	 */
 	protected List<Answer> getAnswers() {
-		return qpanel.getAnswers();
+		List<Answer> answers = new ArrayList<Answer>();
+		for (Component component : cardPanel.getComponents()) {
+			if (component instanceof QuestionnairePanel) {
+				List<Answer> tempAnswers = ((QuestionnairePanel) component).getAnswers();
+				for (Answer answer : tempAnswers) {
+					answers.add(answer);
+				}
+			}
+			
+		}
+		return answers;
 	}
 
 	/**
-	 * @return action to proceed to next screen
+	 * @return button to proceed to next screen
 	 */
 	protected abstract Action next();
 
@@ -64,6 +135,6 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 * 
 	 * @see #update(GameLogic)
 	 */
-	protected abstract Questionnaire updateQuestionnaire(GameLogic logic) throws Exception;
+	protected abstract List<Questionnaire> updateQuestionnaire(GameLogic logic) throws Exception;
 
 }

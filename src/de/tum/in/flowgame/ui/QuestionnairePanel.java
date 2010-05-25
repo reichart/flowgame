@@ -55,8 +55,9 @@ public class QuestionnairePanel extends JPanel {
 	// }
 	// }
 
-	public QuestionnairePanel() {
+	public QuestionnairePanel(Questionnaire q) {
 		super(new BorderLayout());
+		setQuestionnaire(q);
 	}
 
 	public List<Answer> getAnswers() {
@@ -68,8 +69,8 @@ public class QuestionnairePanel extends JPanel {
 		return answers;
 	}
 
-	public void setQuestionnaire(Questionnaire questionnaire) {
-		this.removeAll();
+	private void setQuestionnaire(Questionnaire questionnaire) {
+//		this.removeAll();
 		this.questionnaire = questionnaire;
 		// boolean first = true;
 		// Create Labels with Questions and add sliders to them
@@ -138,11 +139,6 @@ public class QuestionnairePanel extends JPanel {
 		textArea.setWrapStyleWord(true);
 		textArea.setOpaque(false);
 
-		final JPanel titlePanel = new JPanel(new BorderLayout());
-		titlePanel.add(new JLabel(questionnaire.getName()), BorderLayout.NORTH);
-		titlePanel.add(textArea, BorderLayout.CENTER);
-
 		this.add(questions, BorderLayout.CENTER);
-		this.add(titlePanel, BorderLayout.NORTH);
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 import org.apache.commons.logging.Log;
@@ -34,7 +35,7 @@ public class GameSessionExtroScreen extends MenuScreen {
 	});
 
 	public GameSessionExtroScreen() {
-		super(Utils.imageResource("/res/spacestation.png", null));
+		super(Utils.imageResource("/res/spacestation.png", null), BorderFactory.createEmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
 	}
 
 	@Override

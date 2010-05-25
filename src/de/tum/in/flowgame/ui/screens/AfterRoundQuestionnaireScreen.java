@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -10,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Questionnaire;
+import de.tum.in.flowgame.ui.GameMenu;
 
 /**
  * Displays the "how was it" questionnaire after the highscores.
@@ -25,14 +27,18 @@ public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 		}
 	};
 
+	public AfterRoundQuestionnaireScreen() {
+		super();
+	}
+
 	@Override
 	protected Action next() {
 		return next;
 	}
 
 	@Override
-	protected Questionnaire updateQuestionnaire(final GameLogic logic) {
+	protected List<Questionnaire> updateQuestionnaire(final GameLogic logic) {
 		log.info("updating to after/scenarioround qn");
-		return logic.getCurrentScenarioRound().getQuestionnaire();
+		return logic.getCurrentScenarioRound().getQuestionnaires();
 	}
 }
