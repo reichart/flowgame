@@ -3,7 +3,7 @@ package de.tum.in.flowgame.ui.screens;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
+import javax.swing.Action;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,20 +19,20 @@ public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final static Log log = LogFactory.getLog(AfterRoundQuestionnaireScreen.class);
 	
-	private final JButton play = new JButton(new AbstractAction("Play!") {
+	private final Action next = new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveRoundAnswers(getAnswers());
 			menu.show(GameSessionExtroScreen.class);
 		}
-	});
+	};
 
 	public AfterRoundQuestionnaireScreen(final GameMenu menu) {
 		super(menu);
 	}
 
 	@Override
-	protected JButton nextButton() {
-		return play;
+	protected Action next() {
+		return next;
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
+import javax.swing.Action;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,20 +21,20 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final static Log log = LogFactory.getLog(BeforeSessionQuestionnaireScreen.class);
 	
-	private final JButton play = new JButton(new AbstractAction("Play!") {
+	private final Action next = new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveSessionAnswers(getAnswers());
 			menu.show(GameSessionIntroScreen.class);
 		}
-	});
+	};
 
 	public BeforeSessionQuestionnaireScreen(final GameMenu menu) {
 		super(menu);
 	}
 
 	@Override
-	protected JButton nextButton() {
-		return play;
+	protected Action next() {
+		return next;
 	}
 
 	@Override
