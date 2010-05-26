@@ -30,11 +30,13 @@ import de.tum.in.flowgame.strategy.Trend;
 public class GameLogic implements Runnable {
 
 	private final static Log log = LogFactory.getLog(GameLogic.class);
-	
+
 	public final static int MAX_ASTEROIDS = 10;
 	public final static int MAX_FUEL = 10;
 	private static final int pointsForFuel = 10;
 	private static final int pointsForAsteroid = 5;
+
+	private static boolean paused = false;
 
 	private final Client client;
 
@@ -98,9 +100,9 @@ public class GameLogic implements Runnable {
 		double rating = getRating();
 		long increase = (long) (rating * 10 * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
-		
+
 		lastPointsAdded = increase;
-		
+
 		fireCollided(item);
 	}
 
@@ -121,17 +123,17 @@ public class GameLogic implements Runnable {
 		log.info("running");
 
 		fireGameStarted();
-		
+
 		boolean timeOver = false;
 		Long maxPlaytime = getCurrentScenarioRound().getExpectedPlaytime();
-		
+
 		while (!timeOver) {
 			try {
 				Thread.sleep(1000);
 			} catch (final InterruptedException ex) {
 				// ignore
 			}
-			
+
 			if (maxPlaytime != null) {
 				timeOver = getElapsedTime() > maxPlaytime;
 			}
@@ -148,11 +150,11 @@ public class GameLogic implements Runnable {
 			final CustomFacebookClient fb = getFacebookClient();
 			final Set<Long> persons = JSONUtils.toLongs(fb.friends_get());
 			persons.add(getPlayerId());
-			
+
 			Client client = getClient();
 			final List<Highscore> globalScores = client.getHighscores(new ArrayList<Long>(persons));
-			
-			//determine rank of player within his friends
+
+			// determine rank of player within his friends
 			int counter = 1;
 			for (final Iterator<Highscore> iterator = globalScores.iterator(); iterator.hasNext();) {
 				final Highscore highscore = iterator.next();
@@ -165,7 +167,7 @@ public class GameLogic implements Runnable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	public void addListener(final GameListener listener) {
@@ -198,7 +200,7 @@ public class GameLogic implements Runnable {
 		}
 
 		log.info("starting new game round");
-		
+
 		this.fuelTrend = new Trend();
 		this.asteroidTrend = new Trend();
 		this.fuelcansCollected = 0;
@@ -227,11 +229,13 @@ public class GameLogic implements Runnable {
 
 	public void pause() {
 		pauseStartTime = System.currentTimeMillis();
+		paused = true;
 		fireGamePaused();
 	}
 
 	public void unpause() {
 		startTimeWithoutPause += (System.currentTimeMillis() - pauseStartTime);
+		paused = false;
 		fireGameResumed();
 	}
 
@@ -268,7 +272,7 @@ public class GameLogic implements Runnable {
 	public long getPlayerId() {
 		return getPlayer().getId();
 	}
-	
+
 	public Person getPlayer() {
 		return player;
 	}
@@ -290,9 +294,13 @@ public class GameLogic implements Runnable {
 	}
 
 	public long getElapsedTime() {
-		return System.currentTimeMillis() - startTimeWithoutPause;
+		if (paused) {
+			return pauseStartTime - startTimeWithoutPause;
+		} else {
+			return System.currentTimeMillis() - startTimeWithoutPause;
+		}
 	}
-	
+
 	public long getRemainingTime() {
 		return getCurrentScenarioRound().getExpectedPlaytime() - getElapsedTime();
 	}
@@ -300,7 +308,7 @@ public class GameLogic implements Runnable {
 	public long getScore() {
 		return gameRound.getScore().getScore();
 	}
-	
+
 	public long getPointsAdded() {
 		return lastPointsAdded;
 	}
@@ -308,7 +316,7 @@ public class GameLogic implements Runnable {
 	public double getRating() {
 		return rating;
 	}
-	
+
 	public DifficultyFunction getDifficultyFunction() {
 		return getCurrentScenarioRound().getDifficultyFunction();
 	}
@@ -316,11 +324,11 @@ public class GameLogic implements Runnable {
 	public ScenarioSession getCurrentScenarioSession() {
 		return gameSession.getScenarioSession();
 	}
-	
+
 	public void setBaseline(long baseline) {
 		gameSession.setBaseline(new Difficulty(0, baseline, 0));
 	}
-	
+
 	public Difficulty getBaseline() {
 		return gameSession.getBaseline();
 	}
@@ -349,17 +357,17 @@ public class GameLogic implements Runnable {
 		gameRound.setAnswers(answers);
 		gameRound = null; // if this breaks stuff, the stuff is broken
 	}
-	
+
 	public void saveSessionAnswers(final List<Answer> answers) {
 		gameSession.setAnswers(answers);
 	}
-	
+
 	public JSObject getWin() {
 		return win;
 	}
 
 	public void setRating(double difficultyRating) {
-		rating = difficultyRating;		
+		rating = difficultyRating;
 	}
 
 }
