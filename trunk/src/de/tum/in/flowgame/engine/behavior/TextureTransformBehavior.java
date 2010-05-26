@@ -9,15 +9,19 @@ import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnElapsedTime;
 import javax.vecmath.Vector3d;
 
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.GameLogicConsumer;
 import de.tum.in.flowgame.engine.Game3D;
 
-public class TextureTransformBehavior extends Behavior {
+public class TextureTransformBehavior extends Behavior implements GameLogicConsumer {
 
 	private final TextureAttributes attribs;
 	private final Transform3D transform;
 	private final WakeupCondition condition;
 
 	private final Vector3d vector;
+
+	private GameLogic logic;
 
 	public TextureTransformBehavior(final TextureAttributes attribs) {
 		this.attribs = attribs;
@@ -40,25 +44,31 @@ public class TextureTransformBehavior extends Behavior {
 	private int deltaY = 0;
 
 	private final static int STEPS = 400;
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void processStimulus(final Enumeration/* <WakeupCriterion> */criteria) {
+		if (!logic.isPaused()) {
+			vector.x = deltaX;
+			vector.y = -deltaY;
+			vector.scale(1d / STEPS);
 
-		vector.x = deltaX;
-		vector.y = -deltaY;
-		vector.scale(1d / STEPS);
+			transform.set(vector);
+			attribs.setTextureTransform(transform);
 
-		transform.set(vector);
-		attribs.setTextureTransform(transform);
+			deltaX++;
+			deltaY++;
 
-		deltaX++;
-		deltaY++;
-
-		deltaX %= STEPS;
-		deltaY %= STEPS;
-
+			deltaX %= STEPS;
+			deltaY %= STEPS;
+		}
+		
 		wakeupOn(condition);
+	}
+	
+	public void setGameLogic(final GameLogic logic) {
+		this.logic = logic;
+		
 	}
 
 }

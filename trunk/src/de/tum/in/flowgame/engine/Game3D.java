@@ -78,6 +78,7 @@ public class Game3D extends Canvas3D {
 	private CreateCollidables cc;
 	private CollisionBehavior collisionBehavior;
 	private CreateNewCollidablesBehavior cncb;
+	private Tunnel tunnel;
 
 	private final TransformGroup viewTG;
 
@@ -98,6 +99,7 @@ public class Game3D extends Canvas3D {
 				game.addListener(overlay);
 				collisionBehavior.setGameLogic(game);
 				cncb.setGameLogic(game);
+				tunnel.setGameLogic(game);
 			}
 
 			@Override
@@ -107,6 +109,7 @@ public class Game3D extends Canvas3D {
 				game.removeListener(overlay);
 				collisionBehavior.setGameLogic(null);
 				cncb.setGameLogic(null);
+				tunnel.setGameLogic(null);
 			}
 
 			@Override
@@ -194,7 +197,7 @@ public class Game3D extends Canvas3D {
 		forwardGroup.addChild(ship);
 		collidables.addChild(forwardGroup);
 		
-		Tunnel tunnel = new Tunnel();
+		tunnel = new Tunnel();
 		forwardGroup.addChild(tunnel);
 
 		this.cc = new CreateCollidables(collidables);
