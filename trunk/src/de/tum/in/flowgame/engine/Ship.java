@@ -61,6 +61,7 @@ public class Ship extends TransformGroup implements GameListener {
 	private final Timer flashTimer;
 	private final SpeedChangeBehavior speedChange;
 	private final ForwardBehavior forwardBehavior;
+	private final Tunnel tunnel;
 	
 	/**
 	 * Creates the ship.
@@ -69,7 +70,9 @@ public class Ship extends TransformGroup implements GameListener {
 	 *            The {@link TransformGroup} of our view.
 	 * @throws IOException
 	 */
-	public Ship(final TransformGroup viewTG, ForwardBehavior forwardBehavior) throws IOException {
+	public Ship(final TransformGroup viewTG, ForwardBehavior forwardBehavior, Tunnel tunnel) throws IOException {
+		this.tunnel = tunnel;
+		
 		this.flashTimer = new Timer("FlashTimer", true);
 		this.setBoundsAutoCompute(false);
 
@@ -97,7 +100,7 @@ public class Ship extends TransformGroup implements GameListener {
 		ship.addChild(shipNavigationBehavior);
 		shipNavigationBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		
-		speedChange = new SpeedChangeBehavior(forwardBehavior);
+		speedChange = new SpeedChangeBehavior(forwardBehavior, tunnel.getTTB());
 		speedChange.setSchedulingBounds(Game3D.WORLD_BOUNDS);
 		addChild(speedChange);
 

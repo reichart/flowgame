@@ -41,6 +41,10 @@ public class Tunnel extends TransformGroup implements GameLogicConsumer {
 		addChild(Helper.translate(Helper.rotate(body, 90, 0, 0), 0, 0, -TUNNEL_LENGTH / 2));
 		addChild(ttb);
 	}
+	
+	public TextureTransformBehavior getTTB(){
+		return ttb;
+	}
 
 	public void setGameLogic(final GameLogic game) {
 		ttb.setGameLogic(game);
