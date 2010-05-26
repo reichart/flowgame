@@ -20,6 +20,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Questionnaire;
@@ -30,6 +33,8 @@ import de.tum.in.flowgame.ui.QuestionnairePanel;
  */
 public abstract class QuestionnaireScreen extends MenuScreen {
 
+	private final static Log log = LogFactory.getLog(QuestionnaireScreen.class);
+	
 	private final JPanel cardPanel;
 	private final JTextArea task = new JTextArea();
 	private CardLayout layout;
@@ -76,9 +81,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		System.err.println("QuestionnaireTitle " + title);
-		title = title("");
-		return centered(title, main, next);
+		return centered(title = title(""), main, next);
 	}
 
 	@Override
@@ -86,11 +89,11 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 		questionnaires = updateQuestionnaire(logic);
 		currentPanel = 0;
 		
-		System.err.println("QuestionnaireScreen.update() building new qn panels");
+		log.info("building new qn panels");
 		
 		cardPanel.removeAll();		
 		for (Questionnaire questionnaire : questionnaires) {
-			System.err.println("adding " + questionnaire.getName());
+			log.info("adding " + questionnaire.getName());
 			QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
 			
 			JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -99,9 +102,6 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 		
 		title.setText(questionnaires.get(currentPanel).getName());
 		task.setText(questionnaires.get(currentPanel).getDescription());
-		
-		System.err.println("QuestionnaireScreen.update() revalidating, viewport, position 0,0");
-		
 	}
 
 	/**

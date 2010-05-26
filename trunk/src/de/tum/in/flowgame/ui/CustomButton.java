@@ -22,10 +22,15 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.tum.in.flowgame.util.Browser;
 
 public class CustomButton extends JButton {
 
+	private final static Log log = LogFactory.getLog(CustomButton.class);
+	
 	private Image picture;
 	private Long score;
 	private final Font font;
@@ -45,7 +50,7 @@ public class CustomButton extends JButton {
 		} catch (final Exception e) {
 			img = new BufferedImage(70, 100, BufferedImage.TYPE_4BYTE_ABGR);
 			img = makeColorTransparent(img, Color.BLACK);
-			System.err.println("Buttons have no background image.");
+			log.warn("Buttons have no background image.");
 		}
 		return img;
 	}

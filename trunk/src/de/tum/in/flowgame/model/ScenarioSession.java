@@ -63,8 +63,6 @@ public class ScenarioSession extends AbstractEntity {
 		for (Iterator<ScenarioRound> iterator = rounds.iterator(); iterator.hasNext();) {
 			ScenarioRound scenarioRound = iterator.next();
 			if (scenarioRound.getPosition() == roundsPlayed) {
-				System.err.println("nextRound() returns round " + roundsPlayed + "/" + rounds.size() + " -- increment: " + increment);
-				
 				// only actually change to the next round if told to do so: This
 				// allows us to "peek" at the next round without activating it
 				if (increment) {

@@ -151,7 +151,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 				lastKeyEventTime = when;
 				return;
 			}
-			// System.err.println(when-lastKeyEventTime);
 			lastKeyEventTime = when;
 		}
 

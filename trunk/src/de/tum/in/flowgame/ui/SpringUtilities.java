@@ -76,8 +76,7 @@ public class SpringUtilities {
         try {
             layout = (SpringLayout)parent.getLayout();
         } catch (ClassCastException exc) {
-            System.err.println("The first argument to makeGrid must use SpringLayout.");
-            return;
+            throw new IllegalArgumentException("The first argument to makeGrid must use SpringLayout.", exc);
         }
 
         Spring xPadSpring = Spring.constant(xPad);
@@ -179,8 +178,7 @@ public class SpringUtilities {
         try {
             layout = (SpringLayout)parent.getLayout();
         } catch (ClassCastException exc) {
-            System.err.println("The first argument to makeCompactGrid must use SpringLayout.");
-            return;
+        	throw new IllegalArgumentException("The first argument to makeCompactGrid must use SpringLayout.", exc);
         }
 
         //Align all cells in each column and make them the same width.
