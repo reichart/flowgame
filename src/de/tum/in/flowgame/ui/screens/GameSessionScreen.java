@@ -30,9 +30,6 @@ public class GameSessionScreen extends MenuScreen {
 	private final JToggleButton steering;
 
 	public GameSessionScreen() {
-		// load sound preferences from cookie if available
-		setSoundMuted(Boolean.parseBoolean(getCookie(SOUND)));
-		
 		sound = new JToggleButton(new AbstractAction(null, SOUND_ON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean muted = sound.isSelected();
@@ -47,9 +44,6 @@ public class GameSessionScreen extends MenuScreen {
 		sound.setContentAreaFilled(false);
 		sound.setSelectedIcon(SOUND_OFF);
 
-		// load steering preferences from cookie if available
-		setSteering(Boolean.parseBoolean(getCookie(STEERING)));
-		
 		steering = new JToggleButton(new AbstractAction(null, AIRPLANE_ICON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean normal = steering.isSelected();
@@ -63,6 +57,10 @@ public class GameSessionScreen extends MenuScreen {
 		steering.setFocusPainted(false);
 		steering.setContentAreaFilled(false);
 		steering.setSelectedIcon(NORMAL_ICON);
+		
+		// load user preferences from cookie if available
+		setSoundMuted(Boolean.parseBoolean(getCookie(SOUND)));
+		setSteering(Boolean.parseBoolean(getCookie(STEERING)));
 	}
 
 	private void setSoundMuted(final boolean muted) {
