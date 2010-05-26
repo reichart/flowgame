@@ -191,15 +191,15 @@ public class Game3D extends Canvas3D {
 
 		ForwardBehavior forwardBehavior = new ForwardBehavior(forwardGroup, viewTG);
 		forwardBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
+
+		tunnel = new Tunnel();
+		forwardGroup.addChild(tunnel);
 		
-		ship = new Ship(viewTG, forwardBehavior);
+		ship = new Ship(viewTG, forwardBehavior, tunnel);
 		ship.addChild(forwardBehavior);
 		forwardGroup.addChild(ship);
 		collidables.addChild(forwardGroup);
 		
-		tunnel = new Tunnel();
-		forwardGroup.addChild(tunnel);
-
 		this.cc = new CreateCollidables(collidables);
 		this.cncb = new CreateNewCollidablesBehavior(cc, ship);
 		cncb.setSchedulingBounds(Game3D.WORLD_BOUNDS);

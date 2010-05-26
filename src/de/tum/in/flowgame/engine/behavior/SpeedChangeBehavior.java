@@ -19,6 +19,7 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 
 	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
 	private final ForwardBehavior forwardNavigator;
+	private final TextureTransformBehavior ttb;
 	private double speed;
 	private double maxSpeed;
 	private GameLogic gameLogic;
@@ -26,8 +27,9 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 
 	private boolean pause;
 
-	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator) {
+	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator, final TextureTransformBehavior ttb) {
 		this.forwardNavigator = forwardNavigator;
+		this.ttb = ttb;
 		this.strategy = new FunctionStrategy2();
 		pause = false;
 		Utils.export(this);
@@ -63,6 +65,7 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 				}
 
 				forwardNavigator.setFwdSpeed(-speed);
+				ttb.setFwdSpeed(-speed);
 				//forwardNavigator.setFwdSpeed(0);
 			}
 			wakeupOn(newFrame);
