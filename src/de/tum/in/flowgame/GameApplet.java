@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import com.google.code.facebookapi.ProfileField;
@@ -31,6 +33,8 @@ import de.tum.in.flowgame.util.JSObjectBrowser;
  */
 public class GameApplet extends Applet {
 
+	private final static Log log = LogFactory.getLog(GameApplet.class);
+	
 	private final Game3D game;
 
 	private CustomFacebookClient facebook;
@@ -79,12 +83,12 @@ public class GameApplet extends Applet {
 		final String sessionKey;
 
 		if (isActive()) {
-			System.err.println("using: applet deployment path");
+			log.info("using: applet deployment path");
 			server = getCodeBase().toString();
 			sessionKey = getParameter("sessionKey");
 			sessionSecret = getParameter("sessionSecret");
 		} else {
-			System.err.println("using: local testing path");
+			log.warn("using: local testing path");
 			server = "http://localhost:8080/flowgame/";
 			sessionSecret = "2957c00dd86887f79b3c4827157ac2ab"; // fb_sig_ss
 			sessionKey = "b09011facca373ce59cc53a6-1071363107"; // fb_sig_session_key
@@ -111,7 +115,7 @@ public class GameApplet extends Applet {
 			if (player == null) {
 				newPlayer = true;
 
-				System.err.println("##### creating new player");
+				log.info("creating new player");
 
 				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
 						ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
@@ -133,15 +137,15 @@ public class GameApplet extends Applet {
 					player.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse(birthday));
 					player.setPlace(country);
 					player.setSex(sex);
-				} catch (Exception e) {
-					System.err.println(userInfo);
-					throw e;
+				} catch (final Exception ex) {
+					log.error(userInfo, ex);
+					throw ex;
 				}
 
-				System.err.println("##### created new player: " + player);
+				log.info("created new player: " + player);
 			} else {
 				newPlayer = false;
-				System.err.println("##### existing player: " + player);
+				log.info("existing player: " + player);
 			}
 
 			final Browser browser = JSObjectBrowser.from(this);

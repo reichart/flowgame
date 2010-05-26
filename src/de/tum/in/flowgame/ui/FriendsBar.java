@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 
 import com.google.code.facebookapi.FacebookException;
@@ -24,6 +26,8 @@ import de.tum.in.flowgame.util.Browser;
 
 public class FriendsBar extends JPanel {
 
+	private final static Log log = LogFactory.getLog(FriendsBar.class);
+	
 	private static final int MAX_NUMBER_OF_FRIENDS_SHOWN = 7;
 	public static final int INNER_MARGIN = 10;
 	public static final int LEFT_BORDER = 25;
@@ -153,7 +157,7 @@ public class FriendsBar extends JPanel {
 					friendButtons.get(i).setPicture(f.getPicture());
 					friendButtons.get(i).setScore(highscore.getScore());
 				} else {
-					System.err.println("Friend Object could not be found");
+					log.warn("Friend Object could not be found");
 				}
 			} else {
 				friendButtons.get(i).setPicture(null);

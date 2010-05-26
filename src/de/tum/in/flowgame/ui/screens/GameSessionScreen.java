@@ -33,7 +33,6 @@ public class GameSessionScreen extends MenuScreen {
 		sound = new JToggleButton(new AbstractAction(null, SOUND_ON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean muted = sound.isSelected();
-//				System.err.println("setting sound to " + (muted ? "off" : "on"));
 				setSoundMuted(muted);
 				setCookie(SOUND, muted);
 			}
@@ -47,7 +46,6 @@ public class GameSessionScreen extends MenuScreen {
 		steering = new JToggleButton(new AbstractAction(null, AIRPLANE_ICON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean normal = steering.isSelected();
-//				System.err.println("setting steering to " + (normal ? "normal" : "airplane"));
 				setSteering(normal);
 				setCookie(STEERING, normal);
 			}
