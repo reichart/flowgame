@@ -66,10 +66,12 @@ public class GameSessionScreen extends MenuScreen {
 	}
 
 	private void setSoundMuted(final boolean muted) {
+		sound.setSelected(muted);
 		Sounds.setMuted(muted);
 	}
 	
 	private void setSteering(final boolean normal) {
+		steering.setSelected(normal);
 		menu.getGame().getShip().getControls().setNormalSteering(normal);
 	}
 	
