@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,74 +35,83 @@ import de.tum.in.flowgame.ui.QuestionnairePanel;
 public abstract class QuestionnaireScreen extends MenuScreen {
 
 	private final static Log log = LogFactory.getLog(QuestionnaireScreen.class);
-	
+
+	private final CardLayout cardLayout;
 	private final JPanel cardPanel;
-	private final JTextArea task = new JTextArea();
-	private CardLayout layout;
+
+	private final JTextArea description;
+	private final JLabel title = title("");
+
+	private List<Questionnaire> questionnaires;
 	private int currentPanel;
-	private JLabel title;
+
 	private final JButton next = new JButton(new AbstractAction("Continue") {
-		
-		public void actionPerformed(ActionEvent e) {
-			if (currentPanel < questionnaires.size()-1) { // more questionnaires to display?
-				layout.next(cardPanel);
-				title.setText(questionnaires.get(currentPanel).getName());
-				task.setText(questionnaires.get(currentPanel).getDescription());
+
+		public void actionPerformed(final ActionEvent e) {
+			final boolean moreQuestionnaires = currentPanel < questionnaires.size() - 1;
+			if (moreQuestionnaires) {
+				cardLayout.next(cardPanel);
+				update();
 				currentPanel++;
 			} else {
 				next().actionPerformed(e);
 			}
 		}
-		
+
 	});
-	private List<Questionnaire> questionnaires;
-	private final JPanel main;
-	
 
 	public QuestionnaireScreen() {
 		super(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-		layout = new CardLayout();
-		cardPanel = new JPanel(layout);
-//		cardPanel.setPreferredSize(new Dimension(500, 350));
-		currentPanel = 0;
-		main = new JPanel();
-		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-		
-		task.setWrapStyleWord(true);
-		task.setLineWrap(true);
-		Font f = new Font(Font.SANS_SERIF, Font.BOLD, 12);
-		task.setFont(f );
-		
-		main.add(task);
-		main.add(Box.createVerticalStrut(7));
-		main.add(cardPanel);
-		
-		questionnaires = new ArrayList<Questionnaire>();
+
+		cardLayout = new CardLayout();
+		cardPanel = new JPanel(cardLayout);
+
+		description = new JTextArea();
+		description.setEditable(false);
+		description.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+		description.setWrapStyleWord(true);
+		description.setLineWrap(true);
+	}
+
+	private JComponent mainUI() {
+		final JComponent panel = new Box(BoxLayout.Y_AXIS);
+		panel.add(description);
+		panel.add(Box.createVerticalStrut(7));
+		panel.add(cardPanel);
+		return panel;
 	}
 
 	@Override
 	public Container getContents() {
-		return centered(title = title(""), main, next);
+		return centered(title, mainUI(), next);
 	}
 
 	@Override
 	public final void update(final GameLogic logic) throws Exception {
 		questionnaires = updateQuestionnaire(logic);
 		currentPanel = 0;
-		
+
 		log.info("building new qn panels");
-		
-		cardPanel.removeAll();		
-		for (Questionnaire questionnaire : questionnaires) {
+
+		cardPanel.removeAll();
+		for (final Questionnaire questionnaire : questionnaires) {
 			log.info("adding " + questionnaire.getName());
-			QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
-			
-			JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			cardPanel.add(qscrollpane, "Questionnaire" + questionnaires.indexOf(questionnaire));
+			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
+			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			// card name isn't used by CardLayout complains if none is given
+			final String cardName = String.valueOf(questionnaire.getId());
+			cardPanel.add(qscrollpane, cardName);
 		}
-		
-		title.setText(questionnaires.get(currentPanel).getName());
-		task.setText(questionnaires.get(currentPanel).getDescription());
+
+		update();
+	}
+
+	private void update() {
+		final Questionnaire qn = questionnaires.get(currentPanel);
+		title.setText(qn.getName());
+		description.setText(qn.getDescription());
 	}
 
 	/**
@@ -109,15 +119,13 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 *         {@link Questionnaire}
 	 */
 	protected List<Answer> getAnswers() {
-		List<Answer> answers = new ArrayList<Answer>();
-		for (Component component : cardPanel.getComponents()) {
+		final List<Answer> answers = new ArrayList<Answer>();
+		for (final Component component : cardPanel.getComponents()) {
 			if (component instanceof QuestionnairePanel) {
-				List<Answer> tempAnswers = ((QuestionnairePanel) component).getAnswers();
-				for (Answer answer : tempAnswers) {
-					answers.add(answer);
-				}
+				final QuestionnairePanel qPanel = (QuestionnairePanel) component;
+				answers.addAll(qPanel.getAnswers());
 			}
-			
+
 		}
 		return answers;
 	}
@@ -132,7 +140,6 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 * 
 	 * @param logic
 	 * @return a (possibly updated) {@link Questionnaire} to display
-	 * 
 	 * @see #update(GameLogic)
 	 */
 	protected abstract List<Questionnaire> updateQuestionnaire(GameLogic logic) throws Exception;
