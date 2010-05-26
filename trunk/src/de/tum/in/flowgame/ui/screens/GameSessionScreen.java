@@ -1,18 +1,10 @@
 package de.tum.in.flowgame.ui.screens;
 
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JToggleButton;
-
-import netscape.javascript.JSObject;
 
 import com.kitfox.svg.app.beans.SVGIcon;
 
@@ -82,25 +74,11 @@ public class GameSessionScreen extends MenuScreen {
 	}
 	
 	private void setCookie(final String name, final boolean value) {
-		final String cValue = String.valueOf(value);
-		final JSObject win = menu.getLogic().getWin();
-		if (win != null) {
-			final Object[] newCookie = new Object[2];
-			newCookie[0] = name;
-			newCookie[1] = cValue;
-			win.call("set_cookie", newCookie);
-		}
+		menu.getLogic().getBrowser().setCookie(name, String.valueOf(value));
 	}
 
 	private String getCookie(final String name) {
-		final JSObject win = menu.getLogic().getWin();
-		if (win != null) {
-			final Object[] cookieName = new Object[1];
-			cookieName[0] = name;
-			final String value = (String) win.call("get_cookie", cookieName);
-			return value;
-		}
-		return null;
+		return menu.getLogic().getBrowser().getCookie(name);
 	}
 
 	@Override

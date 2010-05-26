@@ -12,8 +12,6 @@ import java.text.SimpleDateFormat;
 
 import javax.imageio.ImageIO;
 
-import netscape.javascript.JSObject;
-
 import org.json.JSONObject;
 
 import com.google.code.facebookapi.ProfileField;
@@ -24,6 +22,8 @@ import de.tum.in.flowgame.facebook.CustomFacebookClient;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.story.BeforeProfileScreen;
+import de.tum.in.flowgame.util.Browser;
+import de.tum.in.flowgame.util.JSObjectBrowser;
 
 /**
  * This class starts the Flowgame as {@link Applet} and creates a new
@@ -144,13 +144,9 @@ public class GameApplet extends Applet {
 				System.err.println("##### existing player: " + player);
 			}
 
-			JSObject win = null;
-			if (isActive()) {
-				win = JSObject.getWindow(this);
-			}
-			
+			final Browser browser = JSObjectBrowser.from(this);
 			// this initializes all the other classes
-			new GameLogic(player, client, facebook, win).addListener(game.getListener());
+			new GameLogic(player, client, facebook, browser).addListener(game.getListener());
 
 			if (newPlayer) {
 				game.getMenu().show(BeforeProfileScreen.class);

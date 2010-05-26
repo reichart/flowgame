@@ -13,8 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import netscape.javascript.JSObject;
-
 import org.json.JSONException;
 
 import com.google.code.facebookapi.FacebookException;
@@ -22,6 +20,7 @@ import com.google.code.facebookapi.FacebookException;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.facebook.Friend;
 import de.tum.in.flowgame.model.Highscore;
+import de.tum.in.flowgame.util.Browser;
 
 public class FriendsBar extends JPanel {
 
@@ -45,7 +44,7 @@ public class FriendsBar extends JPanel {
 
 	private final List<CustomButton> friendButtons;
 
-	public FriendsBar(List<Highscore> highscores, FacebookFriendCache friendCash, JSObject win) throws Exception {
+	public FriendsBar(List<Highscore> highscores, FacebookFriendCache friendCash, Browser browser) throws Exception {
 		this.friendCash = friendCash;
 
 		friendButtons = new ArrayList<CustomButton>();
@@ -57,7 +56,7 @@ public class FriendsBar extends JPanel {
 		currentPosition = 0;
 		
 		for (int i = 0; i < MAX_NUMBER_OF_FRIENDS_SHOWN; i++) {
-			final CustomButton btn = new CustomButton(win);
+			final CustomButton btn = new CustomButton(browser);
 			btn.setLocation(calculatePosition(i), 0);
 			this.add(btn);
 			friendButtons.add(btn);

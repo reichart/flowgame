@@ -11,10 +11,10 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import netscape.javascript.JSObject;
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.model.Highscore;
+import de.tum.in.flowgame.util.Browser;
 
 public class SocialHighscore extends JPanel {
 
@@ -27,7 +27,7 @@ public class SocialHighscore extends JPanel {
 	private final Client client;
 	private CustomButton personButton;
 
-	public SocialHighscore(final Client client, final FacebookFriendCache friendCash, JSObject win) {
+	public SocialHighscore(final Client client, final FacebookFriendCache friendCash, Browser browser) {
 		this.client = client;
 		this.friendCash = friendCash;
 
@@ -35,7 +35,7 @@ public class SocialHighscore extends JPanel {
 			update();
 
 			this.setLayout(new BorderLayout());
-			fb = new FriendsBar(highscores, friendCash, win);
+			fb = new FriendsBar(highscores, friendCash, browser);
 			this.add(fb, BorderLayout.SOUTH);
 		} catch (Exception ex) {
 			// TODO handle exception
