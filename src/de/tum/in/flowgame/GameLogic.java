@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import netscape.javascript.JSObject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -26,6 +24,7 @@ import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.strategy.Trend;
+import de.tum.in.flowgame.util.Browser;
 
 public class GameLogic implements Runnable {
 
@@ -68,12 +67,12 @@ public class GameLogic implements Runnable {
 
 	private long lastPointsAdded;
 
-	private final JSObject win;
+	private final Browser browser;
 
 	private double rating;
 
-	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, JSObject win) {
-		this.win = win;
+	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, Browser browser) {
+		this.browser = browser;
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
 		this.client = client;
@@ -362,8 +361,8 @@ public class GameLogic implements Runnable {
 		gameSession.setAnswers(answers);
 	}
 
-	public JSObject getWin() {
-		return win;
+	public Browser getBrowser() {
+		return browser;
 	}
 
 	public void setRating(double difficultyRating) {

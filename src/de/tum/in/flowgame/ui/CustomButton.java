@@ -22,7 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
-import netscape.javascript.JSObject;
+import de.tum.in.flowgame.util.Browser;
 
 public class CustomButton extends JButton {
 
@@ -30,7 +30,7 @@ public class CustomButton extends JButton {
 	private Long score;
 	private final Font font;
 	private final FontMetrics metrics;
-	private final JSObject win;
+	private final Browser browser;
 
 	private static final int MARGIN = 10;
 	private static final Image cardBackground = loadCardBackground();
@@ -50,7 +50,7 @@ public class CustomButton extends JButton {
 		return img;
 	}
 
-	public static Image makeColorTransparent(Image im, final Color color) {
+	private static Image makeColorTransparent(Image im, final Color color) {
 		ImageFilter filter = new RGBImageFilter() {
 			// the color we are looking for... Alpha bits are set to opaque
 			public int markerRGB = color.getRGB() | 0xFF000000;
@@ -71,11 +71,11 @@ public class CustomButton extends JButton {
 		return Toolkit.getDefaultToolkit().createImage(ip);
 	}
 
-	public CustomButton(Image picture, Long score, JSObject win) {
+	private CustomButton(Image picture, Long score, Browser browser) {
 
 		this.picture = picture;
 		this.score = score;
-		this.win = win;
+		this.browser = browser;
 
 		font = new Font("Arial", Font.BOLD, 14);
 		metrics = getFontMetrics(font);
@@ -93,20 +93,20 @@ public class CustomButton extends JButton {
 		this(null, null);
 	}
 
-	public CustomButton(Image picture, Long score) {
+	private CustomButton(Image picture, Long score) {
 		this(picture, score, null);
 	}
 
-	public CustomButton(JSObject win) {
-		this(null, null, win);
+	public CustomButton(Browser browser) {
+		this(null, null, browser);
 	}
 
 	private void addMouseListener() {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if ((score == null) && (win != null)) {
-					win.call("toggle_invite_content", null);
+				if (score == null) {
+					browser.toggleInviteDialog();
 				}
 			}
 		});
