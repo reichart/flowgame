@@ -34,7 +34,6 @@ import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.PauseScreen;
 import de.tum.in.flowgame.ui.screens.ProfileScreen;
-import de.tum.in.flowgame.ui.screens.SettingsScreen;
 import de.tum.in.flowgame.ui.screens.SocialHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
 import de.tum.in.flowgame.ui.screens.story.AfterProfileScreen;
@@ -108,7 +107,6 @@ public class GameMenu implements Sprite, GameListener {
 		add(new SocialHighscoresScreen());
 		add(new IndividualHighscoresScreen());
 		add(new PauseScreen());
-		add(new SettingsScreen());
 		add(new SystemInfoScreen());
 		add(new GameSessionScreen());
 		

@@ -19,8 +19,6 @@ public class MainScreen extends MenuScreen {
 	
 	private final JButton socialHighscore = goTo("Social Highscore", SocialHighscoresScreen.class);
 
-	private final JButton settings = goTo("Settings", SettingsScreen.class);
-
 	private final JButton systemInfo = goTo("System Info", SystemInfoScreen.class);
 
 	private final JLabel title;
@@ -31,7 +29,7 @@ public class MainScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title, play, individualHighscore, socialHighscore, settings, systemInfo);
+		return centered(title, play, individualHighscore, socialHighscore, systemInfo);
 	}
 
 }
