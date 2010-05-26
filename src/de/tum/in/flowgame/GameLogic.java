@@ -35,7 +35,7 @@ public class GameLogic implements Runnable {
 	private static final int pointsForFuel = 10;
 	private static final int pointsForAsteroid = 5;
 
-	private static boolean paused = false;
+	private boolean paused;
 
 	private final Client client;
 
@@ -369,4 +369,7 @@ public class GameLogic implements Runnable {
 		rating = difficultyRating;
 	}
 
+	public boolean isPaused() {
+		return paused;
+	}
 }
