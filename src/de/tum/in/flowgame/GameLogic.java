@@ -30,8 +30,6 @@ public class GameLogic implements Runnable {
 
 	private final static Log log = LogFactory.getLog(GameLogic.class);
 
-	public final static int MAX_ASTEROIDS = 10;
-	public final static int MAX_FUEL = 10;
 	private static final int pointsForFuel = 10;
 	private static final int pointsForAsteroid = 5;
 
