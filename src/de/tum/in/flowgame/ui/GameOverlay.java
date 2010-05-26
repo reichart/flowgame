@@ -131,6 +131,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	}
 
 	public void gameResumed(GameLogic game) {
+		// empty
 	}
 
 	public void gameStopped(final GameLogic game) {
