@@ -47,7 +47,7 @@ public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyM
 	}
 
 	public void setFunction(DifficultyFunction fun) {
-		
+		// empty
 	}
 
 	public double getAverageSpeed() {
