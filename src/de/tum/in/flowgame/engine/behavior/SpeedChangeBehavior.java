@@ -1,11 +1,5 @@
 package de.tum.in.flowgame.engine.behavior;
 
-import java.util.Enumeration;
-
-import javax.media.j3d.Behavior;
-import javax.media.j3d.WakeupCriterion;
-import javax.media.j3d.WakeupOnElapsedFrames;
-
 import de.tum.in.flowgame.DefaultGameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.GameLogicConsumer;
@@ -15,9 +9,8 @@ import de.tum.in.flowgame.strategy.FlowStrategy;
 import de.tum.in.flowgame.strategy.FunctionStrategy;
 import de.tum.in.flowgame.strategy.FunctionStrategy2;
 
-public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, SpeedChangeBehaviorMBean {
+public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicConsumer, SpeedChangeBehaviorMBean {
 
-	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
 	private final ForwardBehavior forwardNavigator;
 	private final TextureTransformBehavior ttb;
 	private double speed;
@@ -36,13 +29,7 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 	}
 
 	@Override
-	public void initialize() {
-		this.wakeupOn(newFrame);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public void processStimulus(final Enumeration criteria) {
+	protected void update() {
 		if (!pause) {
 			if ((this.strategy instanceof FunctionStrategy || this.strategy instanceof FunctionStrategy2)
 					&& (strategy.getFunction() == null || strategy.getFunction().getSpeed() == null)) {
@@ -68,7 +55,6 @@ public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, 
 				ttb.setFwdSpeed(-speed);
 				//forwardNavigator.setFwdSpeed(0);
 			}
-			wakeupOn(newFrame);
 		}
 	}
 

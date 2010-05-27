@@ -1,12 +1,7 @@
 package de.tum.in.flowgame.engine.behavior;
 
-import java.util.Enumeration;
-
-import javax.media.j3d.Behavior;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
-import javax.media.j3d.WakeupCondition;
-import javax.media.j3d.WakeupOnElapsedTime;
 import javax.vecmath.Point3d;
 import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
@@ -18,7 +13,7 @@ import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.engine.Tunnel;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class TextureTransformBehavior extends Behavior implements GameLogicConsumer, GameListener {
+public class TextureTransformBehavior extends RepeatingBehavior implements GameLogicConsumer, GameListener {
 
 	private final Transform3D transform;
 	private Vector3d pos = new Vector3d();
@@ -28,7 +23,6 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 	private double fwdSpeed = 100/Tunnel.TUNNEL_LENGTH;
 
 	private final TextureAttributes attribs;
-	private final WakeupCondition condition;
 
 	private GameLogic logic;
 	
@@ -38,7 +32,6 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 	public TextureTransformBehavior(final TextureAttributes attribs) {
 		this.attribs = attribs;
 		transform = new Transform3D();
-		condition = new WakeupOnElapsedTime(10);
 
 		attribs.setCapability(TextureAttributes.ALLOW_TRANSFORM_WRITE);
 
@@ -46,18 +39,15 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 	}
 
 	@Override
-	public void initialize() {
+	protected void init() {
 		attribs.getTextureTransform(transform);
-		wakeupOn(condition);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public void processStimulus(final Enumeration/* <WakeupCriterion> */criteria) {
+	protected void update() {
 		if (!pause) {
 			attribs.setTextureTransform(updatePosition());
 		}
-		wakeupOn(condition);
 	}
 	
 	public void setGameLogic(final GameLogic logic) {
