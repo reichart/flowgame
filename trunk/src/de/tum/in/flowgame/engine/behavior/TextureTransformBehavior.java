@@ -108,13 +108,13 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 
 	@Override
 	public void added(GameLogic game) {
-		// TODO Auto-generated method stub
+		// empty
 		
 	}
 
 	@Override
 	public void collided(GameLogic game, Item item) {
-		// TODO Auto-generated method stub
+		// empty
 		
 	}
 
@@ -132,19 +132,19 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 
 	@Override
 	public void gameStarted(GameLogic game) {
-		// TODO Auto-generated method stub
+		// empty
 		
 	}
 
 	@Override
 	public void gameStopped(GameLogic game) {
-		// TODO Auto-generated method stub
+		// empty
 		
 	}
 
 	@Override
 	public void removed(GameLogic game) {
-		// TODO Auto-generated method stub
+		// empty
 		
 	}
 
