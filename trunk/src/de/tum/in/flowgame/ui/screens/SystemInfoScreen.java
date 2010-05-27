@@ -23,7 +23,7 @@ public class SystemInfoScreen extends MenuScreen {
 
 	public SystemInfoScreen() {
 		final StringWriter stringWriter = new StringWriter();
-		SystemInfo.getSystemInfo(new PrintWriter(stringWriter), menu.getGame());
+		SystemInfo.getSystemInfo(new PrintWriter(stringWriter));
 
 		final JTextArea systemInfo = new JTextArea(stringWriter.toString());
 		systemInfo.setEditable(true);

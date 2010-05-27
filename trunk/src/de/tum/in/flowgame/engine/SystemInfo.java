@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.media.j3d.Canvas3D;
 import javax.media.j3d.VirtualUniverse;
 
 public class SystemInfo {
@@ -15,7 +14,7 @@ public class SystemInfo {
 	private static final String[] SYSTEM_PROPERTY_KEYS = { "java.class.version", "java.vendor", "java.version",
 			"os.name", "os.arch", "os.version" };
 
-	public static void getSystemInfo(final PrintWriter out, final Canvas3D canvas) {
+	public static void getSystemInfo(final PrintWriter out) {
 		for (final String key : SYSTEM_PROPERTY_KEYS) {
 			out.println(key + ": " + System.getProperty(key));
 		}
