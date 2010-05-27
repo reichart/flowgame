@@ -11,12 +11,14 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
+import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.GameLogicConsumer;
 import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.engine.Tunnel;
+import de.tum.in.flowgame.model.Collision.Item;
 
-public class TextureTransformBehavior extends Behavior implements GameLogicConsumer {
+public class TextureTransformBehavior extends Behavior implements GameLogicConsumer, GameListener {
 
 	private final Transform3D transform;
 	private Vector3d pos = new Vector3d();
@@ -29,6 +31,9 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 	private final WakeupCondition condition;
 
 	private GameLogic logic;
+	
+	private boolean pause;
+	private long pauseBegin;
 
 	public TextureTransformBehavior(final TextureAttributes attribs) {
 		this.attribs = attribs;
@@ -49,16 +54,15 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 	@SuppressWarnings("unchecked")
 	@Override
 	public void processStimulus(final Enumeration/* <WakeupCriterion> */criteria) {
-		if (!logic.isPaused()) {	
+		if (!pause) {
 			attribs.setTextureTransform(updatePosition());
 		}
-		
 		wakeupOn(condition);
 	}
 	
 	public void setGameLogic(final GameLogic logic) {
 		this.logic = logic;
-		
+		this.logic.addListener(this);
 	}
 	
 	/**
@@ -100,6 +104,48 @@ public class TextureTransformBehavior extends Behavior implements GameLogicConsu
 	
 	public void setFwdSpeed(final double fwdSpeed) {
 		this.fwdSpeed = -fwdSpeed/Tunnel.TUNNEL_LENGTH;
+	}
+
+	@Override
+	public void added(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void collided(GameLogic game, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gamePaused(GameLogic game) {
+		pause = true;
+		pauseBegin = System.currentTimeMillis();
+	}
+
+	@Override
+	public void gameResumed(GameLogic game) {
+		pause = false;
+		time = time + (System.currentTimeMillis() - pauseBegin);
+	}
+
+	@Override
+	public void gameStarted(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gameStopped(GameLogic game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removed(GameLogic game) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
