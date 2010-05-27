@@ -2,13 +2,10 @@ package de.tum.in.flowgame.engine.behavior;
 
 import java.util.Enumeration;
 
-import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
-import javax.media.j3d.WakeupCondition;
-import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.vecmath.Vector3d;
 
 import de.tum.in.flowgame.GameLogic;
@@ -17,8 +14,8 @@ import de.tum.in.flowgame.engine.Collidable;
 import de.tum.in.flowgame.engine.Ship;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class CollisionBehavior extends Behavior implements GameLogicConsumer {
-	private final WakeupCondition condition;
+public class CollisionBehavior extends RepeatingBehavior implements GameLogicConsumer {
+	
 	private GameLogic gameLogic;
 	private final BranchGroup branchGroup;
 	private final Ship ship;
@@ -31,19 +28,13 @@ public class CollisionBehavior extends Behavior implements GameLogicConsumer {
 	private boolean collision;
 
 	public CollisionBehavior(final BranchGroup collidables, final Ship ship) {
-		condition = new WakeupOnElapsedFrames(0);
 		branchGroup = collidables;
 		this.ship = ship;
 	}
 
-	@Override
-	public void initialize() {
-		wakeupOn(condition);
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
-	public void processStimulus(final Enumeration criteria) {
+	protected void update() {
 		final Enumeration<Node> children = branchGroup.getAllChildren();
 
 		shipOldX = shipX;
@@ -95,7 +86,6 @@ public class CollisionBehavior extends Behavior implements GameLogicConsumer {
 				}
 			}
 		}
-		wakeupOn(condition);
 	}
 	
 	public void setGameLogic(final GameLogic logic) {

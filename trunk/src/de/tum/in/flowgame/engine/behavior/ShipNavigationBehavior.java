@@ -4,10 +4,8 @@ import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 import java.util.Enumeration;
 
-import javax.media.j3d.Behavior;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnAWTEvent;
 import javax.media.j3d.WakeupOnElapsedFrames;
@@ -23,7 +21,7 @@ import de.tum.in.flowgame.engine.Ship;
 import de.tum.in.flowgame.engine.Tunnel;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class ShipNavigationBehavior extends Behavior implements GameListener {
+public class ShipNavigationBehavior extends RepeatingBehavior implements GameListener {
 
 	private float acceleration = 30f;
 	private float maxSpeed = 18f;
@@ -51,7 +49,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 	private final TransformGroup translationGroup;
 	private final TransformGroup viewTG;
 	private Matrix3f shipRotation = new Matrix3f();
-	private final WakeupCondition condition;
 
 	private boolean KEY_LEFT;
 	private boolean KEY_RIGHT;
@@ -73,24 +70,24 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 	private boolean firstPerson = false;
 
 	public ShipNavigationBehavior(final TransformGroup translationGroup, final TransformGroup viewTG) {
+		super(createCondition());
+		
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
 		setPhysics(this.maxSpeed, this.acceleration);
 
-		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(
-				KeyEvent.KEY_PRESSED);
-		final WakeupCriterion keyReleased = new WakeupOnAWTEvent(
-				KeyEvent.KEY_RELEASED);
-		final WakeupCriterion keyTyped = new WakeupOnAWTEvent(
-				KeyEvent.KEY_TYPED);
-		final WakeupCriterion currentFrame = new WakeupOnElapsedFrames(0);
-
-		this.condition = new WakeupOr(Utils.asArray(keyPressed, keyReleased,
-				keyTyped, currentFrame));
-
 		// Create Timer here.
 		time = System.currentTimeMillis();
+	}
+
+	private static WakeupOr createCondition() {
+		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(KeyEvent.KEY_PRESSED);
+		final WakeupCriterion keyReleased = new WakeupOnAWTEvent(KeyEvent.KEY_RELEASED);
+		final WakeupCriterion keyTyped = new WakeupOnAWTEvent(KeyEvent.KEY_TYPED);
+		final WakeupCriterion currentFrame = new WakeupOnElapsedFrames(0);
+		
+		return new WakeupOr(Utils.asArray(keyPressed, keyReleased, keyTyped, currentFrame));
 	}
 
 	private void setPhysics(float maxSpeed, float acceleration) {
@@ -111,16 +108,10 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 	}
 
 	@Override
-	public void initialize() {
-		wakeupOn(condition);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void processStimulus(final Enumeration criteria) {
+	protected void update(final Enumeration<WakeupCriterion> criteria) {
 		WakeupCriterion crit;
 		while (criteria.hasMoreElements()) {
-			crit = (WakeupCriterion) criteria.nextElement();
+			crit = criteria.nextElement();
 			if (crit instanceof WakeupOnAWTEvent) {
 				final WakeupOnAWTEvent awtEvent = (WakeupOnAWTEvent) crit;
 				for (final AWTEvent event : awtEvent.getAWTEvent()) {
@@ -133,8 +124,6 @@ public class ShipNavigationBehavior extends Behavior implements GameListener {
 					updatePosition();
 			}
 		}
-
-		wakeupOn(condition);
 	}
 
 	private void processKeyEvent(final KeyEvent e) {

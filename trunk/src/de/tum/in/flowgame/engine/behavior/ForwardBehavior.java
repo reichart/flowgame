@@ -1,22 +1,16 @@
 package de.tum.in.flowgame.engine.behavior;
 
-import java.util.Enumeration;
-
-import javax.media.j3d.Behavior;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.media.j3d.WakeupCondition;
-import javax.media.j3d.WakeupOnElapsedFrames;
 import javax.vecmath.Point3d;
 import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
-
 
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Collision.Item;
 
-public class ForwardBehavior extends Behavior implements GameListener {
+public class ForwardBehavior extends RepeatingBehavior implements GameListener {
 
 	private Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
@@ -24,7 +18,6 @@ public class ForwardBehavior extends Behavior implements GameListener {
 	private Vector3d mov = new Vector3d(0, 0, 0);
 
 	private final TransformGroup translationGroup;
-	private final WakeupCondition condition;
 
 	private boolean pause;
 	private long pauseBegin;
@@ -38,24 +31,15 @@ public class ForwardBehavior extends Behavior implements GameListener {
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
-		this.condition = new WakeupOnElapsedFrames(0);
-
 		// Create Timer here.
 		time = System.currentTimeMillis();
 	}
 
 	@Override
-	public void initialize() {
-		wakeupOn(condition);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void processStimulus(final Enumeration criteria) {
+	protected void update() {
 		if (!pause) {
 			updatePosition();
 		}
-		wakeupOn(condition);
 	}
 
 	
