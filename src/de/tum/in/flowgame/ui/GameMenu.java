@@ -86,8 +86,10 @@ public class GameMenu implements Sprite, GameListener {
 		final BufferedImage img = Utils.createImage(w, h);
 
 		final Graphics2D offscreen = (Graphics2D) img.getGraphics();
-		panel.setSize(w, h);
-		panel.paintAll(offscreen);
+		synchronized (panel) {
+			panel.setSize(w, h);
+			panel.paintAll(offscreen);
+		}
 		offscreen.dispose();
 
 		g.drawImage(img, 0, 0, null);
@@ -170,7 +172,7 @@ public class GameMenu implements Sprite, GameListener {
 	 * Fixes various problem with rendering components offscreen outside of the
 	 * usual Swing/AWT magic.
 	 */
-	private void prepareForOffscreen(final Container root) {
+	private static void prepareForOffscreen(final Container root) {
 		for (final Component comp : root.getComponents()) {
 
 			// white text color for everything
@@ -219,8 +221,10 @@ public class GameMenu implements Sprite, GameListener {
 			if (component.getClass().equals(screenClass)) {
 				final MenuScreen screen = (MenuScreen) component;
 				try {
-					screen.update(logic);
-					prepareForOffscreen(screen);
+					synchronized (panel) {
+						screen.update(logic);
+						prepareForOffscreen(screen);
+					}
 				} catch (final Exception ex) {
 					log.error("failed to update screen for showing: " + screenClass.getName(), ex);
 					return; // don't show when update failed
@@ -233,9 +237,10 @@ public class GameMenu implements Sprite, GameListener {
 			throw new IllegalArgumentException("unknown screen: " + screenClass.getName());
 		}
 		
-		layout.show(screens, screenClass.getName());
-		panel.revalidate();
-		
+		synchronized (panel) {
+			layout.show(screens, screenClass.getName());
+			panel.revalidate();
+		}
 		this.previous = current;
 		this.current = screenClass;
 	}
