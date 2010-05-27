@@ -52,7 +52,9 @@ public class TextureTransformBehavior extends RepeatingBehavior implements GameL
 	
 	public void setGameLogic(final GameLogic logic) {
 		this.logic = logic;
-		this.logic.addListener(this);
+		if (logic != null) {
+			logic.addListener(this);
+		}
 	}
 	
 	/**
