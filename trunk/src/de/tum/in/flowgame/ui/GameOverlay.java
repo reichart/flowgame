@@ -33,15 +33,15 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	private final static Font MEDIUM = new Font("sans", Font.PLAIN, 20);
 	private final static Font MEDIUM_BOLD = new Font("sans", Font.BOLD, 20);
 	private final static Font SMALL = new Font("sans", Font.PLAIN, 16);
-	
-	//radius of circle surrounding timer animation
+
+	// radius of circle surrounding timer animation
 	private final static int RADIUS = 20;
 	private final static int UPPER_BORDER = 5;
 	private final static int CIRCLE_BORDER = 5;
 
 	private final Timer timer;
 	private volatile GameLogic logic;
-	
+
 	private int width, height;
 
 	private String message;
@@ -49,36 +49,36 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	private boolean drawMessage;
 	private boolean drawHUD;
-	private boolean drawFPS;
+	private boolean drawFPS = true;
 
 	private GameMenu menu;
-	
+
 	private List<ScreenMessage> messages;
-	
+
 	private final Game3D engine;
-	
+
 	private TimeLimitAnitmationTask timerAnimation;
 
 	public GameOverlay(final Game3D engine) {
 		this.menu = new GameMenu(engine, this);
-		
+
 		this.timer = new Timer(GameOverlay.class.getSimpleName(), true);
-		
+
 		this.engine = engine;
-		
+
 		this.messages = new CopyOnWriteArrayList<ScreenMessage>();
 	}
 
 	public GameMenu getMenu() {
 		return menu;
 	}
-	
+
 	public void render(final Graphics2D g) {
 		final FontMetrics fmXLarge = g.getFontMetrics(XLARGE);
 		final FontMetrics fmMedium = g.getFontMetrics(MEDIUM);
 		final FontMetrics fmMediumBold = g.getFontMetrics(MEDIUM_BOLD);
 		final FontMetrics fmSmall = g.getFontMetrics(SMALL);
-		
+
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -91,7 +91,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 			g.drawString(message, (width - w) / 2, (height - h) / 2);
 		}
-		
+
 		g.setFont(LARGE);
 		for (ScreenMessage message : messages) {
 			g.setColor(message.getColor());
@@ -112,21 +112,24 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final String controls = "Pause/continue: SPACE";
 			final int controlsW = fmSmall.stringWidth(controls);
 			g.drawString(controls, width - controlsW - 20, height - stringH);
-			
+
 			if (logic != null) {
-				//render Score in the upper middle of screen
+				// render Score in the upper middle of screen
 				g.setFont(MEDIUM);
 				String scoreValue = "" + logic.getScore();
-				g.drawString(scoreValue, width/2, fmMedium .getAscent() + UPPER_BORDER);
+				g.drawString(scoreValue, width / 2, fmMedium.getAscent() + UPPER_BORDER);
 				g.setFont(MEDIUM_BOLD);
-				g.drawString("Score ", width/2 - fmMediumBold.stringWidth("Score "), fmMediumBold.getAscent() + UPPER_BORDER);
-				
-				//get remaining time in seconds
-				String remainingTime = String.valueOf(logic.getRemainingTime()/1000);
-				//if remainingTime changed (one second is over) start new animation
+				g.drawString("Score ", width / 2 - fmMediumBold.stringWidth("Score "), fmMediumBold.getAscent()
+						+ UPPER_BORDER);
+
+				// get remaining time in seconds
+				String remainingTime = String.valueOf(logic.getRemainingTime() / 1000);
+				// if remainingTime changed (one second is over) start new
+				// animation
 				if (timerAnimation == null || !timerAnimation.getMessage().getMessage().equals(remainingTime)) {
 					Color color;
-					//change colors from green to yellow to red the fewer time is left
+					// change colors from green to yellow to red the fewer time
+					// is left
 					if (logic.getRemainingTime() > (logic.getCurrentScenarioRound().getExpectedPlaytime() / 2)) {
 						color = Color.GREEN;
 					} else if (logic.getRemainingTime() > (logic.getCurrentScenarioRound().getExpectedPlaytime() / 4)) {
@@ -134,11 +137,13 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 					} else {
 						color = Color.RED;
 					}
-					timerAnimation = new TimeLimitAnitmationTask(new ScreenMessage(remainingTime, color, new Point2d(width - RADIUS*2, RADIUS + UPPER_BORDER + CIRCLE_BORDER), MEDIUM.getSize()));
+					timerAnimation = new TimeLimitAnitmationTask(new ScreenMessage(remainingTime, color, new Point2d(
+							width - RADIUS * 2, RADIUS + UPPER_BORDER + CIRCLE_BORDER), MEDIUM.getSize()));
 					timer.schedule(timerAnimation, 0, 40);
 				}
-				
-				//draw timer in upper right corner with parameters from timerAnimation
+
+				// draw timer in upper right corner with parameters from
+				// timerAnimation
 				g.setFont(new Font("sans", Font.BOLD, timerAnimation.getMessage().getSize()));
 				final FontMetrics fmTimer = g.getFontMetrics();
 				final int remTimeWidth = fmTimer.stringWidth(remainingTime);
@@ -146,13 +151,19 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				g.setColor(timerAnimation.getMessage().getColor());
 				int xPos = timerAnimation.getMessage().getX();
 				int yPos = timerAnimation.getMessage().getY();
-				g.drawString(remainingTime, xPos - remTimeWidth/2, yPos - 3 + remTimeHeight/2);
+				g.drawString(remainingTime, xPos - remTimeWidth / 2, yPos - 3 + remTimeHeight / 2);
 
-				//draw surrounding circle
+				// draw surrounding circle
 				g.setStroke(new BasicStroke(CIRCLE_BORDER));
-				Paint paint = new GradientPaint(xPos-20, yPos-20, timerAnimation.getMessage().getColor(), xPos+RADIUS, yPos+RADIUS, timerAnimation.getMessage().getColor().darker().darker());
-			    g.setPaint(paint);
-				g.drawOval(xPos-RADIUS, yPos-RADIUS, RADIUS*2, RADIUS*2);
+				Paint paint = new GradientPaint(xPos - 20, yPos - RADIUS, timerAnimation.getMessage().getColor(), xPos
+						+ RADIUS, yPos + RADIUS, timerAnimation.getMessage().getColor().darker().darker());
+				g.setPaint(paint);
+				
+				// display circle that shrinks with the time
+				double playtimeOver = (double) logic.getRemainingTime() / logic.getCurrentScenarioRound().getExpectedPlaytime();
+				for (int i = 0; i < 12 * playtimeOver; i++) {
+					g.drawArc(xPos - RADIUS, yPos - RADIUS, RADIUS * 2, RADIUS * 2, (i*30 + 90) % 360, 10);
+				}
 			}
 		}
 
@@ -163,12 +174,12 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		this.logic = game;
 		game.addListener(menu);
 	}
-	
+
 	public void removed(final GameLogic game) {
 		this.logic = null;
 		game.removeListener(menu);
 	}
-	
+
 	public void gameStarted(final GameLogic game) {
 		drawHUD = true;
 		message("Go speed racer!");
@@ -191,10 +202,10 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		Point2d coords = engine.getShip2DCoords();
 		if (item == Item.ASTEROID) {
 			message(String.valueOf(logic.getPointsAdded()), Color.RED, coords);
-			//message("Oh noes! Evil asteroidz!");
+			// message("Oh noes! Evil asteroidz!");
 		} else if (item == Item.FUELCAN) {
 			message(String.valueOf(logic.getPointsAdded()), Color.YELLOW, coords);
-			//message("Yay! Fuel FTW!");
+			// message("Yay! Fuel FTW!");
 		}
 	}
 
@@ -218,7 +229,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			timer.schedule(new MessageTimer(message), seconds * 1000);
 		}
 	}
-	
+
 	public void message(final String message, final Color color, final Point2d position) {
 		ScreenMessage m = new ScreenMessage(message, color, position);
 		messages.add(m);
@@ -247,11 +258,11 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			}
 		}
 	}
-	
+
 	private class ScoreAnimationTask extends TimerTask {
 		private ScreenMessage message;
 		private int counter;
-		
+
 		public ScoreAnimationTask(ScreenMessage message) {
 			this.message = message;
 			this.counter = 0;
@@ -267,13 +278,13 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				this.cancel();
 			}
 		}
-		
+
 	}
-	
+
 	private class TimeLimitAnitmationTask extends TimerTask {
 		private ScreenMessage message;
 		private int counter;
-		
+
 		public TimeLimitAnitmationTask(ScreenMessage message) {
 			this.message = message;
 			this.counter = 0;
@@ -282,17 +293,17 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		@Override
 		public void run() {
 			if (counter < 5) {
-				message.setSize(message.getSize()+1);
+				message.setSize(message.getSize() + 1);
 				counter++;
 			} else if (counter < 18) {
-				message.setSize(message.getSize()-1);
+				message.setSize(message.getSize() - 1);
 				counter++;
 			} else {
 				messages.remove(message);
 				this.cancel();
 			}
 		}
-		
+
 		public ScreenMessage getMessage() {
 			return message;
 		}
@@ -314,13 +325,13 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 	public void componentShown(final ComponentEvent e) {
 		// empty
 	}
-	
+
 	public void setDrawFPS(final boolean drawFPS) {
 		this.drawFPS = drawFPS;
 	}
 
-//	@Override
-//	public void sessionFinished(GameLogic game) {
-//		// empty		
-//	}
+	// @Override
+	// public void sessionFinished(GameLogic game) {
+	// // empty
+	// }
 }
