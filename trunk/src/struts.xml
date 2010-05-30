@@ -63,6 +63,12 @@
 			</result>
 		</action>
 
+		<action name="percentageDownload" class="de.tum.in.flowgame.server.PercentageDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+
 		<action name="highscoresDownload" class="de.tum.in.flowgame.server.HighscoresDownloadAction">
 			<result type="stream">
 				<param name="contentType">application/octet-stream</param>
