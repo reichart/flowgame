@@ -6,11 +6,9 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.model.Collision.Item;
 
-public class ForwardBehavior extends RepeatingBehavior implements GameListener {
+public class ForwardBehavior extends RepeatingBehavior {
 
 	private Vector3d pos = new Vector3d();
 	private final Transform3D trans = new Transform3D();
@@ -19,30 +17,22 @@ public class ForwardBehavior extends RepeatingBehavior implements GameListener {
 
 	private final TransformGroup translationGroup;
 
-	private boolean pause;
-	private long pauseBegin;
-
-	private long time;
 	private double fwdSpeed;
-	
+
 	private TransformGroup viewTG;
 
 	public ForwardBehavior(final TransformGroup translationGroup, final TransformGroup viewTG) {
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
-
-		// Create Timer here.
-		time = System.currentTimeMillis();
 	}
 
 	@Override
 	protected void update() {
-		if (!pause) {
+		if (!isPaused()) {
 			updatePosition();
 		}
 	}
 
-	
 	/**
 	 * Computes a new transform for the next frame based on the current
 	 * transform and elapsed time. This new transform is written into the target
@@ -70,52 +60,20 @@ public class ForwardBehavior extends RepeatingBehavior implements GameListener {
 		trans.set(new Quat4d(), pos, 1);
 
 		translationGroup.setTransform(trans);
-		
+
 		Transform3D vpTrans = new Transform3D();
 		viewTG.getTransform(vpTrans);
 		Vector3d vpPos = new Vector3d();
 		vpTrans.get(vpPos);
-		
+
 		vpPos.add(dp);
 
 		vpTrans.set(vpPos);
-		
+
 		viewTG.setTransform(vpTrans);
 	}
 
-	private long getDeltaTime() {
-		final long newTime = System.currentTimeMillis();
-		long deltaTime = newTime - time;
-		// System.out.println(deltaTime);
-		time = newTime;
-		if (deltaTime > 2000)
-			return 0;
-		else
-			return deltaTime;
-	}
-
-	public void added(final GameLogic game) {
-		//empty
-	}
-
-	public void removed(final GameLogic game) {
-		//empty
-	}
-
-	public void collided(GameLogic logic, Item item) {
-		// empty
-	}
-
-	public void gamePaused(GameLogic game) {
-		pause = true;
-		pauseBegin = System.currentTimeMillis();
-	}
-
-	public void gameResumed(GameLogic game) {
-		pause = false;
-		time = time + (System.currentTimeMillis() - pauseBegin);
-	}
-
+	@Override
 	public void gameStarted(GameLogic game) {
 		trans.setIdentity();
 		translationGroup.setTransform(trans);
@@ -124,6 +82,7 @@ public class ForwardBehavior extends RepeatingBehavior implements GameListener {
 		viewTG.setTransform(new Transform3D());
 	}
 
+	@Override
 	public void gameStopped(GameLogic game) {
 		reset();
 	}

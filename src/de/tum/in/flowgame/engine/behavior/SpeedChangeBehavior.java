@@ -53,7 +53,6 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 
 				forwardNavigator.setFwdSpeed(-speed);
 				ttb.setFwdSpeed(-speed);
-				//forwardNavigator.setFwdSpeed(0);
 			}
 		}
 	}
@@ -83,7 +82,6 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 
 				@Override
 				public void gameStopped(GameLogic game) {
-					// game.removeListener(this);
 					if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
 						long baseline = (long) (maxSpeed * 0.9);
 						gameLogic.setBaseline(baseline);

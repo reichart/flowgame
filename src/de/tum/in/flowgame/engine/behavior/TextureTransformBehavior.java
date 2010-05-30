@@ -6,27 +6,21 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.GameLogicConsumer;
 import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.engine.Tunnel;
-import de.tum.in.flowgame.model.Collision.Item;
 
-public class TextureTransformBehavior extends RepeatingBehavior implements GameLogicConsumer, GameListener {
+public class TextureTransformBehavior extends RepeatingBehavior implements GameLogicConsumer {
 
 	private final Transform3D transform;
 	private Vector3d pos = new Vector3d();
 	private Vector3d mov = new Vector3d(0, 0, 0);
 	
-	private long time;
 	private double fwdSpeed = 100/Tunnel.TUNNEL_LENGTH;
 
 	private final TextureAttributes attribs;
 	
-	private boolean pause;
-	private long pauseBegin;
-
 	public TextureTransformBehavior(final TextureAttributes attribs) {
 		this.attribs = attribs;
 		transform = new Transform3D();
@@ -43,7 +37,7 @@ public class TextureTransformBehavior extends RepeatingBehavior implements GameL
 	
 	@Override
 	protected void update() {
-		if (!pause) {
+		if (!isPaused()) {
 			attribs.setTextureTransform(updatePosition());
 		}
 	}
@@ -80,54 +74,8 @@ public class TextureTransformBehavior extends RepeatingBehavior implements GameL
 		return transform;
 	}
 
-	private long getDeltaTime() {
-		final long newTime = System.currentTimeMillis();
-		long deltaTime = newTime - time;
-		// System.out.println(deltaTime);
-		time = newTime;
-		if (deltaTime > 2000)
-			return 0;
-		else
-			return deltaTime;
-	}
-	
 	public void setFwdSpeed(final double fwdSpeed) {
 		this.fwdSpeed = -fwdSpeed/Tunnel.TUNNEL_LENGTH;
-	}
-
-	public void added(GameLogic game) {
-		// empty
-		
-	}
-
-	public void collided(GameLogic game, Item item) {
-		// empty
-		
-	}
-
-	public void gamePaused(GameLogic game) {
-		pause = true;
-		pauseBegin = System.currentTimeMillis();
-	}
-
-	public void gameResumed(GameLogic game) {
-		pause = false;
-		time = time + (System.currentTimeMillis() - pauseBegin);
-	}
-
-	public void gameStarted(GameLogic game) {
-		// empty
-		
-	}
-
-	public void gameStopped(GameLogic game) {
-		// empty
-		
-	}
-
-	public void removed(GameLogic game) {
-		// empty
-		
 	}
 
 }

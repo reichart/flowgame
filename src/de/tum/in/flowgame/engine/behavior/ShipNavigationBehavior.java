@@ -14,14 +14,12 @@ import javax.vecmath.Matrix3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.engine.Ship;
 import de.tum.in.flowgame.engine.Tunnel;
-import de.tum.in.flowgame.model.Collision.Item;
 
-public class ShipNavigationBehavior extends RepeatingBehavior implements GameListener {
+public class ShipNavigationBehavior extends RepeatingBehavior {
 
 	private float acceleration = 30f;
 	private float maxSpeed = 18f;
@@ -58,15 +56,12 @@ public class ShipNavigationBehavior extends RepeatingBehavior implements GameLis
 	private boolean normalSteering;
 
 	private static final char PAUSE_KEY = ' ';
-	private boolean pause;
-	private long pauseBegin;
 	private GameLogic gameLogic;
 
 	public static final double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
 
 	private long lastKeyEventTime;
 
-	private long time;
 	private boolean firstPerson = false;
 
 	public ShipNavigationBehavior(final TransformGroup translationGroup, final TransformGroup viewTG) {
@@ -76,9 +71,6 @@ public class ShipNavigationBehavior extends RepeatingBehavior implements GameLis
 		this.viewTG = viewTG;
 
 		setPhysics(this.maxSpeed, this.acceleration);
-
-		// Create Timer here.
-		time = System.currentTimeMillis();
 	}
 
 	private static WakeupOr createCondition() {
@@ -120,7 +112,7 @@ public class ShipNavigationBehavior extends RepeatingBehavior implements GameLis
 					}
 				}
 			} else if (crit instanceof WakeupOnElapsedFrames) {
-				if (!pause)
+				if (!isPaused())
 					updatePosition();
 			}
 		}
@@ -148,7 +140,7 @@ public class ShipNavigationBehavior extends RepeatingBehavior implements GameLis
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
 			case PAUSE_KEY:
-				if (pause) {
+				if (isPaused()) {
 					gameLogic.unpause();
 					// System.out.println("resume");
 				} else {
@@ -375,17 +367,6 @@ public class ShipNavigationBehavior extends RepeatingBehavior implements GameLis
 		}
 	}
 
-	private long getDeltaTime() {
-		final long newTime = System.currentTimeMillis();
-		long deltaTime = newTime - time;
-		// System.out.println(deltaTime);
-		time = newTime;
-		if (deltaTime > 2000)
-			return 0;
-		else
-			return deltaTime;
-	}
-
 	public Vector3d getCoords() {
 		Vector3d vec = new Vector3d();
 		trans.get(vec);
@@ -403,38 +384,23 @@ public class ShipNavigationBehavior extends RepeatingBehavior implements GameLis
 		return this.normalSteering;
 	}
 
+	@Override
 	public void added(final GameLogic game) {
-		this.gameLogic = game;
+		this.gameLogic = game; // TODO extract into RepeatingBehavior
 	}
 	
+	@Override
 	public void removed(final GameLogic game) {
-		this.gameLogic = null;
+		this.gameLogic = null; // TODO extract into RepeatingBehavior
 	}
 	
-	public void collided(GameLogic logic, Item item) {
-		// empty
-	}
-
-	public void gamePaused(GameLogic game) {
-		pause = true;
-		pauseBegin = System.currentTimeMillis();
-	}
-
-	public void gameResumed(GameLogic game) {
-		pause = false;
-		time = time + (System.currentTimeMillis() - pauseBegin);
-	}
-
+	@Override
 	public void gameStarted(GameLogic game) {
 		trans.setIdentity();
 		translationGroup.setTransform(trans);
 		a = new Vector3d();
 		mov = new Vector3d();
 		pos = new Vector3d();
-	}
-
-	public void gameStopped(GameLogic game) {
-		// empty
 	}
 
 }
