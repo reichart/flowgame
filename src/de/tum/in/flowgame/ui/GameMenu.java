@@ -27,6 +27,7 @@ import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.model.ScenarioSession.Type;
 import de.tum.in.flowgame.ui.screens.AfterRoundQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.BeforeSessionQuestionnaireScreen;
+import de.tum.in.flowgame.ui.screens.CreditsScreen;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
 import de.tum.in.flowgame.ui.screens.GameSessionScreen;
 import de.tum.in.flowgame.ui.screens.IndividualHighscoresScreen;
@@ -110,6 +111,7 @@ public class GameMenu implements Sprite, GameListener {
 		add(new IndividualHighscoresScreen());
 		add(new PauseScreen());
 		add(new SystemInfoScreen());
+		add(new CreditsScreen());
 		add(new GameSessionScreen());
 		
 		// qn screens
@@ -186,7 +188,7 @@ public class GameMenu implements Sprite, GameListener {
 				// prevent NPE when requesting focus on JRE 1.5
 				jcomp.setRequestFocusEnabled(false);
 			}
-
+			
 			if (comp instanceof JButton) {
 				comp.setForeground(Color.DARK_GRAY);
 			}
@@ -211,7 +213,7 @@ public class GameMenu implements Sprite, GameListener {
 			if (comp instanceof Container) {
 				prepareForOffscreen((Container) comp);
 			}
-
+			
 		}
 	}
 
