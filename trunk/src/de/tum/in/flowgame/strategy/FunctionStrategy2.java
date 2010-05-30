@@ -7,7 +7,7 @@ public class FunctionStrategy2 implements FlowStrategy, FunctionStrategy2MBean {
 
 	private DifficultyFunction function;
 
-	private int currentPosition;
+	private long currentPosition;
 
 	private float longTerm;
 
@@ -19,12 +19,12 @@ public class FunctionStrategy2 implements FlowStrategy, FunctionStrategy2MBean {
 		Utils.export(this);
 	}
 
-	public int getCurrentPosition() {
+	public long getCurrentPosition() {
 		return currentPosition;
 	}
 
-	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue) {
-		double speed = function.getSpeed().getValue(getPosition(asteroidTrend, fuelTrend));
+	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue, long deltaTime) {
+		double speed = function.getSpeed().getValue(getPosition(asteroidTrend, fuelTrend, deltaTime));
 
 		// Prevention from driving backwards
 		if (speed < 30D) {
@@ -33,24 +33,27 @@ public class FunctionStrategy2 implements FlowStrategy, FunctionStrategy2MBean {
 		return speed;
 	}
 
-	private double getPosition(Trend asteroidTrend, Trend fuelTrend) {
+	private double getPosition(Trend asteroidTrend, Trend fuelTrend, long deltaTime) {
 		shortTerm = (1 - asteroidTrend.getShortRatio()) + fuelTrend.getShortRatio();
 		midTerm = (1 - asteroidTrend.getMidRatio()) + fuelTrend.getMidRatio();
 		longTerm = (1 - asteroidTrend.getLongRatio()) + fuelTrend.getLongRatio();
 
-		if (longTerm != 0) {
+		if (fuelTrend.getPassedItems() > 10) {
 			//get slower when hit by many asteroids or missed many fuel cans
-			if (asteroidTrend.getShortRatio() > 0.3 && fuelTrend.getShortRatio() < 0.3) {
-				currentPosition--;
+			if (asteroidTrend.getShortRatio() > 0.15 && fuelTrend.getShortRatio() < 0.3) {
+				currentPosition -= deltaTime/6.0;
 			//get a lot faster when player collected more than 2/3 of the fuel cans
 			} else if (fuelTrend.getShortRatio() > 0.6){
-				currentPosition+=2;
+				currentPosition += deltaTime/3.0;
+			//get slightly faster when player collected more than 1/3 of the fuel cans on mid term
+			} else if (fuelTrend.getMidRatio() > 0.3) {
+				currentPosition += deltaTime/6.0;
 			//get slightly slower when player is neither especially bad nor good
 			} else {
-				currentPosition++;
+				currentPosition -= deltaTime/6.0;
 			}
 		} else {
-			currentPosition++;
+			currentPosition += deltaTime/6.0;
 		}
 
 		return currentPosition;
@@ -81,7 +84,7 @@ public class FunctionStrategy2 implements FlowStrategy, FunctionStrategy2MBean {
 	}
 	
 	public double getDifficultyRating(Trend asteroidTrend, Trend fuelTrend) {
-		return function.getDifficultyRating(getPosition(asteroidTrend, fuelTrend));
+		return function.getDifficultyRating(getPosition(asteroidTrend, fuelTrend, 0));
 	}
 
 }
