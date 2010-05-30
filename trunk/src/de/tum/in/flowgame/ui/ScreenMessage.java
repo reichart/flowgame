@@ -11,12 +11,18 @@ public class ScreenMessage {
 	private Color color;
 	private int x;
 	private int y;
+	private int size;
 
 	public ScreenMessage(String message, Color color, Point2d position) {
+		this(message, color, position, 12);
+	}
+	
+	public ScreenMessage(String message, Color color, Point2d position, int size) {
 		this.message = message;
 		this.color = color;
 		this.x = (int) position.x;
 		this.y = (int) position.y;
+		this.size = size;
 	}
 
 	public void move(int deltaX, int deltaY) {
@@ -40,4 +46,11 @@ public class ScreenMessage {
 		return y;
 	}
 	
+	public int getSize() {
+		return size;
+	}
+	
+	public void setSize(int size) {
+		this.size = size;
+	}
 }
