@@ -22,11 +22,16 @@
             action="${endinvite}"
 			target="_self">
 
+			<fb:req-choice url="http://192.168.1.57:8080/flowgame/" 
+                label="Monster" onclick="alert('ape')" />
+			<fb:req-choice url="http://192.168.1.57:8080/flowgame/" label="Idiot" />
+
             <fb:multi-friend-selector max="20" 
                 actiontext="Spiele Flowgame!" 
                 showborder="true" 
                 rows="5" cols="4"
 				bypass="cancel"
+				email_invite="false"
                 exclude_ids=""/><!-- TODO exclude fb.app_users -->
                 
         </fb:request-form>
