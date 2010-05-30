@@ -23,8 +23,6 @@ public class TextureTransformBehavior extends RepeatingBehavior implements GameL
 	private double fwdSpeed = 100/Tunnel.TUNNEL_LENGTH;
 
 	private final TextureAttributes attribs;
-
-	private GameLogic logic;
 	
 	private boolean pause;
 	private long pauseBegin;
@@ -51,7 +49,6 @@ public class TextureTransformBehavior extends RepeatingBehavior implements GameL
 	}
 	
 	public void setGameLogic(final GameLogic logic) {
-		this.logic = logic;
 		if (logic != null) {
 			logic.addListener(this);
 		}
