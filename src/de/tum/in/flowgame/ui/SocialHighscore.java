@@ -11,31 +11,36 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import de.tum.in.flowgame.client.Client;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
+import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Highscore;
-import de.tum.in.flowgame.util.Browser;
 
 public class SocialHighscore extends JPanel {
 
 	private static final boolean CURVE = true;
+	private static final Log log = LogFactory.getLog(SocialHighscore.class);
 
 	private final FacebookFriendCache friendCash;
 	private final FriendsBar fb;
 	private Highscore ownScore;
 	private List<Highscore> highscores;
-	private final Client client;
 	private CustomButton personButton;
+	
+	private GameLogic logic;
 
-	public SocialHighscore(final Client client, final FacebookFriendCache friendCash, Browser browser) {
-		this.client = client;
+	public SocialHighscore(final FacebookFriendCache friendCash, GameLogic logic) {
+		this.logic = logic;
 		this.friendCash = friendCash;
 
 		try {
 			update();
 
 			this.setLayout(new BorderLayout());
-			fb = new FriendsBar(highscores, friendCash, browser);
+			fb = new FriendsBar(highscores, friendCash, logic.getBrowser());
 			this.add(fb, BorderLayout.SOUTH);
 		} catch (Exception ex) {
 			// TODO handle exception
@@ -54,13 +59,23 @@ public class SocialHighscore extends JPanel {
 		final List<Long> persons = friendCash.getFriendsids();
 		persons.add(friendCash.getCurrentPlayer().getId());
 
-		final List<Highscore> globalScores = client.getHighscores(persons);
+		final List<Highscore> globalScores = logic.getClient().getHighscores(persons);
 
 		final long currentID = friendCash.getCurrentPlayer().getId();
 		for (final Iterator<Highscore> iterator = globalScores.iterator(); iterator.hasNext();) {
 			final Highscore highscore = iterator.next();
 			if (highscore.getPersonid() == currentID) {
 				ownScore = highscore;
+				GameSession currentGameSession = logic.getCurrentGameSession();
+				if (currentGameSession != null) {
+					final long localHighscore = currentGameSession.getHighscore();
+					if (ownScore.getScore() < localHighscore) {
+						log.info("Found new Highscore, getting percentage from server.");
+						Integer percentage = logic.getClient().getPercentage(localHighscore);
+						Highscore o = new Highscore(ownScore.getPersonid(), localHighscore, percentage);
+						ownScore = o;
+					}
+				}
 				iterator.remove();
 			}
 		}

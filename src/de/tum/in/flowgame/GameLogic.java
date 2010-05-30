@@ -321,6 +321,10 @@ public class GameLogic implements Runnable {
 	public ScenarioSession getCurrentScenarioSession() {
 		return gameSession.getScenarioSession();
 	}
+	
+	public GameSession getCurrentGameSession(){
+		return gameSession;
+	}
 
 	public void setBaseline(long baseline) {
 		gameSession.setBaseline(new Difficulty(0, baseline, 0));

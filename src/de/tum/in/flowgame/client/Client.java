@@ -32,6 +32,7 @@ public class Client {
 
 	private final String UPLOAD_URL;
 	private final String DOWNLOAD_PERSON_URL;
+	private final String DOWNLOAD_PERCENTAGE;
 	private final String DOWNLOAD_SCENARIOSESSION;
 	private final String DOWNLOAD_HIGHSCORES_URL;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE;
@@ -44,6 +45,7 @@ public class Client {
 
 		this.UPLOAD_URL = server + "upload.action";
 		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
+		this.DOWNLOAD_PERCENTAGE = server + "percentageDownload.action";
 		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
 		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload.action";
 		this.DOWNLOAD_PERSONAL_HIGHSCORE = server + "personalHighscoreDownload.action";
@@ -75,6 +77,15 @@ public class Client {
 	public List<Highscore> getHighscores(final List<Long> persons) {
 		try {
 			return execute(DOWNLOAD_HIGHSCORES_URL, persons);
+		} catch (final Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Integer getPercentage(final long score){
+		try {
+			return execute(DOWNLOAD_PERCENTAGE, score);
 		} catch (final Exception ex) {
 			ex.printStackTrace();
 			return null;

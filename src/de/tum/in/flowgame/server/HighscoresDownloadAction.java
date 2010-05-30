@@ -15,7 +15,7 @@ public class HighscoresDownloadAction extends GameDataAction<List<Long>, List<Hi
 		final List<Highscore> friendsHighscore = new ArrayList<Highscore>();
 
 		for (final Highscore highscore : personsHighscore) {
-			final Integer percentage = (int) (globalHighscore.indexOf(highscore) * 100.0 / (globalHighscore.size() - 1));
+			final Integer percentage = (int) (globalHighscore.indexOf(highscore) * 100.0 / (globalHighscore.size()));
 			friendsHighscore.add(new Highscore(highscore.getPersonid(), highscore.getScore(), percentage));
 		}
 
