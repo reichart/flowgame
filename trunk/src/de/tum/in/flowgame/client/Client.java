@@ -40,12 +40,14 @@ public class Client {
 	public Client(final String server) {
 		this.client = new HttpClient(new MultiThreadedHttpConnectionManager());
 
-		this.UPLOAD_URL = server + "upload.action";
-		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
-		this.DOWNLOAD_PERCENTAGE = server + "percentageDownload.action";
-		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
-		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload.action";
-		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload.action";
+		final String ext = ".action";
+		
+		this.UPLOAD_URL = server + "upload" + ext;
+		this.DOWNLOAD_PERSON_URL = server + "personDownload" + ext;
+		this.DOWNLOAD_PERCENTAGE = server + "percentageDownload" + ext;
+		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload" + ext;
+		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload" + ext;
+		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload" + ext;
 	}
 
 	public void uploadQuietly(final Object entity) {
