@@ -95,43 +95,36 @@ public class TextureTransformBehavior extends RepeatingBehavior implements GameL
 		this.fwdSpeed = -fwdSpeed/Tunnel.TUNNEL_LENGTH;
 	}
 
-	@Override
 	public void added(GameLogic game) {
 		// empty
 		
 	}
 
-	@Override
 	public void collided(GameLogic game, Item item) {
 		// empty
 		
 	}
 
-	@Override
 	public void gamePaused(GameLogic game) {
 		pause = true;
 		pauseBegin = System.currentTimeMillis();
 	}
 
-	@Override
 	public void gameResumed(GameLogic game) {
 		pause = false;
 		time = time + (System.currentTimeMillis() - pauseBegin);
 	}
 
-	@Override
 	public void gameStarted(GameLogic game) {
 		// empty
 		
 	}
 
-	@Override
 	public void gameStopped(GameLogic game) {
 		// empty
 		
 	}
 
-	@Override
 	public void removed(GameLogic game) {
 		// empty
 		
