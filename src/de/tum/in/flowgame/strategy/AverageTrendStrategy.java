@@ -12,7 +12,7 @@ public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyM
 		Utils.export(this);
 	}
 	
-	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue) {
+	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue, long deltaTime) {
 		double trendRating = getTrendRating(asteroidTrend, fuelTrend);
 		
 		averageTrendRating =  (trendRating+100*averageTrendRating)/101;

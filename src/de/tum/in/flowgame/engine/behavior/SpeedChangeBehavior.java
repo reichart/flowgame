@@ -18,19 +18,16 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 	private GameLogic gameLogic;
 	private final FlowStrategy strategy;
 
-	private boolean pause;
-
 	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator, final TextureTransformBehavior ttb) {
 		this.forwardNavigator = forwardNavigator;
 		this.ttb = ttb;
 		this.strategy = new FunctionStrategy2();
-		pause = false;
 		Utils.export(this);
 	}
 
 	@Override
 	protected void update() {
-		if (!pause) {
+		if (!isPaused()) {
 			if ((this.strategy instanceof FunctionStrategy || this.strategy instanceof FunctionStrategy2)
 					&& (strategy.getFunction() == null || strategy.getFunction().getSpeed() == null)) {
 				strategy.setFunction(gameLogic.getDifficultyFunction());
@@ -39,7 +36,7 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 			if (gameLogic != null) {
 				final Function fun = gameLogic.getDifficultyFunction().getSpeed();
 				if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
-					speed = strategy.calculateSpeed(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend(), speed);
+					speed = strategy.calculateSpeed(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend(), speed, getDeltaTime());
 					maxSpeed = Math.max(speed, maxSpeed);
 					gameLogic.setRating(strategy.getDifficultyRating(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend()));
 				} else {
@@ -66,18 +63,7 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 					if (strategy != null) {
 						strategy.reset();
 					}
-					pause = false;
 					maxSpeed = Double.MIN_VALUE;
-				}
-
-				@Override
-				public void gamePaused(GameLogic game) {
-					pause = true;
-				}
-
-				@Override
-				public void gameResumed(GameLogic game) {
-					pause = false;
 				}
 
 				@Override

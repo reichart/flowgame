@@ -4,7 +4,7 @@ import de.tum.in.flowgame.model.DifficultyFunction;
 
 
 public interface FlowStrategy {
-	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue);
+	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue, long deltaTime);
 	public void setFunction(DifficultyFunction fun);
 	public DifficultyFunction getFunction();
 	public void reset();
