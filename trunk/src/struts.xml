@@ -75,12 +75,6 @@
 			</result>
 		</action>
 		
-		<action name="personalHighscoreDownload" class="de.tum.in.flowgame.server.PersonalHighscoreDownloadAction">
-			<result type="stream">
-				<param name="contentType">application/octet-stream</param>
-			</result>
-		</action>
-
 		<action name="personalHighscoreChartDownload" class="de.tum.in.flowgame.server.PersonalHighscoreChartDownloadAction">
 			<result type="stream">
 				<param name="contentType">image/png</param>
