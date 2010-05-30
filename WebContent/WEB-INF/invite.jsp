@@ -20,11 +20,7 @@
 			content="&lt;fb:name uid=&quot;${param.fb_sig_user}&quot; firstnameonly=&quot;true&quot; linked=&quot;false&quot;/&gt; wants you to play Flowspace!&lt;fb:req-choice url='http://www.facebook.com/login.php?v=1.0&api_key=${param.fb_sig_api_key}&next=${canvas}&canvas=' label='Play Now' /&gt;" 
 			invite="true" 
             action="${endinvite}"
-			target="_self">
-
-			<fb:req-choice url="http://192.168.1.57:8080/flowgame/" 
-                label="Monster" onclick="alert('ape')" />
-			<fb:req-choice url="http://192.168.1.57:8080/flowgame/" label="Idiot" />
+			target="_parent">
 
             <fb:multi-friend-selector max="20" 
                 actiontext="Spiele Flowgame!" 
@@ -39,11 +35,11 @@
 </script>
 </fb:serverfbml>
 <div>
-<img style="position: absolute; left:547px; top:23px; width:54px; height:24px" src="pixel.png" onclick="parent.toggle_invite_content();" />
+<!-- <img style="position: absolute; left:547px; top:23px; width:54px; height:24px" src="pixel.png" onclick="parent.toggle_invite_content();" />
 </div>
 <div>
 <img style="position: absolute; left:547px; top:604px; width:54px; height:24px" src="pixel.png" onclick="parent.toggle_invite_content();" />
-</div>
+</div> -->
 
 <div id="fb-root"></div>
 
