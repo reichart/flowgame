@@ -1,7 +1,6 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -33,7 +32,6 @@ import de.tum.in.flowgame.ui.QuestionnairePanel;
  * Abstract base class for displaying a {@link Questionnaire}.
  */
 public abstract class QuestionnaireScreen extends MenuScreen {
-
 	private final static Log log = LogFactory.getLog(QuestionnaireScreen.class);
 
 	private final CardLayout cardLayout;
@@ -42,13 +40,14 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	private final JTextArea description;
 	private final JLabel title = title("");
 
-	private List<Questionnaire> questionnaires;
 	private int currentPanel;
-
+	
+	private final List<QuestionnairePanel> questionnairePanels;
+	
 	private final JButton next = new JButton(new AbstractAction("Continue") {
 
 		public void actionPerformed(final ActionEvent e) {
-			final boolean moreQuestionnaires = currentPanel < questionnaires.size() - 1;
+			final boolean moreQuestionnaires = currentPanel < questionnairePanels.size() - 1;
 			if (moreQuestionnaires) {
 				cardLayout.next(cardPanel);
 				update();
@@ -71,6 +70,22 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 		description.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 		description.setWrapStyleWord(true);
 		description.setLineWrap(true);
+		
+		//download questionnaires from server
+		List<Questionnaire> questionnaires = menu.getLogic().getClient().downloadQuestionnaires(getQuestionnaireNames());
+		questionnairePanels = new ArrayList<QuestionnairePanel>();
+		
+		for (final Questionnaire questionnaire : questionnaires) {
+			log.info("adding " + questionnaire.getName());
+			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
+			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			// card name isn't used by CardLayout complains if none is given
+			final String cardName = String.valueOf(questionnaire.getId());
+			cardPanel.add(qscrollpane, cardName);
+			questionnairePanels.add(qPanel);
+		}
 	}
 
 	private JComponent mainUI() {
@@ -87,30 +102,16 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	}
 
 	@Override
-	public final void update(final GameLogic logic) throws Exception {
-		questionnaires = updateQuestionnaire(logic);
+	public void update(final GameLogic logic) throws Exception {
 		currentPanel = 0;
-
 		log.info("building new qn panels");
-
-		cardPanel.removeAll();
-		for (final Questionnaire questionnaire : questionnaires) {
-			log.info("adding " + questionnaire.getName());
-			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
-			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-			// card name isn't used by CardLayout complains if none is given
-			final String cardName = String.valueOf(questionnaire.getId());
-			cardPanel.add(qscrollpane, cardName);
-		}
 
 		update();
 	}
 
 	private void update() {
-		final Questionnaire qn = questionnaires.get(currentPanel);
-		title.setText(qn.getName());
+		final Questionnaire qn = questionnairePanels.get(currentPanel).getQuestionnaire();
+		title.setText(Messages.getString(qn.getName() + ".title"));
 		description.setText(qn.getDescription());
 	}
 
@@ -120,12 +121,8 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 */
 	protected List<Answer> getAnswers() {
 		final List<Answer> answers = new ArrayList<Answer>();
-		for (final Component component : cardPanel.getComponents()) {
-			if (component instanceof QuestionnairePanel) {
-				final QuestionnairePanel qPanel = (QuestionnairePanel) component;
-				answers.addAll(qPanel.getAnswers());
-			}
-
+		for (final QuestionnairePanel qPanel : questionnairePanels) {
+			answers.addAll(qPanel.getAnswers());
 		}
 		return answers;
 	}
@@ -142,6 +139,13 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 * @return a (possibly updated) {@link Questionnaire} to display
 	 * @see #update(GameLogic)
 	 */
-	protected abstract List<Questionnaire> updateQuestionnaire(GameLogic logic) throws Exception;
+
+	/**
+	 * 
+	 * Called once at Screen Creation
+	 * 
+	 * @return array with the names of the questionnaires the screen should display
+	 */
+	protected abstract List<String> getQuestionnaireNames();
 
 }

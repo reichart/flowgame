@@ -62,6 +62,12 @@
 				<param name="contentType">application/octet-stream</param>
 			</result>
 		</action>
+		
+		<action name="questionnaireDownload" class="de.tum.in.flowgame.server.QuestionnaireDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
 
 		<action name="percentageDownload" class="de.tum.in.flowgame.server.PercentageDownloadAction">
 			<result type="stream">

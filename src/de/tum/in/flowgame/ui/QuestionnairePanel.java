@@ -14,11 +14,16 @@ import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Question;
 import de.tum.in.flowgame.model.Questionnaire;
 
 public class QuestionnairePanel extends JPanel {
+
+	private static final Log log = LogFactory.getLog(QuestionnairePanel.class);
 
 	private Questionnaire questionnaire;
 	private List<JSlider> sliders;
@@ -81,21 +86,25 @@ public class QuestionnairePanel extends JPanel {
 		sliders = new ArrayList<JSlider>();
 
 		if (questionnaire.isLabelDriven()) {
-			for (final Question question : qs) {
-				String[] split = question.getText().split(Question.separator);
-				JLabel label1 = new JLabel(split[0]);
-				JLabel label2 = new JLabel(split[1]);
-				final JSlider slider = new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
-				questions.add(label1);
-				questions.add(slider);
-				sliders.add(slider);
-				questions.add(label2);
+			try {
+				for (final Question question : qs) {
+					String[] split = question.getText().split(Question.separator);
+					JLabel label1 = new JLabel(split[0]);
+					JLabel label2 = new JLabel(split[1]);
+					final JSlider slider = new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
+					questions.add(label1);
+					questions.add(slider);
+					sliders.add(slider);
+					questions.add(label2);
+				}
+				// Lay out the panel.
+				SpringUtilities.makeCompactGrid(questions,
+						qs.size(), 3, // rows, cols
+						6, 6, // initX, initY
+						6, 6); // xPad, yPad
+			} catch (ArrayIndexOutOfBoundsException e) {
+				log.error("Question is not defined.", e);
 			}
-			// Lay out the panel.
-			SpringUtilities.makeCompactGrid(questions,
-					qs.size(), 3, // rows, cols
-					6, 6, // initX, initY
-					6, 6); // xPad, yPad
 		} else {
 			// Create the label table
 			final Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
@@ -141,4 +150,9 @@ public class QuestionnairePanel extends JPanel {
 
 		this.add(questions, BorderLayout.CENTER);
 	}
+
+	public Questionnaire getQuestionnaire() {
+		return questionnaire;
+	}
+	
 }

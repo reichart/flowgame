@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Highscore;
 import de.tum.in.flowgame.model.Person;
+import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioSession;
 
 public class Client {
@@ -34,6 +35,7 @@ public class Client {
 	private final String DOWNLOAD_SCENARIOSESSION;
 	private final String DOWNLOAD_HIGHSCORES_URL;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE_CHART;
+	private final String DOWNLOAD_QUESTIONNAIRES;
 	
 	private final HttpClient client;
 
@@ -48,6 +50,7 @@ public class Client {
 		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload" + ext;
 		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload" + ext;
 		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload" + ext;
+		this.DOWNLOAD_QUESTIONNAIRES = server + "questionnaireDownload" + ext;
 	}
 
 	public void uploadQuietly(final Object entity) {
@@ -65,6 +68,15 @@ public class Client {
 	public Person downloadPerson(final long id) {
 		try {
 			return execute(DOWNLOAD_PERSON_URL, id);
+		} catch (final Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Questionnaire> downloadQuestionnaires(final List<String> names) {
+		try {
+			return execute(DOWNLOAD_QUESTIONNAIRES, names);
 		} catch (final Exception ex) {
 			ex.printStackTrace();
 			return null;
