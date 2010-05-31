@@ -27,12 +27,13 @@ public class DDLGenerator {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		// once before each session
+		//create questionnaires
+		// questionnaire that is used for player creation
+		Questionnaire profile = new Questionnaire("profile", false, 13);
+		// questionnaires that are used once before each session
 		Questionnaire moodAndSkills = new Questionnaire("mood",true, 10);
-		
 		Questionnaire moodAndSkillsShort = new Questionnaire("moodShort", true, 3);
-		
-		// after every round
+		// questionnaires that are used  after every round
 		Questionnaire howWasIt = new Questionnaire("howWasIt", false, 10);
 
 		//Create 6 Players
@@ -80,20 +81,7 @@ public class DDLGenerator {
 		ScenarioRound cSr4 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction));
 		ScenarioRound cSr5 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction));
 		
-		cBaselineRound.addQuestionnaire(howWasIt);
-		cBaselineRound.addQuestionnaire(moodAndSkillsShort);
-		cSr1.addQuestionnaire(howWasIt);
-		cSr1.addQuestionnaire(moodAndSkillsShort);
-		cSr2.addQuestionnaire(howWasIt);
-		cSr2.addQuestionnaire(moodAndSkillsShort);
-		cSr3.addQuestionnaire(howWasIt);
-		cSr3.addQuestionnaire(moodAndSkillsShort);
-		cSr4.addQuestionnaire(howWasIt);
-		cSr4.addQuestionnaire(moodAndSkillsShort);
-		cSr5.addQuestionnaire(howWasIt);
-		cSr5.addQuestionnaire(moodAndSkillsShort);
-		
-		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL, moodAndSkills);
+		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL);
 		constantScenarioSession.add(cBaselineRound);
 		constantScenarioSession.add(cSr1);
 		constantScenarioSession.add(cSr2);
@@ -123,6 +111,11 @@ public class DDLGenerator {
 		em.persist(d);
 		em.persist(intervalFunction);
 		em.persist(df2);
+		
+		em.persist(moodAndSkills);
+		em.persist(moodAndSkillsShort);
+		em.persist(howWasIt);
+		em.persist(profile);
 		
 		em.getTransaction().commit();
 	}

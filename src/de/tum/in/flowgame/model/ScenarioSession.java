@@ -7,9 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -17,10 +15,6 @@ public class ScenarioSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ScenarioRound> rounds;
 	
-	@JoinColumn(nullable = false)
-	@OneToOne(cascade=CascadeType.PERSIST)
-	Questionnaire questionnaire;
-
 	public enum Type {
 		INDIVIDUAL, SOCIAL
 	}
@@ -32,13 +26,12 @@ public class ScenarioSession extends AbstractEntity {
 	
 	@SuppressWarnings("unused")
 	private ScenarioSession() {
-		this(null, null); // for JPA
+		this(null); // for JPA
 	}
 
-	public ScenarioSession(final Type type, final Questionnaire questionnaire) {
+	public ScenarioSession(final Type type) {
 		this.rounds = new ArrayList<ScenarioRound>();
 		this.type = type;
-		this.questionnaire = questionnaire;
 	}
 
 	public void add(final ScenarioRound round) {
@@ -79,10 +72,6 @@ public class ScenarioSession extends AbstractEntity {
 		return type;
 	}
 	
-	public Questionnaire getQuestionnaire() {
-		return questionnaire;
-	}
-
 	public List<ScenarioRound> getRounds() {
 		return rounds;
 	}

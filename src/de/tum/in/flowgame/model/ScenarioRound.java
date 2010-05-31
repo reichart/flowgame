@@ -1,12 +1,7 @@
 package de.tum.in.flowgame.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -15,15 +10,12 @@ public class ScenarioRound extends AbstractEntity {
 	private long expectedPlaytime;
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private DifficultyFunction difficultyFunction;
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
-	private List<Questionnaire> questionnaires;
 	private boolean baseline;
 	private int position;
 
 	@SuppressWarnings("unused")
 	private ScenarioRound() {
 		// for JPA
-		questionnaires = new ArrayList<Questionnaire>();
 	}
 
 	/**
@@ -44,7 +36,6 @@ public class ScenarioRound extends AbstractEntity {
 		this.baselineModifier = baselineModifier;
 		this.expectedPlaytime = expectedPlaytime;
 		this.difficultyFunction = f;
-		questionnaires = new ArrayList<Questionnaire>();
 	}
 
 	public Integer getBaselineModifier() {
@@ -59,22 +50,6 @@ public class ScenarioRound extends AbstractEntity {
 		return difficultyFunction;
 	}
 	
-	public void addQuestionnaire(Questionnaire q) {
-		questionnaires.add(q);
-	}
-
-	public Questionnaire getQuestionnaire(int i) {
-		return questionnaires.get(i);
-	}
-	
-	public int getNumberOfQuestionnaires() {
-		return questionnaires.size();
-	}
-	
-	public List<Questionnaire> getQuestionnaires() {
-		return questionnaires;
-	}
-
 	public boolean isBaselineRound() {
 		return baseline;
 	}
