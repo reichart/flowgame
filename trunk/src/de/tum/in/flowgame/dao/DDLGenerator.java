@@ -28,39 +28,13 @@ public class DDLGenerator {
 		em.getTransaction().begin();
 		
 		// once before each session
-		Questionnaire moodAndSkills = new Questionnaire("Stimmung",
-				"Bitte geben Sie bei den unten stehenden Adjektivpaaren an, wie Sie sich im Moment fühlen.", true);
-		moodAndSkills.addLabelQuestion("zufrieden", "unzufrieden");
-		moodAndSkills.addLabelQuestion("energiegeladen", "energielos");
-		moodAndSkills.addLabelQuestion("gestresst", "entspannt");
-		moodAndSkills.addLabelQuestion("müde", "hellwach");
-		moodAndSkills.addLabelQuestion("friedlich", "verärgert");
-		moodAndSkills.addLabelQuestion("unglücklich", "glücklich");
-		moodAndSkills.addLabelQuestion("lustlos", "hoch motiviert");
-		moodAndSkills.addLabelQuestion("ruhig", "nervös");
-		moodAndSkills.addLabelQuestion("begeistert", "gelangweilt");
-		moodAndSkills.addLabelQuestion("besorgt", "sorgenfrei");
+		Questionnaire moodAndSkills = new Questionnaire("mood",true, 10);
 		
-		Questionnaire moodAndSkillsShort = new Questionnaire("Stimmung", "Wie fühlen Sie sich.", true);
-		moodAndSkillsShort.addLabelQuestion("ruhig", "nervös");
-		moodAndSkillsShort.addLabelQuestion("zufrieden","unzufrieden");
-		moodAndSkillsShort.addLabelQuestion("lustlos", "hoch motiviert"); 
+		Questionnaire moodAndSkillsShort = new Questionnaire("moodShort", true, 3);
 		
 		// after every round
-		Questionnaire howWasIt = new Questionnaire("How was it?", "Bitte versetzen Sie sich in die gerade beendete Spielrunde und beantworten Sie die Aussagen zur Erleben beim Spielen:");
-		howWasIt.addQuestion("Ich fühle mich optimal beansprucht.");
-		howWasIt.addQuestion("Meine Gedanken bzw. Aktivitäten laufen flüssig und glatt.");
-		howWasIt.addQuestion("Ich merke gar nicht, wie die Zeit vergeht.");
-		howWasIt.addQuestion("Ich habe keine Mühe, mich zu konzentrieren.");
-		howWasIt.addQuestion("Mein Kopf ist völlig klar.");
-		howWasIt.addQuestion("Ich bin ganz vertieft in das was ich gerade mache.");
-		howWasIt.addQuestion("Die richtigen Gedanken/Bewegungen kommen wie von selbst.");
-		howWasIt.addQuestion("Ich weiss bei jedem Schritt, was ich zu tun habe.");
-		howWasIt.addQuestion("Ich habe das Gefühl, den Ablauf unter Kontrolle zu haben.");
-		howWasIt.addQuestion("Ich bin völlig selbstvergessen.");
-		
-		howWasIt.addQuestion("Für mich persönlich sind die jetzigen Anforderungen...");//zu gering <-> zu hoch
-		
+		Questionnaire howWasIt = new Questionnaire("howWasIt", false, 10);
+
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
 		Person p1 = new Person(226900023L, "Blitz");

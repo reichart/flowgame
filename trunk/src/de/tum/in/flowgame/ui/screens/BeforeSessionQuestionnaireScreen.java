@@ -1,8 +1,7 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -12,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.ui.screens.story.RoundIntroScreen;
 
 /**
@@ -34,13 +32,16 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 	protected Action next() {
 		return next;
 	}
-
+	
 	@Override
-	protected List<Questionnaire> updateQuestionnaire(final GameLogic logic) throws IOException {
+	public final void update(final GameLogic logic) throws Exception {
+		super.update(logic);
 		log.info("creating new session, updating to before/scenariosession qn");
 		logic.newSession();
-		final List<Questionnaire> qs = new ArrayList<Questionnaire>();
-		qs.add(logic.getCurrentScenarioSession().getQuestionnaire());
-		return qs;
+	}
+	
+	@Override
+	protected List<String> getQuestionnaireNames() {
+		return Arrays.asList("mood");
 	}
 }
