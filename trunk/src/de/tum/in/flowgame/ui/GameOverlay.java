@@ -49,7 +49,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	private boolean drawMessage;
 	private boolean drawHUD;
-	private boolean drawFPS = true;
+	private boolean drawFPS;
 
 	private GameMenu menu;
 

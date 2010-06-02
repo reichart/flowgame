@@ -80,7 +80,7 @@ public class FriendsBar extends JPanel {
 		btn.setBorder(BorderFactory.createEmptyBorder());
 		btn.setSize(25, 25);
 		btn.setContentAreaFilled(false);
-		btn.setLocation(0, 40);
+		btn.setLocation(5, 40);
 
 		btn.setText("Invite Friends");
 

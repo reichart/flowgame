@@ -75,9 +75,12 @@ public class QuestionnairePanel extends JPanel {
 	}
 
 	private void setQuestionnaire(Questionnaire questionnaire) {
-//		this.removeAll();
 		this.questionnaire = questionnaire;
-		// boolean first = true;
+		repaintQuestions();
+	}
+	
+	private void repaintQuestions() {
+		removeAll();
 		// Create Labels with Questions and add sliders to them
 		final List<Question> qs = this.questionnaire.getQuestions();
 		Collections.shuffle(qs);
@@ -122,7 +125,7 @@ public class QuestionnairePanel extends JPanel {
 
 				final JSlider slider = new JSlider(SwingConstants.HORIZONTAL);
 				// if (first) {
-				slider.setMinorTickSpacing(50);
+				slider.setValue(50);
 				slider.setPaintTicks(true);
 
 				slider.setLabelTable(labelTable);
@@ -141,18 +144,15 @@ public class QuestionnairePanel extends JPanel {
 					6, 6); // xPad, yPad
 		}
 
-		final JTextArea textArea = new JTextArea(questionnaire.getDescription());
-		textArea.setEditable(false);
-		textArea.setEnabled(false);
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
-		textArea.setOpaque(false);
-
 		this.add(questions, BorderLayout.CENTER);
 	}
 
 	public Questionnaire getQuestionnaire() {
 		return questionnaire;
+	}
+
+	public void reset() {
+//		repaintQuestions();
 	}
 	
 }

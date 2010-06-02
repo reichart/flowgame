@@ -7,12 +7,19 @@ import javax.persistence.Transient;
 public class Question extends AbstractEntity {
 	
 	public static final String separator = "<->";
+	
+	private int number;
 
 	@Transient
 	private String text;
 	
-	public Question() {
+	@SuppressWarnings("unused")
+	private Question() {
 		// for JPA
+	}
+	
+	public Question(int number) {
+		this.number = number;
 	}
 	
 	/**
@@ -25,4 +32,9 @@ public class Question extends AbstractEntity {
 	public String getText() {
 		return text;
 	}
+	
+	public int getNumber() {
+		return number;
+	}
+	
 }
