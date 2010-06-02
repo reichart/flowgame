@@ -47,7 +47,7 @@ public class Questionnaire extends AbstractEntity {
 		this.name = name;
 		this.labelDriven = labelDriven;
 		for (int i = 0; i < numberOfQuestions; i++) {
-			questions.add(new Question());
+			questions.add(new Question(i+1));
 		}
 	}
 
@@ -57,7 +57,7 @@ public class Questionnaire extends AbstractEntity {
 
 	public List<Question> getQuestions() {
 		for (Question q : questions) {
-			q.setText(Messages.getString(name + q.getId()));
+			q.setText(Messages.getString(name + q.getNumber()));
 		}
 		return questions;
 	}
