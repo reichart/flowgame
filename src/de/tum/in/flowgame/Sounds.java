@@ -14,7 +14,7 @@ public enum Sounds {
 
 	private Sounds(final String res) {
 		try {
-			this.snd = SoundsHelper.getApplet().getAudioClip(getClass().getResource("/res/sound/" + res + ".wav"));
+			this.snd = SoundsHelper.load(res);
 		} catch (final Exception ex) {
 			LogFactory.getLog(Sounds.class).warn("failed to load sound " + res, ex);
 			this.snd = null;
