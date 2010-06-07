@@ -41,10 +41,9 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	private final JLabel title = title("");
 
 	private int currentPanel;
-	
+
 	private List<QuestionnairePanel> questionnairePanels;
-//	private final List<JScrollPane> scrollPanels;
-	
+
 	private final JButton next = new JButton(new AbstractAction("Continue") {
 
 		public void actionPerformed(final ActionEvent e) {
@@ -70,22 +69,6 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 		description.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 		description.setWrapStyleWord(true);
 		description.setLineWrap(true);
-		
-		//download questionnaires from server
-//		List<Questionnaire> questionnaires = menu.getLogic().getClient().downloadQuestionnaires(getQuestionnaireNames());
-//		scrollPanels = new ArrayList<JScrollPane>(); 
-//		questionnairePanels = new ArrayList<QuestionnairePanel>();
-//		
-//		for (final Questionnaire questionnaire : questionnaires) {
-//			log.info("adding " + questionnaire.getName());
-//			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
-//			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-//					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-//			scrollPanels.add(qscrollpane);
-//
-//			cardPanel.add(qscrollpane, questionnaire.getName());
-//			questionnairePanels.add(qPanel);
-//		}
 	}
 
 	private JComponent mainUI() {
@@ -105,11 +88,12 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	public void update(final GameLogic logic) throws Exception {
 		log.info("building new qn panels");
 		currentPanel = 0;
-		
+
 		cardPanel.removeAll();
-		
+
 		questionnairePanels = new ArrayList<QuestionnairePanel>();
-		List<Questionnaire> questionnaires = menu.getLogic().getClient().downloadQuestionnaires(getQuestionnaireNames());
+		final List<Questionnaire> questionnaires = menu.getLogic().getClient().downloadQuestionnaires(
+				getQuestionnaireNames());
 		for (final Questionnaire questionnaire : questionnaires) {
 			log.info("adding " + questionnaire.getName());
 			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
@@ -118,20 +102,18 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 			cardPanel.add(qscrollpane, questionnaire.getName());
 			questionnairePanels.add(qPanel);
 		}
-		
+
 		update();
 	}
 
 	private void update() {
-		QuestionnairePanel questionnairePanel = questionnairePanels.get(currentPanel);
+		final QuestionnairePanel questionnairePanel = questionnairePanels.get(currentPanel);
 		questionnairePanel.reset();
-		
+
 		final Questionnaire qn = questionnairePanel.getQuestionnaire();
-//		System.err.println(currentPanel);
-//		System.err.println(qn.getTitel());
 		title.setText(qn.getTitel());
 		description.setText(qn.getDescription());
-		
+
 		cardLayout.show(cardPanel, qn.getName());
 	}
 
@@ -161,10 +143,10 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 */
 
 	/**
-	 * 
 	 * Called once at Screen Creation
 	 * 
-	 * @return array with the names of the questionnaires the screen should display
+	 * @return array with the names of the questionnaires the screen should
+	 *         display
 	 */
 	protected abstract List<String> getQuestionnaireNames();
 
