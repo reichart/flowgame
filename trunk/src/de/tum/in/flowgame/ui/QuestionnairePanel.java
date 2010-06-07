@@ -28,39 +28,7 @@ public class QuestionnairePanel extends JPanel {
 	private Questionnaire questionnaire;
 	private List<JSlider> sliders;
 	
-	// /**
-	// * Scrolls directly to the clicked value instead of only moving the knob
-	// * slightly in the direction.
-	// */
-	// private static class DirectClickSliderUI extends BasicSliderUI {
-	//
-	// private DirectClickSliderUI(final JSlider slider) {
-	// super(slider);
-	// }
-	//
-	// @Override
-	// protected void scrollDueToClickInTrack(final int direction) {
-	// final int value;
-	//
-	// final Point mouse = slider.getMousePosition();
-	// switch (slider.getOrientation()) {
-	// case SwingConstants.HORIZONTAL:
-	// value = valueForXPosition(mouse.x);
-	// break;
-	//
-	// case SwingConstants.VERTICAL:
-	// value = valueForYPosition(mouse.y);
-	// break;
-	//
-	// default:
-	// value = slider.getValue();
-	// break;
-	// }
-	// slider.setValue(value);
-	// }
-	// }
-
-	public QuestionnairePanel(Questionnaire q) {
+	public QuestionnairePanel(final Questionnaire q) {
 		super(new BorderLayout());
 		setQuestionnaire(q);
 	}
@@ -74,7 +42,7 @@ public class QuestionnairePanel extends JPanel {
 		return answers;
 	}
 
-	private void setQuestionnaire(Questionnaire questionnaire) {
+	private void setQuestionnaire(final Questionnaire questionnaire) {
 		this.questionnaire = questionnaire;
 		repaintQuestions();
 	}
@@ -85,15 +53,15 @@ public class QuestionnairePanel extends JPanel {
 		final List<Question> qs = this.questionnaire.getQuestions();
 		Collections.shuffle(qs);
 
-		JPanel questions = new JPanel(new SpringLayout());
+		final JPanel questions = new JPanel(new SpringLayout());
 		sliders = new ArrayList<JSlider>();
 
 		if (questionnaire.isLabelDriven()) {
 			try {
 				for (final Question question : qs) {
-					String[] split = question.getText().split(Question.separator);
-					JLabel label1 = new JLabel(split[0]);
-					JLabel label2 = new JLabel(split[1]);
+					final String[] split = question.getText().split(Question.separator);
+					final JLabel label1 = new JLabel(split[0]);
+					final JLabel label2 = new JLabel(split[1]);
 					final JSlider slider = new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
 					questions.add(label1);
 					questions.add(slider);
@@ -105,7 +73,7 @@ public class QuestionnairePanel extends JPanel {
 						qs.size(), 3, // rows, cols
 						6, 6, // initX, initY
 						6, 6); // xPad, yPad
-			} catch (ArrayIndexOutOfBoundsException e) {
+			} catch (final ArrayIndexOutOfBoundsException e) {
 				log.error("Question is not defined.", e);
 			}
 		} else {
@@ -117,23 +85,18 @@ public class QuestionnairePanel extends JPanel {
 				label.setForeground(Color.WHITE);
 			}
 			for (final Question question : qs) {
-				JTextArea text = new JTextArea(question.getText());
+				final JTextArea text = new JTextArea(question.getText());
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
 				text.setForeground(Color.WHITE);
 				questions.add(text);
 
 				final JSlider slider = new JSlider(SwingConstants.HORIZONTAL);
-				// if (first) {
 				slider.setValue(50);
 				slider.setPaintTicks(true);
-
 				slider.setLabelTable(labelTable);
-
 				slider.setPaintLabels(true);
-				// first = false;
-				// }
-				// slider.setUI(new DirectClickSliderUI(slider));
+
 				sliders.add(slider);
 				questions.add(slider);
 			}
