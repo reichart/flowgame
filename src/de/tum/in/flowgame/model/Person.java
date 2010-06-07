@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Person implements Serializable {
@@ -25,6 +26,9 @@ public class Person implements Serializable {
 	private Date dateOfBirth;
 	private String place;
 
+	@Transient
+	private transient boolean newPlayer;
+	
 	/**
 	 * Answers given to the initial profiling questionaire for first-time
 	 * players.
@@ -40,8 +44,13 @@ public class Person implements Serializable {
 	public Person(final long id, final String name) {
 		this.id = id;
 		this.name = name;
+		this.newPlayer = true; // constructor call means new person
 	}
 
+	public boolean isNewPlayer() {
+		return newPlayer;
+	}
+	
 	public String getName() {
 		return name;
 	}

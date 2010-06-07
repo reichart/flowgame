@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Highscore;
@@ -25,7 +26,7 @@ public class SocialHighscore extends JPanel {
 	private static final Log log = LogFactory.getLog(SocialHighscore.class);
 
 	private final FacebookFriendCache friendCash;
-	private final FriendsBar fb;
+	private FriendsBar fb;
 	private Highscore ownScore;
 	private List<Highscore> highscores;
 	private CustomButton personButton;
@@ -44,7 +45,10 @@ public class SocialHighscore extends JPanel {
 			this.add(fb, BorderLayout.SOUTH);
 		} catch (Exception ex) {
 			// TODO handle exception
-			throw new RuntimeException(ex);
+//			throw new RuntimeException(ex);
+			
+			fb = null;
+			log.error("failed to update social highscore");
 		}
 
 		personButton = new CustomButton();
@@ -59,7 +63,12 @@ public class SocialHighscore extends JPanel {
 		final List<Long> persons = friendCash.getFriendsids();
 		persons.add(friendCash.getCurrentPlayer().getId());
 
-		final List<Highscore> globalScores = logic.getClient().getHighscores(persons);
+		final Client client = logic.getClient();
+		if (client == null) {
+			log.warn("no client, not updating highscore");
+			return;
+		}
+		final List<Highscore> globalScores = client.getHighscores(persons);
 
 		final long currentID = friendCash.getCurrentPlayer().getId();
 		for (final Iterator<Highscore> iterator = globalScores.iterator(); iterator.hasNext();) {
@@ -71,7 +80,7 @@ public class SocialHighscore extends JPanel {
 					final long localHighscore = currentGameSession.getHighscore();
 					if (ownScore.getScore() < localHighscore) {
 						log.info("Found new Highscore, getting percentage from server.");
-						Integer percentage = logic.getClient().getPercentage(localHighscore);
+						Integer percentage = client.getPercentage(localHighscore);
 						Highscore o = new Highscore(ownScore.getPersonid(), localHighscore, percentage);
 						ownScore = o;
 					}

@@ -104,17 +104,32 @@ public class GameApplet extends Applet {
 			
 			this.facebook = createFacebookClient();
 
+			final Client client = new Client(facebook.getServer());
+			final Person player = getPlayer(client);
+			final Browser browser = JSObjectBrowser.from(this);
+			
+			// this initializes all the other classes
+			new GameLogic(player, client, facebook, browser).addListener(game.getListener());
+
+			if (player.isNewPlayer()) {
+				game.getMenu().show(BeforeProfileScreen.class);
+			} else {
+				game.getMenu().show(MainScreen.class);
+			}
+
+		} catch (final Exception ex) {
+			throw new RuntimeException("Failed to connect to " + facebook.getServer(), ex);
+		}
+	}
+
+	private Person getPlayer(final Client client) {
+		Person player;
+		try {
 			final long loggedInUser = facebook.users_getLoggedInUser();
 
-			final Client client = new Client(facebook.getServer());
-
-			final boolean newPlayer;
-
 			// download person information from server
-			Person player = client.downloadPerson(loggedInUser);
+			player = client.downloadPerson(loggedInUser);
 			if (player == null) {
-				newPlayer = true;
-
 				log.info("creating new player");
 
 				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
@@ -126,7 +141,7 @@ public class GameApplet extends Applet {
 					final String sex = userInfo.getString(ProfileField.SEX.fieldName());
 
 					final String country;
-					if (userInfo.isNull("hometown_location")) {
+					if (userInfo.isNull(ProfileField.HOMETOWN_LOCATION.fieldName())) {
 						country = null;
 					} else {
 						country = userInfo.getJSONObject(ProfileField.HOMETOWN_LOCATION.fieldName()).getString(
@@ -144,22 +159,12 @@ public class GameApplet extends Applet {
 
 				log.info("created new player: " + player);
 			} else {
-				newPlayer = false;
 				log.info("existing player: " + player);
 			}
-
-			final Browser browser = JSObjectBrowser.from(this);
-			// this initializes all the other classes
-			new GameLogic(player, client, facebook, browser).addListener(game.getListener());
-
-			if (newPlayer) {
-				game.getMenu().show(BeforeProfileScreen.class);
-			} else {
-				game.getMenu().show(MainScreen.class);
-			}
-
-		} catch (final Exception ex) {
-			throw new RuntimeException("Failed to connect to " + facebook.getServer(), ex);
+		} catch (final Exception e) {
+			log.error("failed to connect to facebook, using dummy user in offline mode");
+			player = new Person(-1, "dummy");
 		}
+		return player;
 	}
 }
