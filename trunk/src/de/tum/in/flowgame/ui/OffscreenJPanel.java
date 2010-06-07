@@ -1,25 +1,26 @@
 package de.tum.in.flowgame.ui;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.GraphicsConfiguration;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import de.tum.in.flowgame.Utils;
 
 /**
  * Frankenstein's own JPanel to render regular Swing components to an offscreen
  * image and still have them react to mouse events.
- * 
+ * <p>
  * Based on {@link java.awt.LightweightDispatcher}.
  */
-public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotionListener {
+public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	private transient Component mouseEventTarget;
 	private transient Component targetLastEntered;
@@ -33,11 +34,12 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 	public OffscreenJPanel(final Component mouseTrap) {
 		mouseTrap.addMouseListener(this);
 		mouseTrap.addMouseMotionListener(this);
-		
+		mouseTrap.addMouseWheelListener(this);
+
 		// force layout of offscreen Swing/AWT components (Sun bug #4639354)
 		addNotify();
 	}
-	
+
 	@Override
 	public GraphicsConfiguration getGraphicsConfiguration() {
 		// prevents NPE on JRE 1.5 somewhere in Metal LAF
@@ -49,15 +51,15 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 
 		if (e.getID() == MouseEvent.MOUSE_PRESSED || e.getID() == MouseEvent.MOUSE_RELEASED) {
 			switch (e.getButton()) {
-			case MouseEvent.BUTTON1:
-				modifiers ^= InputEvent.BUTTON1_DOWN_MASK;
-				break;
-			case MouseEvent.BUTTON2:
-				modifiers ^= InputEvent.BUTTON2_DOWN_MASK;
-				break;
-			case MouseEvent.BUTTON3:
-				modifiers ^= InputEvent.BUTTON3_DOWN_MASK;
-				break;
+				case MouseEvent.BUTTON1:
+					modifiers ^= InputEvent.BUTTON1_DOWN_MASK;
+					break;
+				case MouseEvent.BUTTON2:
+					modifiers ^= InputEvent.BUTTON2_DOWN_MASK;
+					break;
+				case MouseEvent.BUTTON3:
+					modifiers ^= InputEvent.BUTTON3_DOWN_MASK;
+					break;
 			}
 		}
 		return ((modifiers & (InputEvent.BUTTON1_DOWN_MASK | InputEvent.BUTTON2_DOWN_MASK | InputEvent.BUTTON3_DOWN_MASK)) != 0);
@@ -65,7 +67,7 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 
 	protected boolean processOffscreenMouseEvent(final MouseEvent e) {
 		final int id = e.getID();
-		final Component currentTarget = getMouseEventTarget(this, e.getX(), e.getY());
+		final Component currentTarget = SwingUtilities.getDeepestComponentAt(this, e.getX(), e.getY());
 
 		trackMouseEnterExit(currentTarget, e);
 
@@ -75,31 +77,28 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 
 		if (mouseEventTarget != null) {
 			switch (id) {
-			case MouseEvent.MOUSE_ENTERED:
-			case MouseEvent.MOUSE_EXITED:
-				break;
-			case MouseEvent.MOUSE_PRESSED:
-				retargetMouseEvent(mouseEventTarget, id, e);
-				break;
-			case MouseEvent.MOUSE_RELEASED:
-				retargetMouseEvent(mouseEventTarget, id, e);
-				break;
-			case MouseEvent.MOUSE_CLICKED:
-				if (currentTarget == mouseEventTarget) {
-					retargetMouseEvent(currentTarget, id, e);
-				}
-				break;
-			case MouseEvent.MOUSE_MOVED:
-				retargetMouseEvent(mouseEventTarget, id, e);
-				break;
-			case MouseEvent.MOUSE_DRAGGED:
-				if (isMouseGrab(e)) {
+				case MouseEvent.MOUSE_ENTERED:
+				case MouseEvent.MOUSE_EXITED:
+					// handled in trackMouseEnterExit()
+					break;
+				case MouseEvent.MOUSE_PRESSED:
+				case MouseEvent.MOUSE_RELEASED:
+				case MouseEvent.MOUSE_MOVED:
 					retargetMouseEvent(mouseEventTarget, id, e);
-				}
-				break;
-			case MouseEvent.MOUSE_WHEEL:
-				retargetMouseEvent(currentTarget, id, e);
-				break;
+					break;
+				case MouseEvent.MOUSE_CLICKED:
+					if (currentTarget == mouseEventTarget) {
+						retargetMouseEvent(currentTarget, id, e);
+					}
+					break;
+				case MouseEvent.MOUSE_DRAGGED:
+					if (isMouseGrab(e)) {
+						retargetMouseEvent(mouseEventTarget, id, e);
+					}
+					break;
+				case MouseEvent.MOUSE_WHEEL:
+					retargetMouseEvent(currentTarget, id, e);
+					break;
 			}
 			e.consume();
 		}
@@ -186,41 +185,6 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 		target.dispatchEvent(retargeted);
 	}
 
-	/**
-	 * Finds the component at position (x,y) which is deepest in the UI
-	 * component tree.
-	 * 
-	 * @param root
-	 *            the container to start looking in
-	 * @param x
-	 *            the x value of the mouse position
-	 * @param y
-	 *            the y value of the mouse position
-	 * @return the component at position (x,y) or <code>null</code> if outside
-	 *         root
-	 */
-	private static Component getMouseEventTarget(final Container root, final int x, final int y) {
-		for (final Component comp : root.getComponents()) {
-			if (comp != null && comp.isVisible() && comp.contains(x - comp.getX(), y - comp.getY())) {
-				if (comp instanceof Container) {
-					final Container child = (Container) comp;
-					final Component deeper = getMouseEventTarget(child, x - child.getX(), y - child.getY());
-					if (deeper != null) {
-						return deeper;
-					}
-				} else {
-					return comp;
-				}
-			}
-		}
-
-		if (root.contains(x, y)) {
-			return root;
-		}
-
-		return null;
-	}
-
 	public void mouseClicked(final MouseEvent e) {
 		processOffscreenMouseEvent(e);
 	}
@@ -246,6 +210,10 @@ public class OffscreenJPanel extends JPanel implements MouseListener, MouseMotio
 	}
 
 	public void mouseMoved(final MouseEvent e) {
+		processOffscreenMouseEvent(e);
+	}
+
+	public void mouseWheelMoved(final MouseWheelEvent e) {
 		processOffscreenMouseEvent(e);
 	}
 
