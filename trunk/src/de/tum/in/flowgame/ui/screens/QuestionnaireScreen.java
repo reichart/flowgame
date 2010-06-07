@@ -48,7 +48,10 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	
 	private final ForceAnswersListener forceAnswers;
 
-	private final JButton next = new JButton(new AbstractAction("Continue") {
+	private static final String NEXT_ENABLED = "Continue";
+	private static final String NEXT_DISABLED = "Please answers all questions to continue";
+	
+	private final JButton next = new JButton(new AbstractAction() {
 
 		public void actionPerformed(final ActionEvent e) {
 			final boolean moreQuestionnaires = currentPanel < questionnairePanels.size() - 1;
@@ -128,6 +131,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 		
 		// disable until all questions are answered
 		next.setEnabled(false);
+		next.setText(NEXT_DISABLED);
 	}
 
 	private QuestionnairePanel getCurrentPanel() {
@@ -137,7 +141,13 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	private class ForceAnswersListener implements ChangeListener {
 		public void stateChanged(final ChangeEvent e) {
 			// enable button only when all questions have been answered
-			next.setEnabled(getCurrentPanel().isCompletelyAnswered());
+			if (getCurrentPanel().isCompletelyAnswered()) {
+				next.setEnabled(true);
+				next.setText(NEXT_ENABLED);
+			} else {
+				next.setEnabled(false);
+				next.setText(NEXT_DISABLED);
+			}
 		}
 	}
 	
