@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,8 +43,10 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	private final JLabel title = title("");
 
 	private int currentPanel;
-
+	
 	private List<QuestionnairePanel> questionnairePanels;
+	
+	private final ForceAnswersListener forceAnswers;
 
 	private final JButton next = new JButton(new AbstractAction("Continue") {
 
@@ -61,6 +65,8 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	public QuestionnaireScreen() {
 		super(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
 
+		forceAnswers = new ForceAnswersListener();
+		
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
 
@@ -88,35 +94,53 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	public void update(final GameLogic logic) throws Exception {
 		log.info("building new qn panels");
 		currentPanel = 0;
-
+		
 		cardPanel.removeAll();
-
+		
 		questionnairePanels = new ArrayList<QuestionnairePanel>();
 		final List<Questionnaire> questionnaires = menu.getLogic().getClient().downloadQuestionnaires(
 				getQuestionnaireNames());
 		for (final Questionnaire questionnaire : questionnaires) {
 			log.info("adding " + questionnaire.getName());
 			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
-			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+			qPanel.addChangeListener(forceAnswers);
+			
+			// TODO qn gets cut off with VERTICAL_SCROLLBAR_AS_NEEDED
+			// work around is to always show vertical scrollbars
+			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			cardPanel.add(qscrollpane, questionnaire.getName());
 			questionnairePanels.add(qPanel);
 		}
-
+		
 		update();
 	}
 
 	private void update() {
-		final QuestionnairePanel questionnairePanel = questionnairePanels.get(currentPanel);
+		QuestionnairePanel questionnairePanel = getCurrentPanel();
 		questionnairePanel.reset();
-
+		
 		final Questionnaire qn = questionnairePanel.getQuestionnaire();
 		title.setText(qn.getTitel());
 		description.setText(qn.getDescription());
-
+		
 		cardLayout.show(cardPanel, qn.getName());
+		
+		// disable until all questions are answered
+		next.setEnabled(false);
 	}
 
+	private QuestionnairePanel getCurrentPanel() {
+		return questionnairePanels.get(currentPanel);
+	}
+
+	private class ForceAnswersListener implements ChangeListener {
+		public void stateChanged(final ChangeEvent e) {
+			// enable button only when all questions have been answered
+			next.setEnabled(getCurrentPanel().isCompletelyAnswered());
+		}
+	}
+	
 	/**
 	 * @return the list of {@link Answer}s for the currently displayed
 	 *         {@link Questionnaire}
