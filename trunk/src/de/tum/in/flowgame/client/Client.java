@@ -141,7 +141,7 @@ public class Client {
 
 			final int statusCode = client.executeMethod(post);
 			if (statusCode != HttpStatus.SC_OK) {
-				throw new IOException(post.getStatusLine().toString());
+				throw new IOException(post.getURI() + ": " + post.getStatusLine().toString());
 			}
 
 			final Object response = Utils.bytesToObject(IOUtils.toByteArray(post.getResponseBodyAsStream()));
