@@ -8,10 +8,12 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -66,21 +68,24 @@ public class QuestionnairePanel extends ChangeableComponent {
 			try {
 				for (final Question question : qs) {
 					final String[] split = question.getText().split(Question.separator);
-					final JLabel label1 = new JLabel(split[0]);
-					final JLabel label2 = new JLabel(split[1]);
+					final JLabel label1 = new JLabel(split[0], SwingConstants.RIGHT);
+					final JLabel label2 = new JLabel(split[1], SwingConstants.LEFT);
 					final JPsychoSlider slider = new JPsychoSlider();
 					slider.addChangeListener(forceAnswers);
 
+					questions.add(Box.createHorizontalStrut(60));
 					questions.add(label1);
 					questions.add(slider);
 					sliders.add(slider);
 					questions.add(label2);
+					questions.add(Box.createHorizontalStrut(60));
 				}
+				
 				// Lay out the panel.
 				SpringUtilities.makeCompactGrid(questions,
-						qs.size(), 3, // rows, cols
+						qs.size(), 5, // rows, cols
 						6, 6, // initX, initY
-						6, 6); // xPad, yPad
+						6, 18); // xPad, yPad
 			} catch (final ArrayIndexOutOfBoundsException e) {
 				log.error("Question is not defined.", e);
 			}
@@ -115,7 +120,7 @@ public class QuestionnairePanel extends ChangeableComponent {
 			// Lay out the panel.
 			SpringUtilities.makeCompactGrid(questions, qs.size(), 2, // rows, cols
 					6, 6, // initX, initY
-					6, 6); // xPad, yPad
+					6, 18); // xPad, yPad
 		}
 
 		this.add(questions, BorderLayout.CENTER);
