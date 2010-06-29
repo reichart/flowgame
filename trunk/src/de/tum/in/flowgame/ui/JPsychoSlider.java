@@ -53,6 +53,8 @@ public class JPsychoSlider extends ChangeableComponent {
 		final Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+		g.translate(0, (getHeight() - TRACK_HEIGHT) / 2);
+		
 		g.setColor(COLOR_TRACK);
 		g.fillRect(0, 0, getWidth(), TRACK_HEIGHT);
 
