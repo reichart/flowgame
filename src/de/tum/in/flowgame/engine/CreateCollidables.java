@@ -1,14 +1,19 @@
 package de.tum.in.flowgame.engine;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Group;
+import javax.media.j3d.Material;
 import javax.media.j3d.Node;
+import javax.media.j3d.Shape3D;
 import javax.media.j3d.SharedGroup;
+import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 
 import de.tum.in.flowgame.GameListener;
@@ -47,14 +52,37 @@ public class CreateCollidables implements GameListener {
 	public CreateCollidables(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.collidableBranchGroup.setCapability(Group.ALLOW_CHILDREN_EXTEND);
-		this.asteroid = loadModel(Item.ASTEROID, "/res/asteroid.obj", 0.8);
-		this.fuelcan = loadModel(Item.FUELCAN, "/res/fuelcan2.obj", 1.5);
+		this.asteroid = loadModel(Item.ASTEROID, "/res/asteroid.obj", 0.8, null);
+
+		//creates new appearance with yellow colored material
+		Color3f ambient = new Color3f(Color.BLACK);
+		Color3f emissive= new Color3f(Color.BLACK);
+		Color3f diffuse = new Color3f(1.0f, 0.8f, 0.0f);
+		Color3f specular = new Color3f(Color.WHITE);
+		Material mat = new Material(ambient, emissive, diffuse, specular, 10.5f);
+		Appearance a = new Appearance();
+		a.setMaterial(mat);
+		
+		//The diamond3.obj has a associated material file (diamond3.mtl).
+		//If you want to overwrite the material defined in the file, then
+		//you have to pass a Material as last parameter (instead of null).
+		this.fuelcan = loadModel(Item.FUELCAN, "/res/diamond3.obj", 1.5, null);
 	}
 
-	private SharedGroup loadModel(final Item item, final String resource, final double bounds) throws IOException {
+	private SharedGroup loadModel(final Item item, final String resource, final double bounds, final Appearance a) throws IOException {
 		final SharedGroup model = new SharedGroup();
 		model.setBoundsAutoCompute(false);
-		model.addChild(Java3DUtils.loadScene(resource));
+		BranchGroup b = Java3DUtils.loadScene(resource);
+		
+		if (a != null) {
+			Shape3D s = (Shape3D) b.getChild(0);
+			Appearance ap = s.getAppearance();
+//			System.err.println(ap.getMaterial().toString());
+//			System.err.println(a.getMaterial().toString());
+			s.setAppearance(a);
+		}
+
+		model.addChild(b);
 		model.setUserData(item);
 		model.setBounds(new BoundingSphere(new Point3d(), bounds));
 		return model;
