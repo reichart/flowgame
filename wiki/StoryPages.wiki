@@ -262,3 +262,76 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "Sehr gut gemacht heute! Sobald sie sicher zuhause angekommen sind, melden sie sich zur Lagebesprechung und sie sind für heute entlassen. Nach einem Tag wie diesem müssen sie sich wirklich auf ein gutes Essen und ihr Bett freuen!"
 
 ----
+
+==Scenario 4: Kupier Trouble==
+
+===Session Intro===
+"Good morning, pilot. We need you to survey some operations for Deep Space Mining today. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
+
+"Guten Morgen, Pilot. Sie müssen heute ein paar Operationen für Deep Space Mining überwachen. Melden sie sich wie immer zunächst beim Departement für Offene Psychologische Erweiterung, um ihre Stress- und Leistungsstufen zu messen. Es ist wichtig, dass sie D.O.P.E. genaue Einschätzungen geben um die bestmögliche Leistung zu erzielen."
+
+===Round Intro 1 (Baseline)===
+"Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
+
+"Danke für ihre Kooperation mit D.O.P.E. Melden sie sich jetzt im Flugsimulator, wo sie einen simulierten Hyperraumsprung durchführen werden, bei dem wir ihre heutige Leistung messen. Weichen sie Anomalien aus und sammeln sie so viel Crystalis wie möglich!"
+
+===Round Extro 1 (Baseline)===
+"We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
+
+"Wir haben das Schiff ihrem heutigen Zustand optimal angepasst und es im Hangar für sie bereitgestellt. Die Lageeinweisung für ihren ersten Sprung werden sie an Bord über ihren Commlink erhalten. Viel Glück!"
+
+
+===Round Intro 2===
+"This mission will take you into the Kupier Belt. Deep Space Mining experienced trouble with pirates there recently and they requested a report on a suspected pirate base close to one of their own bases."
+
+"Diese Mission wird sie in den Kupiergürtel bringen. Deep Space Mining hatte dort kürzlich Probleme mit Piraten und forderte einen Bericht über eine Piratenbasis in der Nähe von einer ihrer eigenen Basen an."
+
+===Round Extro 2===
+"You found the pirate base, but it was deserted. That is a very strange discovery, especially because there were no signs of fighting. Stand by for further orders."
+
+"Sie haben die Piratenbasis gefunden, aber sie war verlassen. Eine sehr seltsame Entdeckung, besonders, da es keine Spuren eines Kampfes gab. Erwarten sie neue Befehle."
+
+===Round Intro 3===
+"Deep Space Mining wants another mining base surveyed. They lost all contact with this base earlier today. Check what happened to this base."
+
+"Deep Space Mining möchte eine weitere Bergbaukolonie überprüft haben. Sie haben heute morgen jeden Kontakt mit dieser Kolonie verloren. Überprüfen sie, was dort passiert ist."
+
+===Round Extro 3===
+"Once more, you found a base suddenly deserted with no sign of a fight. This cannot simply be a coincidence. We will check what our contacts know. Stand by for further orders."
+
+"Wieder einmal fanden sie eine plötzlich verlassene Basis, ohne das geringste Anzeichen eines Kampfes. Das kann nicht einfach ein Zufall sein. Wir werden überprüfen, was unsere Kontakte dazu wissen. Erwarten sie weitere Befehle."
+
+===Round Intro 4===
+"Deep Space Mining wants you to survey an asteroid for minerals. Simply jump to the coordinates and initiate a scan on the asteroid."
+
+"Deep Space Mining möchte, dass sie einen Asteroiden auf Mineralienvorkommen überprüfen. Springen sie einfach zu den Koordinaten und überprüfen sie den Asteroiden mit ihren Sensoren."
+
+===Round Extro 4===
+"The scan detected abundant minerals, but there is something more essential. We have found a hint to what happened to the deserted colonies. Stand by for your orders."
+
+"Ihre Überprüfung ergab reiche Mineralienvorkommen, aber es gibt etwas viel wichtigeres. Wir haben einen Hinweis darauf gefunden, was mit den verlassenen Kolonien passiert ist. Erwarten sie ihre Befehle."
+
+===Round Intro 5===
+"We have gained intel that there were several more colonies that were deserted just like that. Obviously one of the transport ships the colonists used crashed into an asteroid. Jump to the crash site and see if you can get some information about its destination."
+
+"Wir haben Informationen über einige weitere Kolonien bekommen, die einfach so verlassen wurden. Offensichtlich ist eines der Transportschiffe, die die Kolonisten benutzt haben, auf einem Asteroiden abgestürzt. Springen sie zur Absturzstelle und sehen sie, ob sie Informationen über sein Ziel finden können."
+
+===Round Extro 5===
+"You retrieved the black box of the ship. We are going to process the data you sent us and will give you further orders for investigation."
+
+"Sie haben die Black Box des Schiffes gefunden. Wir werden die Daten, die sie uns geschickt haben, aufbereiten und ihnen weitere Befehle zur Untersuchung des Vorfalls geben."
+
+===Round Intro 6===
+"The black box contained the destination along with the captain's log. It contains some strange notes about some better world they would move to. Obviously we are dealing with some kind of cult among those settlers. Jump to that location and take a look at the situation."
+
+"In der Black Box war das Ziel sowie das Loggbuch des Kapitäns enthalten. In letzterem standen einige seltsame Notizen über eine "Bessere Welt", in die sie ziehen würden. Offensichtlich haben wir es mit irgend einer Art von Sekte zu tun. Springen sie zu den Koordinaten und sehen sie sich die Situation an."
+
+===Round Extro 6===
+"All kinds of settlers and criminals in fact created a huge colony here. We will report this incident to all parties involved. It will later be decided what to do with this colony."
+
+"Alle Arten von Siedlern und Kriminellen haben hier tatsächlich eine gewaltige Kolonie erbaut. Wir werden diesen Vorfall an alle involvierten Parteien berichten. Später wird entschieden werden, was mit dieser Kolonie zu tun ist."
+
+===Scenario Extro===
+"Good job. You may return home now. You will be debriefed and dismissed on arrival."
+
+"Gut gemacht. Sie dürfen jetzt nach hause zurückkehren. Melden sie sich zur Lagebesprechung und dann sind sie für heute entlassen."
