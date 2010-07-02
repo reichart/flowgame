@@ -48,9 +48,9 @@ public class JSObjectBrowser implements Browser {
 			log.warn("no JS object, not calling: " + call);
 			return null;
 		} else {
-			log.warn("calling: " + call);
+			log.info("calling: " + call);
 			final Object ret = js.call(function, parameters);
-			log.warn(call + " returned " + ret);
+			log.info(call + " returned " + ret);
 			return ret;
 		}
 	}
