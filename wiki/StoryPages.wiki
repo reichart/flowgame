@@ -54,41 +54,63 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 ===Round Extro 1 (Baseline)===
 "We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
 
+"Wir haben das Schiff ihrem heutigen Zustand optimal angepasst und es im Hangar für sie bereitgestellt. Die Lageeinweisung für ihren ersten Sprung werden sie an Bord über ihren Commlink erhalten. Viel Glück!"
+
 ===Round Intro 2===
-"There has been a power failure in one of our outer-rim antimatter processing plants. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers from this station there to repair the damage. The jump is easy, so take your chance to collect Crystalis!"
+"There has been a power failure in one of our outer-rim antimatter processing plants. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers from this station there to repair the damage. Take your chance to collect Crystalis!"
+
+"Die Stromversorgung einer unserer Antimaterieverarbeitungsanlagen im weit abgelegenen Raum ist ausgefallen. Leider hat die Basis nicht die richtige Ausrüstung um das Problem selbst zu lösen. Sie werden also ein Team von Ingenieuren dort hin bringen, die den Schaden reparieren. Nutzen sie die Chance, Crystalis zu sammeln!"
 
 ===Round Extro 2===
 "Thank you. The maintenance team arrived safely and is now repairing the plant. It should be resuming operation by the end of the day."
 
+"Vielen Dank. Das Wartungsteam ist sicher angekommen und repariert die Schäden in der Anlage. Sie sollte den Betrieb am Ende des Tages wieder aufnehmen können."
+
 ===Round Intro 3===
 "A load of antimatter from the plant has been loaded into your ship. It is urgently required by one of our mining bases in the Centauri solar system which is under attack by pirates. Its defence grid ran out of ammunition, it is your job to resupply it before the pirates destroy the base."
 
+"Eine Ladung Antimaterie wurde auf ihr Schiff geladen. Es wird dringend auf einer Bergbaukolonie im Sternensystem Centauri benötigt, die von Piraten angegriffen wird. Ihren Verteidigungsanlagen ist die Munition ausgegangen und es ist ihre Aufgabe, sie neu zu bestücken, bevor die Piraten die Kolonie vernichten."
+
 ===Round Extro 3===
-"You just saved a lot of innocent lives there. Take a break on the asteroid base and await your next orders."
+"The defence grid has been reloaded and is driving the pirates off. Take a break on the asteroid base and await your next orders."
+
+"Die Verteidigungsanlagen wurden nachgeladen und vertreiben die Piraten. Machen sie eine Pause auf der Asteroidenkolonie und warten sie auf ihre nächsten Befehle."
 
 ===Round Intro 4===
 "Hello, pilot! Your next jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor Wilmut.
 His presence is required elsewhere, you will be briefed on take-off from Tau Ceti."
 
+"Hallo, Pilot! Ihr nächster Sprung wird sie zu einer Forschungsstation auf Tau Ceti Alpha bringen. Sie werden dort einen unserer besten Wissenschaftler in der Biogenetic, Professor Wilmut an Bord nehmen. Seine Anwesenheit wird andernorts gebraucht sie werden bei Abflug eingewiesen."
+
 ===Round Extro 4===
-"Welcome to Tau Ceti. No time for breaks this time, Professor Wilmut has already boarded your ship. You have performed great so far, we have faith that you will complete the following mission successfully!"
+"Welcome to Tau Ceti. No time for breaks this time, Professor Wilmut has already boarded your ship."
+
+"Willkommen auf Tau Ceti. Diesmal keine Zeit für Pausen, Professor Wilmut ist bereits an Bord."
 
 ===Round Intro 5===
 "No time to lose, pilot. You will immediately commence your jump into the distant Hourglass Nebula, where at the transmitted coordinates you will find a gas harvesting station. Professor Wilmut will supervise the loading of your ship with a small amount of a special gas mix required in your final mission."
 
+"Keine Zeit zu verlieren, Pilot! Sie werden ihren Sprung in den entfernten Horse Nebula sofort beginnen. An den übertragenen Koordinaten werden sie eine Basis zum Gasabbau finden. Professor Wilmut wird dafür sorgen, dass ihr Schiff mit einer kleinen Menge einer besonderen Gasmischung beladen wird, die sie in ihrer letzten Mission benötigen werden."
+
 ===Round Extro 5===
 "The gas mix is being loaded onto your ship, but stay ready for take-off at all time! As soon as the loading finished, Professor Wilmut will board your ship and you will be required to commence your next jump."
+
+"Die Gasmischung wird auf ihr Schiff geladen, aber bleiben sie jederzeit bereit für den Abflug! Sobald die Beladung abgeschlossen ist, wird Professor Wilmut wieder an Bord gehen und sie werden ihren nächsten Sprung einleiten müssen."
 
 ===Round Intro 6===
 "The final jump today will take you to a distant research station in deep space. The impact of dark matter on organisms is being investigated there. Sadly, an experiment went terribly wrong and the base staff hast lost control of large parts of the station to mutated organisms. Professor Wilmut will use the gas you picked up to initiate a complex process to undo the damage done there."
 
+"Der letzte Sprung heute wird sie in eine Forschungsbasis tief im Weltall bringen. Dort wird der Einfluss von dunkler Materie auf Lebewesen untersucht. Leider gab es einen schrecklichen Unfall und die Besatzung hat die Kontrolle über den Großteil der Station an Mutanten verloren. Professor Wilmut wird mithilfe des Gases einen komplexen Prozess einleiten, der den Schaden rückgängig machen wird."
+
 ===Round Extro 6===
 "Professor Wilmut will stay on the station for a while to monitor the process. Most of the station's staff had barricaded themselves in the control room and survived that way."
+
+"Professor Wilmut eine Weile wird auf der Station bleiben, um den Prozess zu überwachen. Der Großteil der Besatzung hatte sich im Kontrollraum verbarrikadiert und auf diese Weise überlebt."
 
 ===Session Extro===
 "Thank you for your excellent work today, pilot. We sorted out a safe hyperspace route for you to return to F.L.O.W.'s base in the orbit of Luna. Once you arrive, you will be debriefed and dismissed for today."
 
-
+"Vielen Dank für die Großartige Arbeit heute! Wir haben eine sichere Route durch den Hyperraum ausgearbeitet, über die sie zur Basis von F.L.O.W. im Orbit von Luna zurückkehren können. Wenn sie ankommen, melden sie sich zur finalen Lagebesprechung und sie sind für heute entlassen."
 
 ----
 
@@ -97,46 +119,73 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 ===Session Intro===
 "Good morning, pilot. We need you to aid the terran naval forces in the shadow war today. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
 
+"Guten Morgen, Pilot. Sie werden heute der Sternenflotte der Erde im Krieg gegen die Shadows helfen. Melden sie sich wie immer zunächst beim Departement für Offene Psychologische Erweiterung, um ihre Stress- und Leistungsstufen zu messen. Es ist wichtig, dass sie D.O.P.E. genaue Einschätzungen geben um die bestmögliche Leistung zu erzielen."
+
 ===Round Intro 1 (Baseline)===
 "Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
+
+"Danke für ihre Kooperation mit D.O.P.E. Melden sie sich jetzt im Flugsimulator, wo sie einen simulierten Hyperraumsprung durchführen werden, bei dem wir ihre heutige Leistung messen. Weichen sie Anomalien aus und sammeln sie so viel Crystalis wie möglich!"
 
 ===Round Extro 1 (Baseline)===
 "We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
 
+"Wir haben das Schiff ihrem heutigen Zustand optimal angepasst und es im Hangar für sie bereitgestellt. Die Lageeinweisung für ihren ersten Sprung werden sie an Bord über ihren Commlink erhalten. Viel Glück!"
+
+
 ===Round Intro 2===
 "Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. You will now jump to Cervesia Prima, taking one of our officers with you, who's holiday there will start today."
+
+"Der Urlaub von Admiral Farrell auf Cervesia Prima ist vorbei und seine Anwesenheit wird bei der 1st Federal Navy gebraucht. Sie werden nach Cervesia Prima springen und einen unserer Offiziere mitnehmen, dessen Urlaub heute beginnt."
 
 ===Round Extro 2===
 "Thank you. Now wait for the Grand Admiral to board your ship. Stand by for further orders."
 
+"Danke. Jetzt warten sie auf den Admiral. Bleiben sie für weitere Befehle verfügbar."
+
 ===Round Intro 3===
-"Having the Grand Admiral on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. You will then dock at the Terran flagship, the Achilles where the Grand Admiral will leave your ship. Our reputation with the Terran Navy is at stake, so do your best to deliver the Grand Admiral safely."
+"Having the Grand Admiral on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. You will then dock at the Terran flagship, the Achilles where the Grand Admiral will leave your ship."
+
+"Mit dem Admiral an Bord werden sie einen Hyperraumsprung zur Front im Krieg gegen die Shadows durchführen. Sie werden dann auf unserem Flaggshiff, der Achilles landen, wo der Admiral ihr Schiff verlassen wird."
 
 ===Round Extro 3===
-"The Grand Admiral was pleased about the quick delivery. Stand by docked at the Achilles and wait for further orders."
+"The Grand Admiral has left your ship and entered his command post. Stand by docked at the Achilles and wait for further orders."
+
+"Der Admiral hat ihr Schiff verlassen und ist auf seinem Kommandostand angekommen. Bleiben sie an Bord ihres Schiffes im Hangar der Achilles und warten sie auf weitere Befehle."
 
 ===Round Intro 4===
 "We received a distress signal from a scouting fleet in the Horse Nebula. Unfortunately, the signal was very blurred, so we do not know exactly what happened. You will immediately perform a jump to the last known location of the fleet and report in on arrival."
 
+"Wir haben ein Notsignal von einer Erkundungsflotte im Horse Nebula erhalten. Leider war das Signal sehr verzerrt, daher wissen wir nicht genau, was passiert ist. Sie werden sofort zum letzten bekannten Aufenthalt der Flotte springen und bei ihrer Ankunft berichten."
+
 ===Round Extro 4===
 "Thank you for your report about the fleet being ambushed and destroyed by the shadows. The Federal Naval Command is currently arranging a counter-attack. Stand by for further orders."
 
+"Danke für ihren Bericht darüber, dass die Flotte von den Shadows angegriffen und zerstört wurde. Das Federal Naval Command arrangiert derzeit einen Gegenangriff. Bereiten sie sich auf weitere Befehle vor."
 
 ===Round Intro 5===
 "Being our only pilot close to the front lines, you are assigned with the task to support the Navy's counter-attack as good as you can. The FNC will not be able to commence the attack without special gear which was just completed at the Federal assembly plant in the Wolf 1061 solar system."
 
+"Da sie unser einziger Pilot so nahe an der Front sind, erhalten sie die Aufgabe, den Gegenangriff der Navy so gut sie können zu unterstützen. Die FNC wird diesen Gegenangriff nicht ohne spezielle Ausrüstung durchführen können. Springen sie zu einer Fabrik im Sonnensystem Wolf 1061 und holen sie diese Ausrüstung ab."
+
 ===Round Extro 5===
 "The special gear is being loaded onto your ship. Stand by, ready for take-off."
+
+"Die Ausrüstung wird auf ihr Schiff geladen. Seien sie bereit zum Abflug."
 
 ===Round Intro 6===
 "The FNC is preparing a fleet to counter-attack the Shadows in the Horse Nebula. You will liase with the fleet close to the nebula and dock at the battleship Athene, where the special gear you transported is going to be unloaded and assembled."
 
+"Das FNC bereitet eine Flotte für den Gegenangriff auf die Shadows vor. Sie werden die Flotte in der Nähe des Horse Nebula treffen und auf dem Schlachtschiff Athene landen, wo die Ausrüstung, die sie transportiert haben, entladen und zusammengebaut werden wird."
+
 ===Round Extro 6===
 "The new special weapon is being unloaded and mounted to the Athene and will ensure her to stand victorious against the Shadow forces."
+
+"Die neue Spezialwaffe wird gerade entladen und an der Athene montiert. Sie wird sicherstellen, dass sie aus dem Kampf gegen die Shadows siegreich hervorgeht."
 
 ===Session Extro===
 "You performed well today, pilot. This was your final mission and a safe hyperspace route back to Luna has been transmitted to you. Once you arrive at the F.L.O.W.-base, you will be debriefed and dismissed for today."
 
+"Sehr gute Arbeit heute, Pilot! Das war ihre letzte Mission für heute. Eine sichere Route durch den Hyperraum zurück nach Luna wurde ihnen gesendet. Wenn sie auf der F.L.O.W.-Station ankommen, melden sie sich zur Lagebesprechung und sie sind für heute entlassen."
 
 ----
 
@@ -145,44 +194,71 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 ===Session Intro===
 "Good morning, pilot. The Association for Exploration of Human Habitats requires our services. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
 
+"Guten Morgen, Pilot. Die Gemeinschaft zur Erweiterung Inhärenten Lebensraums braucht unsere Dienste. Melden sie sich wie immer zunächst beim Departement für Offene Psychologische Erweiterung, um ihre Stress- und Leistungsstufen zu messen. Es ist wichtig, dass sie D.O.P.E. genaue Einschätzungen geben um die bestmögliche Leistung zu erzielen."
+
 ===Round Intro 1 (Baseline)===
 "Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
+
+"Danke für ihre Kooperation mit D.O.P.E. Melden sie sich jetzt im Flugsimulator, wo sie einen simulierten Hyperraumsprung durchführen werden, bei dem wir ihre heutige Leistung messen. Weichen sie Anomalien aus und sammeln sie so viel Crystalis wie möglich!"
 
 ===Round Extro 1 (Baseline)===
 "We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
 
+"Wir haben das Schiff ihrem heutigen Zustand optimal angepasst und es im Hangar für sie bereitgestellt. Die Lageeinweisung für ihren ersten Sprung werden sie an Bord über ihren Commlink erhalten. Viel Glück!"
+
 ===Round Intro 2===
 "The AEHH found a possibly habitable planet in the Spica solar system. You will jump there and run a scan so AEHH can proceed with the preparations for colonizing, if the results are positive."
+
+"Die G.E.I.L. hat einen möglicherweise bewohnbaren Planeten im Sonnensystem Spica gefunden. Sie werden dorthin springen und einen detaillierten Scan durchführen, sodass die G.E.I.L. mit den Vorbereitungen für die Kolonisierung beginnen kann, wenn die Ergebnisse positiv sind."
 
 ===Round Extro 2===
 "The scan results were positive and are being transmitted to the AEHH. Stand by in orbit to receive further orders."
 
+"Die Ergebnisse waren positiv und werden an die G.E.I.L übermittelt. Bleiben sie im Orbit und bereit für weitere Befehle."
+
 ===Round Intro 3===
 "In order to colonize the planet, we need you to deploy a beacon relais in the orbit of the planet. We transmitted you the hyperspace route to a manufacturing plant, where you will pick up a beacon relais."
+
+"Damit der Planet kolonisiert werden kann, müssen sie eine Boje im Orbit des Planeten platzieren. Wir haben ihnen die Hyperraumroute zu einer Fabrik übermittelt, wo sie die Boje an Bord nehmen können."
 
 ===Round Extro 3===
 "The beacon relais is being loaded onto your ship. Stand by for take-off."
 
+"Die Boje wird auf ihr Schiff geladen. Seien sie bereit, wieder abzuheben."
+
 ===Round Intro 4===
 "You will now go back to the Spica system and deploy the beacon relais in orbit of the planet you scanned before."
+
+"Sie werden jetzt zurück ins Sonnensystem Spica springen und die Boje dort im Orbit des Planeten platzieren."
 
 ===Round Extro 4===
 "The AEHH is now launching its freighters and colonization ships. Stand by, we have more work for you to do!"
 
+"Die G.E.I.L. kann jetzt ihre Frachter und Kolonieschiffe starten. Bleiben sie bereit, wir haben noch mehr Arbeit für sie."
+
 ===Round Intro 5===
 "There is another possibly habitable planet in the Betelguese solar system. As before, you will jump there and run a scan on this system. But be warned, Shadow activity has been detected in a nebula not far from Betelgeuse."
+
+"Es gibt einen weiteren möglicherweise bewohnbaren Planeten im Sonnensystem Betelguese. Sie werden dorthin springen und das System untersuchen. Aber seien sie gewarnt, wir sind auf Aktivitäten der Shadows in einem nahegelegenen Nebel gestoßen."
 
 ===Round Extro 5===
 "You ran straight into trouble there, pilot! Although the scan results were positive and indicated great mineral abundancy on this planet, the whole system is infested with Shadows. Your retreat coordinates will be transmitted immediately."
 
+"Sie sind direkt in eine Menge Ärger gesprungen! Zwar waren die Ergebnisse positiv und der Planet verfügt über großen Mineralienreichtum, aber das ganze System ist voll mit Shadows. Die Zielkoordinaten für ihren Rückzug werden sofort übertragen."
+
 ===Round Intro 6===
 "There you go. Retreat to the 6th Federal Naval Fleet. Jump immediately, it is only a matter of minutes until the Shadows detect your ship and will attack you. Once arrived, dock at the commanding Battleship, the "Archimedes". You will pass your intel on the Shadow forces to the commanding admiral, who will immediately initiate an attack to drive the Shadows off."
+
+"Ziehen sie sich zur 6th Federal Naval Fleet zurück. Springen sie sofort, es kann sich nur um Minuten handeln, bis die Shadows ihr Schiff entdecken und sie angreifen. Wenn sie angekommen sind, landen sie auf dem Schlachtschiff Archimedes. Sie werden ihre Informationen an den kommandierenden Admiral weitergeben, der sofort einen Angriff einleiten wird, um die Shadows zu vertreiben."
 
 ===Round Extro 6===
 "You are safe now, as soon as the admiral dismisses you, return to the F.L.O.W.-base. We will transmit a safe jump route for you."
 
+"Sie sind in Sicherheit. Sobald der Admiral sie entlässt, kehren sie zur Basis von F.L.O.W. zurück. Wir werden eine sichere Sprungroute für sie ausarbeiten."
+
 ===Session Extro===
 "Great job today, pilot! Once you arrived safely at home, you will be debriefed and dismissed for today. You must be looking forward to a nice meal and your bed tonight."
 
+"Sehr gut gemacht heute! Sobald sie sicher zuhause angekommen sind, melden sie sich zur Lagebesprechung und sie sind für heute entlassen. Nach einem Tag wie diesem müssen sie sich wirklich auf ein gutes Essen und ihr Bett freuen!"
 
 ----
