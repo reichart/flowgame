@@ -13,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioSession;
-import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.SettingIconsScreen;
 
 /**
