@@ -23,6 +23,7 @@ import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 import de.tum.in.flowgame.strategy.Trend;
 import de.tum.in.flowgame.util.Browser;
 
@@ -338,6 +339,14 @@ public class GameLogic implements Runnable {
 		return gameRound.getScenarioRound();
 	}
 
+	public void configChange(ConfigKey key, String value){
+		if (this.gameRound != null) {
+			this.gameRound.configChange(key, value);
+		} else {
+			log.info("ConfigChange not saved in Database as there is no GameRound active.");
+		}
+	}
+	
 	public Client getClient() {
 		return client;
 	}
