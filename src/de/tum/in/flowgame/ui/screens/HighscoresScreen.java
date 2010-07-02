@@ -13,7 +13,7 @@ import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
 /**
  * Abstract base class for displaying highscores.
  */
-public abstract class HighscoresScreen extends SettingIconsScreen {
+public abstract class HighscoresScreen extends MenuScreen {
 
 	private final JButton next = new JButton(new AbstractAction("Continue") {
 

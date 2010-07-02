@@ -33,7 +33,7 @@ import de.tum.in.flowgame.ui.QuestionnairePanel;
 /**
  * Abstract base class for displaying a {@link Questionnaire}.
  */
-public abstract class QuestionnaireScreen extends SettingIconsScreen {
+public abstract class QuestionnaireScreen extends MenuScreen {
 	private final static Log log = LogFactory.getLog(QuestionnaireScreen.class);
 
 	private final CardLayout cardLayout;

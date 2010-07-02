@@ -12,13 +12,13 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioRound;
-import de.tum.in.flowgame.ui.screens.SettingIconsScreen;
+import de.tum.in.flowgame.ui.screens.MenuScreen;
 
 /**
  * Displayed after each gameplay-highscore-questionnaire block before the game
  * session ends or the next round starts.
  */
-public class RoundExtroScreen extends SettingIconsScreen {
+public class RoundExtroScreen extends MenuScreen {
 
 	private final static Log log = LogFactory.getLog(RoundExtroScreen.class);
 

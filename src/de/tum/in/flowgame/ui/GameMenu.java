@@ -1,6 +1,5 @@
 package de.tum.in.flowgame.ui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +18,7 @@ import javax.swing.table.JTableHeader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.tum.in.flowgame.GameApplet;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
@@ -63,6 +63,8 @@ public class GameMenu implements Sprite, GameListener {
 	
 	private Class<? extends MenuScreen> previous, current;
 
+	private static SettingsPanel settings;
+	
 	public GameMenu(final Component mouseTrap, final GameOverlay overlay) {
 		this.overlay = overlay;
 		this.game = (Game3D) mouseTrap;
@@ -71,12 +73,19 @@ public class GameMenu implements Sprite, GameListener {
 		this.screens = new JPanel(layout);
 		screens.setDoubleBuffered(false); // hides white background
 		screens.setOpaque(false);
-
+		screens.setBounds(0, 0, GameApplet.WIDTH, GameApplet.HEIGHT);
+		
+		settings = SettingsPanel.getInstance(this); // singleton
+		settings.setDoubleBuffered(false);
+		settings.setBounds(0, 0, 200, 100);
+		
 		panel = new OffscreenJPanel(mouseTrap);
-		panel.setLayout(new BorderLayout());
+		panel.setLayout(null); // null layout for explicit positioning
 		panel.setDoubleBuffered(false); // hides white background
 		panel.setOpaque(false);
-		panel.add(screens, BorderLayout.CENTER);
+		
+		panel.add(settings);
+		panel.add(screens);
 	}
 
 	public void render(final Graphics2D g, final int x, final int y) {
@@ -129,6 +138,8 @@ public class GameMenu implements Sprite, GameListener {
 		add(new SessionExtroScreen());
 		
 		show(EmptyScreen.class);
+		
+		settings.loadSettings();
 	}
 
 	public void removed(final GameLogic game) {

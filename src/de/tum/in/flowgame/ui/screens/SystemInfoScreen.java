@@ -15,7 +15,7 @@ import de.tum.in.flowgame.engine.SystemInfo;
 /**
  * Displays technical information about the system, graphics, etc.
  */
-public class SystemInfoScreen extends SettingIconsScreen {
+public class SystemInfoScreen extends MenuScreen {
 
 	private final JButton back = goTo("Back", MainScreen.class);
 
