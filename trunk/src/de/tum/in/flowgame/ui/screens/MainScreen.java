@@ -11,7 +11,7 @@ import de.tum.in.flowgame.ui.sprite.SVGSprite;
 /**
  * Displays the main menu.
  */
-public class MainScreen extends MenuScreen {
+public class MainScreen extends SettingIconsScreen {
 
 	private final JButton play = goTo("Play", SessionIntroScreen.class);
 

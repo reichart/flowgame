@@ -13,12 +13,13 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
+import de.tum.in.flowgame.ui.screens.SettingIconsScreen;
 
 /**
  * Displayed after each gameplay-highscore-questionnaire block before the game
  * session ends or the next round starts.
  */
-public class RoundExtroScreen extends MenuScreen {
+public class RoundExtroScreen extends SettingIconsScreen {
 
 	private final static Log log = LogFactory.getLog(RoundExtroScreen.class);
 
@@ -36,12 +37,13 @@ public class RoundExtroScreen extends MenuScreen {
 	});
 
 	public RoundExtroScreen() {
-		super(Utils.imageResource("/res/spacestation.png", null), BorderFactory.createEmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
+		super(Utils.imageResource("/res/spacestation.png", null));
 	}
 
 	@Override
 	public Container getContents() {
-		return centered(title("Game Session Extro"), next);
+		return centered(BorderFactory.createEmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH),
+				title("Game Session Extro"), next);
 	}
 
 }

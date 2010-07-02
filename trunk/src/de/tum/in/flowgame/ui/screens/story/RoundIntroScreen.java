@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -15,11 +14,12 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
+import de.tum.in.flowgame.ui.screens.SettingIconsScreen;
 
 /**
  * Story screen just before game play starts.
  */
-public class RoundIntroScreen extends MenuScreen {
+public class RoundIntroScreen extends SettingIconsScreen {
 
 	private final static Log log = LogFactory.getLog(RoundIntroScreen.class);
 
@@ -37,7 +37,7 @@ public class RoundIntroScreen extends MenuScreen {
 	});
 
 	public RoundIntroScreen() {
-		super(Utils.imageResource("/res/spacestation.png", null), BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
+		super(Utils.imageResource("/res/spacestation.png", null));
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class RoundIntroScreen extends MenuScreen {
 		text.setLineWrap(true);
 		text.setWrapStyleWord(true);
 		text.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-		return centered(title("Prepare for Action"), text, play);
+		return centered(COMMON_BORDER, title("Prepare for Action"), text, play);
 	}
 
 }
