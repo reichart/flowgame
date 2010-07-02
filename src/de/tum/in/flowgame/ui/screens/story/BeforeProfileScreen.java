@@ -4,7 +4,6 @@ import java.awt.Container;
 
 import javax.swing.JButton;
 
-import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.ProfileScreen;
 import de.tum.in.flowgame.ui.screens.SettingIconsScreen;
 
