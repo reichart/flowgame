@@ -8,17 +8,17 @@
 ==Before Profile==
 Background-Screen-Idee: U.S.-Army Werbeplakat ("We Want You...")?
 
-"Being an elite pilot has always been your dream. You made it so far, starting out with a rusty old cargo ship ending up piloting a fighter in combat- the time has come, FLOW awaits you. You keep thinking about the infinite glory, but also the omnipresent danger of death as you start signing your application form..."
+"Being an elite pilot has always been your dream. You made it so far, starting out with a rusty old cargo ship ending up piloting a fighter in combat- the time has come, F.L.O.W. awaits you. You keep thinking about the infinite glory, but also the omnipresent danger of death as you start signing your application form..."
 
 "Ein Elitepilot zu sein, war schon immer dein Traum. Du hast es so weit geschafft- angefangen hast du mit einer Rostlaube von Frachtschiff und jetzt fliegst du Jäger im Gefecht. Die Zeit ist reif, F.L.O.W. erwartet dich. Als du das Bewerbungsformular ausfüllst, musst du nicht nur an den unendlichen Ruhm, sondern auch an die allgegenwärtige Gefahr denken..."
 
 ==After Profile==
 Szenerie: Abschluss-"Feier" nach bestandener Aufnahmeprüfung in F.L.O.W., als Bild evtl der Blick von hinten über ein sitzendes Publikum zu zwei entfernten Personen auf einem Podest- schemenhafte Personen in "Programmer-Art"-Stil
 
-"Congratuations, Pilot. You are now one of the elite pilots of F.L.O.W., the Federal Lunar Operation Wing. Our task is to deliver important cargo, messages and passegers safely through dangerous hyperspace routes. While the jumps we perform are dangerous, these areas of hyperspace are the only deposit of the valuable Crystalis. Thus, our task is also to collect Crystalis on our way. You will be assigned a suitable ship and perform your first jumps soon, pilot. Welcome to FLOW!"
+"Congratuations, Pilot. You are now one of the elite pilots of F.L.O.W., the Federal Lunar Operation Wing. Our task is to deliver important cargo, messages and passegers safely through dangerous hyperspace routes. While the jumps we perform are dangerous, these areas of hyperspace are the only deposit of the valuable Crystalis. Thus, our task is also to collect Crystalis on our way. You will be assigned a suitable ship and perform your first jumps soon, pilot. Welcome to F.L.O.W.!"
 
 
-"Gratulation, Pilot. Du gehörst jetzt zu den Elitepiloten von F.L.O.W., dem Federal Lunar Operation Wing. Unser Aufgabe ist es, wichtige Fracht, Nachrichten oder Passagiere sicher durch gefährliche Hyperraumrouten zu bringen. Zwar sind die Sprünge, die wir durchführen, gefährlich, aber die Gegenden des Hyperraums, die wir durchfliegen sind das einzige Vorkommen des wertvollen Crystalis. Daher ist es auch unsere Aufgabe, das Crystalis auf dem Weg einzusammeln. Dir wird ein passendes Schiff zugeteilt werden und bald wirst du deine ersten Sprünge fliegen. Willkommen bei FLOW!"
+"Gratulation, Pilot. Du gehörst jetzt zu den Elitepiloten von F.L.O.W., dem Federal Lunar Operation Wing. Unser Aufgabe ist es, wichtige Fracht, Nachrichten oder Passagiere sicher durch gefährliche Hyperraumrouten zu bringen. Zwar sind die Sprünge, die wir durchführen, gefährlich, aber die Gegenden des Hyperraums, die wir durchfliegen sind das einzige Vorkommen des wertvollen Crystalis. Daher ist es auch unsere Aufgabe, das Crystalis auf dem Weg einzusammeln. Dir wird ein passendes Schiff zugeteilt werden und bald wirst du deine ersten Sprünge fliegen. Willkommen bei F.L.O.W.!"
 
 ----
 
@@ -49,19 +49,19 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 "Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
 
 ===Round Extro 1 (Baseline)===
-"Well done. We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
+"We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
 
 ===Round Intro 2===
 "There has been a power failure in one of our outer-rim antimatter processing plants. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers from this station there to repair the damage. The jump is easy, so take your chance to collect Crystalis!"
 
 ===Round Extro 2===
-"Good job! The maintenance team arrived safely and is now repairing the plant. It should be resuming operation by the end of the day."
+"Thank you. The maintenance team arrived safely and is now repairing the plant. It should be resuming operation by the end of the day."
 
 ===Round Intro 3===
 "A load of antimatter from the plant has been loaded into your ship. It is urgently required by one of our mining bases in the Centauri solar system which is under attack by pirates. Its defence grid ran out of ammunition, it is your job to resupply it before the pirates destroy the base."
 
 ===Round Extro 3===
-"Congratulations! You just saved a lot of innocent lives there. Take a break on the asteroid base and await your next orders."
+"You just saved a lot of innocent lives there. Take a break on the asteroid base and await your next orders."
 
 ===Round Intro 4===
 "Hello, pilot! Your next jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor Wilmut.
@@ -74,13 +74,13 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "No time to lose, pilot. You will immediately commence your jump into the distant Hourglass Nebula, where at the transmitted coordinates you will find a gas harvesting station. Professor Wilmut will supervise the loading of your ship with a small amount of a special gas mix required in your final mission."
 
 ===Round Extro 5===
-"Well done. The gas mix is being loaded onto your ship, but stay ready for take-off at all time! As soon as the loading finished, Professor Wilmut will board your ship and you will be required to commence your next jump."
+"The gas mix is being loaded onto your ship, but stay ready for take-off at all time! As soon as the loading finished, Professor Wilmut will board your ship and you will be required to commence your next jump."
 
 ===Round Intro 6===
 "The final jump today will take you to a distant research station in deep space. The impact of dark matter on organisms is being investigated there. Sadly, an experiment went terribly wrong and the base staff hast lost control of large parts of the station to mutated organisms. Professor Wilmut will use the gas you picked up to initiate a complex process to undo the damage done there."
 
 ===Round Extro 6===
-"Very well done! Your fast action saved a lot of lives today. Professor Wilmut will stay on the station for a while to monitor the process. Most of the station's staff had barricaded themselves in the control room and survived that way."
+"Professor Wilmut will stay on the station for a while to monitor the process. Most of the station's staff had barricaded themselves in the control room and survived that way."
 
 ===Session Extro===
 "Thank you for your excellent work today, pilot. We sorted out a safe hyperspace route for you to return to F.L.O.W.'s base in the orbit of Luna. Once you arrive, you will be debriefed and dismissed for today."
@@ -98,38 +98,38 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
 
 ===Round Extro 1 (Baseline)===
-"Well done. We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
+"We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
 
 ===Round Intro 2===
 "Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. You will now jump to Cervesia Prima, taking one of our officers with you, who's holiday there will start today."
 
 ===Round Extro 2===
-"Good flying. Now wait for the Grand Admiral to board your ship. Stand by for further orders."
+"Thank you. Now wait for the Grand Admiral to board your ship. Stand by for further orders."
 
 ===Round Intro 3===
 "Having the Grand Admiral on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. You will then dock at the Terran flagship, the Achilles where the Grand Admiral will leave your ship. Our reputation with the Terran Navy is at stake, so do your best to deliver the Grand Admiral safely."
 
 ===Round Extro 3===
-"Very well done. The Grand Admiral was very pleased with your flying abilities. Stand by docked at the Achilles and wait for further orders."
+"The Grand Admiral was pleased about the quick delivery. Stand by docked at the Achilles and wait for further orders."
 
 ===Round Intro 4===
 "We received a distress signal from a scouting fleet in the Horse Nebula. Unfortunately, the signal was very blurred, so we do not know exactly what happened. You will immediately perform a jump to the last known location of the fleet and report in on arrival."
 
 ===Round Extro 4===
-"Good jump. The Federal Navy Command was displeased to hear the news of the fleet having been ambushed and destroyed by the shadows. It is currently arranging a counter-attack."
+"Thank you for your report about the fleet being ambushed and destroyed by the shadows. The Federal Naval Command is currently arranging a counter-attack. Stand by for further orders."
 
 
 ===Round Intro 5===
 "Being our only pilot close to the front lines, you are assigned with the task to support the Navy's counter-attack as good as you can. The FNC will not be able to commence the attack without special gear which was just completed at the Federal assembly plant in the Wolf 1061 solar system."
 
 ===Round Extro 5===
-"Good job, pilot! The special gear is being loaded onto your ship. Stand by, ready for take-off."
+"The special gear is being loaded onto your ship. Stand by, ready for take-off."
 
 ===Round Intro 6===
-"The FNC is preparing a fleet to counter-attack the Shadows in the Horse Nebula. You will liase with the fleet close to the nebula and dock at the battleship "Athene", where the special gear you transported is going to be unloaded and assembled."
+"The FNC is preparing a fleet to counter-attack the Shadows in the Horse Nebula. You will liase with the fleet close to the nebula and dock at the battleship Athene, where the special gear you transported is going to be unloaded and assembled."
 
 ===Round Extro 6===
-"Well done. The new special weapon will ensure the Athene to stand victorious against the Shadow forces."
+"The new special weapon is being unloaded and mounted to the Athene and will ensure her to stand victorious against the Shadow forces."
 
 ===Session Extro===
 "You performed well today, pilot. This was your final mission and a safe hyperspace route back to Luna has been transmitted to you. Once you arrive at the F.L.O.W.-base, you will be debriefed and dismissed for today."
@@ -146,25 +146,25 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
 
 ===Round Extro 1 (Baseline)===
-"Well done. We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
+"We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
 
 ===Round Intro 2===
 "The AEHH found a possibly habitable planet in the Spica solar system. You will jump there and run a scan so AEHH can proceed with the preparations for colonizing, if the results are positive."
 
 ===Round Extro 2===
-"Very well. The scan results were positive and AEHH were very pleased with your work. Stand by in orbit to receive further orders."
+"The scan results were positive and are being transmitted to the AEHH. Stand by in orbit to receive further orders."
 
 ===Round Intro 3===
 "In order to colonize the planet, we need you to deploy a beacon relais in the orbit of the planet. We transmitted you the hyperspace route to a manufacturing plant, where you will pick up a beacon relais."
 
 ===Round Extro 3===
-"That was a smooth jump, pilot! The beacon relais is being loaded onto your ship. Stand by for take-off."
+"The beacon relais is being loaded onto your ship. Stand by for take-off."
 
 ===Round Intro 4===
 "You will now go back to the Spica system and deploy the beacon relais in orbit of the planet you scanned before."
 
 ===Round Extro 4===
-"Good job. You contributed greatly to mankinds expansion in space today. Stand by, we have more work for you to do!"
+"The AEHH is now launching its freighters and colonization ships. Stand by, we have more work for you to do!"
 
 ===Round Intro 5===
 "There is another possibly habitable planet in the Betelguese solar system. As before, you will jump there and run a scan on this system. But be warned, Shadow activity has been detected in a nebula not far from Betelgeuse."
@@ -176,7 +176,7 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "There you go. Retreat to the 6th Federal Naval Fleet. Jump immediately, it is only a matter of minutes until the Shadows detect your ship and will attack you. Once arrived, dock at the commanding Battleship, the "Archimedes". You will pass your intel on the Shadow forces to the commanding admiral, who will immediately initiate an attack to drive the Shadows off."
 
 ===Round Extro 6===
-"That was an awesome job evading those Shadow forces. You are safe now, as soon as the admiral dismisses you, return to the F.L.O.W.-base. We will transmit a safe jump route for you."
+"You are safe now, as soon as the admiral dismisses you, return to the F.L.O.W.-base. We will transmit a safe jump route for you."
 
 ===Session Extro===
 "Great job today, pilot! Once you arrived safely at home, you will be debriefed and dismissed for today. You must be looking forward to a nice meal and your bed tonight."
