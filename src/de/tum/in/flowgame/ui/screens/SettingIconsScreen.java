@@ -11,6 +11,7 @@ import com.kitfox.svg.app.beans.SVGIcon;
 
 import de.tum.in.flowgame.GameApplet;
 import de.tum.in.flowgame.Sounds;
+import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 import de.tum.in.flowgame.ui.sprite.SVGSprite;
 
 public abstract class SettingIconsScreen extends MenuScreen {
@@ -38,7 +39,7 @@ public abstract class SettingIconsScreen extends MenuScreen {
 		sound = new JToggleButton(new AbstractAction(null, SOUND_ON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean muted = sound.isSelected();
-				System.out.println("SettingIconsScreen.SettingIconsScreen().new AbstractAction() {...}.actionPerformed()");
+				menu.getLogic().configChange(ConfigKey.SOUND, String.valueOf(muted));
 				setSoundMuted(muted);
 				setCookie(SOUND, muted);
 			}
@@ -51,8 +52,8 @@ public abstract class SettingIconsScreen extends MenuScreen {
 
 		steering = new JToggleButton(new AbstractAction(null, AIRPLANE_ICON) {
 			public void actionPerformed(final ActionEvent e) {
-				System.out.println("SettingIconsScreen.SettingIconsScreen().new AbstractAction() {...}.actionPerformed()");
 				final boolean normal = steering.isSelected();
+				menu.getLogic().configChange(ConfigKey.STEERING, String.valueOf(normal));
 				setSteering(normal);
 				setCookie(STEERING, normal);
 			}
