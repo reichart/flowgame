@@ -36,6 +36,8 @@ public class GameApplet extends Applet {
 	private final static Log log = LogFactory.getLog(GameApplet.class);
 	
 	private final Game3D game;
+	public static final int WIDTH = 600;
+	public static final int HEIGHT = 400;
 
 	private CustomFacebookClient facebook;
 
@@ -46,7 +48,7 @@ public class GameApplet extends Applet {
 		final Frame frame = new Frame();
 		frame.setUndecorated(true);
 		frame.setResizable(false);
-		frame.setSize(600, 400);
+		frame.setSize(WIDTH, HEIGHT);
 
 		final int centerX = (screen.width - frame.getWidth()) / 2;
 		final int centerY = (screen.height - frame.getHeight()) / 2;

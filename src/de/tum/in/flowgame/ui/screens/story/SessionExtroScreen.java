@@ -9,11 +9,12 @@ import javax.swing.JButton;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
+import de.tum.in.flowgame.ui.screens.SettingIconsScreen;
 
 /**
  * Displayed after the scenario has no more rounds.
  */
-public class SessionExtroScreen extends MenuScreen {
+public class SessionExtroScreen extends SettingIconsScreen {
 
 	private final JButton backToMain = new JButton(new AbstractAction("Main Menu") {
 		public void actionPerformed(final ActionEvent e) {

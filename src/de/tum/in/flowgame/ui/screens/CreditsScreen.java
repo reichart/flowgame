@@ -5,14 +5,13 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class CreditsScreen extends MenuScreen {
+public class CreditsScreen extends SettingIconsScreen {
 	private static final Log log = LogFactory.getLog(MenuScreen.class);
 	
 	private final JButton next = new JButton(new AbstractAction("Continue") {
@@ -21,10 +20,6 @@ public class CreditsScreen extends MenuScreen {
 			menu.show(MainScreen.class); // go back
 		}
 	});
-	
-	public CreditsScreen() {
-		super(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-	}
 	
 	@Override
 	public Container getContents() {
@@ -36,7 +31,7 @@ public class CreditsScreen extends MenuScreen {
 			credits = new JEditorPane();
 		}
 		
-		return centered(title("Credits"), credits, next);
+		return centered(COMMON_BORDER, title("Credits"), credits, next);
 	}
 	
 }

@@ -30,36 +30,26 @@ public abstract class MenuScreen extends JPanel {
 	public static final int BORDER_WIDTH = 20;
 	public static final int BORDER_WIDTH_TOP = 10;
 	private static final Border DEFAULT_BORDER = BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, 0, 0, 0);
+	public static final Border COMMON_BORDER = BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH);
 	
 	public static GameMenu menu; // for subclasses
 	private final BufferedImage backgroundImage;
 	
-
-	private static Border border;
 	
 	/**
 	 * @param menu the game menu managing all screens
 	 * @param backgroundImage the optional background image, <code>null</code> to disable
 	 */
-	protected MenuScreen(final BufferedImage backgroundImage, Border cborder) {
+	protected MenuScreen(final BufferedImage backgroundImage) {
 		setLayout(new BorderLayout());
 		setDoubleBuffered(false);
 		setOpaque(false);
 
 		this.backgroundImage = backgroundImage;
-		border = cborder;
-	}
-	
-	protected MenuScreen(final BufferedImage backgroundImage) {
-		this(backgroundImage, DEFAULT_BORDER);
-	}
-	
-	protected MenuScreen(Border border) {
-		this(null, border);
 	}
 	
 	protected MenuScreen() {
-		this(null, DEFAULT_BORDER);
+		this(null);
 	}
 
 	public void build() {
@@ -92,10 +82,14 @@ public abstract class MenuScreen extends JPanel {
 		return comp;
 	}
 
+	protected static Container centered(final JComponent... components) {
+		return centered(null, components);
+	}
+	
 	/**
 	 * Centers components both vertically and horizontically on the screen.
 	 */
-	protected static Container centered(final JComponent... components) {
+	protected static Container centered(final Border border, final JComponent... components) {
 		final Box column = new Box(BoxLayout.Y_AXIS);
 		column.setOpaque(false);
 		column.add(Box.createVerticalGlue());
@@ -111,8 +105,11 @@ public abstract class MenuScreen extends JPanel {
 		center.add(Box.createHorizontalGlue());
 		center.add(column);
 		center.add(Box.createHorizontalGlue());
-		center.setBorder(border);
-
+		if (border == null) {
+			center.setBorder(DEFAULT_BORDER);
+		} else {
+			center.setBorder(border);
+		}
 		return center;
 	}
 

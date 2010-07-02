@@ -33,7 +33,7 @@ import de.tum.in.flowgame.ui.QuestionnairePanel;
 /**
  * Abstract base class for displaying a {@link Questionnaire}.
  */
-public abstract class QuestionnaireScreen extends MenuScreen {
+public abstract class QuestionnaireScreen extends SettingIconsScreen {
 	private final static Log log = LogFactory.getLog(QuestionnaireScreen.class);
 
 	private final CardLayout cardLayout;
@@ -66,8 +66,6 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	});
 
 	public QuestionnaireScreen() {
-		super(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-
 		forceAnswers = new ForceAnswersListener();
 		
 		cardLayout = new CardLayout();
@@ -90,7 +88,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title, mainUI(), next);
+		return centered(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH), title, mainUI(), next);
 	}
 
 	@Override
