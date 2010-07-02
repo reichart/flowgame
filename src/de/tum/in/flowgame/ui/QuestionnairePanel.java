@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.Box;
@@ -73,12 +72,15 @@ public class QuestionnairePanel extends ChangeableComponent {
 					final JPsychoSlider slider = new JPsychoSlider();
 					slider.addChangeListener(forceAnswers);
 
+					// build UI
 					questions.add(Box.createHorizontalStrut(60));
 					questions.add(label1);
 					questions.add(slider);
-					sliders.add(slider);
 					questions.add(label2);
 					questions.add(Box.createHorizontalStrut(60));
+					
+					// remember slider
+					sliders.add(slider);
 				}
 				
 				// Lay out the panel.
@@ -90,35 +92,38 @@ public class QuestionnairePanel extends ChangeableComponent {
 				log.error("Question is not defined.", e);
 			}
 		} else {
-			// Create the label table
-			final Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-			labelTable.put(0, new JLabel("Trifft nicht zu"));
-			labelTable.put(100, new JLabel("Trifft zu"));
-			for (final JLabel label : labelTable.values()) {
-				label.setForeground(Color.WHITE);
-			}
 			for (final Question question : qs) {
 				final JTextArea text = new JTextArea(question.getText());
+				text.setColumns(20);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
 				text.setForeground(Color.WHITE);
-				questions.add(text);
 
+				final JLabel label1 = new JLabel("Trifft nicht zu", SwingConstants.RIGHT);
+				final JLabel label2 = new JLabel("Trifft zu", SwingConstants.LEFT);
+				
 				final JPsychoSlider slider = new JPsychoSlider();
 				slider.addChangeListener(forceAnswers);
 				
-				// TODO implement sth like label table for psycho slider
-				// slider.setValue(50);
-				// slider.setPaintTicks(true);
-				// slider.setLabelTable(labelTable);
-				// slider.setPaintLabels(true);
-
+				// "labels above slider" border layout:
+				// <west east> (labels)
+				// ---south--- (slider)
+				final JPanel labelledSlider = new JPanel(new BorderLayout());
+				labelledSlider.add(slider, BorderLayout.SOUTH);
+				labelledSlider.add(label1, BorderLayout.WEST);
+				labelledSlider.add(label2, BorderLayout.EAST);
+				
+				// build UI
+				questions.add(text);
+				questions.add(Box.createHorizontalGlue());
+				questions.add(labelledSlider);
+				
+				// remember slider
 				sliders.add(slider);
-				questions.add(slider);
 			}
 
 			// Lay out the panel.
-			SpringUtilities.makeCompactGrid(questions, qs.size(), 2, // rows, cols
+			SpringUtilities.makeCompactGrid(questions, qs.size(), 3, // rows, cols
 					6, 6, // initX, initY
 					6, 18); // xPad, yPad
 		}
