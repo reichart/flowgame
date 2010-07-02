@@ -44,9 +44,12 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 
 "Good morning, pilot. Your today's mission is to fix some technical problems in Luna's industry. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
 
+"Guten Morgen, Pilot. Ihre heutige Aufgabe ist es, ein paar technische Probleme in der Industrie von Luna zu lösen. Melden sie sich wie immer zunächst beim Departement für Offene Psychologische Erweiterung, um ihre Stress- und Leistungsstufen zu messen. Es ist wichtig, dass sie D.O.P.E. genaue Einschätzungen geben um die bestmögliche Leistung zu erzielen."
 
 ===Round Intro 1 (Baseline)===
 "Thank you for your cooperation with D.O.P.E., pilot. Now report to the flight simulator in which you will perform a simulated hyperspace jump allowing us to measure your today's performance. Try to avoid the anomalies and collect as much Crystalis as you can."
+
+"Danke für ihre Kooperation mit D.O.P.E. Melden sie sich jetzt im Flugsimulator, wo sie einen simulierten Hyperraumsprung durchführen werden, bei dem wir ihre heutige Leistung messen. Weichen sie Anomalien aus und sammeln sie so viel Crystalis wie möglich!"
 
 ===Round Extro 1 (Baseline)===
 "We adapted your ship so it suits your status best, it is ready in the hangar for you. The briefing for the first jump will be on board via your commlink. Good luck and fly safe!"
