@@ -11,7 +11,7 @@ import javax.swing.JEditorPane;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class CreditsScreen extends SettingIconsScreen {
+public class CreditsScreen extends MenuScreen {
 	private static final Log log = LogFactory.getLog(MenuScreen.class);
 	
 	private final JButton next = new JButton(new AbstractAction("Continue") {

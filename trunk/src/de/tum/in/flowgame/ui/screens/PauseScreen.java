@@ -9,7 +9,7 @@ import javax.swing.JButton;
 /**
  * Displayed when the game is paused.
  */
-public class PauseScreen extends SettingIconsScreen {
+public class PauseScreen extends MenuScreen {
 
 	private final JButton continueButton = new JButton(new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
