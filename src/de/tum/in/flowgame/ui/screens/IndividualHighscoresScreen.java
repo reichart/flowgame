@@ -2,15 +2,19 @@ package de.tum.in.flowgame.ui.screens;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.SortedSet;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.diagram.Diagram;
+import de.tum.in.flowgame.model.Score;
 
 /**
- * Displays an individual highscore comparing the player to his previous scores.
+ * Displays an chart of all individual highscores showing the player his actual
+ * and previous scores.
  */
 public class IndividualHighscoresScreen extends HighscoresScreen {
 
@@ -28,7 +32,7 @@ public class IndividualHighscoresScreen extends HighscoresScreen {
 	@Override
 	public void update(final GameLogic logic) throws IOException {
 		final long playerId = logic.getPlayerId();
-		final BufferedImage im = logic.getClient().downloadPersonHighscoreChart(playerId);
-		imageIcon.setImage(im);
+		final SortedSet<Score> scores = logic.getClient().downloadPersonHighscoreSet(playerId);
+		imageIcon.setImage(new Diagram(scores).diagram());
 	}
 }

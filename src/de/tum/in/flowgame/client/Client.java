@@ -3,6 +3,7 @@ package de.tum.in.flowgame.client;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.imageio.ImageIO;
 
@@ -24,6 +25,7 @@ import de.tum.in.flowgame.model.Highscore;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioSession;
+import de.tum.in.flowgame.model.Score;
 
 public class Client {
 
@@ -34,6 +36,7 @@ public class Client {
 	private final String DOWNLOAD_PERCENTAGE;
 	private final String DOWNLOAD_SCENARIOSESSION;
 	private final String DOWNLOAD_HIGHSCORES_URL;
+	private final String DOWNLOAD_PERSONAL_HIGHSCORES_SET;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE_CHART;
 	private final String DOWNLOAD_QUESTIONNAIRES;
 	
@@ -49,6 +52,7 @@ public class Client {
 		this.DOWNLOAD_PERCENTAGE = server + "percentageDownload" + ext;
 		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload" + ext;
 		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload" + ext;
+		this.DOWNLOAD_PERSONAL_HIGHSCORES_SET = server + "personalHighscoresSetDownload" + ext;
 		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload" + ext;
 		this.DOWNLOAD_QUESTIONNAIRES = server + "questionnaireDownload" + ext;
 	}
@@ -106,6 +110,10 @@ public class Client {
 		return execute(DOWNLOAD_SCENARIOSESSION, playerId);
 	}
 
+	public SortedSet<Score> downloadPersonHighscoreSet(final long playerId) throws IOException {
+		return execute(DOWNLOAD_PERSONAL_HIGHSCORES_SET, playerId);
+	}
+	
 	public BufferedImage downloadPersonHighscoreChart(final long personId) throws IOException {
 		final PostMethod post = new PostMethod(DOWNLOAD_PERSONAL_HIGHSCORE_CHART + "?id=" + personId);
 		try {
