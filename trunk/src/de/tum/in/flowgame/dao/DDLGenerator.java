@@ -34,7 +34,7 @@ public class DDLGenerator {
 		Questionnaire moodAndSkills = new Questionnaire("mood",true, 10);
 		Questionnaire moodAndSkillsShort = new Questionnaire("moodShort", true, 3);
 		// questionnaires that are used  after every round
-		Questionnaire howWasIt = new Questionnaire("howWasIt", false, 10);
+		Questionnaire flow = new Questionnaire("flow", false, 10);
 
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
@@ -114,7 +114,7 @@ public class DDLGenerator {
 		
 		em.persist(moodAndSkills);
 		em.persist(moodAndSkillsShort);
-		em.persist(howWasIt);
+		em.persist(flow);
 		em.persist(profile);
 		
 		em.getTransaction().commit();
