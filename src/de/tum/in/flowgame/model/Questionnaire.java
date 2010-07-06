@@ -74,4 +74,8 @@ public class Questionnaire extends AbstractEntity {
 		return labelDriven;
 	}
 
+	@Override
+	public String toString() {
+		return getClass().getName() + "[" + getName() + "]";
+	}
 }
