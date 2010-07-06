@@ -80,6 +80,12 @@
 				<param name="contentType">application/octet-stream</param>
 			</result>
 		</action>
+
+		<action name="personalHighscoresSetDownload" class="de.tum.in.flowgame.server.PersonalHighscoreSetDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
 		
 		<action name="personalHighscoreChartDownload" class="de.tum.in.flowgame.server.PersonalHighscoreChartDownloadAction">
 			<result type="stream">
