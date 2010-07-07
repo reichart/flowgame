@@ -32,7 +32,9 @@
 	</target>
 
 	<target name="compile" depends="init">
-		<javac srcdir="${src}" destdir="${build}" classpathref="classpath" includeantruntime="false" />
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath" includeantruntime="false" deprecation="true">
+			<compilerarg value="-Xlint" />
+		</javac>
 	</target>
 
 	<target name="dist" depends="compile">
