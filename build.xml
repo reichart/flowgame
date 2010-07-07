@@ -8,6 +8,14 @@
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
 
+	<!-- "-Dfindbugs.home=/path/to/findbugs" needs to be set at runtime -->
+	
+	<path id="findbugs.classpath">
+		<fileset dir="${findbugs.home}/lib">
+			<include name="findbugs.jar" />
+		</fileset>
+	</path>
+
 	<path id="classpath">
 		<fileset dir="${lib}" includes="**/*.jar" />
 		<fileset dir="${weblib}" includes="**/*.jar" />
@@ -26,6 +34,18 @@
 	<target name="dist" depends="compile">
 		<mkdir dir="${dist}/lib" />
 		<jar jarfile="${dist}/lib/flowgame-${DSTAMP}.jar" basedir="${build}" />
+	</target>
+
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.classpath" />
+
+	<target name="findbugs" depends="compile">
+		<findbugs home="${findbugs.home}" output="xml" outputFile="${build}/findbugs.xml">
+			<sourcePath path="${src}" />
+			<class location="${build}" />
+			<auxClasspath>
+				<path refid="classpath" />
+			</auxClasspath>
+		</findbugs>
 	</target>
 
 	<target name="clean">
