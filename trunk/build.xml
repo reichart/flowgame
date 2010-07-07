@@ -20,7 +20,7 @@
 	</target>
 
 	<target name="compile" depends="init">
-		<javac srcdir="${src}" destdir="${build}" classpathref="classpath" />
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath" includeantruntime="false" />
 	</target>
 
 	<target name="dist" depends="compile">
