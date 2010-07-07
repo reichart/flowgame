@@ -39,6 +39,8 @@ public class Diagram {
 	private final static int RIGHT_MARGIN = 8;
 	private final static Font NUMBERS = new Font("Serif", Font.PLAIN, 9);
 	private final static Font TEXT = new Font("Serif", Font.PLAIN, 12);
+	private final static Color TRANSPARENT_WHITE = new Color(1f, 1f, 1f, 0.75f);
+	private final static Color TRANSPARENT_BLACK = new Color(0f, 0f, 0f, 0.5f);
 
 	public Diagram(SortedSet<Score> scores) {
 		this.scores = scores;
@@ -77,8 +79,8 @@ public class Diagram {
 	}
 
 	public Image diagram() {
-		// WHITE background
-		g.setColor(Color.WHITE);
+		// TRANSPARENT_WHITE background
+		g.setColor(TRANSPARENT_WHITE);
 		g.fillRect(COORD_BUFFER_X, 0, WIDTH, HEIGHT - COORD_BUFFER_Y);
 
 		addYCaptionAndTicks();
@@ -111,11 +113,11 @@ public class Diagram {
 	}
 
 	private void addLineTickX(int xCoord) {
-		g.setColor(Color.WHITE);
+		g.setColor(TRANSPARENT_WHITE);
 		g.setStroke(new BasicStroke(1));
 		g.drawLine(xCoord, HEIGHT - COORD_BUFFER_Y - 1, xCoord, HEIGHT - COORD_BUFFER_Y + 2);
 
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(TRANSPARENT_BLACK);
 		float[] dash = { 2f };
 		BasicStroke dashed = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1f, dash, 0f);
 		g.setStroke(dashed);
@@ -127,7 +129,7 @@ public class Diagram {
 		int value = 0;
 		for (int i = 0; i < maxDiagramValue + increment; i += increment) {
 			value = (int) ((HEIGHT - COORD_BUFFER_Y - 1) - i * scaleFactor);
-			g.setColor(Color.WHITE);
+			g.setColor(TRANSPARENT_WHITE);
 			g.setStroke(new BasicStroke(1));
 			g.drawLine(COORD_BUFFER_X - 3, value, COORD_BUFFER_X - 1, value);
 			String s = Integer.toString(i);
@@ -135,7 +137,7 @@ public class Diagram {
 			int yOffset = fm.getAscent() / 2;
 			g.drawString(s, 30 - xOffset, value + yOffset);
 
-			g.setColor(Color.LIGHT_GRAY);
+			g.setColor(TRANSPARENT_BLACK);
 			float[] dash = { 2f };
 			BasicStroke dashed = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1f, dash, 0f);
 			g.setStroke(dashed);
@@ -162,7 +164,7 @@ public class Diagram {
 	}
 
 	private void addXNumber(int x, int xCoord) {
-		g.setColor(Color.WHITE);
+		g.setColor(TRANSPARENT_WHITE);
 		g.setStroke(new BasicStroke(1));
 		FontMetrics fm = g.getFontMetrics();
 		String s = Integer.toString(x);
@@ -182,12 +184,13 @@ public class Diagram {
 		Random r = new Random(300);
 		long time = System.currentTimeMillis();
 		for (int i = 0; i < 10; i++) {
-			scores.add(new Score(time + i * 100, (long) r.nextInt(100)));
+			scores.add(new Score(time + i * 100, (long) r.nextInt(400)));
 		}
 		JFrame jFrame = new JFrame();
 		jFrame.add(new JLabel(new ImageIcon(new Diagram(scores).diagram())));
 		jFrame.pack();
 		jFrame.setVisible(true);
+		jFrame.getContentPane().setBackground(Color.BLACK);
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
