@@ -28,6 +28,6 @@ public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 
 	@Override
 	protected List<String> getQuestionnaireNames() {
-		return Arrays.asList("moodShort", "flow");
+		return Arrays.asList("moodShort", "flow", "reqfit");
 	}
 }

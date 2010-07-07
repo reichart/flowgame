@@ -27,14 +27,16 @@ public class DDLGenerator {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		//create questionnaires
-		// questionnaire that is used for player creation
+		// questionnaires used for player creation
 		Questionnaire profile = new Questionnaire("profile", false, 13);
-		// questionnaires that are used once before each session
+		
+		// questionnaires used once before each session
 		Questionnaire moodAndSkills = new Questionnaire("mood",true, 10);
+		
+		// questionnaires used after every round
 		Questionnaire moodAndSkillsShort = new Questionnaire("moodShort", true, 3);
-		// questionnaires that are used  after every round
 		Questionnaire flow = new Questionnaire("flow", false, 10);
+		Questionnaire reqfit = new Questionnaire("reqfit", true, 1);
 
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
@@ -115,6 +117,7 @@ public class DDLGenerator {
 		em.persist(moodAndSkills);
 		em.persist(moodAndSkillsShort);
 		em.persist(flow);
+		em.persist(reqfit);
 		em.persist(profile);
 		
 		em.getTransaction().commit();
