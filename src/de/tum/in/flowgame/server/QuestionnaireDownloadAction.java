@@ -8,20 +8,16 @@ import de.tum.in.flowgame.model.Questionnaire;
 public class QuestionnaireDownloadAction extends GameDataAction<List<String>, List<Questionnaire>> {
 
 	@Override
-	@SuppressWarnings("unchecked")
 	protected List<Questionnaire> execute(final List<String> questionnaireNames) throws Exception {
-		return transform(em.createQuery("SELECT q FROM Questionnaire q " +
-			"WHERE q.name IN :names")
-			.setParameter("names", questionnaireNames)
-			.getResultList());
-	}
-	
-	private List<Questionnaire> transform(final List<Object> questionnaires) {
-		final List<Questionnaire> list = new ArrayList<Questionnaire>();
-		for (final Object objects : questionnaires) {
-			list.add((Questionnaire) objects);
+		final List<Questionnaire> questionnaires = new ArrayList<Questionnaire>();
+		for (final String name : questionnaireNames) {
+			final Questionnaire qn = (Questionnaire) em.createQuery(
+					"SELECT q FROM Questionnaire q WHERE q.name = :name")
+					.setParameter("name", name)
+					.getSingleResult();
+			questionnaires.add(qn);
 		}
-		return list;
+		return questionnaires;
 	}
 
 }
