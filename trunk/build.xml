@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="flowgame" default="dist">
+
+	<property name="src" location="src" />
+	<property name="lib" location="lib" />
+	<property name="weblib" location="WebContent/lib" />
+	<property name="webapplib" location="WebContent/WEB-INF/lib" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+
+	<path id="classpath">
+		<fileset dir="${lib}" includes="**/*.jar" />
+		<fileset dir="${weblib}" includes="**/*.jar" />
+		<fileset dir="${webapplib}" includes="**/*.jar" />
+	</path>
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath" />
+	</target>
+
+	<target name="dist" depends="compile">
+		<mkdir dir="${dist}/lib" />
+		<jar jarfile="${dist}/lib/flowgame-${DSTAMP}.jar" basedir="${build}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+
+</project>
