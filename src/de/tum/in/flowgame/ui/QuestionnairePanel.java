@@ -154,4 +154,8 @@ public class QuestionnairePanel extends ChangeableComponent {
 		// repaintQuestions();
 	}
 
+	@Override
+	public String toString() {
+		return getClass().getName() + "[" + questionnaire + "]";
+	}
 }
