@@ -8,12 +8,16 @@
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
 
-	<!-- "-Dfindbugs.home=/path/to/findbugs" needs to be set at runtime -->
-	
+	<!-- findbugs.home, pmd.home needs to be set at runtime -->
+
 	<path id="findbugs.classpath">
 		<fileset dir="${findbugs.home}/lib">
 			<include name="findbugs.jar" />
 		</fileset>
+	</path>
+
+	<path id="pmd.classpath">
+		<fileset dir="${pmd.home}" includes="**/*.jar" />
 	</path>
 
 	<path id="classpath">
@@ -46,6 +50,33 @@
 				<path refid="classpath" />
 			</auxClasspath>
 		</findbugs>
+	</target>
+
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
+
+	<target name="pmd">
+		<pmd>
+			<ruleset>basic</ruleset>
+			<ruleset>braces</ruleset>
+			<ruleset>clone</ruleset>
+			<ruleset>codesize</ruleset>
+			<ruleset>controversial</ruleset>
+			<ruleset>coupling</ruleset>
+			<ruleset>design</ruleset>
+			<ruleset>finalizers</ruleset>
+			<ruleset>imports</ruleset>
+			<ruleset>logging-jakarta-commons</ruleset>
+			<ruleset>naming</ruleset>
+			<ruleset>optimizations</ruleset>
+			<ruleset>strings</ruleset>
+			<ruleset>sunsecure</ruleset>
+			<ruleset>typeresolution</ruleset>
+			<ruleset>unusedcode</ruleset>
+			<formatter type="xml" toFile="${build}/pmd.xml" />
+			<fileset dir="${src}">
+				<include name="**/*.java" />
+			</fileset>
+		</pmd>
 	</target>
 
 	<target name="clean">
