@@ -228,12 +228,14 @@ public class GameLogic implements Runnable {
 	public void pause() {
 		pauseStartTime = System.currentTimeMillis();
 		paused = true;
+		configChange(ConfigKey.PAUSE, paused);
 		fireGamePaused();
 	}
 
 	public void unpause() {
 		startTimeWithoutPause += (System.currentTimeMillis() - pauseStartTime);
 		paused = false;
+		configChange(ConfigKey.PAUSE, paused);
 		fireGameResumed();
 	}
 
@@ -339,9 +341,9 @@ public class GameLogic implements Runnable {
 		return gameRound.getScenarioRound();
 	}
 
-	public void configChange(ConfigKey key, String value){
+	public void configChange(ConfigKey key, Object value){
 		if (this.gameRound != null) {
-			this.gameRound.configChange(key, value);
+			this.gameRound.configChange(key, String.valueOf(value));
 		} else {
 			log.info("ConfigChange not saved in Database as there is no GameRound active.");
 		}

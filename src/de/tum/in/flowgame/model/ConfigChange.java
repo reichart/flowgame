@@ -10,7 +10,7 @@ import javax.persistence.TemporalType;
 public class ConfigChange extends AbstractEntity implements Comparable<ConfigChange> {
 
 	public enum ConfigKey {
-		SOUND, STEERING
+		SOUND, STEERING, PAUSE
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
