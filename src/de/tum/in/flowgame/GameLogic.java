@@ -117,29 +117,26 @@ public class GameLogic implements Runnable {
 	}
 
 	public void run() {
-		log.info("running");
+		log.info("running " + this);
 
 		fireGameStarted();
 
-		boolean timeOver = false;
-		Long maxPlaytime = getCurrentScenarioRound().getExpectedPlaytime();
-
-		while (!timeOver) {
+		while (isRunning()) {
 			try {
 				Thread.sleep(1000);
 			} catch (final InterruptedException ex) {
 				// ignore
-			}
-
-			if (maxPlaytime != null) {
-				timeOver = getElapsedTime() > maxPlaytime;
 			}
 		}
 
 		storeRank();
 		fireGameStopped();
 
-		log.info("stopped");
+		log.info("stopped " + this);
+	}
+
+	private boolean isRunning() {
+		return getElapsedTime() <= getExpectedPlaytime();
 	}
 
 	private void storeRank() {
@@ -300,7 +297,11 @@ public class GameLogic implements Runnable {
 	}
 
 	public long getRemainingTime() {
-		return getCurrentScenarioRound().getExpectedPlaytime() - getElapsedTime();
+		return getExpectedPlaytime() - getElapsedTime();
+	}
+
+	private long getExpectedPlaytime() {
+		return getCurrentScenarioRound().getExpectedPlaytime();
 	}
 
 	public long getScore() {
@@ -382,5 +383,11 @@ public class GameLogic implements Runnable {
 
 	public boolean isPaused() {
 		return paused;
+	}
+	
+	@Override
+	public String toString() {
+		return getClass().getName() + "[running=" + isRunning() + ";paused=" + paused
+			+ "startTime=" + startTime + ";pauseStartTime=" + pauseStartTime + "]";
 	}
 }
