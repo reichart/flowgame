@@ -123,7 +123,7 @@ public class GameLogic implements Runnable {
 
 		while (isRunning()) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (final InterruptedException ex) {
 				// ignore
 			}
@@ -309,7 +309,7 @@ public class GameLogic implements Runnable {
 	}
 
 	private long getExpectedPlaytime() {
-		return getCurrentScenarioRound().getExpectedPlaytime();
+		return getCurrentScenarioRound().getExpectedPlaytime() / 10;
 	}
 
 	public long getScore() {
@@ -396,6 +396,6 @@ public class GameLogic implements Runnable {
 	@Override
 	public String toString() {
 		return getClass().getName() + "[running=" + isRunning() + ";paused=" + paused
-			+ "startTime=" + startTime + ";pauseStartTime=" + pauseStartTime + "]";
+			+ ";startTime=" + startTime + ";pauseStartTime=" + pauseStartTime + "]";
 	}
 }
