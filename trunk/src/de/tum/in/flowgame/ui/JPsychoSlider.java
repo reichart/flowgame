@@ -86,7 +86,9 @@ public class JPsychoSlider extends ChangeableComponent {
 	 * @return relative value between 0 and 1
 	 */
 	public Float getValue() {
-		return value == null ? null : (clamp(value) / (float) getMaxValue());
+		final float max = getMaxValue() - KNOB_HALFSIZE;
+		final int realValue = clamp(value) - KNOB_HALFSIZE;
+		return value == null ? null : (realValue / max);
 	}
 
 	private void setSelectedValue(final Integer value) {
