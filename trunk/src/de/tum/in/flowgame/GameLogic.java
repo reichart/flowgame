@@ -31,8 +31,8 @@ public class GameLogic implements Runnable {
 
 	private final static Log log = LogFactory.getLog(GameLogic.class);
 
-	private static final int pointsForFuel = 10;
-	private static final int pointsForAsteroid = 5;
+	private static final int POINTS_FOR_FUEL = 10;
+	private static final int POINTS_FOR_ASTEROID = 5;
 
 	private boolean paused;
 
@@ -69,7 +69,7 @@ public class GameLogic implements Runnable {
 
 	private double rating;
 
-	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, Browser browser) {
+	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, final Browser browser) {
 		this.browser = browser;
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
@@ -94,8 +94,8 @@ public class GameLogic implements Runnable {
 			break;
 		}
 
-		double rating = getRating();
-		long increase = (long) (rating * 10 * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
+		final double rating = getRating();
+		final long increase = (long) (rating * 10 * ((fuelInRow * POINTS_FOR_FUEL) - (asteroidsInRow * POINTS_FOR_ASTEROID)));
 		gameRound.increaseScore(increase);
 
 		lastPointsAdded = increase;
@@ -103,7 +103,7 @@ public class GameLogic implements Runnable {
 		fireCollided(item);
 	}
 
-	public void seen(final Item item, boolean collision) {
+	public void seen(final Item item, final boolean collision) {
 		switch (item) {
 		case FUELCAN:
 			fuelTrend.update(collision);
@@ -145,7 +145,7 @@ public class GameLogic implements Runnable {
 			final Set<Long> persons = JSONUtils.toLongs(fb.friends_get());
 			persons.add(getPlayerId());
 
-			Client client = getClient();
+			final Client client = getClient();
 			final List<Highscore> globalScores = client.getHighscores(new ArrayList<Long>(persons));
 
 			// determine rank of player within his friends
@@ -159,7 +159,7 @@ public class GameLogic implements Runnable {
 				}
 				counter++;
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -258,7 +258,7 @@ public class GameLogic implements Runnable {
 		}
 	}
 
-	private void fireCollided(Item item) {
+	private void fireCollided(final Item item) {
 		for (final GameListener listener : listeners) {
 			listener.collided(this, item);
 		}
@@ -328,7 +328,7 @@ public class GameLogic implements Runnable {
 		return gameSession;
 	}
 
-	public void setBaseline(long baseline) {
+	public void setBaseline(final long baseline) {
 		gameSession.setBaseline(new Difficulty(0, baseline, 0));
 	}
 
@@ -340,7 +340,7 @@ public class GameLogic implements Runnable {
 		return gameRound.getScenarioRound();
 	}
 
-	public void configChange(ConfigKey key, Object value){
+	public void configChange(final ConfigKey key, final Object value){
 		if (this.gameRound != null) {
 			this.gameRound.configChange(key, String.valueOf(value));
 		} else {
@@ -377,7 +377,7 @@ public class GameLogic implements Runnable {
 		return browser;
 	}
 
-	public void setRating(double difficultyRating) {
+	public void setRating(final double difficultyRating) {
 		rating = difficultyRating;
 	}
 
