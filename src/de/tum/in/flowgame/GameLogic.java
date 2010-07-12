@@ -59,7 +59,6 @@ public class GameLogic implements Runnable {
 	private Trend fuelTrend;
 
 	private long startTime;
-	private long startTimeWithoutPause;
 	private long pauseStartTime;
 
 	private final CustomFacebookClient facebook;
@@ -212,12 +211,11 @@ public class GameLogic implements Runnable {
 		// reset internal state
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
-
+		
 		fuelInRow = 0;
 		asteroidsInRow = 0;
 
 		startTime = System.currentTimeMillis();
-		startTimeWithoutPause = startTime;
 
 		// spawn new thread for game updates
 		this.thread = new Thread(this, GameLogic.class.getSimpleName());
@@ -233,7 +231,7 @@ public class GameLogic implements Runnable {
 	}
 
 	public void unpause() {
-		startTimeWithoutPause += (System.currentTimeMillis() - pauseStartTime);
+		startTime += (System.currentTimeMillis() - pauseStartTime);
 		paused = false;
 		configChange(ConfigKey.PAUSE, paused);
 		fireGameResumed();
@@ -295,9 +293,9 @@ public class GameLogic implements Runnable {
 
 	public long getElapsedTime() {
 		if (paused) {
-			return pauseStartTime - startTimeWithoutPause;
+			return pauseStartTime - startTime;
 		} else {
-			return System.currentTimeMillis() - startTimeWithoutPause;
+			return System.currentTimeMillis() - startTime;
 		}
 	}
 
