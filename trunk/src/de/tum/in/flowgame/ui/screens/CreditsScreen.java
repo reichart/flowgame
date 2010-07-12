@@ -7,6 +7,8 @@ import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,8 +32,11 @@ public class CreditsScreen extends MenuScreen {
 			log.error("Credits file not found");
 			credits = new JEditorPane();
 		}
-		
-		return centered(COMMON_BORDER, title("Credits"), credits, next);
+
+		final JScrollPane scrollpane = new JScrollPane(credits, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+		return centered(COMMON_BORDER, title("Credits"), scrollpane, next);
 	}
 	
 }
