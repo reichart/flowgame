@@ -221,17 +221,25 @@ public class GameLogic implements Runnable {
 	}
 
 	public void pause() {
-		pauseStartTime = System.currentTimeMillis();
-		paused = true;
-		configChange(ConfigKey.PAUSE, paused);
-		fireGamePaused();
+		if (isRunning()) {
+			pauseStartTime = System.currentTimeMillis();
+			paused = true;
+			configChange(ConfigKey.PAUSE, paused);
+			fireGamePaused();
+		} else {
+			log.warn("not running");
+		}
 	}
 
 	public void unpause() {
-		startTime += (System.currentTimeMillis() - pauseStartTime);
-		paused = false;
-		configChange(ConfigKey.PAUSE, paused);
-		fireGameResumed();
+		if (isRunning()) {
+			startTime += (System.currentTimeMillis() - pauseStartTime);
+			paused = false;
+			configChange(ConfigKey.PAUSE, paused);
+			fireGameResumed();
+		} else {
+			log.warn("not running");
+		}
 	}
 
 	private void fireGameStarted() {
