@@ -184,7 +184,7 @@ public class Diagram {
 		Random r = new Random(300);
 		long time = System.currentTimeMillis();
 		for (int i = 0; i < 10; i++) {
-			scores.add(new Score(time + i * 100, (long) r.nextInt(400)));
+			scores.add(new Score(time + i * 100, r.nextInt(400)));
 		}
 		JFrame jFrame = new JFrame();
 		jFrame.add(new JLabel(new ImageIcon(new Diagram(scores).diagram())));
