@@ -44,14 +44,14 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	private final JLabel title = title("");
 
 	private int currentPanel;
-	
+
 	private List<QuestionnairePanel> questionnairePanels;
-	
+
 	private final ForceAnswersListener forceAnswers;
 
 	private static final String NEXT_ENABLED = "Continue";
 	private static final String NEXT_DISABLED = "Please answers all questions to continue";
-	
+
 	private final JButton next = new JButton(new AbstractAction() {
 
 		public void actionPerformed(final ActionEvent e) {
@@ -68,7 +68,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 
 	public QuestionnaireScreen() {
 		forceAnswers = new ForceAnswersListener();
-		
+
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
 
@@ -96,9 +96,9 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	public void update(final GameLogic logic) throws Exception {
 		log.info("building new qn panels");
 		currentPanel = 0;
-		
+
 		cardPanel.removeAll();
-		
+
 		questionnairePanels = new ArrayList<QuestionnairePanel>();
 		final List<Questionnaire> questionnaires = menu.getLogic().getClient().downloadQuestionnaires(
 				getQuestionnaireNames());
@@ -106,7 +106,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 			log.info("adding " + questionnaire.getName());
 			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
 			qPanel.addChangeListener(forceAnswers);
-			
+
 			// TODO qn gets cut off with VERTICAL_SCROLLBAR_AS_NEEDED
 			// work around is to always show vertical scrollbars
 			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -114,29 +114,28 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 			cardPanel.add(qscrollpane, questionnaire.getName());
 			questionnairePanels.add(qPanel);
 		}
-		
+
 		update();
 	}
 
 	private void update() {
 		// reset position of all scrollpanes to top
-		final Component[] components = cardPanel.getComponents();
-		for (final Component component : components) {
+		for (final Component component : cardPanel.getComponents()) {
 			if (component instanceof JScrollPane) {
 				final JScrollPane scrollpane = (JScrollPane) component;
 				scrollpane.getVerticalScrollBar().setValue(0);
 			}
 		}
-		
-		QuestionnairePanel questionnairePanel = getCurrentPanel();
+
+		final QuestionnairePanel questionnairePanel = getCurrentPanel();
 		questionnairePanel.reset();
-		
+
 		final Questionnaire qn = questionnairePanel.getQuestionnaire();
 		title.setText(qn.getTitel());
 		description.setText(qn.getDescription());
-		
+
 		cardLayout.show(cardPanel, qn.getName());
-		
+
 		// disable until all questions are answered
 		next.setEnabled(false);
 		next.setText(NEXT_DISABLED);
@@ -158,7 +157,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return the list of {@link Answer}s for the currently displayed
 	 *         {@link Questionnaire}
