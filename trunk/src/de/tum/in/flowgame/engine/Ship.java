@@ -184,12 +184,14 @@ public class Ship extends TransformGroup implements GameListener {
 	public void added(final GameLogic game) {
 		game.addListener(shipNavigationBehavior);
 		game.addListener(forwardBehavior);
+		game.addListener(speedChange);
 		speedChange.setGameLogic(game);
 	}
 
 	public void removed(final GameLogic game) {
 		game.removeListener(shipNavigationBehavior);
 		game.removeListener(forwardBehavior);
+		game.removeListener(speedChange); 
 		speedChange.setGameLogic(null);
 	}
 
