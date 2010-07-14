@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -118,6 +119,15 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	}
 
 	private void update() {
+		// reset position of all scrollpanes to top
+		final Component[] components = cardPanel.getComponents();
+		for (final Component component : components) {
+			if (component instanceof JScrollPane) {
+				final JScrollPane scrollpane = (JScrollPane) component;
+				scrollpane.getVerticalScrollBar().setValue(0);
+			}
+		}
+		
 		QuestionnairePanel questionnairePanel = getCurrentPanel();
 		questionnairePanel.reset();
 		
