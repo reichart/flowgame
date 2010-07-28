@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.tum.in.flowgame.ui.screens.UIMessages;
 import de.tum.in.flowgame.util.Browser;
 
 public class CustomButton extends JButton {
@@ -131,8 +132,8 @@ public class CustomButton extends JButton {
 			g2d.drawString(getAttributedString(valueOf).getIterator(), (cardBackground.getWidth(this) - metrics
 					.stringWidth(valueOf)) / 2, 85);
 		} else {
-			String text1 = "Invite";
-			String text2 = "Friend";
+			String text1 = UIMessages.getString("invite");
+			String text2 = UIMessages.getString("friend");
 			g2d.drawString(getAttributedString(text1).getIterator(), (cardBackground.getWidth(this) - metrics
 					.stringWidth(text1)) / 2, 40);
 			g2d.drawString(getAttributedString(text2).getIterator(), (cardBackground.getWidth(this) - metrics

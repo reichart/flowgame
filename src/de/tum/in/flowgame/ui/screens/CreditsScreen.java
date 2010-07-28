@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 public class CreditsScreen extends MenuScreen {
 	private static final Log log = LogFactory.getLog(MenuScreen.class);
 	
-	private final JButton next = new JButton(new AbstractAction("Continue") {
+	private final JButton next = new JButton(new AbstractAction(UIMessages.CONTINUE) {
 
 		public void actionPerformed(final ActionEvent e) {
 			menu.show(MainScreen.class); // go back
@@ -36,7 +36,7 @@ public class CreditsScreen extends MenuScreen {
 		final JScrollPane scrollpane = new JScrollPane(credits, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-		return centered(COMMON_BORDER, title("Credits"), scrollpane, next);
+		return centered(COMMON_BORDER, title(UIMessages.getString("credits")), scrollpane, next);
 	}
 	
 }

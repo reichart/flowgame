@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
+import de.tum.in.flowgame.ui.screens.UIMessages;
 
 /**
  * Displayed after each gameplay-highscore-questionnaire block before the game
@@ -22,7 +23,7 @@ public class RoundExtroScreen extends MenuScreen {
 
 	private final static Log log = LogFactory.getLog(RoundExtroScreen.class);
 
-	private final JButton next = new JButton(new AbstractAction("Continue") {
+	private final JButton next = new JButton(new AbstractAction(UIMessages.CONTINUE) {
 		public void actionPerformed(final ActionEvent e) {
 			final ScenarioRound nextRound = menu.getLogic().getCurrentScenarioSession().getNextRound(false);
 			if (nextRound == null) {
@@ -42,7 +43,7 @@ public class RoundExtroScreen extends MenuScreen {
 	@Override
 	public Container getContents() {
 		return centered(BorderFactory.createEmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH),
-				title("Game Session Extro"), next);
+				title(UIMessages.getString("extro")), next);
 	}
 
 }

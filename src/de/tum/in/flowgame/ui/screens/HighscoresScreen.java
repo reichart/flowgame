@@ -15,7 +15,7 @@ import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
  */
 public abstract class HighscoresScreen extends MenuScreen {
 
-	private final JButton next = new JButton(new AbstractAction("Continue") {
+	private final JButton next = new JButton(new AbstractAction(UIMessages.CONTINUE) {
 
 		public void actionPerformed(final ActionEvent e) {
 			if (MainScreen.class.equals(menu.getPreviousScreen())) {
@@ -34,7 +34,7 @@ public abstract class HighscoresScreen extends MenuScreen {
 
 	@Override
 	public final Container getContents() {
-		return centered(title("Highscore"), getHighscoreComponent(), next);
+		return centered(title(UIMessages.getString("highscore")), getHighscoreComponent(), next);
 	}
 
 	/**

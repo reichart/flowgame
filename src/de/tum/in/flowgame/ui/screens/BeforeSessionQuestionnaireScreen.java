@@ -21,7 +21,7 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final static Log log = LogFactory.getLog(BeforeSessionQuestionnaireScreen.class);
 	
-	private final Action next = new AbstractAction("Continue") {
+	private final Action next = new AbstractAction(UIMessages.CONTINUE) {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveSessionAnswers(getAnswers());
 			menu.show(RoundIntroScreen.class);
