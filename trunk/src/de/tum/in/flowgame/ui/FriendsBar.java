@@ -22,6 +22,7 @@ import com.google.code.facebookapi.FacebookException;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.facebook.Friend;
 import de.tum.in.flowgame.model.Highscore;
+import de.tum.in.flowgame.ui.screens.UIMessages;
 import de.tum.in.flowgame.util.Browser;
 
 public class FriendsBar extends JPanel {
@@ -82,7 +83,7 @@ public class FriendsBar extends JPanel {
 		btn.setContentAreaFilled(false);
 		btn.setLocation(5, 40);
 
-		btn.setText("Invite Friends");
+		btn.setText(UIMessages.getString("friend.invite"));
 
 		btn.addMouseListener(new MouseAdapter() {
 			@Override

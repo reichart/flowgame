@@ -49,8 +49,8 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 
 	private final ForceAnswersListener forceAnswers;
 
-	private static final String NEXT_ENABLED = "Continue";
-	private static final String NEXT_DISABLED = "Please answers all questions to continue";
+	private static final String NEXT_ENABLED = UIMessages.CONTINUE;
+	private static final String NEXT_DISABLED = UIMessages.getString("next.disabled");
 
 	private final JButton next = new JButton(new AbstractAction() {
 

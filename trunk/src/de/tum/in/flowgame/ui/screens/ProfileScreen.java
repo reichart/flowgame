@@ -16,7 +16,7 @@ import de.tum.in.flowgame.ui.screens.story.AfterProfileScreen;
  */
 public class ProfileScreen extends QuestionnaireScreen {
 	
-	private final Action createProfile = new AbstractAction("Continue") {
+	private final Action createProfile = new AbstractAction(UIMessages.CONTINUE) {
 		public void actionPerformed(final ActionEvent e) {
 			final Person player = menu.getLogic().getPlayer();
 			player.setProfilingAnswers(getAnswers());
