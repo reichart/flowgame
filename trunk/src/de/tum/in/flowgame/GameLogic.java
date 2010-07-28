@@ -336,8 +336,9 @@ public class GameLogic implements Runnable {
 		return gameSession;
 	}
 
-	public void setBaseline(final long baseline) {
-		gameSession.setBaseline(new Difficulty(0, baseline, 0));
+	public void setBaseline(double baseline) {
+		//FIXME: baseline probably should be double or speed should be long
+		gameSession.setBaseline(new Difficulty(0, (long) baseline, 0));
 	}
 
 	public Difficulty getBaseline() {
