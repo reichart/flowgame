@@ -1,8 +1,10 @@
 package de.tum.in.flowgame.engine.behavior;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Enumeration;
+
+import javax.media.j3d.Behavior;
+import javax.media.j3d.WakeupCriterion;
+import javax.media.j3d.WakeupOnElapsedFrames;
 
 import de.tum.in.flowgame.DefaultGameListener;
 import de.tum.in.flowgame.GameLogic;
@@ -13,62 +15,55 @@ import de.tum.in.flowgame.strategy.FlowStrategy;
 import de.tum.in.flowgame.strategy.FunctionStrategy;
 import de.tum.in.flowgame.strategy.FunctionStrategy2;
 
-public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicConsumer, SpeedChangeBehaviorMBean {
+public class SpeedChangeBehavior extends Behavior implements GameLogicConsumer, SpeedChangeBehaviorMBean {
 
+	private final WakeupCriterion newFrame = new WakeupOnElapsedFrames(0);
 	private final ForwardBehavior forwardNavigator;
-	private final TextureTransformBehavior ttb;
 	private double speed;
-	/**
-	 * maximum speed player reaches during current round, used to calculate the baseline
-	 */
 	private double maxSpeed;
 	private GameLogic gameLogic;
-	/**
-	 * strategy that decides over how the speed is changed
-	 */
 	private final FlowStrategy strategy;
-	/**
-	 * list of speeds during the round, used to calculate the baseline
-	 */
-	private List<Double> speeds;
 
-	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator, final TextureTransformBehavior ttb) {
+	private boolean pause;
+
+	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator) {
 		this.forwardNavigator = forwardNavigator;
-		this.ttb = ttb;
 		this.strategy = new FunctionStrategy2();
+		pause = false;
 		Utils.export(this);
-		
-		speeds = new ArrayList<Double>();
 	}
 
 	@Override
-	protected void update() {
-		if (!isPaused()) {
+	public void initialize() {
+		this.wakeupOn(newFrame);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public void processStimulus(final Enumeration criteria) {
+		if (!pause) {
 			if ((this.strategy instanceof FunctionStrategy || this.strategy instanceof FunctionStrategy2)
-					&& (strategy.getFunction() == null || strategy.getFunction().getSpeed() == null)) {
-				strategy.setFunction(gameLogic.getDifficultyFunction());
+					&& strategy.getFunction() == null) {
+				strategy.setFunction(gameLogic.getDifficultyFunction().getSpeed());
 			}
 
 			if (gameLogic != null) {
 				final Function fun = gameLogic.getDifficultyFunction().getSpeed();
 				if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
-					speed = strategy.calculateSpeed(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend(), speed, getDeltaTime());
+					speed = strategy.calculateSpeed(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend(), speed);
 					maxSpeed = Math.max(speed, maxSpeed);
-					gameLogic.setRating(strategy.getDifficultyRating(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend()));
 				} else {
 					long speedAddFromDifficulty = 0;
 					if (gameLogic.getBaseline() != null) {
 						speedAddFromDifficulty = gameLogic.getBaseline().getSpeed();
 					}
 					speed = (fun == null) ? 0 : fun.getValue(gameLogic.getElapsedTime()) + speedAddFromDifficulty;
-					gameLogic.setRating(gameLogic.getDifficultyFunction().getDifficultyRating(gameLogic.getElapsedTime()));
 				}
 
-				speeds.add(speed);
-				
 				forwardNavigator.setFwdSpeed(-speed);
-				ttb.setFwdSpeed(-speed);
+				//forwardNavigator.setFwdSpeed(0);
 			}
+			wakeupOn(newFrame);
 		}
 	}
 
@@ -76,29 +71,30 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 		this.gameLogic = gameLogic;
 		if (gameLogic != null) {
 			this.gameLogic.addListener(new DefaultGameListener() {
-
 				@Override
-				/**
-				 * reset the strategy, speeds listed from previous games, and the maxSpeed the player obtained
-				 * 
-				 */
 				public void gameStarted(GameLogic game) {
-					speeds = new ArrayList<Double>();
 					if (strategy != null) {
 						strategy.reset();
 					}
+					pause = false;
 					maxSpeed = Double.MIN_VALUE;
 				}
 
 				@Override
+				public void gamePaused(GameLogic game) {
+					pause = true;
+				}
+
+				@Override
+				public void gameResumed(GameLogic game) {
+					pause = false;
+				}
+
+				@Override
 				public void gameStopped(GameLogic game) {
+					// game.removeListener(this);
 					if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
-//						long baseline = (long) (maxSpeed * 0.9);
-						Collections.sort(speeds);
-						System.err.println("Speeds Size: " + speeds.size() + "\tPosition at 70% " + (int)(speeds.size() * 0.5f));
-						System.err.println("maxSpeed " + maxSpeed);
-						double baseline = speeds.get((int)(speeds.size() * 0.5f));
-						System.err.println("baseline " + baseline);
+						long baseline = (long) (maxSpeed * 0.9);
 						gameLogic.setBaseline(baseline);
 					}
 				}

@@ -105,7 +105,7 @@
 					<th>ID</th>
 					<th>Sc. Round</th>
 					<th>Actual Playtime</th>
-					<th>Collisions (fuel/asteroid)</th>
+					<th>Collisions</th>
 					<th>Answers</th>
 					<th>Start Time</th>
 					<th>Score</th>
@@ -116,7 +116,7 @@
 						<td><s:property value="id" /></td>
 						<td><a href="#scenarioround-<s:property value="scenarioRound.id" />"><s:property value="scenarioRound.id" /></a></td>
 						<td><s:property value="actualPlaytime" /></td>
-						<td><s:property value="collisionsWithFuelcans" />/<s:property value="collisionsWithAsteroids" /></td>
+						<td><s:property value="collisions" /></td>
 						<td>
 						<table border="1">
 							<s:iterator value="answers">

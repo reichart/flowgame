@@ -2,25 +2,20 @@ package de.tum.in.flowgame.ui.screens;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.SortedSet;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.diagram.Diagram;
-import de.tum.in.flowgame.model.Score;
+import de.tum.in.flowgame.ui.GameMenu;
 
-/**
- * Displays an chart of all individual highscores showing the player his actual
- * and previous scores.
- */
 public class IndividualHighscoresScreen extends HighscoresScreen {
 
 	private final ImageIcon imageIcon;
 
-	public IndividualHighscoresScreen() {
+	public IndividualHighscoresScreen(final GameMenu menu) {
+		super(menu);
 		this.imageIcon = new ImageIcon(new BufferedImage(500, 300, BufferedImage.TYPE_BYTE_BINARY));
 	}
 
@@ -32,7 +27,7 @@ public class IndividualHighscoresScreen extends HighscoresScreen {
 	@Override
 	public void update(final GameLogic logic) throws IOException {
 		final long playerId = logic.getPlayerId();
-		final SortedSet<Score> scores = logic.getClient().downloadPersonHighscoreSet(playerId);
-		imageIcon.setImage(new Diagram(scores).diagram());
+		final BufferedImage im = logic.getClient().downloadPersonHighscoreChart(playerId);
+		imageIcon.setImage(im);
 	}
 }

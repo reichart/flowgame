@@ -47,16 +47,6 @@ public class GameSession extends AbstractEntity {
 	public List<GameRound> getRounds() {
 		return rounds;
 	}
-	
-	public long getHighscore (){
-		long highscore = 0;
-		for (GameRound gr : rounds) {
-			if (gr.getScore().getScore() > highscore){
-				highscore = gr.getScore().getScore();
-			}
-		}
-		return highscore;
-	}
 
 	public ScenarioSession getScenarioSession() {
 		return scenarioSession;

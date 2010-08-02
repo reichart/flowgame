@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import netscape.javascript.JSObject;
+
 import org.json.JSONException;
 
 import com.google.code.facebookapi.FacebookException;
@@ -22,13 +23,9 @@ import com.google.code.facebookapi.FacebookException;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.facebook.Friend;
 import de.tum.in.flowgame.model.Highscore;
-import de.tum.in.flowgame.ui.screens.UIMessages;
-import de.tum.in.flowgame.util.Browser;
 
 public class FriendsBar extends JPanel {
 
-	private final static Log log = LogFactory.getLog(FriendsBar.class);
-	
 	private static final int MAX_NUMBER_OF_FRIENDS_SHOWN = 7;
 	public static final int INNER_MARGIN = 10;
 	public static final int LEFT_BORDER = 25;
@@ -49,7 +46,7 @@ public class FriendsBar extends JPanel {
 
 	private final List<CustomButton> friendButtons;
 
-	public FriendsBar(List<Highscore> highscores, FacebookFriendCache friendCash, Browser browser) throws Exception {
+	public FriendsBar(List<Highscore> highscores, FacebookFriendCache friendCash, JSObject win) throws Exception {
 		this.friendCash = friendCash;
 
 		friendButtons = new ArrayList<CustomButton>();
@@ -61,7 +58,7 @@ public class FriendsBar extends JPanel {
 		currentPosition = 0;
 		
 		for (int i = 0; i < MAX_NUMBER_OF_FRIENDS_SHOWN; i++) {
-			final CustomButton btn = new CustomButton(browser);
+			final CustomButton btn = new CustomButton(win);
 			btn.setLocation(calculatePosition(i), 0);
 			this.add(btn);
 			friendButtons.add(btn);
@@ -81,9 +78,9 @@ public class FriendsBar extends JPanel {
 		btn.setBorder(BorderFactory.createEmptyBorder());
 		btn.setSize(25, 25);
 		btn.setContentAreaFilled(false);
-		btn.setLocation(5, 40);
+		btn.setLocation(0, 40);
 
-		btn.setText(UIMessages.getString("friend.invite"));
+		btn.setText("Invite Friends");
 
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -158,7 +155,7 @@ public class FriendsBar extends JPanel {
 					friendButtons.get(i).setPicture(f.getPicture());
 					friendButtons.get(i).setScore(highscore.getScore());
 				} else {
-					log.warn("Friend Object could not be found");
+					System.err.println("Friend Object could not be found");
 				}
 			} else {
 				friendButtons.get(i).setPicture(null);
@@ -182,7 +179,7 @@ public class FriendsBar extends JPanel {
 		return null;
 	}
 
-	public void update(List<Highscore> highscores) throws FacebookException, JSONException {
+	public void update(List<Highscore> highscores) throws FacebookException, JSONException, IOException {
 		friendCash.updateFriends();
 		this.highscores = highscores;
 	}

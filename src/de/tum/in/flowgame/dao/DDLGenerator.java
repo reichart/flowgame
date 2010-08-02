@@ -18,9 +18,7 @@ import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.functions.ConstantFunction;
-import de.tum.in.flowgame.model.functions.LinearFunction;
 import de.tum.in.flowgame.model.functions.LnFunction;
-import de.tum.in.flowgame.model.functions.SigmoidBaselineFunction;
 
 public class DDLGenerator {
 
@@ -29,17 +27,59 @@ public class DDLGenerator {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		// questionnaires used for player creation
-		Questionnaire profile = new Questionnaire("profile", false, 13);
+		// once when user first plays game
+		Questionnaire profile = new Questionnaire("Persönlichkeitsbeschreibung", "Die Folgenden eignen sich zur Beschreibung Ihrer eigenen Person (insgesamt 13 Aussagen). Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
+						+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.");
+		profile.addQuestion("Viel Leute halten mich für etwas kühl und distanziert.");
+		profile.addQuestion("Probleme, die schwierig zu lösen sind, reizen mich.");
+		profile.addQuestion("Ich bin ein fröhlicher, gut gelaunter Mensch.");
+		profile.addQuestion("Zu häufig bin ich entmutigt und will aufgeben, wenn etwas schief geht.");
+		profile.addQuestion("Ich strebe danach, alles mir Mögliche zu erreichen.");
+		profile.addQuestion("Ich bin häufig beunruhigt, über Dinge, die schief gehen könnten.");
+		profile.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine neue Idee darüber bekommen habe, wie eine Sache funktioniert.");
+		profile.addQuestion("Ich arbeite zielstrebig und effektiv.");
+		profile.addQuestion("Ich ziehe es gewöhnlich vor, Dinge allein zu tun.");
+		profile.addQuestion("Mich reizen Situationen, in denen ich meine Fähigkeiten testen kann.");
+		profile.addQuestion("Ich fühle mich oft hilflos und wünsche mir eine Person, die meine Probleme löst.");
+		profile.addQuestion("Ich habe gerne viele Leute um mich herum.");
+		profile.addQuestion("Ich fühle mich besonders erfolgreich, wenn ich eine wirklich komplizierte Sache endgültig verstanden habe.");
 		
-		// questionnaires used once before each session
-		Questionnaire moodAndSkills = new Questionnaire("mood",true, 10);
+		// once before each session
+		Questionnaire moodAndSkills = new Questionnaire("Stimmung",
+				"Die Folgenden sollen feststellen, wie Sie sich gerade fühlen. Lesen Sie bitte jede Aussage aufmerksam durch. Zur Beantwortung steht Ihnen eine kontinuierlich Skala von starker Ablehnung (d.h. die Beschreibung trifft überhaupt nicht auf Sie zu) bis zu einer starken Zustimmung (d.h. die Beschreibung trifft voll auf Sie zu) zur Verfügung."
+				+ "Es gibt keine „richtigen“ oder „falschen“ Antworten. Sie bringen mit Ihren Antworten vielmehr Ihre persönliche Sichtweise zum Ausdruck. Wenn Ihnen einmal die Entscheidung schwer fallen sollte, geben Sie dann die Ausprägung an, die noch am ehesten auf Sie zutrifft.", true);
+		moodAndSkills.addLabelQuestion("zufrieden", "unzufrieden");
+		moodAndSkills.addLabelQuestion("energiegeladen", "energielos");
+		moodAndSkills.addLabelQuestion("gestresst", "entspannt");
+		moodAndSkills.addLabelQuestion("müde", "hellwach");
+		moodAndSkills.addLabelQuestion("friedlich", "verärgert");
+		moodAndSkills.addLabelQuestion("unglücklich", "glücklich");
+		moodAndSkills.addLabelQuestion("lustlos", "hoch motiviert");
+		moodAndSkills.addLabelQuestion("ruhig", "nervös");
+		moodAndSkills.addLabelQuestion("begeistert", "gelangweilt");
+		moodAndSkills.addLabelQuestion("besorgt", "sorgenfrei");
 		
-		// questionnaires used after every round
-		Questionnaire moodAndSkillsShort = new Questionnaire("moodShort", true, 3);
-		Questionnaire flow = new Questionnaire("flow", false, 10);
-		Questionnaire reqfit = new Questionnaire("reqfit", true, 1);
-
+		Questionnaire moodAndSkillsShort = new Questionnaire("Stimmung", "", true);
+		moodAndSkillsShort.addLabelQuestion("ruhig", "nervös");
+		moodAndSkillsShort.addLabelQuestion("zufrieden","unzufrieden");
+		moodAndSkillsShort.addLabelQuestion("lustlos", "hoch motiviert"); 
+		
+		// after every round
+		Questionnaire howWasIt = new Questionnaire("How was it?", "TBD mood (15q) and flow (20q)");
+		howWasIt.addQuestion("how was it question");
+		howWasIt.addQuestion("Ich fühle mich optimal beansprucht.");
+		howWasIt.addQuestion("Meine Gedanken bzw. Aktivitäten laufen flüssig und glatt.");
+		howWasIt.addQuestion("Ich merke gar nicht, wie die Zeit vergeht.");
+		howWasIt.addQuestion("Ich habe keine Mühe, mich zu konzentrieren.");
+		howWasIt.addQuestion("Mein Kopf ist völlig klar.");
+		howWasIt.addQuestion("Ich bin ganz vertieft in das was ich gerade mache.");
+		howWasIt.addQuestion("Die richtigen Gedanken/Bewegungen kommen wie von selbst.");
+		howWasIt.addQuestion("Ich weiss bei jedem Schritt, was ich zu tun habe.");
+		howWasIt.addQuestion("Ich habe das Gefühl, den Ablauf unter Kontrolle zu haben.");
+		howWasIt.addQuestion("Ich bin völlig selbstvergessen.");
+		
+		howWasIt.addQuestion("Für mich persönlich sind die jetzigen Anforderungen...");//zu gering <-> zu hoch
+		
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
 		Person p1 = new Person(226900023L, "Blitz");
@@ -66,21 +106,8 @@ public class DDLGenerator {
 		Function ratioFunction = new ConstantFunction(0.3);
 		
 		//useful functions for baseline measurment
-		Function speedFunction = new LinearFunction(60D,0.02);
-		Function speedFunction2 = new LinearFunction(60D, 0.015);
-		
-		Function speedFunction3 = new LnFunction(31.5, 6.5, 0.0);
-		Function speedFunction4 = new LnFunction(25.55, 1.0, 60);
-		
-		Function speedFunction5 = new SigmoidBaselineFunction();
-		
-		DifficultyFunction df1 = new DifficultyFunction(intervalFunction, speedFunction, ratioFunction);
+		Function speedFunction2 = new LnFunction(31.5, 6.5, 0.0);
 		DifficultyFunction df2 = new DifficultyFunction(intervalFunction, speedFunction2, ratioFunction);
-		DifficultyFunction df3 = new DifficultyFunction(intervalFunction, speedFunction3, ratioFunction);
-		DifficultyFunction df4 = new DifficultyFunction(intervalFunction, speedFunction4, ratioFunction);
-		DifficultyFunction df5 = new DifficultyFunction(intervalFunction, speedFunction5, ratioFunction);
-
-		final long timeLimit = 60*1000;
 		
 		//Create Scenario with Constant functions and previos baseline
 		Function speedFunctionConstant1 = new ConstantFunction(-60);
@@ -89,20 +116,14 @@ public class DDLGenerator {
 		Function speedFunctionConstant4 = new ConstantFunction(30);
 		Function speedFunctionConstant5 = new ConstantFunction(60);
 		
-		Function speedFunctionLinear1 = new LinearFunction(-75, 40f/timeLimit);
-		Function speedFunctionLinear2 = new LinearFunction(-45, 40f/timeLimit);
-		Function speedFunctionLinear3 = new LinearFunction(-15, 40f/timeLimit);
-		Function speedFunctionLinear4 = new LinearFunction(15, 40f/timeLimit);
-		Function speedFunctionLinear5 = new LinearFunction(45, 40f/timeLimit);
-
-		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, timeLimit, df5);
-		ScenarioRound cSr1 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction));
-		ScenarioRound cSr2 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction));
-		ScenarioRound cSr3 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction));
-		ScenarioRound cSr4 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction));
-		ScenarioRound cSr5 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction));
+		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, null, df2, howWasIt);
+		ScenarioRound cSr1 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction), howWasIt);
+		ScenarioRound cSr2 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction), howWasIt);
+		ScenarioRound cSr3 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction), howWasIt);
+		ScenarioRound cSr4 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction), howWasIt);
+		ScenarioRound cSr5 = new ScenarioRound(false, 0, null, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction), howWasIt);
 		
-		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL);
+		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL, moodAndSkills);
 		constantScenarioSession.add(cBaselineRound);
 		constantScenarioSession.add(cSr1);
 		constantScenarioSession.add(cSr2);
@@ -111,25 +132,8 @@ public class DDLGenerator {
 		constantScenarioSession.add(cSr5);
 		em.persist(constantScenarioSession);
 		
-		
-		ScenarioRound dBaselineRound = new ScenarioRound(true, 0, timeLimit, df5);
-		ScenarioRound dSr1 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear1, ratioFunction));
-		ScenarioRound dSr2 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear2, ratioFunction));
-		ScenarioRound dSr3 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear3, ratioFunction));
-		ScenarioRound dSr4 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear4, ratioFunction));
-		ScenarioRound dSr5 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear5, ratioFunction));
-		
-		ScenarioSession linearScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL);
-		linearScenarioSession.add(dBaselineRound);
-		linearScenarioSession.add(dSr1);
-		linearScenarioSession.add(dSr2);
-		linearScenarioSession.add(dSr3);
-		linearScenarioSession.add(dSr4);
-		linearScenarioSession.add(dSr5);
-		em.persist(linearScenarioSession);
-		
-		
 		//Create 1 GameSession for each player
+		em.persist(constantScenarioSession);
 		
 		final Random rnd = new Random(0xCAFEBABE);
 		for (Person player : players) {
@@ -149,12 +153,7 @@ public class DDLGenerator {
 		em.persist(d);
 		em.persist(intervalFunction);
 		em.persist(df2);
-		
-		em.persist(moodAndSkills);
-		em.persist(moodAndSkillsShort);
-		em.persist(flow);
-		em.persist(reqfit);
-		em.persist(profile);
+		em.persist(howWasIt);
 		
 		em.getTransaction().commit();
 	}

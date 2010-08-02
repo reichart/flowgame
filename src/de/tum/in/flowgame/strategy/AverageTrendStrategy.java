@@ -1,7 +1,8 @@
 package de.tum.in.flowgame.strategy;
 
 import de.tum.in.flowgame.Utils;
-import de.tum.in.flowgame.model.DifficultyFunction;
+import de.tum.in.flowgame.model.Function;
+
 
 public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyMBean {
 
@@ -12,7 +13,7 @@ public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyM
 		Utils.export(this);
 	}
 	
-	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue, long deltaTime) {
+	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue) {
 		double trendRating = getTrendRating(asteroidTrend, fuelTrend);
 		
 		averageTrendRating =  (trendRating+100*averageTrendRating)/101;
@@ -42,12 +43,12 @@ public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyM
 		return 2*fuelTrendRating - asteroidTrendRating;
 	}
 
-	public DifficultyFunction getFunction() {
+	public Function getFunction() {
 		return null;
 	}
 
-	public void setFunction(DifficultyFunction fun) {
-		// empty
+	public void setFunction(Function fun) {
+		
 	}
 
 	public double getAverageSpeed() {
@@ -61,11 +62,6 @@ public class AverageTrendStrategy implements FlowStrategy, AverageTrendStrategyM
 	public void reset() {
 		averageTrendRating = 0;
 		averageSpeed = -60;		
-	}
-
-	public double getDifficultyRating(Trend asteroidTrend, Trend fuelTrend) {
-		// TODO Unclear
-		return 1;
 	}
 	
 }

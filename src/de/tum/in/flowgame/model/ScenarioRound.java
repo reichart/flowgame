@@ -5,11 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-public class ScenarioRound extends AbstractEntity implements Comparable<ScenarioRound> {
+public class ScenarioRound extends AbstractEntity {
 	private Integer baselineModifier;
-	private long expectedPlaytime;
+	private Long expectedPlaytime;
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private DifficultyFunction difficultyFunction;
+	@OneToOne(cascade=CascadeType.PERSIST)
+	private Questionnaire questionnaire;
 	private boolean baseline;
 	private int position;
 
@@ -18,37 +20,31 @@ public class ScenarioRound extends AbstractEntity implements Comparable<Scenario
 		// for JPA
 	}
 
-	/**
-	 * @param baseline
-	 *            <code>true</code> if this round is a
-	 * @param baselineModifier
-	 *            the baseline modifier
-	 * @param expectedPlaytime
-	 *            the expected play time
-	 * @param f
-	 *            the difficulty function
-	 * @param q
-	 *            the questionnaire to display after this round
-	 */
-	public ScenarioRound(final boolean baseline, final Integer baselineModifier, final long expectedPlaytime, final DifficultyFunction f) {
+	public ScenarioRound(final boolean baseline, final Integer baselineModifier, final Long expectedPlaytime,
+			final DifficultyFunction f, final Questionnaire q) {
 		this.baseline = baseline;
 		this.baselineModifier = baselineModifier;
 		this.expectedPlaytime = expectedPlaytime;
 		this.difficultyFunction = f;
+		this.questionnaire = q;
 	}
 
 	public Integer getBaselineModifier() {
 		return baselineModifier;
 	}
 
-	public long getExpectedPlaytime() {
+	public Long getExpectedPlaytime() {
 		return expectedPlaytime;
 	}
 
 	public DifficultyFunction getDifficultyFunction() {
 		return difficultyFunction;
 	}
-	
+
+	public Questionnaire getQuestionnaire() {
+		return questionnaire;
+	}
+
 	public boolean isBaselineRound() {
 		return baseline;
 	}
@@ -59,17 +55,6 @@ public class ScenarioRound extends AbstractEntity implements Comparable<Scenario
 
 	public int getPosition() {
 		return position;
-	}
-
-	/**
-	 * allow for sorting on the basis of the position
-	 */
-	public int compareTo(ScenarioRound scenarioRound) {
-		if (scenarioRound == null) {
-			throw new NullPointerException();
-		} else {
-			return this.getPosition() - scenarioRound.getPosition();
-		}
 	}
 	
 }

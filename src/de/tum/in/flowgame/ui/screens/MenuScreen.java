@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -16,53 +14,27 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.GameMenu;
 
-/**
- * Abstract base class for all screens in the game.
- */
 public abstract class MenuScreen extends JPanel {
 
-	public static final int BORDER_WIDTH = 20;
-	public static final int BORDER_WIDTH_TOP = 10;
-	private static final Border DEFAULT_BORDER = BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, 0, 0, 0);
-	public static final Border COMMON_BORDER = BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH);
-	
-	public static GameMenu menu; // for subclasses
-	private final BufferedImage backgroundImage;
-	
-	
-	/**
-	 * @param menu the game menu managing all screens
-	 * @param backgroundImage the optional background image, <code>null</code> to disable
-	 */
-	protected MenuScreen(final BufferedImage backgroundImage) {
+	protected final GameMenu menu; // for subclasses
+
+	protected MenuScreen(final GameMenu menu) {
 		setLayout(new BorderLayout());
 		setDoubleBuffered(false);
 		setOpaque(false);
 
-		this.backgroundImage = backgroundImage;
-	}
-	
-	protected MenuScreen() {
-		this(null);
+		this.menu = menu;
 	}
 
 	public void build() {
 		add(BorderLayout.CENTER, getContents());
 	}
 
-	@Override
-	protected void paintComponent(final Graphics g) {
-		if (backgroundImage != null) {
-			g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
-		}
-	}
-	
 	public abstract Container getContents();
 
 	/**
@@ -82,14 +54,10 @@ public abstract class MenuScreen extends JPanel {
 		return comp;
 	}
 
-	protected static Container centered(final JComponent... components) {
-		return centered(null, components);
-	}
-	
 	/**
 	 * Centers components both vertically and horizontically on the screen.
 	 */
-	protected static Container centered(final Border border, final JComponent... components) {
+	protected static Container centered(final JComponent... components) {
 		final Box column = new Box(BoxLayout.Y_AXIS);
 		column.setOpaque(false);
 		column.add(Box.createVerticalGlue());
@@ -105,11 +73,7 @@ public abstract class MenuScreen extends JPanel {
 		center.add(Box.createHorizontalGlue());
 		center.add(column);
 		center.add(Box.createHorizontalGlue());
-		if (border == null) {
-			center.setBorder(DEFAULT_BORDER);
-		} else {
-			center.setBorder(border);
-		}
+
 		return center;
 	}
 

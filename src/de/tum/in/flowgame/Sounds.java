@@ -1,37 +1,33 @@
 package de.tum.in.flowgame;
 
-import java.applet.AudioClip;
-
-import org.apache.commons.logging.LogFactory;
+import net.java.games.sound3d.Source;
+import de.tum.in.flowgame.util.OALUtil;
 
 public enum Sounds {
 
 	ASTEROID("crash"), FUELCAN("water-droplet-1"), DEATH("chewie");
 
-	private static boolean muted;
-	
-	private AudioClip snd;
+	private final Source snd;
 
 	private Sounds(final String res) {
-		try {
-			this.snd = SoundsHelper.load(res);
-		} catch (final Exception ex) {
-			LogFactory.getLog(Sounds.class).warn("failed to load sound " + res, ex);
-			this.snd = null;
-		}
+		this.snd = OALUtil.loadSound("/res/sound/" + res + ".wav");
 	}
 
 	public void play() {
-		if (snd != null && !muted) {
+		if (snd != null) {
 			snd.play();
 		}
 	}
-	
-	public static boolean isMuted() {
-		return muted;
+
+	private void destroy() {
+		if (snd != null) {
+			snd.delete();
+		}
 	}
 
-	public static void setMuted(boolean _muted) {
-		muted = _muted;
+	public static void close() {
+		for (final Sounds sounds : values()) {
+			sounds.destroy();
+		}
 	}
 }

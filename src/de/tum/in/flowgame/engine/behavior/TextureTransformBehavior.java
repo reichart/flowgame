@@ -1,29 +1,29 @@
 package de.tum.in.flowgame.engine.behavior;
 
+import java.util.Enumeration;
+
+import javax.media.j3d.Behavior;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
-import javax.vecmath.Point3d;
-import javax.vecmath.Quat4d;
+import javax.media.j3d.WakeupCondition;
+import javax.media.j3d.WakeupOnElapsedTime;
 import javax.vecmath.Vector3d;
 
-import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.GameLogicConsumer;
 import de.tum.in.flowgame.engine.Game3D;
-import de.tum.in.flowgame.engine.Tunnel;
 
-public class TextureTransformBehavior extends RepeatingBehavior implements GameLogicConsumer {
-
-	private final Transform3D transform;
-	private Vector3d pos = new Vector3d();
-	private Vector3d mov = new Vector3d(0, 0, 0);
-	
-	private double fwdSpeed = 100/Tunnel.TUNNEL_LENGTH;
+public class TextureTransformBehavior extends Behavior {
 
 	private final TextureAttributes attribs;
-	
+	private final Transform3D transform;
+	private final WakeupCondition condition;
+
+	private final Vector3d vector;
+
 	public TextureTransformBehavior(final TextureAttributes attribs) {
 		this.attribs = attribs;
 		transform = new Transform3D();
+		vector = new Vector3d();
+		condition = new WakeupOnElapsedTime(10);
 
 		attribs.setCapability(TextureAttributes.ALLOW_TRANSFORM_WRITE);
 
@@ -31,51 +31,34 @@ public class TextureTransformBehavior extends RepeatingBehavior implements GameL
 	}
 
 	@Override
-	protected void init() {
+	public void initialize() {
 		attribs.getTextureTransform(transform);
+		wakeupOn(condition);
 	}
-	
+
+	private int deltaX = 0;
+	private int deltaY = 0;
+
+	private final static int STEPS = 400;
+
+	@SuppressWarnings("unchecked")
 	@Override
-	protected void update() {
-		if (!isPaused()) {
-			attribs.setTextureTransform(updatePosition());
-		}
-	}
-	
-	public void setGameLogic(final GameLogic logic) {
-		if (logic != null) {
-			logic.addListener(this);
-		}
-	}
-	
-	/**
-	 * Computes a new transform for the next frame based on the current
-	 * transform and elapsed time. This method should be called once per frame.
-	 */
-	public Transform3D updatePosition() {
+	public void processStimulus(final Enumeration/* <WakeupCriterion> */criteria) {
 
-		transform.get(pos);
+		vector.x = deltaX;
+		vector.y = -deltaY;
+		vector.scale(1d / STEPS);
 
-		double deltaTime = getDeltaTime();
-		deltaTime *= 0.001;
+		transform.set(vector);
+		attribs.setTextureTransform(transform);
 
-		mov.x = 0.1;
-		mov.y = -fwdSpeed;
+		deltaX++;
+		deltaY++;
 
-		Point3d dp = new Point3d();
-		dp.scale(deltaTime, mov);
+		deltaX %= STEPS;
+		deltaY %= STEPS;
 
-
-		pos.add(dp);
-
-		// System.out.println("Pos.x: " + pos.x + " - Pos.y: " + pos.y);
-		transform.set(new Quat4d(), pos, 1);
-
-		return transform;
-	}
-
-	public void setFwdSpeed(final double fwdSpeed) {
-		this.fwdSpeed = -fwdSpeed/Tunnel.TUNNEL_LENGTH;
+		wakeupOn(condition);
 	}
 
 }

@@ -4,18 +4,17 @@ import javax.swing.JComponent;
 
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.facebook.FacebookFriendCache;
+import de.tum.in.flowgame.ui.GameMenu;
 import de.tum.in.flowgame.ui.SocialHighscore;
 
-/**
- * Displays a social highscore comparing the player to his friends.
- */
 public class SocialHighscoresScreen extends HighscoresScreen {
 
 	private final SocialHighscore contentPanel;
 
-	public SocialHighscoresScreen() {
-		final FacebookFriendCache friendCash = new FacebookFriendCache(menu.getLogic().getFacebookClient());
-		contentPanel = new SocialHighscore(friendCash, menu.getLogic());
+	public SocialHighscoresScreen(final GameMenu menu) {
+		super(menu);
+		final FacebookFriendCache friendCash = new FacebookFriendCache(this.menu.getLogic().getFacebookClient());
+		contentPanel = new SocialHighscore(this.menu.getLogic().getClient(), friendCash, this.menu.getLogic().getWin());
 	}
 
 	@Override

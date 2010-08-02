@@ -1,33 +1,49 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
+import javax.swing.JButton;
 
-import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-/**
- * Displays the "how was it" questionnaire after the highscores.
- */
+import de.tum.in.flowgame.GameLogic;
+import de.tum.in.flowgame.model.Questionnaire;
+import de.tum.in.flowgame.model.ScenarioRound;
+import de.tum.in.flowgame.ui.GameMenu;
+
 public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 
-	private final Action next = new AbstractAction(UIMessages.CONTINUE) {
+	private final static Log log = LogFactory.getLog(AfterRoundQuestionnaireScreen.class);
+	
+	private final JButton play = new JButton(new AbstractAction("Play!") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveRoundAnswers(getAnswers());
-			menu.show(RoundExtroScreen.class);
+			
+			final ScenarioRound nextRound = menu.getLogic().getCurrentScenarioSession().getNextRound();
+			if (nextRound == null) {
+				log.info("no next round, game over");
+				menu.show(GameOverScreen.class);
+			} else {
+				log.info("starting next round");
+				menu.getLogic().start(nextRound);
+			}
 		}
-	};
+	});
 
-	@Override
-	protected Action next() {
-		return next;
+	public AfterRoundQuestionnaireScreen(final GameMenu menu) {
+		super(menu);
 	}
 
 	@Override
-	protected List<String> getQuestionnaireNames() {
-		return Arrays.asList("moodShort", "flow", "reqfit");
+	protected JButton nextButton() {
+		return play;
+	}
+
+	@Override
+	protected Questionnaire updateQuestionnaire(final GameLogic logic) {
+		log.info("updating to after/scenarioround qn");
+		return logic.getCurrentScenarioRound().getQuestionnaire();
 	}
 }
