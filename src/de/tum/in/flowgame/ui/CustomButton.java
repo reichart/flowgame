@@ -22,21 +22,15 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import de.tum.in.flowgame.ui.screens.UIMessages;
-import de.tum.in.flowgame.util.Browser;
+import netscape.javascript.JSObject;
 
 public class CustomButton extends JButton {
 
-	private final static Log log = LogFactory.getLog(CustomButton.class);
-	
 	private Image picture;
 	private Long score;
 	private final Font font;
 	private final FontMetrics metrics;
-	private final Browser browser;
+	private final JSObject win;
 
 	private static final int MARGIN = 10;
 	private static final Image cardBackground = loadCardBackground();
@@ -51,12 +45,12 @@ public class CustomButton extends JButton {
 		} catch (final Exception e) {
 			img = new BufferedImage(70, 100, BufferedImage.TYPE_4BYTE_ABGR);
 			img = makeColorTransparent(img, Color.BLACK);
-			log.warn("Buttons have no background image.");
+			System.err.println("Buttons have no background image.");
 		}
 		return img;
 	}
 
-	private static Image makeColorTransparent(Image im, final Color color) {
+	public static Image makeColorTransparent(Image im, final Color color) {
 		ImageFilter filter = new RGBImageFilter() {
 			// the color we are looking for... Alpha bits are set to opaque
 			public int markerRGB = color.getRGB() | 0xFF000000;
@@ -77,11 +71,11 @@ public class CustomButton extends JButton {
 		return Toolkit.getDefaultToolkit().createImage(ip);
 	}
 
-	private CustomButton(Image picture, Long score, Browser browser) {
+	public CustomButton(Image picture, Long score, JSObject win) {
 
 		this.picture = picture;
 		this.score = score;
-		this.browser = browser;
+		this.win = win;
 
 		font = new Font("Arial", Font.BOLD, 14);
 		metrics = getFontMetrics(font);
@@ -99,20 +93,20 @@ public class CustomButton extends JButton {
 		this(null, null);
 	}
 
-	private CustomButton(Image picture, Long score) {
+	public CustomButton(Image picture, Long score) {
 		this(picture, score, null);
 	}
 
-	public CustomButton(Browser browser) {
-		this(null, null, browser);
+	public CustomButton(JSObject win) {
+		this(null, null, win);
 	}
 
 	private void addMouseListener() {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (score == null) {
-					browser.toggleInviteDialog();
+				if ((score == null) && (win != null)) {
+					win.call("toggle_invite_content", null);
 				}
 			}
 		});
@@ -132,8 +126,8 @@ public class CustomButton extends JButton {
 			g2d.drawString(getAttributedString(valueOf).getIterator(), (cardBackground.getWidth(this) - metrics
 					.stringWidth(valueOf)) / 2, 85);
 		} else {
-			String text1 = UIMessages.getString("invite");
-			String text2 = UIMessages.getString("friend");
+			String text1 = "Invite";
+			String text2 = "Friend";
 			g2d.drawString(getAttributedString(text1).getIterator(), (cardBackground.getWidth(this) - metrics
 					.stringWidth(text1)) / 2, 40);
 			g2d.drawString(getAttributedString(text2).getIterator(), (cardBackground.getWidth(this) - metrics

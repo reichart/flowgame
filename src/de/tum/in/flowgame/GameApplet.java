@@ -12,8 +12,8 @@ import java.text.SimpleDateFormat;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import netscape.javascript.JSObject;
+
 import org.json.JSONObject;
 
 import com.google.code.facebookapi.ProfileField;
@@ -23,9 +23,7 @@ import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.facebook.CustomFacebookClient;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.ui.screens.MainScreen;
-import de.tum.in.flowgame.ui.screens.story.BeforeProfileScreen;
-import de.tum.in.flowgame.util.Browser;
-import de.tum.in.flowgame.util.JSObjectBrowser;
+import de.tum.in.flowgame.ui.screens.ProfileScreen;
 
 /**
  * This class starts the Flowgame as {@link Applet} and creates a new
@@ -33,11 +31,7 @@ import de.tum.in.flowgame.util.JSObjectBrowser;
  */
 public class GameApplet extends Applet {
 
-	private final static Log log = LogFactory.getLog(GameApplet.class);
-	
 	private final Game3D game;
-	public static final int WIDTH = 600;
-	public static final int HEIGHT = 400;
 
 	private CustomFacebookClient facebook;
 
@@ -48,7 +42,7 @@ public class GameApplet extends Applet {
 		final Frame frame = new Frame();
 		frame.setUndecorated(true);
 		frame.setResizable(false);
-		frame.setSize(WIDTH, HEIGHT);
+		frame.setSize(600, 400);
 
 		final int centerX = (screen.width - frame.getWidth()) / 2;
 		final int centerY = (screen.height - frame.getHeight()) / 2;
@@ -85,12 +79,12 @@ public class GameApplet extends Applet {
 		final String sessionKey;
 
 		if (isActive()) {
-			log.info("using: applet deployment path");
+			System.err.println("using: applet deployment path");
 			server = getCodeBase().toString();
 			sessionKey = getParameter("sessionKey");
 			sessionSecret = getParameter("sessionSecret");
 		} else {
-			log.warn("using: local testing path");
+			System.err.println("using: local testing path");
 			server = "http://localhost:8080/flowgame/";
 			sessionSecret = "2957c00dd86887f79b3c4827157ac2ab"; // fb_sig_ss
 			sessionKey = "b09011facca373ce59cc53a6-1071363107"; // fb_sig_session_key
@@ -102,37 +96,20 @@ public class GameApplet extends Applet {
 	@Override
 	public void init() {
 		try {
-			SoundsHelper.init(this);
-			
 			this.facebook = createFacebookClient();
 
-			final Client client = new Client(facebook.getServer());
-			final Person player = getPlayer(client);
-			final Browser browser = JSObjectBrowser.from(this);
-			
-			// this initializes all the other classes
-			new GameLogic(player, client, facebook, browser).addListener(game.getListener());
-
-			if (player.isNewPlayer()) {
-				game.getMenu().show(BeforeProfileScreen.class);
-			} else {
-				game.getMenu().show(MainScreen.class);
-			}
-
-		} catch (final Exception ex) {
-			throw new RuntimeException("Failed to connect to " + facebook.getServer(), ex);
-		}
-	}
-
-	private Person getPlayer(final Client client) {
-		Person player;
-		try {
 			final long loggedInUser = facebook.users_getLoggedInUser();
 
+			final Client client = new Client(facebook.getServer());
+
+			final boolean newPlayer;
+
 			// download person information from server
-			player = client.downloadPerson(loggedInUser);
+			Person player = client.downloadPerson(loggedInUser);
 			if (player == null) {
-				log.info("creating new player");
+				newPlayer = true;
+
+				System.err.println("##### creating new player");
 
 				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
 						ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
@@ -143,7 +120,7 @@ public class GameApplet extends Applet {
 					final String sex = userInfo.getString(ProfileField.SEX.fieldName());
 
 					final String country;
-					if (userInfo.isNull(ProfileField.HOMETOWN_LOCATION.fieldName())) {
+					if (userInfo.isNull("hometown_location")) {
 						country = null;
 					} else {
 						country = userInfo.getJSONObject(ProfileField.HOMETOWN_LOCATION.fieldName()).getString(
@@ -154,19 +131,33 @@ public class GameApplet extends Applet {
 					player.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse(birthday));
 					player.setPlace(country);
 					player.setSex(sex);
-				} catch (final Exception ex) {
-					log.error(userInfo, ex);
-					throw ex;
+				} catch (Exception e) {
+					System.err.println(userInfo);
+					throw e;
 				}
 
-				log.info("created new player: " + player);
+				System.err.println("##### created new player: " + player);
 			} else {
-				log.info("existing player: " + player);
+				newPlayer = false;
+				System.err.println("##### existing player: " + player);
 			}
-		} catch (final Exception e) {
-			log.error("failed to connect to facebook, using dummy user in offline mode");
-			player = new Person(-1, "dummy");
+
+			JSObject win = null;
+			if (isActive()) {
+				win = JSObject.getWindow(this);
+			}
+			
+			// this initializes all the other classes
+			new GameLogic(player, client, facebook, win).addListener(game.getListener());
+
+			if (newPlayer) {
+				game.getMenu().show(ProfileScreen.class);
+			} else {
+				game.getMenu().show(MainScreen.class);
+			}
+
+		} catch (final Exception ex) {
+			throw new RuntimeException("Failed to connect to " + facebook.getServer(), ex);
 		}
-		return player;
 	}
 }

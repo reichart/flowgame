@@ -9,13 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import de.tum.in.flowgame.ui.screens.QuestionnaireMessages;
-
 @Entity
 public class Questionnaire extends AbstractEntity {
 
 	@Column(length = 50, nullable = false)
 	private String name;
+	@Column(length = 3000, nullable = false)
+	private String description;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Question> questions;
 	//instead of questions labels like happy<->unhappy are used
@@ -24,58 +24,42 @@ public class Questionnaire extends AbstractEntity {
 
 	@SuppressWarnings("unused")
 	private Questionnaire() {
-		this(null); // for JPA
+		this(null, null); // for JPA
 	}
 	
-	public Questionnaire(final String name) {
-		this(name, false);
+	public Questionnaire(final String name, final String description) {
+		this(name, description, false);
 	}
 	
-	public Questionnaire(final String name, final boolean labelDriven) {
-		this(name, labelDriven, 0);
-	}
-	
-	/**
-	 * Constructor for use with DDLGenerator only to first create the Questionnaires in database
-	 * @param name
-	 * @param description
-	 * @param labelDriven
-	 * @param numberOfQuestions
-	 */
-	public Questionnaire(final String name, final boolean labelDriven, final int numberOfQuestions) {
+	public Questionnaire(final String name, final String description, final boolean labelDriven) {
 		this.questions = new ArrayList<Question>();
 		this.name = name;
+		this.description = description;
 		this.labelDriven = labelDriven;
-		for (int i = 0; i < numberOfQuestions; i++) {
-			questions.add(new Question(i+1));
-		}
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void addQuestion(final String text) {
+		questions.add(new Question(text));
+	}
+	
+	public void addLabelQuestion(final String label1, final String label2) {
+		questions.add(new Question(label1 + Question.separator + label2));
+	}
+	
 	public List<Question> getQuestions() {
-		for (Question q : questions) {
-			q.setText(QuestionnaireMessages.getString(name + q.getNumber()));
-		}
 		return questions;
 	}
 
 	public String getDescription() {
-		return QuestionnaireMessages.getString(name + ".desc");
-	}
-	
-	public String getTitel() {
-		return QuestionnaireMessages.getString(name + ".title");
+		return description;
 	}
 
 	public boolean isLabelDriven() {
 		return labelDriven;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getName() + "[" + getName() + "]";
-	}
 }

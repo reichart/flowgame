@@ -11,19 +11,19 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import de.tum.in.flowgame.engine.SystemInfo;
+import de.tum.in.flowgame.ui.GameMenu;
 
-/**
- * Displays technical information about the system, graphics, etc.
- */
 public class SystemInfoScreen extends MenuScreen {
 
-	private final JButton back = goTo(UIMessages.getString("back"), MainScreen.class);
+	private final JButton back = goTo("Back", MainScreen.class);
 
 	private final JScrollPane systemInfoScroll;
 
-	public SystemInfoScreen() {
+	public SystemInfoScreen(final GameMenu menu) {
+		super(menu);
+
 		final StringWriter stringWriter = new StringWriter();
-		SystemInfo.getSystemInfo(new PrintWriter(stringWriter));
+		SystemInfo.getSystemInfo(new PrintWriter(stringWriter), menu.getGame());
 
 		final JTextArea systemInfo = new JTextArea(stringWriter.toString());
 		systemInfo.setEditable(true);
@@ -38,6 +38,6 @@ public class SystemInfoScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title(UIMessages.getString("info")), systemInfoScroll, back);
+		return centered(title("System Information"), systemInfoScroll, back);
 	}
 }

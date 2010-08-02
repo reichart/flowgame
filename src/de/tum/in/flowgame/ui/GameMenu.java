@@ -1,5 +1,6 @@
 package de.tum.in.flowgame.ui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -18,7 +19,6 @@ import javax.swing.table.JTableHeader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.tum.in.flowgame.GameApplet;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
@@ -27,22 +27,16 @@ import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.model.ScenarioSession.Type;
 import de.tum.in.flowgame.ui.screens.AfterRoundQuestionnaireScreen;
 import de.tum.in.flowgame.ui.screens.BeforeSessionQuestionnaireScreen;
-import de.tum.in.flowgame.ui.screens.CreditsScreen;
 import de.tum.in.flowgame.ui.screens.EmptyScreen;
-import de.tum.in.flowgame.ui.screens.GameSessionScreen;
+import de.tum.in.flowgame.ui.screens.GameOverScreen;
 import de.tum.in.flowgame.ui.screens.IndividualHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
 import de.tum.in.flowgame.ui.screens.PauseScreen;
 import de.tum.in.flowgame.ui.screens.ProfileScreen;
+import de.tum.in.flowgame.ui.screens.SettingsScreen;
 import de.tum.in.flowgame.ui.screens.SocialHighscoresScreen;
 import de.tum.in.flowgame.ui.screens.SystemInfoScreen;
-import de.tum.in.flowgame.ui.screens.story.AfterProfileScreen;
-import de.tum.in.flowgame.ui.screens.story.BeforeProfileScreen;
-import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
-import de.tum.in.flowgame.ui.screens.story.RoundIntroScreen;
-import de.tum.in.flowgame.ui.screens.story.SessionExtroScreen;
-import de.tum.in.flowgame.ui.screens.story.SessionIntroScreen;
 import de.tum.in.flowgame.ui.sprite.Sprite;
 
 public class GameMenu implements Sprite, GameListener {
@@ -63,8 +57,6 @@ public class GameMenu implements Sprite, GameListener {
 	
 	private Class<? extends MenuScreen> previous, current;
 
-	private static SettingsPanel settings;
-	
 	public GameMenu(final Component mouseTrap, final GameOverlay overlay) {
 		this.overlay = overlay;
 		this.game = (Game3D) mouseTrap;
@@ -73,19 +65,12 @@ public class GameMenu implements Sprite, GameListener {
 		this.screens = new JPanel(layout);
 		screens.setDoubleBuffered(false); // hides white background
 		screens.setOpaque(false);
-		screens.setBounds(0, 0, GameApplet.WIDTH, GameApplet.HEIGHT);
-		
-		settings = SettingsPanel.getInstance(this); // singleton
-		settings.setDoubleBuffered(false);
-		settings.setBounds(0, 0, 200, 100);
-		
+
 		panel = new OffscreenJPanel(mouseTrap);
-		panel.setLayout(null); // null layout for explicit positioning
+		panel.setLayout(new BorderLayout());
 		panel.setDoubleBuffered(false); // hides white background
 		panel.setOpaque(false);
-		
-		panel.add(settings);
-		panel.add(screens);
+		panel.add(screens, BorderLayout.CENTER);
 	}
 
 	public void render(final Graphics2D g, final int x, final int y) {
@@ -96,10 +81,8 @@ public class GameMenu implements Sprite, GameListener {
 		final BufferedImage img = Utils.createImage(w, h);
 
 		final Graphics2D offscreen = (Graphics2D) img.getGraphics();
-		synchronized (panel) {
-			panel.setSize(w, h);
-			panel.paintAll(offscreen);
-		}
+		panel.setSize(w, h);
+		panel.paintAll(offscreen);
 		offscreen.dispose();
 
 		g.drawImage(img, 0, 0, null);
@@ -108,38 +91,20 @@ public class GameMenu implements Sprite, GameListener {
 	public void added(final GameLogic game) {
 		this.logic = game;
 
-		// TODO the ugliest way to do dependency injection
-		MenuScreen.menu = this;
-		
 		// these require the above logic to be available
-		
-		// various screens
-		add(new EmptyScreen());
-		add(new MainScreen());
-		add(new SocialHighscoresScreen());
-		add(new IndividualHighscoresScreen());
-		add(new PauseScreen());
-		add(new SystemInfoScreen());
-		add(new CreditsScreen());
-		add(new GameSessionScreen());
-		
-		// qn screens
-		add(new BeforeSessionQuestionnaireScreen());
-		add(new AfterRoundQuestionnaireScreen());
-		add(new ProfileScreen());
-		
-		// story screens
-		add(new BeforeProfileScreen());
-		add(new AfterProfileScreen());
-		add(new SessionIntroScreen());
-		add(new SessionIntroScreen());
-		add(new RoundIntroScreen());
-		add(new RoundExtroScreen());
-		add(new SessionExtroScreen());
+		add(new EmptyScreen(this));
+		add(new MainScreen(this));
+		add(new BeforeSessionQuestionnaireScreen(this));
+		add(new SocialHighscoresScreen(this));
+		add(new IndividualHighscoresScreen(this));
+		add(new PauseScreen(this));
+		add(new AfterRoundQuestionnaireScreen(this));
+		add(new GameOverScreen(this));
+		add(new SettingsScreen(this));
+		add(new SystemInfoScreen(this));
+		add(new ProfileScreen(this));
 		
 		show(EmptyScreen.class);
-		
-		settings.loadSettings();
 	}
 
 	public void removed(final GameLogic game) {
@@ -155,11 +120,11 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	public void gameResumed(final GameLogic game) {
-		show(GameSessionScreen.class);
+		show(EmptyScreen.class);
 	}
 
 	public void gameStarted(final GameLogic game) {
-		show(GameSessionScreen.class);
+		show(EmptyScreen.class);
 	}
 
 	public void gameStopped(final GameLogic game) {
@@ -185,7 +150,7 @@ public class GameMenu implements Sprite, GameListener {
 	 * Fixes various problem with rendering components offscreen outside of the
 	 * usual Swing/AWT magic.
 	 */
-	private static void prepareForOffscreen(final Container root) {
+	private void prepareForOffscreen(final Container root) {
 		for (final Component comp : root.getComponents()) {
 
 			// white text color for everything
@@ -199,7 +164,7 @@ public class GameMenu implements Sprite, GameListener {
 				// prevent NPE when requesting focus on JRE 1.5
 				jcomp.setRequestFocusEnabled(false);
 			}
-			
+
 			if (comp instanceof JButton) {
 				comp.setForeground(Color.DARK_GRAY);
 			}
@@ -224,37 +189,27 @@ public class GameMenu implements Sprite, GameListener {
 			if (comp instanceof Container) {
 				prepareForOffscreen((Container) comp);
 			}
-			
+
 		}
 	}
 
 	public void show(final Class<? extends MenuScreen> screenClass) {
-		boolean found = false;
 		for (final Component component : screens.getComponents()) {
 			if (component.getClass().equals(screenClass)) {
 				final MenuScreen screen = (MenuScreen) component;
 				try {
-					synchronized (panel) {
-						screen.update(logic);
-						prepareForOffscreen(screen);
-					}
+					screen.update(logic);
+					prepareForOffscreen(screen);
 				} catch (final Exception ex) {
 					log.error("failed to update screen for showing: " + screenClass.getName(), ex);
 					return; // don't show when update failed
 				}
-				found = true;
-				break;
 			}
 		}
 
-		if (!found) {
-			throw new IllegalArgumentException("unknown screen: " + screenClass.getName());
-		}
+		layout.show(screens, screenClass.getName());
+		panel.revalidate();
 		
-		synchronized (panel) {
-			layout.show(screens, screenClass.getName());
-			panel.revalidate();
-		}
 		this.previous = current;
 		this.current = screenClass;
 	}

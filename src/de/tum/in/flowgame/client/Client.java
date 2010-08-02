@@ -23,7 +23,6 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Highscore;
 import de.tum.in.flowgame.model.Person;
-import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Score;
 
@@ -33,28 +32,22 @@ public class Client {
 
 	private final String UPLOAD_URL;
 	private final String DOWNLOAD_PERSON_URL;
-	private final String DOWNLOAD_PERCENTAGE;
 	private final String DOWNLOAD_SCENARIOSESSION;
 	private final String DOWNLOAD_HIGHSCORES_URL;
-	private final String DOWNLOAD_PERSONAL_HIGHSCORES_SET;
+	private final String DOWNLOAD_PERSONAL_HIGHSCORE;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORE_CHART;
-	private final String DOWNLOAD_QUESTIONNAIRES;
 	
 	private final HttpClient client;
 
 	public Client(final String server) {
 		this.client = new HttpClient(new MultiThreadedHttpConnectionManager());
 
-		final String ext = ".action";
-		
-		this.UPLOAD_URL = server + "upload" + ext;
-		this.DOWNLOAD_PERSON_URL = server + "personDownload" + ext;
-		this.DOWNLOAD_PERCENTAGE = server + "percentageDownload" + ext;
-		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload" + ext;
-		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload" + ext;
-		this.DOWNLOAD_PERSONAL_HIGHSCORES_SET = server + "personalHighscoresSetDownload" + ext;
-		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload" + ext;
-		this.DOWNLOAD_QUESTIONNAIRES = server + "questionnaireDownload" + ext;
+		this.UPLOAD_URL = server + "upload.action";
+		this.DOWNLOAD_PERSON_URL = server + "personDownload.action";
+		this.DOWNLOAD_SCENARIOSESSION = server + "scenarioSessionDownload.action";
+		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload.action";
+		this.DOWNLOAD_PERSONAL_HIGHSCORE = server + "personalHighscoreDownload.action";
+		this.DOWNLOAD_PERSONAL_HIGHSCORE_CHART = server + "personalHighscoreChartDownload.action";
 	}
 
 	public void uploadQuietly(final Object entity) {
@@ -78,15 +71,6 @@ public class Client {
 		}
 	}
 	
-	public List<Questionnaire> downloadQuestionnaires(final List<String> names) {
-		try {
-			return execute(DOWNLOAD_QUESTIONNAIRES, names);
-		} catch (final Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
-	}
-	
 	//Return highscore of a list of persons depending on their id
 	public List<Highscore> getHighscores(final List<Long> persons) {
 		try {
@@ -97,23 +81,15 @@ public class Client {
 		}
 	}
 	
-	public Integer getPercentage(final long score){
-		try {
-			return execute(DOWNLOAD_PERCENTAGE, score);
-		} catch (final Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
-	}
-	
 	public ScenarioSession downloadScenarioSession(final long playerId) throws IOException {
 		return execute(DOWNLOAD_SCENARIOSESSION, playerId);
 	}
 
-	public SortedSet<Score> downloadPersonHighscoreSet(final long playerId) throws IOException {
-		return execute(DOWNLOAD_PERSONAL_HIGHSCORES_SET, playerId);
+	public SortedSet<Score> downloadPersonHighscore(long personId, int numElements) throws IOException {
+		HighscoreRequest highscoreRequest = new HighscoreRequest(personId, numElements);
+		return execute(DOWNLOAD_PERSONAL_HIGHSCORE, highscoreRequest);
 	}
-	
+
 	public BufferedImage downloadPersonHighscoreChart(final long personId) throws IOException {
 		final PostMethod post = new PostMethod(DOWNLOAD_PERSONAL_HIGHSCORE_CHART + "?id=" + personId);
 		try {
@@ -149,7 +125,7 @@ public class Client {
 
 			final int statusCode = client.executeMethod(post);
 			if (statusCode != HttpStatus.SC_OK) {
-				throw new IOException(post.getURI() + ": " + post.getStatusLine().toString());
+				throw new IOException(post.getStatusLine().toString());
 			}
 
 			final Object response = Utils.bytesToObject(IOUtils.toByteArray(post.getResponseBodyAsStream()));

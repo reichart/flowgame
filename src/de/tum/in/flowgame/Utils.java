@@ -134,26 +134,13 @@ public class Utils {
 	 *            the fallback image when the URL can't be read
 	 * @return either the image read from the URL or the fall back image
 	 */
-	public static BufferedImage imageURL(final String url, final BufferedImage fallback) {
+	public static BufferedImage image(final String url, final BufferedImage fallback) {
 		try {
 			return image(new URL(url), fallback);
 		} catch (final Exception ex) {
 			log.warn("failed to load image from " + url, ex);
 			return fallback;
 		}
-	}
-	
-	/**
-	 * Tries to load an image from a resource.
-	 * 
-	 * @param resource
-	 *            the resource to load an image from
-	 * @param fallback
-	 *            the fallback image when the resource can't be read
-	 * @return either the image read from the resource or the fall back image
-	 */
-	public static BufferedImage imageResource(final String resource, final BufferedImage fallback) {
-		return image(Utils.class.getResource(resource), fallback);
 	}
 
 	/**

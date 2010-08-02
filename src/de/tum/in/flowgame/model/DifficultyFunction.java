@@ -46,14 +46,10 @@ public class DifficultyFunction extends AbstractEntity {
 		return ratio;
 	}
 
-//	public double getDifficultyRating(final long time) {
-//		return getDifficultyRating(time);
-//	}
-	
-	public double getDifficultyRating(final double position) {
-		final double intervalValue = interval.getValue(position);
-		final double speedValue = speed.getValue(position);
-		final double ratioValue = ratio.getValue(position);
+	public double getDifficultyRating(final long time) {
+		final double intervalValue = interval.getValue(time);
+		final double speedValue = speed.getValue(time);
+		final double ratioValue = ratio.getValue(time);
 
 		double difficultyValue = (INTERVAL_MAX_VALUE - intervalValue) + speedValue + ratioValue * 500;
 		// normalize to one assumed that maximum is 2500 (1000 interval, 1000 speed, 500 ratio)

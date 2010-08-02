@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,8 +17,6 @@ import de.tum.in.flowgame.GameApplet;
 import de.tum.in.flowgame.Utils;
 
 public class FacebookFriendCache {
-	
-	private static final Log log = LogFactory.getLog(FacebookFriendCache.class);
 
 	/*
 	 * Dummy profile pic for users with no PIC_SQUARE, fall back to empty pic.
@@ -47,11 +43,6 @@ public class FacebookFriendCache {
 	}
 
 	public void updateFriends() throws FacebookException, JSONException {
-		if (facebook == null) {
-			log.warn("no facebook, not updating friends");
-			return;
-		}
-		
 		final JSONArray fbfriends = facebook.friends_get();
 
 		if (fbfriends == null || fbfriends.length() == 0) {
@@ -80,7 +71,7 @@ public class FacebookFriendCache {
 		final String name = info.getString(ProfileField.NAME.toString());
 
 		final String picSquare = info.getString(ProfileField.PIC_SQUARE.toString());
-		final Image picture = Utils.imageURL(picSquare, DUMMY_PROFILE_PIC);
+		final Image picture = Utils.image(picSquare, DUMMY_PROFILE_PIC);
 
 		return new Friend(uid, name, picture);
 	}
@@ -120,11 +111,6 @@ public class FacebookFriendCache {
 	}
 
 	public Friend getCurrentPlayer() throws Exception {
-		if (facebook == null) {
-			log.warn("no facebook, returning dummy user");
-			return new Friend(-1, "dummy", DUMMY_PROFILE_PIC);
-		}
-		
 		if (currentPlayer == null) {
 			long user = facebook.users_getLoggedInUser();
 			List<Long> users = new ArrayList<Long>();
