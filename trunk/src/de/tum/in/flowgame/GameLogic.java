@@ -11,8 +11,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.client.Client;
-import de.tum.in.flowgame.facebook.CustomFacebookClient;
-import de.tum.in.flowgame.facebook.JSONUtils;
+import de.tum.in.flowgame.client.Sounds;
+import de.tum.in.flowgame.client.facebook.CustomFacebookClient;
+import de.tum.in.flowgame.client.facebook.JSONUtils;
+import de.tum.in.flowgame.client.strategy.Trend;
+import de.tum.in.flowgame.client.util.Browser;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Difficulty;
 import de.tum.in.flowgame.model.DifficultyFunction;
@@ -24,8 +27,6 @@ import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
-import de.tum.in.flowgame.strategy.Trend;
-import de.tum.in.flowgame.util.Browser;
 
 public class GameLogic implements Runnable {
 

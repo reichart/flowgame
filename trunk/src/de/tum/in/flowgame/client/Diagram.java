@@ -19,8 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.client.ui.screens.UIMessages;
 import de.tum.in.flowgame.model.Score;
-import de.tum.in.flowgame.ui.screens.UIMessages;
 
 public class Diagram {
 

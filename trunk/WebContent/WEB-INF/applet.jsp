@@ -25,7 +25,7 @@ function toggle_invite_content() {
 	archive="lib/flowgame-client.jar, lib/facebook-java-api-2.1.1-jsononly.jar, lib/json-20070829.jar, lib/commons-io-1.3.2.jar,lib/commons-httpclient-3.1.jar, lib/commons-codec-1.3.jar, lib/commons-logging-1.1.1.jar, lib/svgSalamander-tiny.jar,http://download.java.net/media/applet-launcher/applet-launcher.jar,http://download.java.net/media/java3d/webstart/release/j3d/latest/j3dcore.jar,http://download.java.net/media/java3d/webstart/release/j3d/latest/j3dutils.jar,http://download.java.net/media/java3d/webstart/release/vecmath/latest/vecmath.jar,http://download.java.net/media/jogl/builds/archive/jsr-231-webstart-current/jogl.jar">	
 	
 	<param name="codebase_lookup" value="false" />
-	<param name="subapplet.classname" value="de.tum.in.flowgame.GameApplet" />
+	<param name="subapplet.classname" value="de.tum.in.flowgame.client.GameApplet" />
 	<param name="subapplet.displayname" value="Flowgame Applet" />
 
 	<param name="mayscript" value="true" />
