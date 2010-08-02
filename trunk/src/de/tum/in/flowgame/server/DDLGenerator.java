@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.dao;
+package de.tum.in.flowgame.server;
 
 import java.util.ArrayList;
 import java.util.List;
