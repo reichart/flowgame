@@ -1,0 +1,7 @@
+newmtl diamond:anisotropic1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 0.05 0.24 0.24
+Ni 2.00
+Ks 0.34 0.24 0.24
