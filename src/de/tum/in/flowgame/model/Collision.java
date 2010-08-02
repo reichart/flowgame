@@ -3,6 +3,8 @@ package de.tum.in.flowgame.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Collision extends AbstractEntity {
@@ -11,23 +13,24 @@ public class Collision extends AbstractEntity {
 		FUELCAN, ASTEROID
 	}
 	
-	private final long time;
+	@Temporal(TemporalType.TIMESTAMP)
+	private final Date time;
 
 	private final Item object;
 
 	@SuppressWarnings("unused") // for JPA
 	private Collision() {
 		this.object = null;
-		this.time = 0;
+		this.time = new Date();
 	}
 	
 	public Collision(final Item object) {
 		this.object = object;
-		this.time = System.currentTimeMillis();
+		this.time = new Date();
 	}
 
 	public Date getTime() {
-		return new Date(time);
+		return time;
 	}
 
 	public Item getObject() {

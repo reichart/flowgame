@@ -11,7 +11,7 @@ import javax.swing.JButton;
  */
 public class PauseScreen extends MenuScreen {
 
-	private final JButton continueButton = new JButton(new AbstractAction(UIMessages.CONTINUE) {
+	private final JButton continueButton = new JButton(new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().unpause();
 		}
@@ -19,7 +19,7 @@ public class PauseScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title(UIMessages.getString("pause")), continueButton);
+		return centered(title("Pause"), continueButton);
 	}
 
 }

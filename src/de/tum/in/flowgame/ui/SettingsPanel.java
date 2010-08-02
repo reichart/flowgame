@@ -46,7 +46,7 @@ public class SettingsPanel extends JPanel {
 		sound = createToggle(SOUND_OFF, new AbstractAction(null, SOUND_ON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean muted = sound.isSelected();
-				menu.getLogic().configChange(ConfigKey.SOUND, muted);
+				menu.getLogic().configChange(ConfigKey.SOUND, String.valueOf(muted));
 				setSoundMuted(muted);
 				setCookie(SOUND, muted);
 			}
@@ -55,7 +55,7 @@ public class SettingsPanel extends JPanel {
 		steering = createToggle(NORMAL_ICON, new AbstractAction(null, AIRPLANE_ICON) {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean normal = steering.isSelected();
-				menu.getLogic().configChange(ConfigKey.STEERING, normal);
+				menu.getLogic().configChange(ConfigKey.STEERING, String.valueOf(normal));
 				setSteering(normal);
 				setCookie(STEERING, normal);
 			}

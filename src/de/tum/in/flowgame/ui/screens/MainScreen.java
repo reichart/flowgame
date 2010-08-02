@@ -13,15 +13,15 @@ import de.tum.in.flowgame.ui.sprite.SVGSprite;
  */
 public class MainScreen extends MenuScreen {
 
-	private final JButton play = goTo(UIMessages.getString("game.play"), SessionIntroScreen.class);
+	private final JButton play = goTo("Play", SessionIntroScreen.class);
 
-	private final JButton individualHighscore = goTo(UIMessages.getString("highscore.individual"), IndividualHighscoresScreen.class);
+	private final JButton individualHighscore = goTo("Individual Highscore", IndividualHighscoresScreen.class);
 	
-	private final JButton socialHighscore = goTo(UIMessages.getString("highscore.social"), SocialHighscoresScreen.class);
+	private final JButton socialHighscore = goTo("Social Highscore", SocialHighscoresScreen.class);
 
-	private final JButton systemInfo = goTo(UIMessages.getString("info"), SystemInfoScreen.class);
+	private final JButton systemInfo = goTo("System Info", SystemInfoScreen.class);
 	
-	private final JButton credits = goTo(UIMessages.getString("credits"), CreditsScreen.class);
+	private final JButton credits = goTo("Credits", CreditsScreen.class);
 
 	private final JLabel title;
 	

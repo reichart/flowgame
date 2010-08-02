@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.model.Score;
-import de.tum.in.flowgame.ui.screens.UIMessages;
 
 public class Diagram {
 
@@ -147,8 +146,8 @@ public class Diagram {
 	}
 
 	private void addAxisLegends() {
-		String x = UIMessages.getString("diagram.xaxis");
-		String y = UIMessages.getString("diagram.yaxis");
+		String x = "Game";
+		String y = "Points";
 		FontMetrics fm = g.getFontMetrics();
 		int xOffset = fm.stringWidth(x) / 2;
 		int xCoord = (WIDTH - COORD_BUFFER_X) / 2 + COORD_BUFFER_X - xOffset;
@@ -185,7 +184,7 @@ public class Diagram {
 		Random r = new Random(300);
 		long time = System.currentTimeMillis();
 		for (int i = 0; i < 10; i++) {
-			scores.add(new Score(time + i * 100, r.nextInt(400)));
+			scores.add(new Score(time + i * 100, (long) r.nextInt(400)));
 		}
 		JFrame jFrame = new JFrame();
 		jFrame.add(new JLabel(new ImageIcon(new Diagram(scores).diagram())));

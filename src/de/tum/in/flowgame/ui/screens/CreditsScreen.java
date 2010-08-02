@@ -7,8 +7,6 @@ import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 public class CreditsScreen extends MenuScreen {
 	private static final Log log = LogFactory.getLog(MenuScreen.class);
 	
-	private final JButton next = new JButton(new AbstractAction(UIMessages.CONTINUE) {
+	private final JButton next = new JButton(new AbstractAction("Continue") {
 
 		public void actionPerformed(final ActionEvent e) {
 			menu.show(MainScreen.class); // go back
@@ -32,11 +30,8 @@ public class CreditsScreen extends MenuScreen {
 			log.error("Credits file not found");
 			credits = new JEditorPane();
 		}
-
-		final JScrollPane scrollpane = new JScrollPane(credits, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		return centered(COMMON_BORDER, title(UIMessages.getString("credits")), scrollpane, next);
+		
+		return centered(COMMON_BORDER, title("Credits"), credits, next);
 	}
 	
 }

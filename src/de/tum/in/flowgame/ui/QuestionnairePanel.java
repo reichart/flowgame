@@ -22,7 +22,6 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Question;
 import de.tum.in.flowgame.model.Questionnaire;
-import de.tum.in.flowgame.ui.screens.UIMessages;
 
 public class QuestionnairePanel extends ChangeableComponent {
 
@@ -100,8 +99,8 @@ public class QuestionnairePanel extends ChangeableComponent {
 				text.setWrapStyleWord(true);
 				text.setForeground(Color.WHITE);
 
-				final JLabel label1 = new JLabel(UIMessages.getString("applies.not"), SwingConstants.RIGHT);
-				final JLabel label2 = new JLabel(UIMessages.getString("applies"), SwingConstants.LEFT);
+				final JLabel label1 = new JLabel("Trifft nicht zu", SwingConstants.RIGHT);
+				final JLabel label2 = new JLabel("Trifft zu", SwingConstants.LEFT);
 				
 				final JPsychoSlider slider = new JPsychoSlider();
 				slider.addChangeListener(forceAnswers);

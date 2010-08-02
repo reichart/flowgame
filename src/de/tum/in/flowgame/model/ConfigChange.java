@@ -3,20 +3,23 @@ package de.tum.in.flowgame.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class ConfigChange extends AbstractEntity implements Comparable<ConfigChange> {
 
 	public enum ConfigKey {
-		SOUND, STEERING, PAUSE
+		SOUND, STEERING
 	}
 
-	private final long timestamp;
+	@Temporal(TemporalType.TIMESTAMP)
+	private final Date timestamp;
 	private final ConfigKey configKey;
 	private final String value;
 
 	public ConfigChange(final ConfigKey key, final String value) {
-		this.timestamp = System.currentTimeMillis();
+		this.timestamp = new Date();
 		this.configKey = key;
 		this.value = value;
 	}
@@ -25,15 +28,15 @@ public class ConfigChange extends AbstractEntity implements Comparable<ConfigCha
 	private ConfigChange() {
 		this.configKey = null;
 		this.value = null;
-		this.timestamp = 0;
+		this.timestamp = new Date();
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((configKey == null) ? 0 : configKey.hashCode());
-		result = prime * result + (int) (timestamp ^ (timestamp >>> 32));
+		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
@@ -52,7 +55,10 @@ public class ConfigChange extends AbstractEntity implements Comparable<ConfigCha
 				return false;
 		} else if (!configKey.equals(other.configKey))
 			return false;
-		if (timestamp != other.timestamp)
+		if (timestamp == null) {
+			if (other.timestamp != null)
+				return false;
+		} else if (!timestamp.equals(other.timestamp))
 			return false;
 		if (value == null) {
 			if (other.value != null)
@@ -63,7 +69,7 @@ public class ConfigChange extends AbstractEntity implements Comparable<ConfigCha
 	}
 
 	public Date getTimestamp() {
-		return new Date(timestamp);
+		return timestamp;
 	}
 
 	public ConfigKey getKey() {
@@ -75,6 +81,6 @@ public class ConfigChange extends AbstractEntity implements Comparable<ConfigCha
 	}
 
 	public int compareTo(final ConfigChange o) {
-		return Long.valueOf(this.timestamp).compareTo(o.timestamp);
+		return this.timestamp.compareTo(o.timestamp);
 	}
 }

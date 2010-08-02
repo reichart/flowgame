@@ -243,7 +243,6 @@ public class GameMenu implements Sprite, GameListener {
 					return; // don't show when update failed
 				}
 				found = true;
-				break;
 			}
 		}
 

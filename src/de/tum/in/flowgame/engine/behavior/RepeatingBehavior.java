@@ -93,7 +93,7 @@ public abstract class RepeatingBehavior extends Behavior implements GameListener
 	}
 
 	public void gameStopped(final GameLogic game) {
-		pause = false;
+		// empty
 	}
 
 	public void removed(final GameLogic game) {
