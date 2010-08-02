@@ -1,4 +1,4 @@
-package de.tum.in.flowgame.diagram;
+package de.tum.in.flowgame.client;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

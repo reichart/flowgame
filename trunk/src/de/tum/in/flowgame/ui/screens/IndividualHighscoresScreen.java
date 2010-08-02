@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.diagram.Diagram;
+import de.tum.in.flowgame.client.Diagram;
 import de.tum.in.flowgame.model.Score;
 
 /**
