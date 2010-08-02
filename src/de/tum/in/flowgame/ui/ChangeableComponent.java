@@ -6,16 +6,12 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/**
- * An abstract base class for UI components that want to to notify listeners
- * about changes using the {@link ChangeListener} interface.
- */
 public abstract class ChangeableComponent extends JPanel {
 
 	protected ChangeableComponent() {
 		super();
 	}
-
+	
 	protected ChangeableComponent(final LayoutManager layout) {
 		super(layout);
 	}

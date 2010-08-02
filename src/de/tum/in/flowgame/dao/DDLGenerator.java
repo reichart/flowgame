@@ -18,9 +18,7 @@ import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.functions.ConstantFunction;
-import de.tum.in.flowgame.model.functions.LinearFunction;
 import de.tum.in.flowgame.model.functions.LnFunction;
-import de.tum.in.flowgame.model.functions.SigmoidBaselineFunction;
 
 public class DDLGenerator {
 
@@ -29,16 +27,14 @@ public class DDLGenerator {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		// questionnaires used for player creation
+		//create questionnaires
+		// questionnaire that is used for player creation
 		Questionnaire profile = new Questionnaire("profile", false, 13);
-		
-		// questionnaires used once before each session
+		// questionnaires that are used once before each session
 		Questionnaire moodAndSkills = new Questionnaire("mood",true, 10);
-		
-		// questionnaires used after every round
 		Questionnaire moodAndSkillsShort = new Questionnaire("moodShort", true, 3);
-		Questionnaire flow = new Questionnaire("flow", false, 10);
-		Questionnaire reqfit = new Questionnaire("reqfit", true, 1);
+		// questionnaires that are used  after every round
+		Questionnaire howWasIt = new Questionnaire("howWasIt", false, 10);
 
 		//Create 6 Players
 		Person p0 = new Person(1071363107L, "Barbara");
@@ -66,21 +62,8 @@ public class DDLGenerator {
 		Function ratioFunction = new ConstantFunction(0.3);
 		
 		//useful functions for baseline measurment
-		Function speedFunction = new LinearFunction(60D,0.02);
-		Function speedFunction2 = new LinearFunction(60D, 0.015);
-		
-		Function speedFunction3 = new LnFunction(31.5, 6.5, 0.0);
-		Function speedFunction4 = new LnFunction(25.55, 1.0, 60);
-		
-		Function speedFunction5 = new SigmoidBaselineFunction();
-		
-		DifficultyFunction df1 = new DifficultyFunction(intervalFunction, speedFunction, ratioFunction);
+		Function speedFunction2 = new LnFunction(31.5, 6.5, 0.0);
 		DifficultyFunction df2 = new DifficultyFunction(intervalFunction, speedFunction2, ratioFunction);
-		DifficultyFunction df3 = new DifficultyFunction(intervalFunction, speedFunction3, ratioFunction);
-		DifficultyFunction df4 = new DifficultyFunction(intervalFunction, speedFunction4, ratioFunction);
-		DifficultyFunction df5 = new DifficultyFunction(intervalFunction, speedFunction5, ratioFunction);
-
-		final long timeLimit = 60*1000;
 		
 		//Create Scenario with Constant functions and previos baseline
 		Function speedFunctionConstant1 = new ConstantFunction(-60);
@@ -88,14 +71,10 @@ public class DDLGenerator {
 		Function speedFunctionConstant3 = new ConstantFunction(0);
 		Function speedFunctionConstant4 = new ConstantFunction(30);
 		Function speedFunctionConstant5 = new ConstantFunction(60);
-		
-		Function speedFunctionLinear1 = new LinearFunction(-75, 40f/timeLimit);
-		Function speedFunctionLinear2 = new LinearFunction(-45, 40f/timeLimit);
-		Function speedFunctionLinear3 = new LinearFunction(-15, 40f/timeLimit);
-		Function speedFunctionLinear4 = new LinearFunction(15, 40f/timeLimit);
-		Function speedFunctionLinear5 = new LinearFunction(45, 40f/timeLimit);
 
-		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, timeLimit, df5);
+		final long timeLimit = 60*1000;
+				
+		ScenarioRound cBaselineRound = new ScenarioRound(true, 0, timeLimit, df2);
 		ScenarioRound cSr1 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction));
 		ScenarioRound cSr2 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction));
 		ScenarioRound cSr3 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction));
@@ -111,25 +90,8 @@ public class DDLGenerator {
 		constantScenarioSession.add(cSr5);
 		em.persist(constantScenarioSession);
 		
-		
-		ScenarioRound dBaselineRound = new ScenarioRound(true, 0, timeLimit, df5);
-		ScenarioRound dSr1 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear1, ratioFunction));
-		ScenarioRound dSr2 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear2, ratioFunction));
-		ScenarioRound dSr3 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear3, ratioFunction));
-		ScenarioRound dSr4 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear4, ratioFunction));
-		ScenarioRound dSr5 = new ScenarioRound(false, 0, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear5, ratioFunction));
-		
-		ScenarioSession linearScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL);
-		linearScenarioSession.add(dBaselineRound);
-		linearScenarioSession.add(dSr1);
-		linearScenarioSession.add(dSr2);
-		linearScenarioSession.add(dSr3);
-		linearScenarioSession.add(dSr4);
-		linearScenarioSession.add(dSr5);
-		em.persist(linearScenarioSession);
-		
-		
 		//Create 1 GameSession for each player
+		em.persist(constantScenarioSession);
 		
 		final Random rnd = new Random(0xCAFEBABE);
 		for (Person player : players) {
@@ -152,8 +114,7 @@ public class DDLGenerator {
 		
 		em.persist(moodAndSkills);
 		em.persist(moodAndSkillsShort);
-		em.persist(flow);
-		em.persist(reqfit);
+		em.persist(howWasIt);
 		em.persist(profile);
 		
 		em.getTransaction().commit();

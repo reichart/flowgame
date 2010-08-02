@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,7 @@ import javax.persistence.Transient;
 public class ScenarioSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ScenarioRound> rounds;
-
+	
 	public enum Type {
 		INDIVIDUAL, SOCIAL
 	}
@@ -22,7 +23,7 @@ public class ScenarioSession extends AbstractEntity {
 
 	@Transient
 	private int roundsPlayed;
-
+	
 	@SuppressWarnings("unused")
 	private ScenarioSession() {
 		this(null); // for JPA
@@ -39,6 +40,7 @@ public class ScenarioSession extends AbstractEntity {
 	}
 
 	/**
+	 * Returns the next round to be played with a flag to control wether or not
 	 * to just peek at the next round (without changing any internal state) or
 	 * actually getting the next round and incrementing the internal round
 	 * counter.
@@ -51,33 +53,25 @@ public class ScenarioSession extends AbstractEntity {
 	 *         more rounds
 	 */
 	public ScenarioRound getNextRound(final boolean increment) {
-		ScenarioRound round;
-		try {
-			round = rounds.get(roundsPlayed);
-		} catch (IndexOutOfBoundsException e) {
-			return null;
+		for (Iterator<ScenarioRound> iterator = rounds.iterator(); iterator.hasNext();) {
+			ScenarioRound scenarioRound = iterator.next();
+			if (scenarioRound.getPosition() == roundsPlayed) {
+				// only actually change to the next round if told to do so: This
+				// allows us to "peek" at the next round without activating it
+				if (increment) {
+					roundsPlayed++;
+				}
+				
+				return scenarioRound;
+			}
 		}
-		
-		// only actually change to the next round if told to do so: This
-		// allows us to "peek" at the next round without activating it
-		if (increment) {
-			roundsPlayed++;
-		}
-		
-		int i = 0;
-		for (ScenarioRound r : rounds) {
-			System.err.println("number " + i + " Position " + r.getPosition() + " Baseline " + r.isBaselineRound());
-			i++;
-		}
-		
-
-		return round;
+		return null;
 	}
 
 	public Type getType() {
 		return type;
 	}
-
+	
 	public List<ScenarioRound> getRounds() {
 		return rounds;
 	}

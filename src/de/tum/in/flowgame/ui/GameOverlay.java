@@ -22,7 +22,6 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.engine.Game3D;
 import de.tum.in.flowgame.engine.behavior.FrameCounterBehavior.FrameCounterListener;
 import de.tum.in.flowgame.model.Collision.Item;
-import de.tum.in.flowgame.ui.screens.UIMessages;
 
 /**
  * Displays overlay graphics like health/damage bars, cockpit, and HUD messages.
@@ -104,13 +103,13 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 		final int stringH = fmSmall.getHeight();
 
 		if (drawFPS) {
-			final String frames = fps + " " + UIMessages.getString("fps");
+			final String frames = fps + " FPS";
 			final int framesW = fmSmall.stringWidth(frames);
 			g.drawString(frames, width - framesW - 20, stringH);
 		}
 
 		if (drawHUD) {
-			final String controls = UIMessages.getString("pause.continue");
+			final String controls = "Pause/continue: SPACE";
 			final int controlsW = fmSmall.stringWidth(controls);
 			g.drawString(controls, width - controlsW - 20, height - stringH);
 
@@ -120,7 +119,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				String scoreValue = "" + logic.getScore();
 				g.drawString(scoreValue, width / 2, fmMedium.getAscent() + UPPER_BORDER);
 				g.setFont(MEDIUM_BOLD);
-				g.drawString(UIMessages.getString("score") + " ", width / 2 - fmMediumBold.stringWidth(UIMessages.getString("score") + " "), fmMediumBold.getAscent()
+				g.drawString("Score ", width / 2 - fmMediumBold.stringWidth("Score "), fmMediumBold.getAscent()
 						+ UPPER_BORDER);
 
 				// get remaining time in seconds
@@ -183,7 +182,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	public void gameStarted(final GameLogic game) {
 		drawHUD = true;
-		message(UIMessages.getString("game.go"));
+		message("Go speed racer!");
 	}
 
 	public void gamePaused(final GameLogic game) {

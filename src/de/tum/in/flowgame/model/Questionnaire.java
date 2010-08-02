@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import de.tum.in.flowgame.ui.screens.QuestionnaireMessages;
+import de.tum.in.flowgame.ui.screens.Messages;
 
 @Entity
 public class Questionnaire extends AbstractEntity {
@@ -57,25 +57,21 @@ public class Questionnaire extends AbstractEntity {
 
 	public List<Question> getQuestions() {
 		for (Question q : questions) {
-			q.setText(QuestionnaireMessages.getString(name + q.getNumber()));
+			q.setText(Messages.getString(name + q.getNumber()));
 		}
 		return questions;
 	}
 
 	public String getDescription() {
-		return QuestionnaireMessages.getString(name + ".desc");
+		return Messages.getString(name + ".desc");
 	}
 	
 	public String getTitel() {
-		return QuestionnaireMessages.getString(name + ".title");
+		return Messages.getString(name + ".title");
 	}
 
 	public boolean isLabelDriven() {
 		return labelDriven;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getName() + "[" + getName() + "]";
-	}
 }

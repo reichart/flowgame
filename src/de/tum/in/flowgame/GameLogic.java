@@ -23,7 +23,6 @@ import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
-import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 import de.tum.in.flowgame.strategy.Trend;
 import de.tum.in.flowgame.util.Browser;
 
@@ -31,8 +30,8 @@ public class GameLogic implements Runnable {
 
 	private final static Log log = LogFactory.getLog(GameLogic.class);
 
-	private static final int POINTS_FOR_FUEL = 10;
-	private static final int POINTS_FOR_ASTEROID = 5;
+	private static final int pointsForFuel = 10;
+	private static final int pointsForAsteroid = 5;
 
 	private boolean paused;
 
@@ -59,6 +58,7 @@ public class GameLogic implements Runnable {
 	private Trend fuelTrend;
 
 	private long startTime;
+	private long startTimeWithoutPause;
 	private long pauseStartTime;
 
 	private final CustomFacebookClient facebook;
@@ -69,7 +69,7 @@ public class GameLogic implements Runnable {
 
 	private double rating;
 
-	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, final Browser browser) {
+	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, Browser browser) {
 		this.browser = browser;
 		this.listeners = new CopyOnWriteArrayList<GameListener>();
 		this.player = player;
@@ -94,8 +94,8 @@ public class GameLogic implements Runnable {
 			break;
 		}
 
-		final double rating = getRating();
-		final long increase = (long) (rating * 10 * ((fuelInRow * POINTS_FOR_FUEL) - (asteroidsInRow * POINTS_FOR_ASTEROID)));
+		double rating = getRating();
+		long increase = (long) (rating * 10 * ((fuelInRow * pointsForFuel) - (asteroidsInRow * pointsForAsteroid)));
 		gameRound.increaseScore(increase);
 
 		lastPointsAdded = increase;
@@ -103,7 +103,7 @@ public class GameLogic implements Runnable {
 		fireCollided(item);
 	}
 
-	public void seen(final Item item, final boolean collision) {
+	public void seen(final Item item, boolean collision) {
 		switch (item) {
 		case FUELCAN:
 			fuelTrend.update(collision);
@@ -117,26 +117,29 @@ public class GameLogic implements Runnable {
 	}
 
 	public void run() {
-		log.info("running " + this);
+		log.info("running");
 
 		fireGameStarted();
 
-		while (isRunning()) {
+		boolean timeOver = false;
+		Long maxPlaytime = getCurrentScenarioRound().getExpectedPlaytime();
+
+		while (!timeOver) {
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1000);
 			} catch (final InterruptedException ex) {
 				// ignore
+			}
+
+			if (maxPlaytime != null) {
+				timeOver = getElapsedTime() > maxPlaytime;
 			}
 		}
 
 		storeRank();
 		fireGameStopped();
 
-		log.info("stopped " + this);
-	}
-
-	private boolean isRunning() {
-		return getElapsedTime() <= getExpectedPlaytime();
+		log.info("stopped");
 	}
 
 	private void storeRank() {
@@ -145,7 +148,7 @@ public class GameLogic implements Runnable {
 			final Set<Long> persons = JSONUtils.toLongs(fb.friends_get());
 			persons.add(getPlayerId());
 
-			final Client client = getClient();
+			Client client = getClient();
 			final List<Highscore> globalScores = client.getHighscores(new ArrayList<Long>(persons));
 
 			// determine rank of player within his friends
@@ -159,7 +162,7 @@ public class GameLogic implements Runnable {
 				}
 				counter++;
 			}
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -208,11 +211,12 @@ public class GameLogic implements Runnable {
 		// reset internal state
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
-		
+
 		fuelInRow = 0;
 		asteroidsInRow = 0;
 
 		startTime = System.currentTimeMillis();
+		startTimeWithoutPause = startTime;
 
 		// spawn new thread for game updates
 		this.thread = new Thread(this, GameLogic.class.getSimpleName());
@@ -221,25 +225,15 @@ public class GameLogic implements Runnable {
 	}
 
 	public void pause() {
-		if (isRunning()) {
-			pauseStartTime = System.currentTimeMillis();
-			paused = true;
-			configChange(ConfigKey.PAUSE, paused);
-			fireGamePaused();
-		} else {
-			log.warn("not running");
-		}
+		pauseStartTime = System.currentTimeMillis();
+		paused = true;
+		fireGamePaused();
 	}
 
 	public void unpause() {
-		if (isRunning()) {
-			startTime += (System.currentTimeMillis() - pauseStartTime);
-			paused = false;
-			configChange(ConfigKey.PAUSE, paused);
-			fireGameResumed();
-		} else {
-			log.warn("not running");
-		}
+		startTimeWithoutPause += (System.currentTimeMillis() - pauseStartTime);
+		paused = false;
+		fireGameResumed();
 	}
 
 	private void fireGameStarted() {
@@ -266,7 +260,7 @@ public class GameLogic implements Runnable {
 		}
 	}
 
-	private void fireCollided(final Item item) {
+	private void fireCollided(Item item) {
 		for (final GameListener listener : listeners) {
 			listener.collided(this, item);
 		}
@@ -298,18 +292,14 @@ public class GameLogic implements Runnable {
 
 	public long getElapsedTime() {
 		if (paused) {
-			return pauseStartTime - startTime;
+			return pauseStartTime - startTimeWithoutPause;
 		} else {
-			return System.currentTimeMillis() - startTime;
+			return System.currentTimeMillis() - startTimeWithoutPause;
 		}
 	}
 
 	public long getRemainingTime() {
-		return getExpectedPlaytime() - getElapsedTime();
-	}
-
-	private long getExpectedPlaytime() {
-		return getCurrentScenarioRound().getExpectedPlaytime() / 10;
+		return getCurrentScenarioRound().getExpectedPlaytime() - getElapsedTime();
 	}
 
 	public long getScore() {
@@ -336,9 +326,8 @@ public class GameLogic implements Runnable {
 		return gameSession;
 	}
 
-	public void setBaseline(double baseline) {
-		//FIXME: baseline probably should be double or speed should be long
-		gameSession.setBaseline(new Difficulty(0, (long) baseline, 0));
+	public void setBaseline(long baseline) {
+		gameSession.setBaseline(new Difficulty(0, baseline, 0));
 	}
 
 	public Difficulty getBaseline() {
@@ -349,14 +338,6 @@ public class GameLogic implements Runnable {
 		return gameRound.getScenarioRound();
 	}
 
-	public void configChange(final ConfigKey key, final Object value){
-		if (this.gameRound != null) {
-			this.gameRound.configChange(key, String.valueOf(value));
-		} else {
-			log.info("ConfigChange not saved in Database as there is no GameRound active.");
-		}
-	}
-	
 	public Client getClient() {
 		return client;
 	}
@@ -386,17 +367,11 @@ public class GameLogic implements Runnable {
 		return browser;
 	}
 
-	public void setRating(final double difficultyRating) {
+	public void setRating(double difficultyRating) {
 		rating = difficultyRating;
 	}
 
 	public boolean isPaused() {
 		return paused;
-	}
-	
-	@Override
-	public String toString() {
-		return getClass().getName() + "[running=" + isRunning() + ";paused=" + paused
-			+ ";startTime=" + startTime + ";pauseStartTime=" + pauseStartTime + "]";
 	}
 }

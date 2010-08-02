@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-public class ScenarioRound extends AbstractEntity implements Comparable<ScenarioRound> {
+public class ScenarioRound extends AbstractEntity {
 	private Integer baselineModifier;
 	private long expectedPlaytime;
 	@OneToOne(cascade=CascadeType.PERSIST)
@@ -30,7 +30,8 @@ public class ScenarioRound extends AbstractEntity implements Comparable<Scenario
 	 * @param q
 	 *            the questionnaire to display after this round
 	 */
-	public ScenarioRound(final boolean baseline, final Integer baselineModifier, final long expectedPlaytime, final DifficultyFunction f) {
+	public ScenarioRound(final boolean baseline, final Integer baselineModifier, final long expectedPlaytime,
+			final DifficultyFunction f) {
 		this.baseline = baseline;
 		this.baselineModifier = baselineModifier;
 		this.expectedPlaytime = expectedPlaytime;
@@ -59,17 +60,6 @@ public class ScenarioRound extends AbstractEntity implements Comparable<Scenario
 
 	public int getPosition() {
 		return position;
-	}
-
-	/**
-	 * allow for sorting on the basis of the position
-	 */
-	public int compareTo(ScenarioRound scenarioRound) {
-		if (scenarioRound == null) {
-			throw new NullPointerException();
-		} else {
-			return this.getPosition() - scenarioRound.getPosition();
-		}
 	}
 	
 }

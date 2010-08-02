@@ -17,7 +17,7 @@ import de.tum.in.flowgame.engine.SystemInfo;
  */
 public class SystemInfoScreen extends MenuScreen {
 
-	private final JButton back = goTo(UIMessages.getString("back"), MainScreen.class);
+	private final JButton back = goTo("Back", MainScreen.class);
 
 	private final JScrollPane systemInfoScroll;
 
@@ -38,6 +38,6 @@ public class SystemInfoScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title(UIMessages.getString("info")), systemInfoScroll, back);
+		return centered(title("System Information"), systemInfoScroll, back);
 	}
 }

@@ -14,7 +14,7 @@ import de.tum.in.flowgame.ui.screens.story.RoundExtroScreen;
  */
 public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 
-	private final Action next = new AbstractAction(UIMessages.CONTINUE) {
+	private final Action next = new AbstractAction("Continue") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveRoundAnswers(getAnswers());
 			menu.show(RoundExtroScreen.class);
@@ -28,6 +28,6 @@ public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 
 	@Override
 	protected List<String> getQuestionnaireNames() {
-		return Arrays.asList("moodShort", "flow", "reqfit");
+		return Arrays.asList("moodShort", "howWasIt");
 	}
 }

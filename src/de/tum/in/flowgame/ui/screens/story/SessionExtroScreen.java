@@ -9,14 +9,13 @@ import javax.swing.JButton;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.ui.screens.MainScreen;
 import de.tum.in.flowgame.ui.screens.MenuScreen;
-import de.tum.in.flowgame.ui.screens.UIMessages;
 
 /**
  * Displayed after the scenario has no more rounds.
  */
 public class SessionExtroScreen extends MenuScreen {
 
-	private final JButton backToMain = new JButton(new AbstractAction(UIMessages.getString("game.menu")) {
+	private final JButton backToMain = new JButton(new AbstractAction("Main Menu") {
 		public void actionPerformed(final ActionEvent e) {
 			menu.show(MainScreen.class);
 		}
@@ -24,7 +23,7 @@ public class SessionExtroScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(title(UIMessages.getString("game.over")), backToMain);
+		return centered(title("Game Over"), backToMain);
 	}
 
 	@Override

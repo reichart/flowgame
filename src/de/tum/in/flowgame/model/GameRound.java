@@ -7,14 +7,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Transient;
 
 import de.tum.in.flowgame.DefaultGameListener;
 import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.model.Collision.Item;
-import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 
 @Entity
 public class GameRound extends AbstractEntity {
@@ -26,8 +24,6 @@ public class GameRound extends AbstractEntity {
 	private List<Answer> answers;
 	private long startTime;
 	private long score;
-	@OneToMany(fetch = FetchType.EAGER)   @OrderBy("timestamp")   
-	private List<ConfigChange> configChanges;
 	/**
 	 * rank within friends at the time the round was played
 	 */
@@ -45,7 +41,6 @@ public class GameRound extends AbstractEntity {
 	public GameRound(final ScenarioRound scenarioRound) {
 		this.collisions = new ArrayList<Collision>();
 		this.answers = new ArrayList<Answer>();
-		this.configChanges = new ArrayList<ConfigChange>();
 		this.startTime = System.currentTimeMillis();
 		this.scenarioRound = scenarioRound;
 		this.listener = new DefaultGameListener() {
@@ -153,7 +148,4 @@ public class GameRound extends AbstractEntity {
 		this.globalRank = globalRank;
 	}
 
-	public void configChange (ConfigKey key, String value){
-		this.configChanges.add(new ConfigChange(key, value));
-	}
 }

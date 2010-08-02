@@ -53,8 +53,6 @@ public class JPsychoSlider extends ChangeableComponent {
 		final Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.translate(0, (getHeight() - TRACK_HEIGHT) / 2);
-		
 		g.setColor(COLOR_TRACK);
 		g.fillRect(0, 0, getWidth(), TRACK_HEIGHT);
 
@@ -86,13 +84,7 @@ public class JPsychoSlider extends ChangeableComponent {
 	 * @return relative value between 0 and 1
 	 */
 	public Float getValue() {
-		if (value == null) {
-			return null;
-		}
-		
-		final float max = getMaxValue() - KNOB_HALFSIZE;
-		final int realValue = clamp(value) - KNOB_HALFSIZE;
-		return realValue / max;
+		return value == null ? null : (clamp(value) / (float) getMaxValue());
 	}
 
 	private void setSelectedValue(final Integer value) {

@@ -1,7 +1,6 @@
 package de.tum.in.flowgame.ui.screens;
 
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -44,14 +43,14 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	private final JLabel title = title("");
 
 	private int currentPanel;
-
+	
 	private List<QuestionnairePanel> questionnairePanels;
-
+	
 	private final ForceAnswersListener forceAnswers;
 
-	private static final String NEXT_ENABLED = UIMessages.CONTINUE;
-	private static final String NEXT_DISABLED = UIMessages.getString("next.disabled");
-
+	private static final String NEXT_ENABLED = "Continue";
+	private static final String NEXT_DISABLED = "Please answers all questions to continue";
+	
 	private final JButton next = new JButton(new AbstractAction() {
 
 		public void actionPerformed(final ActionEvent e) {
@@ -67,8 +66,10 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	});
 
 	public QuestionnaireScreen() {
-		forceAnswers = new ForceAnswersListener();
+		super(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
 
+		forceAnswers = new ForceAnswersListener();
+		
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
 
@@ -89,16 +90,16 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 
 	@Override
 	public Container getContents() {
-		return centered(BorderFactory.createEmptyBorder(BORDER_WIDTH_TOP, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH), title, mainUI(), next);
+		return centered(title, mainUI(), next);
 	}
 
 	@Override
 	public void update(final GameLogic logic) throws Exception {
 		log.info("building new qn panels");
 		currentPanel = 0;
-
+		
 		cardPanel.removeAll();
-
+		
 		questionnairePanels = new ArrayList<QuestionnairePanel>();
 		final List<Questionnaire> questionnaires = menu.getLogic().getClient().downloadQuestionnaires(
 				getQuestionnaireNames());
@@ -106,7 +107,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 			log.info("adding " + questionnaire.getName());
 			final QuestionnairePanel qPanel = new QuestionnairePanel(questionnaire);
 			qPanel.addChangeListener(forceAnswers);
-
+			
 			// TODO qn gets cut off with VERTICAL_SCROLLBAR_AS_NEEDED
 			// work around is to always show vertical scrollbars
 			final JScrollPane qscrollpane = new JScrollPane(qPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -114,28 +115,20 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 			cardPanel.add(qscrollpane, questionnaire.getName());
 			questionnairePanels.add(qPanel);
 		}
-
+		
 		update();
 	}
 
 	private void update() {
-		// reset position of all scrollpanes to top
-		for (final Component component : cardPanel.getComponents()) {
-			if (component instanceof JScrollPane) {
-				final JScrollPane scrollpane = (JScrollPane) component;
-				scrollpane.getVerticalScrollBar().setValue(0);
-			}
-		}
-
-		final QuestionnairePanel questionnairePanel = getCurrentPanel();
+		QuestionnairePanel questionnairePanel = getCurrentPanel();
 		questionnairePanel.reset();
-
+		
 		final Questionnaire qn = questionnairePanel.getQuestionnaire();
 		title.setText(qn.getTitel());
 		description.setText(qn.getDescription());
-
+		
 		cardLayout.show(cardPanel, qn.getName());
-
+		
 		// disable until all questions are answered
 		next.setEnabled(false);
 		next.setText(NEXT_DISABLED);
@@ -157,7 +150,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 			}
 		}
 	}
-
+	
 	/**
 	 * @return the list of {@link Answer}s for the currently displayed
 	 *         {@link Questionnaire}
