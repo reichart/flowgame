@@ -140,11 +140,4 @@ public class Trend {
 	public float getCompleteRatio() {
 		return completeRatio;
 	}
-	
-	/**
-	 * @return Number of bypassed {@link Collidable}s of a certain type.
-	 */
-	public int getPassedItems(){
-		return items.size();
-	}
 }

@@ -1,18 +1,25 @@
 package de.tum.in.flowgame.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
 public class ScenarioSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ScenarioRound> rounds;
+	
+	@JoinColumn(nullable = false)
+	@OneToOne(cascade=CascadeType.PERSIST)
+	Questionnaire questionnaire;
 
 	public enum Type {
 		INDIVIDUAL, SOCIAL
@@ -22,15 +29,16 @@ public class ScenarioSession extends AbstractEntity {
 
 	@Transient
 	private int roundsPlayed;
-
+	
 	@SuppressWarnings("unused")
 	private ScenarioSession() {
-		this(null); // for JPA
+		this(null, null); // for JPA
 	}
 
-	public ScenarioSession(final Type type) {
+	public ScenarioSession(final Type type, final Questionnaire questionnaire) {
 		this.rounds = new ArrayList<ScenarioRound>();
 		this.type = type;
+		this.questionnaire = questionnaire;
 	}
 
 	public void add(final ScenarioRound round) {
@@ -38,44 +46,24 @@ public class ScenarioSession extends AbstractEntity {
 		rounds.add(round);
 	}
 
-	/**
-	 * to just peek at the next round (without changing any internal state) or
-	 * actually getting the next round and incrementing the internal round
-	 * counter.
-	 * 
-	 * @param increment
-	 *            if <code>true</code>, increments the rounds played counter, if
-	 *            <code>false</code>, the next call will return the same (next)
-	 *            round
-	 * @return the next round to be played or <code>null</code> if there are no
-	 *         more rounds
-	 */
-	public ScenarioRound getNextRound(final boolean increment) {
-		ScenarioRound round;
-		try {
-			round = rounds.get(roundsPlayed);
-		} catch (IndexOutOfBoundsException e) {
-			return null;
+	// returns next round and counts how many rounds have been played
+	public ScenarioRound getNextRound() {
+		for (Iterator<ScenarioRound> iterator = rounds.iterator(); iterator.hasNext();) {
+			ScenarioRound scenarioRound = iterator.next();
+			if (scenarioRound.getPosition() == roundsPlayed) {
+				roundsPlayed++;
+				return scenarioRound;
+			}
 		}
-		
-		// only actually change to the next round if told to do so: This
-		// allows us to "peek" at the next round without activating it
-		if (increment) {
-			roundsPlayed++;
-		}
-		
-		int i = 0;
-		for (ScenarioRound r : rounds) {
-			System.err.println("number " + i + " Position " + r.getPosition() + " Baseline " + r.isBaselineRound());
-			i++;
-		}
-		
-
-		return round;
+		return null;
 	}
 
 	public Type getType() {
 		return type;
+	}
+	
+	public Questionnaire getQuestionnaire() {
+		return questionnaire;
 	}
 
 	public List<ScenarioRound> getRounds() {

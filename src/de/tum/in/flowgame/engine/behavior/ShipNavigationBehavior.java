@@ -4,8 +4,10 @@ import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 import java.util.Enumeration;
 
+import javax.media.j3d.Behavior;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupCriterion;
 import javax.media.j3d.WakeupOnAWTEvent;
 import javax.media.j3d.WakeupOnElapsedFrames;
@@ -14,12 +16,14 @@ import javax.vecmath.Matrix3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import de.tum.in.flowgame.GameListener;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.engine.Ship;
 import de.tum.in.flowgame.engine.Tunnel;
+import de.tum.in.flowgame.model.Collision.Item;
 
-public class ShipNavigationBehavior extends RepeatingBehavior {
+public class ShipNavigationBehavior extends Behavior implements GameListener {
 
 	private float acceleration = 30f;
 	private float maxSpeed = 18f;
@@ -47,39 +51,46 @@ public class ShipNavigationBehavior extends RepeatingBehavior {
 	private final TransformGroup translationGroup;
 	private final TransformGroup viewTG;
 	private Matrix3f shipRotation = new Matrix3f();
+	private final WakeupCondition condition;
 
 	private boolean KEY_LEFT;
 	private boolean KEY_RIGHT;
 	private boolean KEY_UP;
 	private boolean KEY_DOWN;
 
-	private boolean normalSteering;
+	private boolean normalSteering = false;
 
 	private static final char PAUSE_KEY = ' ';
+	private boolean pause;
+	private long pauseBegin;
 	private GameLogic gameLogic;
 
 	public static final double MOV_RADIUS = Tunnel.TUNNEL_RADIUS - 0.8;
 
 	private long lastKeyEventTime;
 
+	private long time;
 	private boolean firstPerson = false;
 
 	public ShipNavigationBehavior(final TransformGroup translationGroup, final TransformGroup viewTG) {
-		super(createCondition());
-		
 		this.translationGroup = translationGroup;
 		this.viewTG = viewTG;
 
 		setPhysics(this.maxSpeed, this.acceleration);
-	}
 
-	private static WakeupOr createCondition() {
-		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(KeyEvent.KEY_PRESSED);
-		final WakeupCriterion keyReleased = new WakeupOnAWTEvent(KeyEvent.KEY_RELEASED);
-		final WakeupCriterion keyTyped = new WakeupOnAWTEvent(KeyEvent.KEY_TYPED);
+		final WakeupCriterion keyPressed = new WakeupOnAWTEvent(
+				KeyEvent.KEY_PRESSED);
+		final WakeupCriterion keyReleased = new WakeupOnAWTEvent(
+				KeyEvent.KEY_RELEASED);
+		final WakeupCriterion keyTyped = new WakeupOnAWTEvent(
+				KeyEvent.KEY_TYPED);
 		final WakeupCriterion currentFrame = new WakeupOnElapsedFrames(0);
-		
-		return new WakeupOr(Utils.asArray(keyPressed, keyReleased, keyTyped, currentFrame));
+
+		this.condition = new WakeupOr(Utils.asArray(keyPressed, keyReleased,
+				keyTyped, currentFrame));
+
+		// Create Timer here.
+		time = System.currentTimeMillis();
 	}
 
 	private void setPhysics(float maxSpeed, float acceleration) {
@@ -100,10 +111,16 @@ public class ShipNavigationBehavior extends RepeatingBehavior {
 	}
 
 	@Override
-	protected void update(final Enumeration<WakeupCriterion> criteria) {
+	public void initialize() {
+		wakeupOn(condition);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void processStimulus(final Enumeration criteria) {
 		WakeupCriterion crit;
 		while (criteria.hasMoreElements()) {
-			crit = criteria.nextElement();
+			crit = (WakeupCriterion) criteria.nextElement();
 			if (crit instanceof WakeupOnAWTEvent) {
 				final WakeupOnAWTEvent awtEvent = (WakeupOnAWTEvent) crit;
 				for (final AWTEvent event : awtEvent.getAWTEvent()) {
@@ -112,10 +129,12 @@ public class ShipNavigationBehavior extends RepeatingBehavior {
 					}
 				}
 			} else if (crit instanceof WakeupOnElapsedFrames) {
-				if (!isPaused())
+				if (!pause)
 					updatePosition();
 			}
 		}
+
+		wakeupOn(condition);
 	}
 
 	private void processKeyEvent(final KeyEvent e) {
@@ -132,6 +151,7 @@ public class ShipNavigationBehavior extends RepeatingBehavior {
 				lastKeyEventTime = when;
 				return;
 			}
+			// System.err.println(when-lastKeyEventTime);
 			lastKeyEventTime = when;
 		}
 
@@ -140,7 +160,7 @@ public class ShipNavigationBehavior extends RepeatingBehavior {
 		if (id == KeyEvent.KEY_TYPED) {
 			switch (e.getKeyChar()) {
 			case PAUSE_KEY:
-				if (isPaused()) {
+				if (pause) {
 					gameLogic.unpause();
 					// System.out.println("resume");
 				} else {
@@ -367,6 +387,17 @@ public class ShipNavigationBehavior extends RepeatingBehavior {
 		}
 	}
 
+	private long getDeltaTime() {
+		final long newTime = System.currentTimeMillis();
+		long deltaTime = newTime - time;
+		// System.out.println(deltaTime);
+		time = newTime;
+		if (deltaTime > 2000)
+			return 0;
+		else
+			return deltaTime;
+	}
+
 	public Vector3d getCoords() {
 		Vector3d vec = new Vector3d();
 		trans.get(vec);
@@ -384,23 +415,38 @@ public class ShipNavigationBehavior extends RepeatingBehavior {
 		return this.normalSteering;
 	}
 
-	@Override
 	public void added(final GameLogic game) {
-		this.gameLogic = game; // TODO extract into RepeatingBehavior
+		this.gameLogic = game;
 	}
 	
-	@Override
 	public void removed(final GameLogic game) {
-		this.gameLogic = null; // TODO extract into RepeatingBehavior
+		this.gameLogic = null;
 	}
 	
-	@Override
+	public void collided(GameLogic logic, Item item) {
+		// empty
+	}
+
+	public void gamePaused(GameLogic game) {
+		pause = true;
+		pauseBegin = System.currentTimeMillis();
+	}
+
+	public void gameResumed(GameLogic game) {
+		pause = false;
+		time = time + (System.currentTimeMillis() - pauseBegin);
+	}
+
 	public void gameStarted(GameLogic game) {
 		trans.setIdentity();
 		translationGroup.setTransform(trans);
 		a = new Vector3d();
 		mov = new Vector3d();
 		pos = new Vector3d();
+	}
+
+	public void gameStopped(GameLogic game) {
+		// empty
 	}
 
 }

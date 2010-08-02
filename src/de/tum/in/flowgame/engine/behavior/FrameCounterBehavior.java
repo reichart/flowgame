@@ -1,18 +1,25 @@
 package de.tum.in.flowgame.engine.behavior;
 
+import java.util.Enumeration;
+
+import javax.media.j3d.Behavior;
+import javax.media.j3d.WakeupCondition;
+import javax.media.j3d.WakeupOnElapsedFrames;
+
 import de.tum.in.flowgame.Listeners;
 
 /**
  * Measures frame rate over a number of frames and delivers them to subscribed
  * listeners.
  */
-public class FrameCounterBehavior extends RepeatingBehavior {
+public class FrameCounterBehavior extends Behavior {
 
 	public interface FrameCounterListener {
 		void updateFramesPerSecond(long fps);
 	}
 
 	private final Listeners<FrameCounterListener> listeners;
+	private final WakeupCondition condition;
 	private final long frames;
 
 	private long start;
@@ -23,8 +30,8 @@ public class FrameCounterBehavior extends RepeatingBehavior {
 	 *            number of frames to average frame rate over
 	 */
 	public FrameCounterBehavior(final int frames) {
-		super(frames);
 		this.frames = frames;
+		this.condition = new WakeupOnElapsedFrames(frames);
 		this.listeners = new Listeners<FrameCounterListener>() {
 			@Override
 			protected void fire(final Object event, final FrameCounterListener listener) {
@@ -38,17 +45,21 @@ public class FrameCounterBehavior extends RepeatingBehavior {
 	}
 
 	@Override
-	protected void init() {
+	public void initialize() {
 		this.start = System.currentTimeMillis();
+		wakeupOn(condition);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	protected void update() {
+	public void processStimulus(final Enumeration/* <WakeupCriterion> */criteria) {
 		final long now = System.currentTimeMillis();
 		this.fps = (frames * 1000) / (now - start);
 		this.start = now;
 
 		listeners.fire(null);
+
+		wakeupOn(condition);
 	}
 
 	public long getFramesPerSecond() {

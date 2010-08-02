@@ -23,7 +23,6 @@ import javax.media.j3d.TransformGroup;
 import javax.media.j3d.TriangleArray;
 import javax.media.j3d.View;
 import javax.vecmath.Color3f;
-import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
@@ -78,9 +77,6 @@ public class Game3D extends Canvas3D {
 	private CreateCollidables cc;
 	private CollisionBehavior collisionBehavior;
 	private CreateNewCollidablesBehavior cncb;
-	private Tunnel tunnel;
-
-	private final TransformGroup viewTG;
 
 	/**
 	 * Creates a new Game3D.
@@ -99,7 +95,6 @@ public class Game3D extends Canvas3D {
 				game.addListener(overlay);
 				collisionBehavior.setGameLogic(game);
 				cncb.setGameLogic(game);
-				tunnel.setGameLogic(game);
 			}
 
 			@Override
@@ -109,7 +104,6 @@ public class Game3D extends Canvas3D {
 				game.removeListener(overlay);
 				collisionBehavior.setGameLogic(null);
 				cncb.setGameLogic(null);
-				tunnel.setGameLogic(null);
 			}
 
 			@Override
@@ -133,7 +127,7 @@ public class Game3D extends Canvas3D {
 		});
 
 		final SimpleUniverse su = createUniverse();
-		viewTG = su.getViewingPlatform().getViewPlatformTransform();
+		final TransformGroup viewTG = su.getViewingPlatform().getViewPlatformTransform();
 
 		final BranchGroup scene = new BranchGroup();
 		scene.addChild(createScene());
@@ -191,15 +185,15 @@ public class Game3D extends Canvas3D {
 
 		ForwardBehavior forwardBehavior = new ForwardBehavior(forwardGroup, viewTG);
 		forwardBehavior.setSchedulingBounds(Game3D.WORLD_BOUNDS);
-
-		tunnel = new Tunnel();
-		forwardGroup.addChild(tunnel);
 		
-		ship = new Ship(viewTG, forwardBehavior, tunnel);
+		ship = new Ship(viewTG, forwardBehavior);
 		ship.addChild(forwardBehavior);
 		forwardGroup.addChild(ship);
 		collidables.addChild(forwardGroup);
 		
+		Tunnel tunnel = new Tunnel();
+		forwardGroup.addChild(tunnel);
+
 		this.cc = new CreateCollidables(collidables);
 		this.cncb = new CreateNewCollidablesBehavior(cc, ship);
 		cncb.setSchedulingBounds(Game3D.WORLD_BOUNDS);
@@ -268,26 +262,7 @@ public class Game3D extends Canvas3D {
 	public Ship getShip() {
 		return this.ship;
 	}
-	
-	public Point2d getShip2DCoords() {
-		Point3d shipPos1 = new Point3d(getShip().getCoords());
-		shipPos1.z = shipPos1.z + Ship.INITIAL_SHIP_PLACEMENT_Z;
-		Transform3D viewTrans = new Transform3D();
-		viewTG.getTransform(viewTrans);
-		viewTrans.invert();
 
-		Transform3D t = new Transform3D();
-		this.getVworldToImagePlate(t);
-		viewTrans.add(t);
-		
-		t.transform(shipPos1);
-
-		Point2d pointOnScreen = new Point2d();
-		this.getPixelLocationFromImagePlate(shipPos1, pointOnScreen);
-		
-		return pointOnScreen;
-	}
-	
 	public GameListener getListener() {
 		return listener;
 	}

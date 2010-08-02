@@ -68,8 +68,7 @@ public class SpringUtilities {
      * @param xPad x padding between cells
      * @param yPad y padding between cells
      */
-    @SuppressWarnings("null")
-	public static void makeGrid(Container parent,
+    public static void makeGrid(Container parent,
                                 int rows, int cols,
                                 int initialX, int initialY,
                                 int xPad, int yPad) {
@@ -77,7 +76,8 @@ public class SpringUtilities {
         try {
             layout = (SpringLayout)parent.getLayout();
         } catch (ClassCastException exc) {
-            throw new IllegalArgumentException("The first argument to makeGrid must use SpringLayout.", exc);
+            System.err.println("The first argument to makeGrid must use SpringLayout.");
+            return;
         }
 
         Spring xPadSpring = Spring.constant(xPad);
@@ -179,7 +179,8 @@ public class SpringUtilities {
         try {
             layout = (SpringLayout)parent.getLayout();
         } catch (ClassCastException exc) {
-        	throw new IllegalArgumentException("The first argument to makeCompactGrid must use SpringLayout.", exc);
+            System.err.println("The first argument to makeCompactGrid must use SpringLayout.");
+            return;
         }
 
         //Align all cells in each column and make them the same width.
