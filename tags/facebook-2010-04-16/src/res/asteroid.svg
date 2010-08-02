@@ -1,0 +1,13 @@
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1"
+   width="100"
+   height="100">
+  <g
+     transform="translate(0,-952)">
+    <path
+       d="M 63,952 L 49,970 L 37,959 L 29,976 L 12,973 L 19,988 L 0,999 L 15,1011 L 9,1038 L 32,1029 L 38,1047 L 46,1030 L 65,1052 L 68,1020 L 85,1022 L 80,1011 L 96,1002 L 79,993 L 100,973 L 67,978 L 63,952 z"
+       style="fill:red" />
+  </g>
+</svg>
