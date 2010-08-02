@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.custom.i18n.resources" value="messages" />
+
+	<constant name="persistenceUnit" value="IDP" /> 
+	<bean name="persistence" class="de.tum.in.flowgame.server.PersistenceService" />
+
+	<package name="default" namespace="/" extends="struts-default">
+
+		<default-action-ref name="canvas" />
+
+		<global-results>
+			<result name="exception">/WEB-INF/exception.html</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping result="exception" exception="java.lang.Exception" />
+		</global-exception-mappings>
+
+		<action name="canvas">
+			<result>/WEB-INF/canvas.jsp</result>
+		</action>
+
+		<action name="applet">
+			<result>/WEB-INF/applet.jsp</result>
+		</action>
+		
+		<action name="invite">
+			<result>/WEB-INF/invite.jsp</result>
+		</action>
+		
+		<action name="endinvite">
+			<result>/WEB-INF/endinvite.jsp</result>
+		</action>
+
+		<action name="fbproxy" class="de.tum.in.flowgame.server.FacebookProxyAction">
+			<result>/WEB-INF/fbproxy.jsp</result>
+		</action>
+
+		<action name="upload" class="de.tum.in.flowgame.server.UploadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+
+		<action name="scenarioSessionDownload"
+			class="de.tum.in.flowgame.server.ScenarioSessionDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+
+		<action name="personDownload" class="de.tum.in.flowgame.server.PersonDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+		
+		<action name="questionnaireDownload" class="de.tum.in.flowgame.server.QuestionnaireDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+
+		<action name="percentageDownload" class="de.tum.in.flowgame.server.PercentageDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+
+		<action name="highscoresDownload" class="de.tum.in.flowgame.server.HighscoresDownloadAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+		
+		<action name="personalHighscoreChartDownload" class="de.tum.in.flowgame.server.PersonalHighscoreChartDownloadAction">
+			<result type="stream">
+				<param name="contentType">image/png</param>
+			</result>
+		</action>
+		
+		<action name="export" class="de.tum.in.flowgame.server.DataExportAction">
+			<result>/WEB-INF/export.jsp</result>
+		</action>
+		
+	</package>
+
+</struts>
