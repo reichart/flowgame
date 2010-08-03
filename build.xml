@@ -10,7 +10,19 @@
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
 
-	<!-- findbugs.home, pmd.home needs to be set at runtime -->
+	<property name="war" value="${dist}/flowgame.war" />
+	<property name="contextpath" value="/flowgame" />
+
+	<!-- These credentials aren't secret, they only work locally. -->
+	<property name="mysql.database" value="idp" />
+	<property name="mysql.password" value="idp" />
+	<property name="mysql.username" value="idp" />
+	
+	<property name="tomcat.manager.url" value="http://localhost:8080/manager" />
+
+	<!-- These properties need to be set at runtime: -->
+	<!-- findbugs.home, pmd.home, tomcat.home -->
+	<!-- tomcat.manager.username, tomcat.manager.password -->
 
 	<path id="findbugs.classpath">
 		<fileset dir="${findbugs.home}/lib">
@@ -20,6 +32,10 @@
 
 	<path id="pmd.classpath">
 		<fileset dir="${pmd.home}" includes="**/*.jar" />
+	</path>
+
+	<path id="tomcat.classpath">
+		<fileset dir="${tomcat.home}" includes="lib/catalina-ant.jar" />
 	</path>
 
 	<path id="classpath">
@@ -80,7 +96,7 @@
 		</jar>
 
 		<!-- Build the WAR (as JAR because everything is in the right place already) -->
-		<jar destfile="${dist}/flowgame.war">
+		<jar destfile="${war}">
 			<fileset dir="${web}">
 				<include name="**/*" />
 				<exclude name="**/classes/**" />
@@ -134,6 +150,51 @@
 	<target name="clean">
 		<delete dir="${build}" />
 		<delete dir="${dist}" />
+	</target>
+
+	<target name="init-database" depends="dump-database, dist">
+		<description>Drops all database contents and creates an up-to-date database schema.</description>
+		<!-- Fork or Ant's SAX parser impl will cause problems -->
+		<java classname="de.tum.in.flowgame.server.DDLGenerator" fork="true" failonerror="true">
+			<classpath>
+				<path refid="classpath" />
+				<fileset dir="${dist}" includes="lib/flowgame-server.jar" />
+			</classpath>
+			<jvmarg value="-Declipselink.ddl-generation=drop-and-create-tables" />
+		</java>
+	</target>
+
+	<target name="dump-database">
+		<description>Dumps the current database state into a file.</description>
+		<tstamp>
+			<format property="dumptime" pattern="yyyy-MM-dd-HH-mm-ss" />
+		</tstamp>
+		<property name="dumpfile" value="flowgame-${dumptime}.sql" />
+		<echo>Dumping database to ${dumpfile}</echo>
+		<exec executable="mysqldump" output="${dumpfile}" failonerror="true">
+			<arg value="--user=${mysql.username}" />
+			<arg value="--password=${mysql.password}" />
+			<arg value="${mysql.database}" />
+		</exec>
+	</target>
+
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="tomcat.classpath" />
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="tomcat.classpath" />
+
+	<target name="clean-deploy" depends="init-database, undeploy, deploy">
+		<description>Does a clean database and web app redeploy.</description>
+	</target>
+
+	<target name="deploy" depends="dist, dump-database">
+		<description>Deploys the web app to a local Tomcat server</description>
+		<deploy url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}"
+			path="${contextpath}" war="file:${war}" />
+	</target>
+
+	<target name="undeploy">
+		<description>Undeploys the web app from a local Tomcat server</description>
+		<undeploy url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}"
+			path="${contextpath}" />
 	</target>
 
 </project>
