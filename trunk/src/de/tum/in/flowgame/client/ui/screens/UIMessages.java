@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public class UIMessages {
 	
-	private static final String BUNDLE_NAME = "de.tum.in.flowgame.ui.screens.screens"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = UIMessages.class.getPackage().getName() + ".screens"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
