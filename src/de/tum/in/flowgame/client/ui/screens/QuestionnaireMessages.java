@@ -7,7 +7,7 @@ import de.tum.in.flowgame.model.Question;
 import de.tum.in.flowgame.model.Questionnaire;
 
 public class QuestionnaireMessages {
-	private static final String BUNDLE_NAME = "de.tum.in.flowgame.ui.screens.questionnaires"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = QuestionnaireMessages.class.getPackage().getName() + ".questionnaires"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
