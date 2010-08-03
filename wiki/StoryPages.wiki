@@ -38,7 +38,7 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 
 ----
 
-==Scenario 1: Antimatter Problems==
+==Scenario 1: Antimatter Problems (Antimaterie)==
 
 ===Session Intro===
 
@@ -114,7 +114,7 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 ----
 
-==Scenario 2: The Shadow war==
+==Scenario 2: The Shadow war (Kriegseinsatz)==
 
 ===Session Intro===
 "Good morning, pilot. We need you to aid the terran naval forces in the shadow war today. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
@@ -189,7 +189,7 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 ----
 
-==Scenario 3: Exploration==
+==Scenario 3: Exploration (Erkundung neuer Welten)==
 
 ===Session Intro===
 "Good morning, pilot. The Association for Exploration of Human Habitats requires our services. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
@@ -263,7 +263,7 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 ----
 
-==Scenario 4: Kupier Trouble==
+==Scenario 4: Kupier Trouble (Probleme in Kupier-Gürtel)==
 
 ===Session Intro===
 "Good morning, pilot. We need you to survey some operations for Deep Space Mining today. As always, report to the Department Of Psychological Enhancement to monitor your stress and performance level. It is crucial that you give D.O.P.E. accurate estimations, to ensure best performance among all of our pilots."
