@@ -80,7 +80,7 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 "Hello, pilot! Your next jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor Wilmut.
 His presence is required elsewhere, you will be briefed on take-off from Tau Ceti."
 
-"Hallo, Pilot! Ihr nächster Sprung wird sie zu einer Forschungsstation auf Tau Ceti Alpha bringen. Sie werden dort einen unserer besten Wissenschaftler in der Biogenetic, Professor Wilmut an Bord nehmen. Seine Anwesenheit wird andernorts gebraucht sie werden bei Abflug eingewiesen."
+"Hallo, Pilot! Ihr nächster Sprung wird sie zu einer Forschungsstation auf Tau Ceti Alpha bringen. Sie werden dort einen unserer besten Wissenschaftler in der Biogenetik, Professor Wilmut an Bord nehmen. Seine Anwesenheit wird andernorts gebraucht sie werden bei Abflug eingewiesen."
 
 ===Round Extro 4===
 "Welcome to Tau Ceti. No time for breaks this time, Professor Wilmut has already boarded your ship."
