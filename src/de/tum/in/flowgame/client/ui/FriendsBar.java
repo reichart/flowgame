@@ -15,9 +15,6 @@ import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONException;
-
-import com.google.code.facebookapi.FacebookException;
 
 import de.tum.in.flowgame.client.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.client.facebook.Friend;
@@ -182,7 +179,7 @@ public class FriendsBar extends JPanel {
 		return null;
 	}
 
-	public void update(List<Highscore> highscores) throws FacebookException, JSONException {
+	public void update(List<Highscore> highscores) throws Exception {
 		friendCash.updateFriends();
 		this.highscores = highscores;
 	}
