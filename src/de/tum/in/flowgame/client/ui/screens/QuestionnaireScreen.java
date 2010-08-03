@@ -131,8 +131,8 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 		questionnairePanel.reset();
 
 		final Questionnaire qn = questionnairePanel.getQuestionnaire();
-		title.setText(qn.getTitel());
-		description.setText(qn.getDescription());
+		title.setText(QuestionnaireMessages.getString(qn.getName() + ".title"));
+		description.setText(QuestionnaireMessages.getString(qn.getName() + ".desc"));
 
 		cardLayout.show(cardPanel, qn.getName());
 

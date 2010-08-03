@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import de.tum.in.flowgame.client.ui.screens.QuestionnaireMessages;
-
 @Entity
 public class Questionnaire extends AbstractEntity {
 
@@ -56,18 +54,7 @@ public class Questionnaire extends AbstractEntity {
 	}
 
 	public List<Question> getQuestions() {
-		for (Question q : questions) {
-			q.setText(QuestionnaireMessages.getString(name + q.getNumber()));
-		}
 		return questions;
-	}
-
-	public String getDescription() {
-		return QuestionnaireMessages.getString(name + ".desc");
-	}
-	
-	public String getTitel() {
-		return QuestionnaireMessages.getString(name + ".title");
 	}
 
 	public boolean isLabelDriven() {

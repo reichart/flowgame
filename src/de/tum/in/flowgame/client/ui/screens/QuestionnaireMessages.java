@@ -3,6 +3,9 @@ package de.tum.in.flowgame.client.ui.screens;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import de.tum.in.flowgame.model.Question;
+import de.tum.in.flowgame.model.Questionnaire;
+
 public class QuestionnaireMessages {
 	private static final String BUNDLE_NAME = "de.tum.in.flowgame.ui.screens.questionnaires"; //$NON-NLS-1$
 
@@ -18,5 +21,12 @@ public class QuestionnaireMessages {
 		} catch (final MissingResourceException e) {
 			return '!' + key + '!';
 		}
+	}
+	
+	/**
+	 * @return the localized text for a question.
+	 */
+	public static String getText(final Questionnaire qn, final Question q) {
+		return getString(qn.getName() + q.getNumber());
 	}
 }

@@ -19,6 +19,7 @@ import javax.swing.event.ChangeListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.tum.in.flowgame.client.ui.screens.QuestionnaireMessages;
 import de.tum.in.flowgame.client.ui.screens.UIMessages;
 import de.tum.in.flowgame.model.Answer;
 import de.tum.in.flowgame.model.Question;
@@ -67,7 +68,8 @@ public class QuestionnairePanel extends ChangeableComponent {
 		if (questionnaire.isLabelDriven()) {
 			try {
 				for (final Question question : qs) {
-					final String[] split = question.getText().split(Question.separator);
+					final String text = QuestionnaireMessages.getText(questionnaire, question);
+					final String[] split = text.split(Question.separator);
 					final JLabel label1 = new JLabel(split[0], SwingConstants.RIGHT);
 					final JLabel label2 = new JLabel(split[1], SwingConstants.LEFT);
 					final JPsychoSlider slider = new JPsychoSlider();
@@ -94,7 +96,7 @@ public class QuestionnairePanel extends ChangeableComponent {
 			}
 		} else {
 			for (final Question question : qs) {
-				final JTextArea text = new JTextArea(question.getText());
+				final JTextArea text = new JTextArea(QuestionnaireMessages.getText(questionnaire, question));
 				text.setColumns(20);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
