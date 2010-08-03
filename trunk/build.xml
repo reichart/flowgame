@@ -2,9 +2,11 @@
 <project name="flowgame" default="dist">
 
 	<property name="src" location="src" />
+	<property name="res" location="${src}/res" />
 	<property name="lib" location="lib" />
-	<property name="weblib" location="WebContent/lib" />
-	<property name="webapplib" location="WebContent/WEB-INF/lib" />
+	<property name="web" location="WebContent" />
+	<property name="weblib" location="${web}/lib" />
+	<property name="webapplib" location="${web}/WEB-INF/lib" />
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
 
@@ -29,6 +31,8 @@
 	<target name="init">
 		<tstamp />
 		<mkdir dir="${build}" />
+		<mkdir dir="${weblib}" />
+		<mkdir dir="${webapplib}" />
 	</target>
 
 	<target name="compile" depends="init">
@@ -39,8 +43,53 @@
 	</target>
 
 	<target name="dist" depends="compile">
+		
 		<mkdir dir="${dist}/lib" />
-		<jar jarfile="${dist}/lib/flowgame-${DSTAMP}.jar" basedir="${build}" />
+		
+		<property name="client-pkg" value="de/tum/in/flowgame/client/**" />
+		<property name="server-pkg" value="de/tum/in/flowgame/server/**" />
+		
+		<!-- Client JAR for applet runtime (with resources, no server classes) -->
+		<property name="client-jar" value="${dist}/lib/flowgame-client.jar" />
+		<jar jarfile="${client-jar}">
+			<fileset dir="${build}">
+				<include name="**/*" />
+				<exclude name="${server-pkg}" />
+			</fileset>
+			<fileset dir="${src}">
+				<!-- Include all language properties -->
+				<exclude name="${server-pkg}" />
+				<include name="**/*.properties" />
+			</fileset>
+			<zipfileset dir="${res}" includes="**/*" prefix="res" />
+		</jar>
+
+		<!-- Server JAR for web container (no resources, no client classes) -->
+		<property name="server-jar" value="${dist}/lib/flowgame-server.jar" />
+		<jar jarfile="${server-jar}">
+			<fileset dir="${build}">
+				<include name="**/*" />
+				<exclude name="${client-pkg}" />
+			</fileset>
+			<fileset dir="${src}">
+				<!-- Include all server config files -->
+				<exclude name="${client-pkg}" />
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+			</fileset>
+		</jar>
+
+		<!-- Build the WAR (as JAR because everything is in the right place already) -->
+		<jar destfile="${dist}/flowgame.war">
+			<fileset dir="${web}">
+				<include name="**/*" />
+				<exclude name="**/classes/**" />
+			</fileset>
+			<!-- Put client JAR into web-accessible location (as expected by applet.jsp) -->
+			<zipfileset file="${client-jar}" prefix="lib" />
+			<!-- Put server JAR into web app classpath -->
+			<zipfileset file="${server-jar}" prefix="WEB-INF/lib" />
+		</jar>
 	</target>
 
 	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.classpath" />
