@@ -310,7 +310,7 @@ public class GameLogic implements Runnable {
 	}
 
 	private long getExpectedPlaytime() {
-		return getCurrentScenarioRound().getExpectedPlaytime() / 10;
+		return getCurrentScenarioRound().getExpectedPlaytime();
 	}
 
 	public long getScore() {
