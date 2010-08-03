@@ -87,12 +87,6 @@
 			</result>
 		</action>
 		
-		<action name="personalHighscoreChartDownload" class="de.tum.in.flowgame.server.PersonalHighscoreChartDownloadAction">
-			<result type="stream">
-				<param name="contentType">image/png</param>
-			</result>
-		</action>
-		
 		<action name="export" class="de.tum.in.flowgame.server.DataExportAction">
 			<result>/WEB-INF/export.jsp</result>
 		</action>
