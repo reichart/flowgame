@@ -8,14 +8,17 @@ import de.tum.in.flowgame.model.Function;
 public class SigmoidBaselineFunction extends Function {
 
 	@Override
-	public double getValue(double z) {
+	public double getValue(final double z) {
 		if (z < 0) {
-			return 30 * Math.tanh(z/5000) + 60;
+			return 30 * Math.tanh(z / 5000) + 60;
 		} else {
-			return 240 * Math.tanh(z/5000) + 60;
+			return 240 * Math.tanh(z / 5000) + 60;
 		}
 	}
 
-
+	@Override
+	public String toString() {
+		return "sigmoid";
+	}
 
 }
