@@ -37,17 +37,11 @@ public class GameRound extends AbstractEntity {
 	@Transient
 	private transient GameListener listener;
 
-	@SuppressWarnings("unused")
 	private GameRound() { // for JPA
-		this(null);
-	}
-
-	public GameRound(final ScenarioRound scenarioRound) {
 		this.collisions = new ArrayList<Collision>();
 		this.answers = new ArrayList<Answer>();
 		this.configChanges = new ArrayList<ConfigChange>();
 		this.startTime = System.currentTimeMillis();
-		this.scenarioRound = scenarioRound;
 		this.listener = new DefaultGameListener() {
 			@Override
 			public void gameStarted(final GameLogic game) {
@@ -65,6 +59,15 @@ public class GameRound extends AbstractEntity {
 				collisions.add(new Collision(item));
 			}
 		};
+	}
+
+	public GameRound(final ScenarioRound scenarioRound) {
+		this();
+		
+		if (scenarioRound == null) {
+			throw new IllegalArgumentException("scenario round is null");
+		}
+		this.scenarioRound = scenarioRound;
 	}
 
 	public ScenarioRound getScenarioRound() {
@@ -106,8 +109,8 @@ public class GameRound extends AbstractEntity {
 		return answers;
 	}
 
-	public void setAnswers(final List<Answer> answers) {
-		this.answers = answers;
+	public void addAnswers(final List<Answer> answers) {
+		this.answers.addAll(answers);
 	}
 
 	public long getStartTime() {

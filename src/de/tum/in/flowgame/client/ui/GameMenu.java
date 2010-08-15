@@ -24,6 +24,7 @@ import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.client.GameApplet;
 import de.tum.in.flowgame.client.engine.Game3D;
 import de.tum.in.flowgame.client.ui.screens.AfterRoundQuestionnaireScreen;
+import de.tum.in.flowgame.client.ui.screens.BeforeRoundQuestionnaireScreen;
 import de.tum.in.flowgame.client.ui.screens.BeforeSessionQuestionnaireScreen;
 import de.tum.in.flowgame.client.ui.screens.CreditsScreen;
 import de.tum.in.flowgame.client.ui.screens.EmptyScreen;
@@ -125,6 +126,7 @@ public class GameMenu implements Sprite, GameListener {
 		
 		// qn screens
 		add(new BeforeSessionQuestionnaireScreen());
+		add(new BeforeRoundQuestionnaireScreen());
 		add(new AfterRoundQuestionnaireScreen());
 		add(new ProfileScreen());
 		
