@@ -186,12 +186,36 @@ public class GameLogic implements Runnable {
 		gameSession = null; // if this breaks stuff, that stuff is broken
 	}
 
-	public void start(final ScenarioRound round) {
+	/**
+	 * Initializes the next game round from the current scenarion session.
+	 * <p>
+	 * If after this call, {@link #getCurrentGameRound()} returns
+	 * <code>null</code> there are no more rounds in the current scenario.
+	 */
+	public void initNextRound() {
+		// the separate init/start methods allow access to the "current round"
+		// before starting the actual spaceship action e.g. for pre-round
+		// questionnaires.
+		final ScenarioRound nextRound = getCurrentScenarioSession().getNextRound();
+		if (nextRound == null) {
+			gameRound = null;
+		} else {
+			gameRound = gameSession.newRound(nextRound);
+		}
+		System.err.println("GameLogic.initNextRound() game round is NOW: " + gameRound);
+	}
+	
+	/**
+	 * Starts an initialized game round.
+	 * <p>
+	 * You must call {@link #initNextRound()} before this to initialize.
+	 */
+	public void startCurrentRound() {
 		if (thread != null && thread.isAlive()) {
 			throw new IllegalStateException("A game is still running.");
 		}
-		if (round == null) {
-			throw new IllegalArgumentException("scenario round is null");
+		if (gameRound == null) {
+			throw new IllegalArgumentException("game round is null: have you called initNextRound()?");
 		}
 
 		log.info("starting new game round");
@@ -203,9 +227,8 @@ public class GameLogic implements Runnable {
 		this.asteroidsCollected = 0;
 		this.asteroidsSeen = 0;
 
-		gameRound = gameSession.newRound(round);
 		addListener(gameRound.getListener());
-
+		
 		// reset internal state
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
@@ -336,6 +359,10 @@ public class GameLogic implements Runnable {
 	public GameSession getCurrentGameSession(){
 		return gameSession;
 	}
+	
+	public GameRound getCurrentGameRound() {
+		return gameRound;
+	}
 
 	public void setBaseline(double baseline) {
 		//FIXME: baseline probably should be double or speed should be long
@@ -347,7 +374,7 @@ public class GameLogic implements Runnable {
 	}
 
 	public ScenarioRound getCurrentScenarioRound() {
-		return gameRound.getScenarioRound();
+			return gameRound.getScenarioRound();
 	}
 
 	public void configChange(final ConfigKey key, final Object value){
@@ -374,11 +401,13 @@ public class GameLogic implements Runnable {
 		return fuelTrend;
 	}
 
+	/**
+	 * <em>Adds</em> answers to the current game round.
+	 */
 	public void saveRoundAnswers(final List<Answer> answers) {
-		gameRound.setAnswers(answers);
-		gameRound = null; // if this breaks stuff, the stuff is broken
+		gameRound.addAnswers(answers);
 	}
-
+	
 	public void saveSessionAnswers(final List<Answer> answers) {
 		gameSession.setAnswers(answers);
 	}

@@ -14,7 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.client.ui.screens.MenuScreen;
 import de.tum.in.flowgame.client.ui.screens.UIMessages;
-import de.tum.in.flowgame.model.ScenarioSession;
 
 /**
  * Story screen just before game play starts.
@@ -27,9 +26,8 @@ public class RoundIntroScreen extends MenuScreen {
 
 	private final JButton play = new JButton(new AbstractAction(UIMessages.getString("game.play")) {
 		public void actionPerformed(final ActionEvent e) {
-			log.info("starting first round");
-			final ScenarioSession scenarioSession = menu.getLogic().getCurrentScenarioSession();
-			menu.getLogic().start(scenarioSession.getNextRound(true));
+			log.info("starting current round");
+			menu.getLogic().startCurrentRound();
 		}
 	});
 

@@ -7,17 +7,17 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import de.tum.in.flowgame.client.ui.screens.story.RoundExtroScreen;
+import de.tum.in.flowgame.client.ui.screens.story.RoundIntroScreen;
 
 /**
- * Displays the "flow" and "requirements fit" questionnaires after the highscores.
+ * Displays the short mood questionnaire before a game round.
  */
-public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
+public class BeforeRoundQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final Action next = new AbstractAction(UIMessages.CONTINUE) {
 		public void actionPerformed(final ActionEvent e) {
 			menu.getLogic().saveRoundAnswers(getAnswers());
-			menu.show(RoundExtroScreen.class);
+			menu.show(RoundIntroScreen.class);
 		}
 	};
 
@@ -25,9 +25,9 @@ public class AfterRoundQuestionnaireScreen extends QuestionnaireScreen {
 	protected Action next() {
 		return next;
 	}
-
+	
 	@Override
 	protected List<String> getQuestionnaireNames() {
-		return Arrays.asList("flow", "reqfit");
+		return Arrays.asList("moodShort");
 	}
 }

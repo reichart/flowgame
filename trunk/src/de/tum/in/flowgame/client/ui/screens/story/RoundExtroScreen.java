@@ -11,9 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.Utils;
+import de.tum.in.flowgame.client.ui.screens.BeforeRoundQuestionnaireScreen;
 import de.tum.in.flowgame.client.ui.screens.MenuScreen;
 import de.tum.in.flowgame.client.ui.screens.UIMessages;
-import de.tum.in.flowgame.model.ScenarioRound;
+import de.tum.in.flowgame.model.GameRound;
 
 /**
  * Displayed after each gameplay-highscore-questionnaire block before the game
@@ -25,13 +26,15 @@ public class RoundExtroScreen extends MenuScreen {
 
 	private final JButton next = new JButton(new AbstractAction(UIMessages.CONTINUE) {
 		public void actionPerformed(final ActionEvent e) {
-			final ScenarioRound nextRound = menu.getLogic().getCurrentScenarioSession().getNextRound(false);
-			if (nextRound == null) {
-				log.info("no next round, game over");
+			menu.getLogic().initNextRound();
+			
+			final GameRound round = menu.getLogic().getCurrentGameRound();
+			if (round == null) {
+				log.info("no more rounds, game over");
 				menu.show(SessionExtroScreen.class);
 			} else {
-				log.info("preparing for next round, back to intro screen");
-				menu.show(RoundIntroScreen.class);
+				log.info("more rounds available, showing pre-round qn: " + round);
+				menu.show(BeforeRoundQuestionnaireScreen.class);
 			}
 		}
 	});
