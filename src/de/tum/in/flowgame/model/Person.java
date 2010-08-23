@@ -93,10 +93,14 @@ public class Person implements Serializable {
 	}
 
 	public int getAge() {
-		final Calendar birthday = Calendar.getInstance();
-		birthday.setTime(getDateOfBirth());
-		final Calendar today = Calendar.getInstance();
-		return today.get(Calendar.YEAR) - birthday.get(Calendar.YEAR);
+		if (getDateOfBirth() == null) {
+			return -1;
+		} else {
+			final Calendar birthday = Calendar.getInstance();
+			birthday.setTime(getDateOfBirth());
+			final Calendar today = Calendar.getInstance();
+			return today.get(Calendar.YEAR) - birthday.get(Calendar.YEAR);
+		}
 	}
 	
 	@Override
