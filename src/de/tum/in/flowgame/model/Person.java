@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,13 @@ public class Person implements Serializable {
 		this.profilingAnswers = profilingAnswers;
 	}
 
+	public int getAge() {
+		final Calendar birthday = Calendar.getInstance();
+		birthday.setTime(getDateOfBirth());
+		final Calendar today = Calendar.getInstance();
+		return today.get(Calendar.YEAR) - birthday.get(Calendar.YEAR);
+	}
+	
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj instanceof Person) {
