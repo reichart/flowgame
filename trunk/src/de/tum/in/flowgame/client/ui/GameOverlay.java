@@ -22,6 +22,8 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.client.engine.Game3D;
 import de.tum.in.flowgame.client.engine.behavior.FrameCounterBehavior.FrameCounterListener;
 import de.tum.in.flowgame.client.ui.screens.UIMessages;
+import de.tum.in.flowgame.model.ScenarioRound;
+import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
 
 /**
@@ -115,7 +117,11 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			g.drawString(controls, width - controlsW - 20, height - stringH);
 			
 			// FIXME remove this before going live
-			g.drawString("scenario " + logic.getCurrentScenarioRound().getId(), 20, height - stringH);
+			final ScenarioSession session = logic.getCurrentScenarioSession();
+			final ScenarioRound round = logic.getCurrentScenarioRound();
+			if (session != null && round != null) {
+				g.drawString("scenario session " + session.getId() + " / round " + round.getId(), 20, height - stringH);
+			}
 
 			if (logic != null) {
 				// render Score in the upper middle of screen
@@ -134,9 +140,9 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 					Color color;
 					// change colors from green to yellow to red the fewer time
 					// is left
-					if (logic.getRemainingTime() > (logic.getCurrentScenarioRound().getExpectedPlaytime() / 2)) {
+					if (logic.getRemainingTime() > (round.getExpectedPlaytime() / 2)) {
 						color = Color.GREEN;
-					} else if (logic.getRemainingTime() > (logic.getCurrentScenarioRound().getExpectedPlaytime() / 4)) {
+					} else if (logic.getRemainingTime() > (round.getExpectedPlaytime() / 4)) {
 						color = Color.YELLOW;
 					} else {
 						color = Color.RED;
@@ -164,7 +170,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				g.setPaint(paint);
 				
 				// display circle that shrinks with the time
-				double playtimeOver = (double) logic.getRemainingTime() / logic.getCurrentScenarioRound().getExpectedPlaytime();
+				double playtimeOver = (double) logic.getRemainingTime() / round.getExpectedPlaytime();
 				for (int i = 0; i < 12 * playtimeOver; i++) {
 					g.drawArc(xPos - RADIUS, yPos - RADIUS, RADIUS * 2, RADIUS * 2, (i*30 + 90) % 360, 10);
 				}
