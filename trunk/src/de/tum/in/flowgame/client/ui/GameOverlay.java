@@ -113,6 +113,9 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final String controls = UIMessages.getString("pause.continue");
 			final int controlsW = fmSmall.stringWidth(controls);
 			g.drawString(controls, width - controlsW - 20, height - stringH);
+			
+			// FIXME remove this before going live
+			g.drawString("scenario " + logic.getCurrentScenarioRound().getId(), 20, height - stringH);
 
 			if (logic != null) {
 				// render Score in the upper middle of screen
