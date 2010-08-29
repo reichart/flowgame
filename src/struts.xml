@@ -86,11 +86,21 @@
 				<param name="contentType">application/octet-stream</param>
 			</result>
 		</action>
-		
-		<action name="export" class="de.tum.in.flowgame.server.DataExportAction">
+
+	</package>
+	
+	<package name="export" namespace="/export" extends="struts-default">
+
+		<default-action-ref name="web" />
+
+		<action name="web" class="de.tum.in.flowgame.server.DataExportAction">
 			<result>/WEB-INF/export.jsp</result>
 		</action>
-		
+
+		<action name="spss" class="de.tum.in.flowgame.server.SPSSDataExportAction">
+			<result>/WEB-INF/spss.jsp</result>
+		</action>
+
 	</package>
 
 </struts>
