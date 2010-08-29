@@ -19,10 +19,19 @@ public class ScenarioSessionDownloadAction extends GameDataAction<Long, Scenario
 	@Override
 	public ScenarioSession execute(final Long playerId) throws Exception {
 		final Random rnd = new Random(System.currentTimeMillis());
-		final boolean sort = rnd.nextBoolean();
+		final boolean sort; //rnd.nextBoolean();
+		
+		//TODO read this data from database instead of taking fixed size of 3
+		final Integer scenario = rnd.nextInt(3);
+		final Integer id = scenario%2;//rnd.nextInt(scenarioSessions.size());
+		if (scenario==2) {
+			sort = false;
+		} else {
+			sort = true;
+		}
 
 		final List<ScenarioSession> scenarioSessions = list(ScenarioSession.class);
-		final Integer id = rnd.nextInt(scenarioSessions.size());
+		
 		
 		ScenarioSession session = null;
 		if (id < scenarioSessions.size()) {
