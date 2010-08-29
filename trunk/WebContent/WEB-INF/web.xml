@@ -21,7 +21,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Data Export Interface</web-resource-name>
-			<url-pattern>/export</url-pattern>
+			<url-pattern>/export/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>export</role-name>
