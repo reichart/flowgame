@@ -15,7 +15,7 @@ public class LinearFunction extends Function {
 	}
 
 	public LinearFunction(final double initialValue, final double slope) {
-		super(initialValue);
+		super(initialValue, 1);
 		this.slope = slope;
 	}
 

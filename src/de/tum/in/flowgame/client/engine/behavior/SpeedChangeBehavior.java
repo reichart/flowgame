@@ -31,6 +31,9 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 	 * list of speeds during the round, used to calculate the baseline
 	 */
 	private List<Double> speeds;
+	
+	//debug value for speed at the start of each round
+	private double startSpeed;
 
 	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator, final TextureTransformBehavior ttb) {
 		this.forwardNavigator = forwardNavigator;
@@ -56,12 +59,22 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 					maxSpeed = Math.max(speed, maxSpeed);
 					gameLogic.setRating(strategy.getDifficultyRating(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend()));
 				} else {
-					long speedAddFromDifficulty = 0;
+					long baselineSpeed = 0;
 					if (gameLogic.getBaseline() != null) {
-						speedAddFromDifficulty = gameLogic.getBaseline().getSpeed();
+						baselineSpeed = gameLogic.getBaseline().getSpeed();
 					}
-					speed = (fun == null) ? 0 : fun.getValue(gameLogic.getElapsedTime()) + speedAddFromDifficulty;
+					fun.configure(baselineSpeed, gameLogic.getCurrentScenarioRound().getExpectedPlaytime());
+					speed = (fun == null) ? 0 : fun.getValue(gameLogic.getElapsedTime());
 					gameLogic.setRating(gameLogic.getDifficultyFunction().getDifficultyRating(gameLogic.getElapsedTime()));
+				}
+				
+				// Prevention from driving backwards
+				if (speed < 30D) {
+					speed = 30D;
+				}
+				
+				if (startSpeed == 0) {
+					startSpeed = speed;
 				}
 
 				speeds.add(speed);
@@ -92,8 +105,11 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 
 				@Override
 				public void gameStopped(GameLogic game) {
+					System.err.println("Speed at start of round: " + startSpeed);
+					System.err.println("Speed at end of round: " + speed);
+					startSpeed = 0;
 					if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
-//						long baseline = (long) (maxSpeed * 0.9);
+						//						long baseline = (long) (maxSpeed * 0.9);
 						Collections.sort(speeds);
 						System.err.println("Speeds Size: " + speeds.size() + "\tPosition at 70% " + (int)(speeds.size() * 0.5f));
 						System.err.println("maxSpeed " + maxSpeed);

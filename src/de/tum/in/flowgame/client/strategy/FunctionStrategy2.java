@@ -24,13 +24,7 @@ public class FunctionStrategy2 implements FlowStrategy, FunctionStrategy2MBean {
 	}
 
 	public double calculateSpeed(Trend asteroidTrend, Trend fuelTrend, double speedValue, long deltaTime) {
-		double speed = function.getSpeed().getValue(getPosition(asteroidTrend, fuelTrend, deltaTime));
-
-		// Prevention from driving backwards
-		if (speed < 30D) {
-			speed = 30D;
-		}
-		return speed;
+		return function.getSpeed().getValue(getPosition(asteroidTrend, fuelTrend, deltaTime));
 	}
 
 	private double getPosition(Trend asteroidTrend, Trend fuelTrend, long deltaTime) {

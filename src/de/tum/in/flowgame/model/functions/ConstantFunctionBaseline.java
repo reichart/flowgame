@@ -5,15 +5,15 @@ import javax.persistence.Entity;
 import de.tum.in.flowgame.model.Function;
 
 @Entity
-public class ConstantFunction extends Function {
+public class ConstantFunctionBaseline extends Function {
 
 	@SuppressWarnings("unused")
-	private ConstantFunction() {
+	private ConstantFunctionBaseline() {
 		// JPA only
 	}
 
-	public ConstantFunction(final double initialValue) {
-		super(initialValue, 1);
+	public ConstantFunctionBaseline(final double initialValue, final double baselineFactor) {
+		super(initialValue, baselineFactor);
 	}
 
 	@Override

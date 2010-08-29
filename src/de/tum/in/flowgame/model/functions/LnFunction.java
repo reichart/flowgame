@@ -18,7 +18,7 @@ public class LnFunction extends Function {
 	}
 
 	public LnFunction(final double multiplier, final double offset, final double initialValue) {
-		super(initialValue);
+		super(initialValue, 1);
 		this.multiplier = multiplier;
 		this.offset = offset;
 	}

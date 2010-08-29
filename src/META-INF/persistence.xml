@@ -19,6 +19,8 @@
 		<class>de.tum.in.flowgame.model.functions.LinearFunction</class>
 		<class>de.tum.in.flowgame.model.functions.ConstantFunction</class>
 		<class>de.tum.in.flowgame.model.functions.SigmoidBaselineFunction</class>
+		<class>de.tum.in.flowgame.model.functions.ConstantFunctionBaseline</class>
+		<class>de.tum.in.flowgame.model.functions.LinearFunctionBaseline</class>
 		<class>de.tum.in.flowgame.model.functions.LnFunction</class>
 		<class>de.tum.in.flowgame.model.ScenarioSession</class>
 		<class>de.tum.in.flowgame.model.GameSession</class>
@@ -38,7 +40,7 @@
 <!--		<property name="javax.persistence.jdbc.user" value="idp" />			-->
 <!--		<property name="javax.persistence.jdbc.password" value="idp" /> 			-->
 							
-<!-- 	<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />  -->
+<!--   	<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> --> 
         <property name="eclipselink.ddl-generation.output-mode" value="database" />
 
 		</properties>
