@@ -82,7 +82,7 @@ public class DDLGenerator {
 		DifficultyFunction df4 = new DifficultyFunction(intervalFunction, speedFunction4, ratioFunction);
 		DifficultyFunction df5 = new DifficultyFunction(intervalFunction, speedFunction5, ratioFunction);
 
-		final long timeLimit = 60*1000;
+		final long timeLimit = 120*1000;
 		
 		//Create Scenario with Constant functions and previos baseline
 //		Function speedFunctionConstant1 = new ConstantFunction(-60);
