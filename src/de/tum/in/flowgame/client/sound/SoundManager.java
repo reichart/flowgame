@@ -61,14 +61,16 @@ public class SoundManager {
 
 	}
 
-	public void pause() {
-		for (final AudioStream stream : streams.values()) {
+	public void pause(final Sound sound) {
+		final AudioStream stream = streams.get(sound);
+		if (stream != null) {
 			stream.pause();
 		}
 	}
 
-	public void unpause() {
-		for (final AudioStream stream : streams.values()) {
+	public void unpause(final Sound sound) {
+		final AudioStream stream = streams.get(sound);
+		if (stream != null) {
 			stream.unpause();
 		}
 	}
