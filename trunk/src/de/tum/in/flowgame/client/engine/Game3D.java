@@ -115,6 +115,16 @@ public class Game3D extends Canvas3D {
 			}
 
 			@Override
+			public void gamePaused(final GameLogic game) {
+				SoundManager.getInstance().pause(Sound.GAMEPLAY);
+			}
+
+			@Override
+			public void gameResumed(final GameLogic game) {
+				SoundManager.getInstance().unpause(Sound.GAMEPLAY);
+			}
+
+			@Override
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
 				switsch.setWhichChild(Switch.CHILD_ALL);
