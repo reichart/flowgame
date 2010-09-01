@@ -7,6 +7,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,6 +37,29 @@ public class Utils {
 	 */
 	public static <T> T[] asArray(final T... t) {
 		return t;
+	}
+
+	/**
+	 * Safely compares two nullable objects for equality.
+	 * <p>
+	 * No {@link NullPointerException} will be thrown by this method unless the
+	 * equals method of the first object isn't null-safe as it should be.
+	 * 
+	 * @param a
+	 *            the first object
+	 * @param b
+	 *            the second object
+	 * 
+	 * @return <code>true</code> if either both objects are <code>null</code> or
+	 *         both are equal according to
+	 *         <code>equals<code/> method of the first object, otherwise <code>false</code>
+	 */
+	public static boolean equals(final Object a, final Object b) {
+		if (a == null) {
+			return b == null;
+		} else {
+			return a.equals(b);
+		}
 	}
 
 	static {
@@ -174,6 +198,20 @@ public class Utils {
 		} catch (final Exception ex) {
 			log.warn("failed to load image from " + source, ex);
 			return fallback;
+		}
+	}
+
+	public static void close(final Closeable closeable) throws IOException {
+		if (closeable != null) {
+			closeable.close();
+		}
+	}
+
+	public static void closeQuietly(final Closeable closeable) {
+		try {
+			close(closeable);
+		} catch (final IOException ex) {
+			log.warn("failed to close " + closeable, ex);
 		}
 	}
 }
