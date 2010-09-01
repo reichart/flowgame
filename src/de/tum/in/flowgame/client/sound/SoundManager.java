@@ -53,7 +53,7 @@ public class SoundManager {
 		executor.submit(stream);
 	}
 
-	public void stop(final Sound sound, boolean wait) {
+	public void stop(final Sound sound, final boolean wait) {
 		final AudioStream stream = streams.remove(sound);
 		if (stream != null) {
 			stream.stop(wait);
@@ -61,17 +61,23 @@ public class SoundManager {
 
 	}
 
+	public void pause() {
+		for (final AudioStream stream : streams.values()) {
+			stream.pause();
+		}
+	}
+
+	public void unpause() {
+		for (final AudioStream stream : streams.values()) {
+			stream.unpause();
+		}
+	}
+
 	public void setMuted(final boolean muted) {
 		this.muted = muted;
-		
+
 		for (final AudioStream stream : streams.values()) {
-			if (stream.getSound().isMutable()) {
-				if (muted) {
-					stream.pause();
-				} else {
-					stream.unpause();
-				}
-			}
+			stream.setMuted(muted);
 		}
 	}
 }
