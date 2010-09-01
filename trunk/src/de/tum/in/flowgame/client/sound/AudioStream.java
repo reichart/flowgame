@@ -33,14 +33,12 @@ public class AudioStream implements Runnable {
 
 	private volatile CountDownLatch finished, paused;
 
+	private volatile boolean muted;
+
 	public AudioStream(final Sound sound, final boolean loop) {
 		this.sound = sound;
 		this.loop = loop;
 		this.state = State.PLAY;
-	}
-
-	public Sound getSound() {
-		return sound;
 	}
 
 	public void run() {
@@ -57,6 +55,7 @@ public class AudioStream implements Runnable {
 
 				line.start();
 
+				final byte[] empty = new byte[1024];
 				final byte[] buf = new byte[1024];
 				int len = 0;
 				while ((len = din.read(buf, 0, buf.length)) != -1) {
@@ -67,7 +66,13 @@ public class AudioStream implements Runnable {
 						paused.await();
 						paused = null;
 					}
-					line.write(buf, 0, len);
+					if (muted) {
+						// for some weird reason, we need to write out an empty
+						// byte arrays to be able to unmute later again
+						line.write(empty, 0, empty.length);
+					} else {
+						line.write(buf, 0, len);
+					}
 				}
 				line.drain();
 				line.stop();
@@ -98,6 +103,10 @@ public class AudioStream implements Runnable {
 		}
 	}
 
+	public void setMuted(final boolean muted) {
+		this.muted = muted;
+	}
+
 	public void pause() {
 		paused = new CountDownLatch(1);
 	}
@@ -124,4 +133,8 @@ public class AudioStream implements Runnable {
 		return res;
 	}
 
+	@Override
+	public String toString() {
+		return "stream[" + sound + "]";
+	}
 }
