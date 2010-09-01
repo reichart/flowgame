@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import de.tum.in.flowgame.Utils;
+
 @Entity
 public class ConfigChange extends AbstractEntity implements Comparable<ConfigChange> {
 
@@ -40,26 +42,13 @@ public class ConfigChange extends AbstractEntity implements Comparable<ConfigCha
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final ConfigChange other = (ConfigChange) obj;
-		if (configKey == null) {
-			if (other.configKey != null)
-				return false;
-		} else if (!configKey.equals(other.configKey))
-			return false;
-		if (timestamp != other.timestamp)
-			return false;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
-		return true;
+		if (obj instanceof ConfigChange) {
+			final ConfigChange other = (ConfigChange) obj;
+			return this.timestamp == other.timestamp &&
+				Utils.equals(this.configKey, other.configKey) &&
+				Utils.equals(this.value, other.value);
+		}
+		return false;
 	}
 
 	public Date getTimestamp() {
