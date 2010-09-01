@@ -27,16 +27,10 @@ public class Score implements Serializable, Comparable<Score> {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final Score other = (Score) obj;
-		if (startTime != other.startTime)
-			return false;
-		return true;
+		if (obj instanceof Score) {
+			return startTime == ((Score) obj).startTime;
+		}
+		return false;
 	}
 
 	/**
