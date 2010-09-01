@@ -39,6 +39,8 @@ import de.tum.in.flowgame.client.engine.behavior.CollisionBehavior;
 import de.tum.in.flowgame.client.engine.behavior.CreateNewCollidablesBehavior;
 import de.tum.in.flowgame.client.engine.behavior.ForwardBehavior;
 import de.tum.in.flowgame.client.engine.behavior.FrameCounterBehavior;
+import de.tum.in.flowgame.client.sound.Sound;
+import de.tum.in.flowgame.client.sound.SoundManager;
 import de.tum.in.flowgame.client.ui.GameMenu;
 import de.tum.in.flowgame.client.ui.GameOverlay;
 
@@ -116,12 +118,16 @@ public class Game3D extends Canvas3D {
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
 				switsch.setWhichChild(Switch.CHILD_ALL);
+				SoundManager.getInstance().stop(Sound.MENU);
+				SoundManager.getInstance().once(Sound.GAMEPLAY);
 			}
 
 			@Override
 			public void gameStopped(final GameLogic game) {
 				System.out.println("Game3D.gameStopped()");
 				switsch.setWhichChild(Switch.CHILD_NONE);
+				SoundManager.getInstance().stop(Sound.GAMEPLAY);
+				SoundManager.getInstance().loop(Sound.MENU);
 			}
 		};
 

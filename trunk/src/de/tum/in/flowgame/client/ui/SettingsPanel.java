@@ -10,7 +10,7 @@ import javax.swing.JToggleButton;
 
 import com.kitfox.svg.app.beans.SVGIcon;
 
-import de.tum.in.flowgame.client.Sounds;
+import de.tum.in.flowgame.client.sound.SoundManager;
 import de.tum.in.flowgame.client.ui.sprite.SVGSprite;
 import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 
@@ -88,7 +88,7 @@ public class SettingsPanel extends JPanel {
 
 	private void setSoundMuted(final boolean muted) {
 		sound.setSelected(muted);
-		Sounds.setMuted(muted);
+		SoundManager.getInstance().setMuted(muted);
 	}
 
 	private void setSteering(final boolean normal) {

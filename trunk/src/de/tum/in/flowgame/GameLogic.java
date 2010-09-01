@@ -11,9 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.client.Client;
-import de.tum.in.flowgame.client.Sounds;
 import de.tum.in.flowgame.client.facebook.CustomFacebookClient;
 import de.tum.in.flowgame.client.facebook.JSONUtils;
+import de.tum.in.flowgame.client.sound.Sound;
+import de.tum.in.flowgame.client.sound.SoundManager;
 import de.tum.in.flowgame.client.strategy.Trend;
 import de.tum.in.flowgame.client.util.Browser;
 import de.tum.in.flowgame.model.Answer;
@@ -85,13 +86,13 @@ public class GameLogic implements Runnable {
 			fuelInRow++;
 			asteroidsInRow = 0;
 
-			Sounds.FUELCAN.play();
+			SoundManager.getInstance().once(Sound.GOODIE);
 			break;
 		case ASTEROID:
 			asteroidsCollected++;
 			asteroidsInRow++;
 			fuelInRow = 0;
-			Sounds.ASTEROID.play();
+			SoundManager.getInstance().once(Sound.ASTEROID);
 			break;
 		}
 

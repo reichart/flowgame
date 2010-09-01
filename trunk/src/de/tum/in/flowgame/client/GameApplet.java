@@ -21,6 +21,8 @@ import com.google.code.facebookapi.ProfileField;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.client.engine.Game3D;
 import de.tum.in.flowgame.client.facebook.CustomFacebookClient;
+import de.tum.in.flowgame.client.sound.Sound;
+import de.tum.in.flowgame.client.sound.SoundManager;
 import de.tum.in.flowgame.client.ui.screens.MainScreen;
 import de.tum.in.flowgame.client.ui.screens.story.BeforeProfileScreen;
 import de.tum.in.flowgame.client.util.Browser;
@@ -102,8 +104,6 @@ public class GameApplet extends Applet {
 	@Override
 	public void init() {
 		try {
-			SoundsHelper.init(this);
-			
 			this.facebook = createFacebookClient();
 
 			final Client client = new Client(facebook.getServer());
@@ -118,7 +118,8 @@ public class GameApplet extends Applet {
 			} else {
 				game.getMenu().show(MainScreen.class);
 			}
-
+			
+			SoundManager.getInstance().loop(Sound.MENU);
 		} catch (final Exception ex) {
 			throw new RuntimeException("Failed to connect to " + facebook.getServer(), ex);
 		}
