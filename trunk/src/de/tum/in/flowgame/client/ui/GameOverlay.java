@@ -120,7 +120,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final ScenarioSession session = logic.getCurrentScenarioSession();
 			final ScenarioRound round = logic.getCurrentScenarioRound();
 			if (session != null && round != null) {
-				g.drawString("scenario session " + session.getId() + " / round " + round.getId(), 20, height - stringH);
+				g.drawString("scenario session id=" + session.getId() + ", round pos=" + round.getPosition() + "/" + session.getRounds().size(), 20, height - stringH);
 			}
 
 			if (logic != null) {
