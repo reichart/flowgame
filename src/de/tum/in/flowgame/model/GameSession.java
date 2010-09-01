@@ -20,6 +20,12 @@ public class GameSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Answer> answers;
 
+	/**
+	 * Amount of time (in milliseconds) used to answer all questions for this
+	 * session (excluding round questionnaire).
+	 */
+	private long answeringTime;
+	
 	private GameSession() { // for JPA
 		this.rounds = new ArrayList<GameRound>();
 	}
@@ -66,10 +72,15 @@ public class GameSession extends AbstractEntity {
 		return answers;
 	}
 	
-	public void setAnswers(List<Answer> answers) {
+	public void setAnswers(final List<Answer> answers, final long answeringTime) {
 		this.answers = answers;
+		this.answeringTime = answeringTime;
 	}
 
+	public long getAnsweringTime() {
+		return answeringTime;
+	}
+	
 	public void setBaseline(Difficulty baseline) {
 		this.baseline = baseline;		
 	}

@@ -24,7 +24,10 @@ public class GameRound extends AbstractEntity {
 	private List<Collision> collisions;
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Answer> answers;
+	
 	private long startTime;
+	private long endTime;
+	
 	private long score;
 	@OneToMany(fetch = FetchType.EAGER)   @OrderBy("timestamp")   
 	private List<ConfigChange> configChanges;
@@ -36,6 +39,12 @@ public class GameRound extends AbstractEntity {
 
 	@Transient
 	private transient GameListener listener;
+	
+	/**
+	 * Amount of time (in milliseconds) used to answer all questions for this
+	 * round.
+	 */
+	private long answeringTime;
 
 	private GameRound() { // for JPA
 		this.collisions = new ArrayList<Collision>();
@@ -109,10 +118,15 @@ public class GameRound extends AbstractEntity {
 		return answers;
 	}
 
-	public void addAnswers(final List<Answer> answers) {
+	public void addAnswers(final List<Answer> answers, final long answeringTime) {
 		this.answers.addAll(answers);
+		this.answeringTime += answeringTime;
 	}
 
+	public long getAnsweringTime() {
+		return answeringTime;
+	}
+	
 	public long getStartTime() {
 		return startTime;
 	}
@@ -121,6 +135,14 @@ public class GameRound extends AbstractEntity {
 		this.startTime = startTime;
 	}
 
+	public long getEndTime() {
+		return endTime;
+	}
+	
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
+	
 	public Score getScore() {
 		return new Score(startTime, score);
 	}
