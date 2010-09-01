@@ -47,16 +47,16 @@ public class SoundManager {
 		// stop previous before playing new sound
 		final AudioStream previous = streams.put(sound, stream);
 		if (previous != null) {
-			previous.stop();
+			previous.stop(false);
 		}
 
 		executor.submit(stream);
 	}
 
-	public void stop(final Sound sound) {
+	public void stop(final Sound sound, boolean wait) {
 		final AudioStream stream = streams.remove(sound);
 		if (stream != null) {
-			stream.stop();
+			stream.stop(wait);
 		}
 
 	}
