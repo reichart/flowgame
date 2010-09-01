@@ -42,7 +42,7 @@ public class AudioStream implements Runnable {
 	public Sound getSound() {
 		return sound;
 	}
-	
+
 	public void run() {
 		finished = new CountDownLatch(1);
 
@@ -64,10 +64,8 @@ public class AudioStream implements Runnable {
 						break;
 					}
 					if (paused != null) {
-						System.err.println("entering pause lock");
 						paused.await();
 						paused = null;
-						System.err.println("pause is over");
 					}
 					line.write(buf, 0, len);
 				}
@@ -89,24 +87,25 @@ public class AudioStream implements Runnable {
 		state = State.PLAY;
 	}
 
-	public void stop() {
+	public void stop(final boolean wait) {
 		state = State.STOP;
-		try {
-			finished.await();
-		} catch (final InterruptedException e) {
-			// ignore
+		if (wait) {
+			try {
+				finished.await();
+			} catch (final InterruptedException e) {
+				// ignore
+			}
 		}
 	}
 
 	public void pause() {
-		System.err.println("AudioStream.pause()");
 		paused = new CountDownLatch(1);
 	}
-	
+
 	public void unpause() {
 		paused.countDown();
 	}
-	
+
 	/**
 	 * Creates an decoded format from an encoded input.
 	 */

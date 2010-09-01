@@ -118,7 +118,7 @@ public class Game3D extends Canvas3D {
 			public void gameStarted(final GameLogic game) {
 				System.out.println("Game3D.gameStarted()");
 				switsch.setWhichChild(Switch.CHILD_ALL);
-				SoundManager.getInstance().stop(Sound.MENU);
+				SoundManager.getInstance().stop(Sound.MENU, false);
 				SoundManager.getInstance().once(Sound.GAMEPLAY);
 			}
 
@@ -126,7 +126,7 @@ public class Game3D extends Canvas3D {
 			public void gameStopped(final GameLogic game) {
 				System.out.println("Game3D.gameStopped()");
 				switsch.setWhichChild(Switch.CHILD_NONE);
-				SoundManager.getInstance().stop(Sound.GAMEPLAY);
+				SoundManager.getInstance().stop(Sound.GAMEPLAY, true);
 				SoundManager.getInstance().loop(Sound.MENU);
 			}
 		};
