@@ -200,7 +200,7 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 */
 	public long getAnsweringTime() {
 		final long answeringTime = System.currentTimeMillis() - answeringStartTime;
-		System.err.println("answering for " + this + ": " + answeringTime);
+		System.err.println("answering for " + getClass().getName() + ": " + answeringTime);
 		return answeringTime;
 	}
 }
