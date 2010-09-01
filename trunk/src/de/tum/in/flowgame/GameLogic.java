@@ -404,12 +404,12 @@ public class GameLogic implements Runnable {
 	/**
 	 * <em>Adds</em> answers to the current game round.
 	 */
-	public void saveRoundAnswers(final List<Answer> answers) {
-		gameRound.addAnswers(answers);
+	public void saveRoundAnswers(final List<Answer> answers, final long answeringTime) {
+		gameRound.addAnswers(answers, answeringTime);
 	}
 	
-	public void saveSessionAnswers(final List<Answer> answers) {
-		gameSession.setAnswers(answers);
+	public void saveSessionAnswers(final List<Answer> answers, final long answeringTime) {
+		gameSession.setAnswers(answers, answeringTime);
 	}
 
 	public Browser getBrowser() {

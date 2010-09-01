@@ -45,6 +45,8 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 
 	private int currentPanel;
 
+	private long answeringStartTime;
+
 	private List<QuestionnairePanel> questionnairePanels;
 
 	private final ForceAnswersListener forceAnswers;
@@ -139,6 +141,8 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 		// disable until all questions are answered
 		next.setEnabled(false);
 		next.setText(NEXT_DISABLED);
+		
+		this.answeringStartTime = System.currentTimeMillis();
 	}
 
 	private QuestionnairePanel getCurrentPanel() {
@@ -191,4 +195,12 @@ public abstract class QuestionnaireScreen extends MenuScreen {
 	 */
 	protected abstract List<String> getQuestionnaireNames();
 
+	/**
+	 * @return the time in milliseconds since the questionnaire was displayed
+	 */
+	public long getAnsweringTime() {
+		final long answeringTime = System.currentTimeMillis() - answeringStartTime;
+		System.err.println("answering for " + this + ": " + answeringTime);
+		return answeringTime;
+	}
 }

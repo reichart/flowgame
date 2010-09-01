@@ -22,7 +22,7 @@ public class BeforeSessionQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final Action next = new AbstractAction(UIMessages.CONTINUE) {
 		public void actionPerformed(final ActionEvent e) {
-			menu.getLogic().saveSessionAnswers(getAnswers());
+			menu.getLogic().saveSessionAnswers(getAnswers(), getAnsweringTime());
 			menu.getLogic().initNextRound();
 			menu.show(RoundIntroScreen.class);
 		}

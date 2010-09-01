@@ -16,7 +16,7 @@ public class BeforeRoundQuestionnaireScreen extends QuestionnaireScreen {
 
 	private final Action next = new AbstractAction(UIMessages.CONTINUE) {
 		public void actionPerformed(final ActionEvent e) {
-			menu.getLogic().saveRoundAnswers(getAnswers());
+			menu.getLogic().saveRoundAnswers(getAnswers(), getAnsweringTime());
 			menu.show(RoundIntroScreen.class);
 		}
 	};
