@@ -134,7 +134,6 @@ public class GameMenu implements Sprite, GameListener {
 		add(new BeforeProfileScreen());
 		add(new AfterProfileScreen());
 		add(new SessionIntroScreen());
-		add(new SessionIntroScreen());
 		add(new RoundIntroScreen());
 		add(new RoundExtroScreen());
 		add(new SessionExtroScreen());
