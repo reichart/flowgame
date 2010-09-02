@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -70,6 +71,9 @@ public class GameLogic implements Runnable {
 	private final Browser browser;
 
 	private double rating;
+	
+	private volatile int storyScenario;
+	private volatile int storyPart;
 
 	public GameLogic(final Person player, final Client client, final CustomFacebookClient facebook, final Browser browser) {
 		this.browser = browser;
@@ -77,6 +81,26 @@ public class GameLogic implements Runnable {
 		this.player = player;
 		this.client = client;
 		this.facebook = facebook;
+		
+		selectNewStory();
+	}
+	
+	public void selectNewStory() {
+		Random rnd = new Random(System.currentTimeMillis());
+		storyScenario = rnd.nextInt(4) + 1;
+		storyPart = 1;		
+	}
+	
+	public int getStoryScenario() {
+		return storyScenario;
+	}
+	
+	public int getStoryPart() {
+		return storyPart;
+	}
+	
+	public void nextStoryPart() {
+		storyPart++;
 	}
 
 	public void collide(final Item item) {
