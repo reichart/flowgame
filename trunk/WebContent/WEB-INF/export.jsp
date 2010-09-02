@@ -81,7 +81,8 @@
 		<th>Scenario</th>
 		<th>Player</th>
 		<th>Baseline Difficulty</th>
-		<th>Profile</th>
+		<th>Mood</th>
+		<th>Answering Time</th>
 		<th>Rounds</th>
 	</tr>
 	<s:iterator value="sessions">
@@ -99,6 +100,7 @@
 				</s:iterator>
 			</table>
 			</td>
+			<td><s:property value="answeringTime" /></td>
 			<td>
 			<table border="1">
 				<tr>
@@ -107,6 +109,7 @@
 					<th>Actual Playtime</th>
 					<th>Collisions (fuel/asteroid)</th>
 					<th>Answers</th>
+					<th>Answering Time (ms)</th>
 					<th>Start Time</th>
 					<th>Score</th>
 					<th>Rank</th>
@@ -127,6 +130,7 @@
 							</s:iterator>
 						</table>
 						</td>
+						<td><s:property value="answeringTime" /></td>
 						<td><s:property value="startTime" /></td>
 						<td><s:property value="score.score" /></td>
 						<td><s:property value="socialRank" /></td>
