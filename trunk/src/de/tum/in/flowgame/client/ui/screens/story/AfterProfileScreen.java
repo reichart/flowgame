@@ -1,7 +1,5 @@
 package de.tum.in.flowgame.client.ui.screens.story;
 
-import java.awt.Container;
-
 import javax.swing.JButton;
 
 import de.tum.in.flowgame.client.ui.screens.MainScreen;
@@ -12,16 +10,19 @@ import de.tum.in.flowgame.client.ui.screens.UIMessages;
  */
 public class AfterProfileScreen extends StoryScreen {
 
-	private final JButton next = goTo(UIMessages.CONTINUE, MainScreen.class);
-
 	@Override
-	public Container getContents() {
-		return centered(COMMON_BORDER, title(UIMessages.getString("after_questionnaire")), next);
+	protected JButton next() {
+		return goTo(UIMessages.CONTINUE, MainScreen.class);
 	}
 
 	@Override
-	protected String getText() {
-		return UIMessages.getString("after_profile.text");
+	protected String getTitleKey() {
+		return "after_questionnaire";
+	}
+
+	@Override
+	protected String getTextKey() {
+		return "after_profile.text";
 	}
 
 }

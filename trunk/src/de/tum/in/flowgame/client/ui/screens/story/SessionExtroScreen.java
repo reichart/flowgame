@@ -1,6 +1,5 @@
 package de.tum.in.flowgame.client.ui.screens.story;
 
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -15,28 +14,30 @@ import de.tum.in.flowgame.client.ui.screens.UIMessages;
  */
 public class SessionExtroScreen extends StoryScreen {
 
-	private final JButton backToMain = new JButton(new AbstractAction(UIMessages.getString("game.menu")) {
-		public void actionPerformed(final ActionEvent e) {
-			menu.getLogic().selectNewStory();
-			menu.show(MainScreen.class);
-		}
-	});	
+	@Override
+	protected JButton next() {
+		return new JButton(new AbstractAction(UIMessages.getString("game.menu")) {
+			public void actionPerformed(final ActionEvent e) {
+				menu.getLogic().selectNewStory();
+				menu.show(MainScreen.class);
+			}
+		});
+	}
 
 	@Override
-	public Container getContents() {
-		return centered(COMMON_BORDER, title(UIMessages.getString("game.over")), text, backToMain);
+	protected String getTitleKey() {
+		return "game.over";
+	}
+
+	@Override
+	protected String getTextKey() {
+		return "scenario" + menu.getLogic().getStoryScenario() + ".extro";
 	}
 
 	@Override
 	public void update(final GameLogic logic) throws Exception {
 		super.update(logic);
 		logic.uploadSession();
-	}
-
-	@Override
-	protected String getText() {
-		final int storyScenario = menu.getLogic().getStoryScenario();
-		return UIMessages.getString("scenario" + storyScenario + ".extro");
 	}
 
 }
