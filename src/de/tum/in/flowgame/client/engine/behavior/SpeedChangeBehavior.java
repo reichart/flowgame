@@ -19,7 +19,8 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 	private final TextureTransformBehavior ttb;
 	private double speed;
 	/**
-	 * maximum speed player reaches during current round, used to calculate the baseline
+	 * maximum speed player reaches during current round, used to calculate the
+	 * baseline
 	 */
 	private double maxSpeed;
 	private GameLogic gameLogic;
@@ -31,16 +32,15 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 	 * list of speeds during the round, used to calculate the baseline
 	 */
 	private List<Double> speeds;
-	
-	//debug value for speed at the start of each round
-	private double startSpeed;
+
+	private boolean isFirstRun = true;
 
 	public SpeedChangeBehavior(final ForwardBehavior forwardNavigator, final TextureTransformBehavior ttb) {
 		this.forwardNavigator = forwardNavigator;
 		this.ttb = ttb;
 		this.strategy = new FunctionStrategy2();
 		Utils.export(this);
-		
+
 		speeds = new ArrayList<Double>();
 	}
 
@@ -59,28 +59,33 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 					maxSpeed = Math.max(speed, maxSpeed);
 					gameLogic.setRating(strategy.getDifficultyRating(gameLogic.getAsteroidTrend(), gameLogic.getFuelTrend()));
 				} else {
-					long baselineSpeed = 0;
-					if (gameLogic.getBaseline() != null) {
-						baselineSpeed = gameLogic.getBaseline().getSpeed();
+					final long elapsedTime = gameLogic.getElapsedTime();
+					if (isFirstRun) {
+						long baselineSpeed = 0;
+						if (gameLogic.getBaseline() != null) {
+							baselineSpeed = gameLogic.getBaseline().getSpeed();
+							System.err.println("Baseline " + baselineSpeed);
+						}
+						if (fun != null) {
+							fun.configure(baselineSpeed, gameLogic.getCurrentScenarioRound().getExpectedPlaytime());
+						}
+
 					}
-					fun.configure(baselineSpeed, gameLogic.getCurrentScenarioRound().getExpectedPlaytime());
-					speed = (fun == null) ? 0 : fun.getValue(gameLogic.getElapsedTime());
-					gameLogic.setRating(gameLogic.getDifficultyFunction().getDifficultyRating(gameLogic.getElapsedTime()));
+					speed = (fun == null) ? 0 : fun.getValue(elapsedTime);
+					gameLogic.setRating(gameLogic.getDifficultyFunction().getDifficultyRating(elapsedTime));
 				}
-				
+
 				// Prevention from driving backwards
 				if (speed < 30D) {
 					speed = 30D;
 				}
-				
-				if (startSpeed == 0) {
-					startSpeed = speed;
-				}
 
 				speeds.add(speed);
-				
+
 				forwardNavigator.setFwdSpeed(-speed);
 				ttb.setFwdSpeed(-speed);
+
+				isFirstRun = false;
 			}
 		}
 	}
@@ -105,15 +110,13 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 
 				@Override
 				public void gameStopped(GameLogic game) {
-					System.err.println("Speed at start of round: " + startSpeed);
-					System.err.println("Speed at end of round: " + speed);
-					startSpeed = 0;
+					isFirstRun = true;
 					if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
-						//						long baseline = (long) (maxSpeed * 0.9);
+						// long baseline = (long) (maxSpeed * 0.9);
 						Collections.sort(speeds);
-						System.err.println("Speeds Size: " + speeds.size() + "\tPosition at 70% " + (int)(speeds.size() * 0.5f));
+						System.err.println("Speeds Size: " + speeds.size() + "\tPosition at 70% " + (int) (speeds.size() * 0.5f));
 						System.err.println("maxSpeed " + maxSpeed);
-						double baseline = speeds.get((int)(speeds.size() * 0.5f));
+						double baseline = speeds.get((int) (speeds.size() * 0.5f));
 						System.err.println("baseline " + baseline);
 						gameLogic.setBaseline(baseline);
 					}

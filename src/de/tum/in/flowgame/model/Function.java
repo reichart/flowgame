@@ -12,15 +12,15 @@ public abstract class Function extends AbstractEntity {
 	private double initialValue;
 	private double baselineFactor;
 	@Transient
-	private final double initialValueCopy;
+	private Double initialValueCopy;
 
 	public Function() {
-		initialValueCopy = 0;
+		initialValueCopy = null;
 	}
 
 	public Function(final double initialValue, final double baselineFactor) {
 		this.initialValue = initialValue;
-		initialValueCopy = initialValue;
+		this.initialValueCopy = initialValue;
 		this.baselineFactor = baselineFactor;
 	}
 
@@ -31,6 +31,9 @@ public abstract class Function extends AbstractEntity {
 	}
 
 	public void configure(final double baseline, double expectedPlaytime) {
+		if (initialValueCopy == null) {
+			initialValueCopy = initialValue;
+		}
 		initialValue = baseline * baselineFactor + initialValueCopy;
 	}
 

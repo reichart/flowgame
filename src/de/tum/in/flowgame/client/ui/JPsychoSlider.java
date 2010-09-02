@@ -25,7 +25,7 @@ public class JPsychoSlider extends ChangeableComponent {
 	private static final Color COLOR_CURSOR = new Color(1f, 1f, 1f, .5f);
 
 	private Integer cursor;
-	private Integer value;
+	private Integer value = 1;
 
 	public JPsychoSlider() {
 		final MouseBehavior behavior = new MouseBehavior();

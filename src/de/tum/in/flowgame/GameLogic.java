@@ -18,6 +18,8 @@ import de.tum.in.flowgame.client.sound.SoundManager;
 import de.tum.in.flowgame.client.strategy.Trend;
 import de.tum.in.flowgame.client.util.Browser;
 import de.tum.in.flowgame.model.Answer;
+import de.tum.in.flowgame.model.Collision.Item;
+import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 import de.tum.in.flowgame.model.Difficulty;
 import de.tum.in.flowgame.model.DifficultyFunction;
 import de.tum.in.flowgame.model.GameRound;
@@ -26,8 +28,6 @@ import de.tum.in.flowgame.model.Highscore;
 import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.ScenarioRound;
 import de.tum.in.flowgame.model.ScenarioSession;
-import de.tum.in.flowgame.model.Collision.Item;
-import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 
 public class GameLogic implements Runnable {
 
@@ -60,8 +60,8 @@ public class GameLogic implements Runnable {
 	private Trend asteroidTrend;
 	private Trend fuelTrend;
 
-	private long startTime;
-	private long pauseStartTime;
+	private volatile long startTime;
+	private volatile long pauseStartTime;
 
 	private final CustomFacebookClient facebook;
 
@@ -237,6 +237,7 @@ public class GameLogic implements Runnable {
 		fuelInRow = 0;
 		asteroidsInRow = 0;
 
+		System.err.println("startCurrentRound");
 		startTime = System.currentTimeMillis();
 
 		// spawn new thread for game updates
