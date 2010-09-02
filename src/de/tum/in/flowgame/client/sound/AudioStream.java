@@ -94,7 +94,7 @@ public class AudioStream implements Runnable {
 
 	public void stop(final boolean wait) {
 		state = State.STOP;
-		if (wait) {
+		if (wait && finished != null) {
 			try {
 				finished.await();
 			} catch (final InterruptedException e) {
