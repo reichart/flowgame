@@ -30,7 +30,7 @@ public abstract class StoryScreen extends MenuScreen {
 
 	@Override
 	public final Container getContents() {
-		return centered(COMMON_BORDER, title, text, next(), goTo("reload " + getClass().getSimpleName(), getClass()));
+		return centered(COMMON_BORDER, title, text, next());
 	}
 
 	protected abstract JButton next();
