@@ -43,8 +43,6 @@ public class GameSession extends AbstractEntity {
 		// Only this constructor gets called on the client (not the no-arg one),
 		// so only here we can access the client's locale and get its language
 		this.language = Locale.getDefault().getLanguage();
-		
-		System.err.println("################# language " + language);
 	}
 
 	public GameRound newRound(final ScenarioRound nextRound) {
