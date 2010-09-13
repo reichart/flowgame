@@ -2,8 +2,10 @@ package de.tum.in.flowgame.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -26,6 +28,9 @@ public class GameSession extends AbstractEntity {
 	 */
 	private long answeringTime;
 	
+	@Column(nullable = false, length = 3)
+	private String language;
+	
 	private GameSession() { // for JPA
 		this.rounds = new ArrayList<GameRound>();
 	}
@@ -34,6 +39,12 @@ public class GameSession extends AbstractEntity {
 		this();
 		this.player = new Person(playerId, null);
 		this.scenarioSession = scenarioSession;
+		
+		// Only this constructor gets called on the client (not the no-arg one),
+		// so only here we can access the client's locale and get its language
+		this.language = Locale.getDefault().getLanguage();
+		
+		System.err.println("################# language " + language);
 	}
 
 	public GameRound newRound(final ScenarioRound nextRound) {
@@ -85,4 +96,7 @@ public class GameSession extends AbstractEntity {
 		this.baseline = baseline;		
 	}
 
+	public String getLanguage() {
+		return language;
+	}
 }
