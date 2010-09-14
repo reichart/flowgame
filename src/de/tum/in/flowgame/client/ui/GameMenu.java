@@ -34,6 +34,7 @@ import de.tum.in.flowgame.client.ui.screens.MainScreen;
 import de.tum.in.flowgame.client.ui.screens.MenuScreen;
 import de.tum.in.flowgame.client.ui.screens.PauseScreen;
 import de.tum.in.flowgame.client.ui.screens.ProfileScreen;
+import de.tum.in.flowgame.client.ui.screens.ProfileScreenIntro;
 import de.tum.in.flowgame.client.ui.screens.SocialHighscoresScreen;
 import de.tum.in.flowgame.client.ui.screens.SystemInfoScreen;
 import de.tum.in.flowgame.client.ui.screens.story.AfterProfileScreen;
@@ -132,6 +133,7 @@ public class GameMenu implements Sprite, GameListener {
 		
 		// story screens
 		add(new BeforeProfileScreen());
+		add(new ProfileScreenIntro());
 		add(new AfterProfileScreen());
 		add(new SessionIntroScreen());
 		add(new RoundIntroScreen());
