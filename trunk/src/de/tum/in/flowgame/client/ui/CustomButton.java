@@ -31,7 +31,7 @@ import de.tum.in.flowgame.client.util.Browser;
 public class CustomButton extends JButton {
 
 	private final static Log log = LogFactory.getLog(CustomButton.class);
-	
+
 	private Image picture;
 	private Long score;
 	private final Font font;
@@ -129,15 +129,16 @@ public class CustomButton extends JButton {
 
 		if (score != null) {
 			String valueOf = String.valueOf(score);
-			g2d.drawString(getAttributedString(valueOf).getIterator(), (cardBackground.getWidth(this) - metrics
-					.stringWidth(valueOf)) / 2, 85);
+			g2d.drawString(getAttributedString(valueOf).getIterator(), (cardBackground.getWidth(this) - metrics.stringWidth(valueOf)) / 2, 85);
 		} else {
-			String text1 = UIMessages.getString("invite");
-			String text2 = UIMessages.getString("friend");
-			g2d.drawString(getAttributedString(text1).getIterator(), (cardBackground.getWidth(this) - metrics
-					.stringWidth(text1)) / 2, 40);
-			g2d.drawString(getAttributedString(text2).getIterator(), (cardBackground.getWidth(this) - metrics
-					.stringWidth(text2)) / 2, 40 + metrics.getHeight());
+			String[] texts = (UIMessages.getString("friend.invite")).split(" ");
+			String text1 = texts[0];
+			g2d.drawString(getAttributedString(text1).getIterator(), (cardBackground.getWidth(this) - metrics.stringWidth(text1)) / 2, 40);
+			if (texts.length > 1) {
+				String text2 = texts[1];
+				g2d.drawString(getAttributedString(text2).getIterator(), (cardBackground.getWidth(this) - metrics.stringWidth(text2)) / 2,
+						40 + metrics.getHeight());
+			}
 		}
 	}
 
