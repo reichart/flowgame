@@ -152,7 +152,14 @@ public class GameApplet extends Applet {
 					}
 
 					player = new Person(loggedInUser, name);
-					player.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse(birthday));
+					
+					if (!userInfo.isNull(ProfileField.BIRTHDAY_DATE.fieldName())) {
+						try {
+							player.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse(birthday));
+						} catch (final Exception ex) {
+							log.error("failed to parse birthday: " + birthday, ex);
+						}
+					}
 					player.setPlace(country);
 					player.setSex(sex);
 				} catch (final Exception ex) {
