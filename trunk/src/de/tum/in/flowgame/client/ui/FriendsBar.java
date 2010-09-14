@@ -18,7 +18,6 @@ import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.client.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.client.facebook.Friend;
-import de.tum.in.flowgame.client.ui.screens.UIMessages;
 import de.tum.in.flowgame.client.util.Browser;
 import de.tum.in.flowgame.model.Highscore;
 
@@ -78,9 +77,7 @@ public class FriendsBar extends JPanel {
 		btn.setBorder(BorderFactory.createEmptyBorder());
 		btn.setSize(25, 25);
 		btn.setContentAreaFilled(false);
-		btn.setLocation(5, 40);
-
-		btn.setText(UIMessages.getString("friend.invite"));
+		btn.setLocation(0, 40);
 
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
