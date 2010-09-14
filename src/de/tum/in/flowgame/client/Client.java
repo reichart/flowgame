@@ -82,7 +82,12 @@ public class Client {
 		}
 	}
 	
-	//Return highscore of a list of persons depending on their id
+	/**
+	 * Return highscore for a list of persons 
+	 * @param persons ids of persons whos highscore should be downloaded
+	 * @return Highscores
+	 */
+	//
 	public List<Highscore> getHighscores(final List<Long> persons) {
 		try {
 			return execute(DOWNLOAD_HIGHSCORES_URL, persons);
@@ -92,7 +97,7 @@ public class Client {
 		}
 	}
 	
-	public Integer getPercentage(final long score){
+	public Integer getPercentage(final Highscore score){
 		try {
 			return execute(DOWNLOAD_PERCENTAGE, score);
 		} catch (final Exception ex) {
