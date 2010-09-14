@@ -43,8 +43,8 @@ import de.tum.in.flowgame.client.ui.screens.story.RoundIntroScreen;
 import de.tum.in.flowgame.client.ui.screens.story.SessionExtroScreen;
 import de.tum.in.flowgame.client.ui.screens.story.SessionIntroScreen;
 import de.tum.in.flowgame.client.ui.sprite.Sprite;
+import de.tum.in.flowgame.model.ScoringType;
 import de.tum.in.flowgame.model.Collision.Item;
-import de.tum.in.flowgame.model.ScenarioSession.Type;
 
 public class GameMenu implements Sprite, GameListener {
 
@@ -164,7 +164,7 @@ public class GameMenu implements Sprite, GameListener {
 	}
 
 	public void gameStopped(final GameLogic game) {
-		final Type type = game.getCurrentScenarioSession().getType();
+		final ScoringType type = game.getCurrentGameSession().getType();
 		log.info("game stopped, showing " + type + " highscore");
 		switch (type) {
 		case INDIVIDUAL:

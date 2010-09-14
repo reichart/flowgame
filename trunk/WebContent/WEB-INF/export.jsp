@@ -40,7 +40,6 @@
 	<s:iterator value="scenarios">
 		<tr id="scenario-<s:property value="id" />">
 			<td><s:property value="id" /></td>
-			<td><s:property value="type" /></td>
 			<td>
 			<table border="1">
 				<tr>

@@ -116,7 +116,7 @@ public class DDLGenerator {
 		ScenarioRound cSr4 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction));
 		ScenarioRound cSr5 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction));
 		
-		ScenarioSession constantScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL);
+		ScenarioSession constantScenarioSession = new ScenarioSession();
 		constantScenarioSession.add(cBaselineRound);
 		constantScenarioSession.add(cSr1);
 		constantScenarioSession.add(cSr2);
@@ -133,7 +133,7 @@ public class DDLGenerator {
 		ScenarioRound dSr4 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear4, ratioFunction));
 		ScenarioRound dSr5 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear5, ratioFunction));
 		
-		ScenarioSession linearScenarioSession = new ScenarioSession(ScenarioSession.Type.SOCIAL);
+		ScenarioSession linearScenarioSession = new ScenarioSession();
 		linearScenarioSession.add(dBaselineRound);
 		linearScenarioSession.add(dSr1);
 		linearScenarioSession.add(dSr2);
