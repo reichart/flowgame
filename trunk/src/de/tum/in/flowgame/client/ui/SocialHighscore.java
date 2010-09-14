@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.CubicCurve2D;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -17,7 +16,6 @@ import org.apache.commons.logging.LogFactory;
 import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.client.facebook.FacebookFriendCache;
-import de.tum.in.flowgame.model.GameSession;
 import de.tum.in.flowgame.model.Highscore;
 
 public class SocialHighscore extends JPanel {
@@ -38,17 +36,12 @@ public class SocialHighscore extends JPanel {
 		this.friendCash = friendCash;
 
 		try {
-			update();
-
 			this.setLayout(new BorderLayout());
 			fb = new FriendsBar(highscores, friendCash, logic.getBrowser());
 			this.add(fb, BorderLayout.SOUTH);
 		} catch (Exception ex) {
-			// TODO handle exception
-//			throw new RuntimeException(ex);
-			
 			fb = null;
-			log.error("failed to update social highscore");
+			log.error("failed to update social highscore", ex);
 		}
 
 		personButton = new CustomButton();
@@ -61,35 +54,42 @@ public class SocialHighscore extends JPanel {
 
 	private void updateHighscores() throws Exception {
 		final List<Long> persons = friendCash.getFriendsids();
-		persons.add(friendCash.getCurrentPlayer().getId());
 
 		final Client client = logic.getClient();
 		if (client == null) {
 			log.warn("no client, not updating highscore");
 			return;
 		}
-		final List<Highscore> globalScores = client.getHighscores(persons);
 
-		final long currentID = friendCash.getCurrentPlayer().getId();
-		for (final Iterator<Highscore> iterator = globalScores.iterator(); iterator.hasNext();) {
-			final Highscore highscore = iterator.next();
-			if (highscore.getPersonid() == currentID) {
-				ownScore = highscore;
-				GameSession currentGameSession = logic.getCurrentGameSession();
-				if (currentGameSession != null) {
-					final long localHighscore = currentGameSession.getHighscore();
-					if (ownScore.getScore() < localHighscore) {
-						log.info("Found new Highscore, getting percentage from server.");
-						Integer percentage = client.getPercentage(localHighscore);
-						Highscore o = new Highscore(ownScore.getPersonid(), localHighscore, percentage);
-						ownScore = o;
-					}
+		final long playerId = friendCash.getCurrentPlayer().getId();
+		
+		final boolean showHighscores = logic.getCurrentGameRound() == null;
+		if (showHighscores) {
+			log.info("displaying social high scores");
+			
+			persons.add(friendCash.getCurrentPlayer().getId());
+
+			final List<Highscore> globalScores = client.getHighscores(persons);
+			for (final Highscore highscore : globalScores) {
+				if (highscore.getPersonid() == playerId) {
+					ownScore = highscore;
+					break;
 				}
-				iterator.remove();
 			}
+			globalScores.remove(ownScore);
+			highscores = globalScores;
+		} else {
+			log.info("displaying social current score");
+			
+			highscores = client.getHighscores(persons);
+			final long currentScore = logic.getScore();
+			final Integer percentage = client.getPercentage(new Highscore(playerId, currentScore));
+			ownScore = new Highscore(playerId, currentScore, percentage);
 		}
-		// globalScores.remove(ownScore);
-		highscores = globalScores;
+		
+		log.info("own score " + ownScore);
+		
+		fb.update(highscores);
 	}
 
 	@Override
@@ -99,6 +99,11 @@ public class SocialHighscore extends JPanel {
 
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		if (fb == null) {
+			log.error("Friends Bar is null");
+			return;
+		}
 
 		int lowerBorder = getHeight() - fb.getHeight();
 		int space = lowerBorder - 100 - 20;
