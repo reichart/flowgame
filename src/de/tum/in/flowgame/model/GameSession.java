@@ -31,6 +31,9 @@ public class GameSession extends AbstractEntity {
 	@Column(nullable = false, length = 3)
 	private String language;
 	
+	@Column(nullable = false)
+	private ScoringType type;
+	
 	private GameSession() { // for JPA
 		this.rounds = new ArrayList<GameRound>();
 	}
@@ -43,6 +46,10 @@ public class GameSession extends AbstractEntity {
 		// Only this constructor gets called on the client (not the no-arg one),
 		// so only here we can access the client's locale and get its language
 		this.language = Locale.getDefault().getLanguage();
+		
+		this.type = Math.random() < 0.5 ? ScoringType.SOCIAL : ScoringType.INDIVIDUAL;
+		
+		System.err.println("######### randomy selected scoring type " + type);
 	}
 
 	public GameRound newRound(final ScenarioRound nextRound) {
@@ -96,5 +103,9 @@ public class GameSession extends AbstractEntity {
 
 	public String getLanguage() {
 		return language;
+	}
+	
+	public ScoringType getType() {
+		return type;
 	}
 }

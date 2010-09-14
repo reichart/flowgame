@@ -14,23 +14,11 @@ public class ScenarioSession extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ScenarioRound> rounds;
 
-	public enum Type {
-		INDIVIDUAL, SOCIAL
-	}
-
-	private Type type;
-
 	@Transient
 	private int roundsPlayed;
 
-	@SuppressWarnings("unused")
-	private ScenarioSession() {
-		this(null); // for JPA
-	}
-
-	public ScenarioSession(final Type type) {
+	public ScenarioSession() {
 		this.rounds = new ArrayList<ScenarioRound>();
-		this.type = type;
 	}
 
 	public void add(final ScenarioRound round) {
@@ -53,10 +41,6 @@ public class ScenarioSession extends AbstractEntity {
 		roundsPlayed++;
 		
 		return round;
-	}
-
-	public Type getType() {
-		return type;
 	}
 
 	public List<ScenarioRound> getRounds() {

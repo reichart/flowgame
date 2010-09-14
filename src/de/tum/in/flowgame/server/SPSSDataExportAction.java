@@ -49,7 +49,7 @@ public class SPSSDataExportAction extends DatabaseAction {
 
 	private void output(final GameSession session) {
 		field(session.getId());
-		field(session.getScenarioSession().getType());
+		field(session.getType());
 		field(session.getLanguage());
 		field(session.getHighscore());
 		field(session.getAnsweringTime());
