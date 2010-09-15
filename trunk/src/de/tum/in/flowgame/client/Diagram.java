@@ -33,7 +33,7 @@ public class Diagram {
 	private int increment;
 	private double scaleFactor;
 	private final static int WIDTH = 500;
-	private final static int HEIGHT = 300;
+	private final static int HEIGHT = 250;
 	private final static int UPPER_BUFFER_Y = 10;
 	private final static int COORD_BUFFER_X = 50;
 	private final static int COORD_BUFFER_Y = 30;
@@ -153,7 +153,7 @@ public class Diagram {
 		int xOffset = fm.stringWidth(x) / 2;
 		int xCoord = (WIDTH - COORD_BUFFER_X) / 2 + COORD_BUFFER_X - xOffset;
 		g.setFont(TEXT);
-		g.drawString(x, xCoord, HEIGHT);
+		g.drawString(x, xCoord, HEIGHT - fm.getDescent());
 
 		// clockwise 90 degrees
 		AffineTransform at = new AffineTransform();

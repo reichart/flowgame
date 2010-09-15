@@ -3,6 +3,9 @@ package de.tum.in.flowgame.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -78,6 +81,14 @@ public class GameSession extends AbstractEntity {
 			}
 		}
 		return highscore;
+	}
+	
+	public Set<Score> getRoundScores() {
+		SortedSet<Score> roundScores = new TreeSet<Score>();
+		for (GameRound gr : rounds) {
+			roundScores.add(gr.getScore());
+		}
+		return roundScores;
 	}
 
 	public ScenarioSession getScenarioSession() {
