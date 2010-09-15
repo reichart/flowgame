@@ -22,6 +22,9 @@ public class ScenarioSessionDownloadAction extends GameDataAction<Long, Scenario
 		final boolean sort; //rnd.nextBoolean();
 		
 		//TODO read this data from database instead of taking fixed size of 3
+		//0: constant
+		//1: linear progress
+		//2: constant random
 		final Integer scenario = rnd.nextInt(3);
 		final Integer id = scenario%2;//rnd.nextInt(scenarioSessions.size());
 		if (scenario==2) {
