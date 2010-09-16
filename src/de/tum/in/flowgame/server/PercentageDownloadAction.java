@@ -45,7 +45,7 @@ public class PercentageDownloadAction extends GameDataAction<Highscore, Integer>
 			// calculate percentage of index to number of total highscores
 			percentage = idx * 100.0 / highscores.size();
 		}
-		return (int) (percentage * 100);
+		return (int) percentage;
 	}
 
 	@SuppressWarnings("unchecked")
