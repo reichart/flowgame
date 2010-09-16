@@ -2,6 +2,7 @@ package de.tum.in.flowgame;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -168,7 +169,10 @@ public class GameLogic implements Runnable {
 	private void storeRank() {
 		try {
 			final CustomFacebookClient fb = getFacebookClient();
-			final Set<Long> persons = JSONUtils.toLongs(fb.friends_get());
+			Set<Long> persons = JSONUtils.toLongs(fb.friends_get());
+			if (persons == null) {
+				persons = new HashSet<Long>();
+			}
 			persons.add(getPlayerId());
 
 			final Client client = getClient();
