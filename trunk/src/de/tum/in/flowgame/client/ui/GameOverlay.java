@@ -23,7 +23,6 @@ import de.tum.in.flowgame.client.engine.Game3D;
 import de.tum.in.flowgame.client.engine.behavior.FrameCounterBehavior.FrameCounterListener;
 import de.tum.in.flowgame.client.ui.screens.UIMessages;
 import de.tum.in.flowgame.model.ScenarioRound;
-import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Collision.Item;
 
 /**
@@ -116,13 +115,6 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 			final int controlsW = fmSmall.stringWidth(controls);
 			g.drawString(controls, width - controlsW - 20, height - stringH);
 			
-			// FIXME remove this before going live
-			final ScenarioSession session = logic.getCurrentScenarioSession();
-			final ScenarioRound round = logic.getCurrentScenarioRound();
-			if (session != null && round != null) {
-				g.drawString("scenario session id=" + session.getId() + ", round pos=" + round.getPosition() + "/" + session.getRounds().size(), 20, height - stringH);
-			}
-
 			if (logic != null) {
 				// render Score in the upper middle of screen
 				g.setFont(MEDIUM);
@@ -132,6 +124,8 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 				g.drawString(UIMessages.getString("score") + " ", width / 2 - fmMediumBold.stringWidth(UIMessages.getString("score") + " "), fmMediumBold.getAscent()
 						+ UPPER_BORDER);
 
+				final ScenarioRound round = logic.getCurrentScenarioRound();
+				
 				// get remaining time in seconds
 				String remainingTime = String.valueOf(logic.getRemainingTime() / 1000);
 				// if remainingTime changed (one second is over) start new
