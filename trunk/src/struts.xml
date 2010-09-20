@@ -9,10 +9,19 @@
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.custom.i18n.resources" value="messages" />
 
-	<constant name="persistenceUnit" value="IDP" /> 
-	<bean name="persistence" class="de.tum.in.flowgame.server.PersistenceService" />
+	<package name="flowgame" namespace="/" extends="struts-default">
 
-	<package name="default" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="persistence" class="de.tum.in.flowgame.server.struts2.PersistenceInterceptor" />
+			<interceptor-stack name="flowgameStack">
+				<interceptor-ref name="persistence">
+					<param name="persistenceUnit">IDP</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="flowgameStack" />
 
 		<default-action-ref name="canvas" />
 
@@ -89,7 +98,9 @@
 
 	</package>
 	
-	<package name="export" namespace="/export" extends="struts-default">
+	<package name="flowgame-export" namespace="/export" extends="flowgame">
+
+		<default-interceptor-ref name="flowgameStack" />
 
 		<default-action-ref name="web" />
 

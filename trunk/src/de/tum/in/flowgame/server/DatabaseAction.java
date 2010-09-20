@@ -5,18 +5,18 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.inject.Inject;
+
+import de.tum.in.flowgame.server.struts2.PersistenceAware;
 
 /**
  * Provides subclasses an {@link EntityManager} instance to access the database.
  */
-public abstract class DatabaseAction extends ActionSupport {
+public abstract class DatabaseAction extends ActionSupport implements PersistenceAware {
 
 	protected EntityManager em;
 
-	@Inject("persistence")
-	public void setPersistence(final PersistenceService service) {
-		this.em = service.getEntityManager();
+	public void setEntityManager(final EntityManager em) {
+		this.em = em;
 	}
 
 	public <T> List<T> list(final Class<T> clazz) {
