@@ -21,27 +21,18 @@ function toggle_invite_content() {
 
 <s:text var="appletWidth" name="applet.width" />
 <s:text var="appletHeight" name="applet.height" />
-<applet code="org.jdesktop.applet.util.JNLPAppletLauncher" width="${appletWidth}" height="${appletHeight}"
-	archive="lib/flowgame-client.jar, lib/jogg-0.0.7.jar, lib/jorbis-0.0.15.jar, lib/tritonus_share.jar, lib/vorbisspi1.0.3.jar, lib/facebook-java-api-2.1.1-jsononly.jar, lib/json-20070829.jar, lib/commons-io-1.3.2.jar,lib/commons-httpclient-3.1.jar, lib/commons-codec-1.3.jar, lib/commons-logging-1.1.1.jar, lib/svgSalamander-tiny.jar,http://download.java.net/media/applet-launcher/applet-launcher.jar,http://download.java.net/media/java3d/webstart/release/j3d/latest/j3dcore.jar,http://download.java.net/media/java3d/webstart/release/j3d/latest/j3dutils.jar,http://download.java.net/media/java3d/webstart/release/vecmath/latest/vecmath.jar,http://download.java.net/media/jogl/builds/archive/jsr-231-webstart-current/jogl.jar">	
-	
-	<param name="codebase_lookup" value="false" />
-	<param name="subapplet.classname" value="de.tum.in.flowgame.client.GameApplet" />
-	<param name="subapplet.displayname" value="Flowgame Applet" />
-
-	<param name="mayscript" value="true" />
-
-	<param name="jnlpNumExtensions" value="1" />
-	<param name="jnlpExtension1" value="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp" />
-
-	<param name="progressbar" value="true" />
-	<param name="noddraw.check" value="true" />
-	<param name="noddraw.check.silent" value="true" />
-
-	<param name="userId" value="${param.fb_sig_user}" />
-	<param name="apiKey" value="${param.fb_sig_api_key}" />
-	<param name="sessionKey" value="${param.fb_sig_session_key}" />
-	<param name="sessionSecret" value="${param.fb_sig_ss}" />
-	
+<script src="http://www.java.com/js/deployJava.js"></script>
+<script>
+	var attributes = {code:'de.tum.in.flowgame.client.GameApplet', width:${appletWidth}, height:${appletHeight}} ;
+	var parameters = {jnlp_href: 'flowgame.jnlp',
+					  userId: '${param.fb_sig_user}',
+					  apiKey: '${param.fb_sig_api_key}',
+					  sessionKey: '${param.fb_sig_session_key}',
+					  sessionSecret: '${param.fb_sig_ss}'};
+	var version = '1.5'; // for MacOSX
+	deployJava.runApplet(attributes, parameters, version);
+</script>
+<noscript>
 	<div class="fberrorbox" id="nojava">
 	<p>To play this game, you need Java&trade;<br />
 	but it seems to be not yet installed on your computer.</p>
@@ -55,8 +46,7 @@ function toggle_invite_content() {
 	<p>(Link will open in a new window/tab)</p>
 
 	</div>
-
-</applet>
+</noscript>
 
 <div id="content" style="display: none; position: absolute; top:0; left:0">
 	<s:url var="invite" action="invite" includeParams="get" />
