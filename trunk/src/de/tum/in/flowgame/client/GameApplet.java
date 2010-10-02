@@ -173,8 +173,8 @@ public class GameApplet extends Applet {
 			} else {
 				log.info("existing player: " + player);
 			}
-		} catch (final Exception e) {
-			log.error("failed to connect to facebook, using dummy user in offline mode");
+		} catch (final Exception ex) {
+			log.error("failed to connect to facebook, using dummy user in offline mode", ex);
 			player = new Person(-1, "dummy");
 		}
 		return player;
