@@ -3,10 +3,25 @@
 <html>
 <head>
 <title>Data Export</title>
-<link rel="stylesheet" type="text/css" href="backend-style.css" />
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/backend-style.css" />
 </head>
 
 <body>
+
+<h1>Statistics</h1>
+
+<table>
+	<tr>
+		<td>Players</td>
+		<td><s:property value="players.size" /></td>
+	</tr>
+	<tr>
+		<td>Sessions played</td>
+		<td><s:property value="sessions.size" /></td>
+	</tr>
+</table>
+
+<p><a href="spss">Download in SPSS format</a></p>
 
 <h1>Players</h1>
 
