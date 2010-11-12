@@ -1,0 +1,35 @@
+<!DOCTYPE jnlp SYSTEM "http://java.sun.com/dtd/JNLP-1.5.dtd">
+<jnlp codebase="http://www.vxart.de:8080/flowgame/" href="flowgame.jnlp">
+	<!-- TODO get host and path from context -->
+
+	<information>
+		<title>Flowgame</title>
+		<vendor>Hübner, Köhler, Reichart, Voest</vendor>
+		<homepage href="http://code.google.com/p/flowgame/" />
+	</information>
+
+	<resources>
+		<j2se version="1.5+" />
+		<jar href="lib/flowgame-client.jar" main="true" />
+		<jar href="lib/jogg-0.0.7.jar" />
+		<jar href="lib/jorbis-0.0.15.jar" />
+		<jar href="lib/tritonus_share.jar" />
+		<jar href="lib/vorbisspi1.0.3.jar" />
+		<jar href="lib/facebook-java-api-2.1.1-jsononly.jar" />
+		<jar href="lib/json-20070829.jar" />
+		<jar href="lib/commons-io-1.3.2.jar" />
+		<jar href="lib/commons-httpclient-3.1.jar" />
+		<jar href="lib/commons-codec-1.3.jar" />
+		<jar href="lib/commons-logging-1.1.1.jar" />
+		<jar href="lib/svgSalamander-tiny.jar" />
+		<extension href="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp" />
+	</resources>
+
+	<applet-desc name="applet" main-class="de.tum.in.flowgame.client.GameApplet" width="600"
+		height="400"><!-- TODO get width and height from config  -->
+		<param name="mayscript" value="true" />
+		<param name="progressbar" value="true" /><!-- does this do anything for JWS? -->
+		<param name="noddraw.check" value="true" />
+		<param name="noddraw.check.silent" value="true" />
+	</applet-desc>
+</jnlp>

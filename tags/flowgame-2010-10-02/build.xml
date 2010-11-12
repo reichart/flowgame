@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="flowgame" default="dist">
+
+	<property name="src" location="src" />
+	<property name="res" location="${src}/res" />
+	<property name="lib" location="lib" />
+	<property name="web" location="WebContent" />
+	<property name="weblib" location="${web}/lib" />
+	<property name="webapplib" location="${web}/WEB-INF/lib" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+
+	<property name="war" value="${dist}/flowgame.war" />
+	<property name="contextpath" value="/flowgame" />
+
+	<!-- These credentials aren't secret, they only work locally. -->
+	<property name="mysql.database" value="idp" />
+	<property name="mysql.password" value="idp" />
+	<property name="mysql.username" value="idp" />
+	
+	<property name="tomcat.manager.url" value="http://localhost:8080/manager" />
+
+	<!-- These properties need to be set at runtime: -->
+	<!-- findbugs.home, pmd.home, tomcat.home -->
+	<!-- tomcat.manager.username, tomcat.manager.password -->
+
+	<path id="findbugs.classpath">
+		<fileset dir="${findbugs.home}/lib">
+			<include name="findbugs.jar" />
+		</fileset>
+	</path>
+
+	<path id="pmd.classpath">
+		<fileset dir="${pmd.home}" includes="**/*.jar" />
+	</path>
+
+	<path id="tomcat.classpath">
+		<fileset dir="${tomcat.home}" includes="lib/catalina-ant.jar" />
+	</path>
+
+	<path id="classpath">
+		<fileset dir="${lib}" includes="**/*.jar" />
+		<fileset dir="${weblib}" includes="**/*.jar" />
+		<fileset dir="${webapplib}" includes="**/*.jar" />
+	</path>
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}" />
+		<mkdir dir="${weblib}" />
+		<mkdir dir="${webapplib}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath" includeantruntime="false"
+			deprecation="true" debug="true" debuglevel="lines,source">
+			<compilerarg value="-Xlint" />
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile">
+		
+		<mkdir dir="${dist}/lib" />
+		
+		<property name="client-pkg" value="de/tum/in/flowgame/client/**" />
+		<property name="server-pkg" value="de/tum/in/flowgame/server/**" />
+		
+		<!-- Client JAR for applet runtime (with resources, no server classes) -->
+		<property name="client-jar" value="${dist}/lib/flowgame-client.jar" />
+		<jar jarfile="${client-jar}">
+			<fileset dir="${build}">
+				<include name="**/*" />
+				<exclude name="${server-pkg}" />
+			</fileset>
+			<fileset dir="${src}">
+				<!-- Include all language properties -->
+				<exclude name="${server-pkg}" />
+				<include name="**/*.properties" />
+			</fileset>
+			<zipfileset dir="${res}" includes="**/*" prefix="res" />
+		</jar>
+
+		<!-- Server JAR for web container (no resources, no client classes) -->
+		<property name="server-jar" value="${dist}/lib/flowgame-server.jar" />
+		<jar jarfile="${server-jar}">
+			<fileset dir="${build}">
+				<include name="**/*" />
+				<exclude name="${client-pkg}" />
+			</fileset>
+			<fileset dir="${src}">
+				<!-- Include all server config files -->
+				<exclude name="${client-pkg}" />
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+			</fileset>
+		</jar>
+
+		<!-- Build the WAR (as JAR because everything is in the right place already) -->
+		<jar destfile="${war}">
+			<fileset dir="${web}">
+				<include name="**/*" />
+				<exclude name="**/classes/**" />
+			</fileset>
+			<!-- Put client JAR into web-accessible location (as expected by applet.jsp) -->
+			<zipfileset file="${client-jar}" prefix="lib" />
+			<!-- Put server JAR into web app classpath -->
+			<zipfileset file="${server-jar}" prefix="WEB-INF/lib" />
+		</jar>
+	</target>
+
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.classpath" />
+
+	<target name="findbugs" depends="compile">
+		<findbugs home="${findbugs.home}" output="xml" outputFile="${build}/findbugs.xml">
+			<sourcePath path="${src}" />
+			<class location="${build}" />
+			<auxClasspath>
+				<path refid="classpath" />
+			</auxClasspath>
+		</findbugs>
+	</target>
+
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
+
+	<target name="pmd">
+		<pmd>
+			<ruleset>basic</ruleset>
+			<ruleset>braces</ruleset>
+			<ruleset>clone</ruleset>
+			<ruleset>codesize</ruleset>
+			<ruleset>controversial</ruleset>
+			<ruleset>coupling</ruleset>
+			<ruleset>design</ruleset>
+			<ruleset>finalizers</ruleset>
+			<ruleset>imports</ruleset>
+			<ruleset>logging-jakarta-commons</ruleset>
+			<ruleset>naming</ruleset>
+			<ruleset>optimizations</ruleset>
+			<ruleset>strings</ruleset>
+			<ruleset>sunsecure</ruleset>
+			<ruleset>typeresolution</ruleset>
+			<ruleset>unusedcode</ruleset>
+			<formatter type="xml" toFile="${build}/pmd.xml" />
+			<fileset dir="${src}">
+				<include name="**/*.java" />
+			</fileset>
+		</pmd>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="init-database" depends="dump-database, dist">
+		<description>Drops all database contents and creates an up-to-date database schema.</description>
+		<!-- Fork or Ant's SAX parser impl will cause problems -->
+		<java classname="de.tum.in.flowgame.server.DDLGenerator" fork="true" failonerror="true">
+			<classpath>
+				<path refid="classpath" />
+				<fileset dir="${dist}" includes="lib/flowgame-server.jar" />
+			</classpath>
+			<jvmarg value="-Declipselink.ddl-generation=drop-and-create-tables" />
+		</java>
+	</target>
+
+	<target name="dump-database">
+		<description>Dumps the current database state into a file.</description>
+		<tstamp>
+			<format property="dumptime" pattern="yyyy-MM-dd-HH-mm-ss" />
+		</tstamp>
+		<property name="dumpfile" value="flowgame-${dumptime}.sql" />
+		<echo>Dumping database to ${dumpfile}</echo>
+		<exec executable="mysqldump" output="${dumpfile}" failonerror="true">
+			<arg value="--user=${mysql.username}" />
+			<arg value="--password=${mysql.password}" />
+			<arg value="${mysql.database}" />
+		</exec>
+	</target>
+
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="tomcat.classpath" />
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="tomcat.classpath" />
+
+	<target name="clean-deploy" depends="init-database, undeploy, deploy">
+		<description>Does a clean database and web app redeploy.</description>
+	</target>
+
+	<target name="deploy" depends="dist, dump-database">
+		<description>Deploys the web app to a local Tomcat server</description>
+		<deploy url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}"
+			path="${contextpath}" war="file:${war}" />
+	</target>
+
+	<target name="undeploy">
+		<description>Undeploys the web app from a local Tomcat server</description>
+		<undeploy url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}"
+			path="${contextpath}" />
+	</target>
+
+</project>
