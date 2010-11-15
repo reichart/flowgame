@@ -38,7 +38,7 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 
 ----
 
-==Scenario 1: Antimatter Problems (Antimaterie)==
+==Scenario 1: Dangerous Science (Gefährliche Forschung)==
 
 ===Session Intro===
 
@@ -57,52 +57,32 @@ Blick auf Display im Cockpit, in dem die Nachricht angezeigt wird
 "Wir haben das Schiff deinem heutigen Zustand optimal angepasst und es im Hangar für dich bereitgestellt. Die Lageeinweisung für deinen ersten Sprung wirst du an Bord über ihren Commlink erhalten. Viel Glück!"
 
 ===Round Intro 2===
-"There has been a power failure in one of our outer-rim antimatter processing plants. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers from this station there to repair the damage. Take your chance to collect Crystalis!"
-
-"Die Stromversorgung einer unserer Antimaterieverarbeitungsanlagen im weit abgelegenen Raum ist ausgefallen. Leider hat die Basis nicht die richtige Ausrüstung um das Problem selbst zu lösen. Du wirst also ein Team von Ingenieuren dort hin bringen, die den Schaden reparieren. Nutze die Chance, Crystalis zu sammeln!"
-
-===Round Extro 2===
-"Thank you. The maintenance team arrived safely and is now repairing the plant. It should be resuming operation by the end of the day."
-
-"Vielen Dank. Das Wartungsteam ist sicher angekommen und repariert die Schäden in der Anlage. Sie sollte den Betrieb am Ende des Tages wieder aufnehmen können."
-
-===Round Intro 3===
-"A load of antimatter from the plant has been loaded into your ship. It is urgently required by one of our mining bases in the Centauri solar system which is under attack by pirates. Its defence grid ran out of ammunition, it is your job to resupply it before the pirates destroy the base."
-
-"Eine Ladung Antimaterie wurde auf dein Schiff geladen. Es wird dringend auf einer Bergbaukolonie im Sternensystem Centauri benötigt, die von Piraten angegriffen wird. Ihren Verteidigungsanlagen ist die Munition ausgegangen und es ist deine Aufgabe, sie neu zu bestücken, bevor die Piraten die Kolonie vernichten."
-
-===Round Extro 3===
-"The defence grid has been reloaded and is driving the pirates off. Take a break on the asteroid base and await your next orders."
-
-"Die Verteidigungsanlagen wurden nachgeladen und vertreiben die Piraten. Gönn' dir eine Pause auf der Asteroidenkolonie und warte auf deine nächsten Befehle."
-
-===Round Intro 4===
-"Hello, pilot! Your next jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor Wilmut.
+"Hello, pilot! Your first jump will take you to the research station at Tau Ceti Alpha. You will pick up one of our top scientists on biogenetics there, Professor Wilmut.
 His presence is required elsewhere, you will be briefed on take-off from Tau Ceti."
 
-"Hallo, Pilot! Dein nächster Sprung wird dich zu einer Forschungsstation auf Tau Ceti Alpha bringen. Du wirst dort einen unserer besten Wissenschaftler in der Biogenetik, Professor Wilmut an Bord nehmen. Seine Anwesenheit wird andernorts gebraucht, du wirst bei Abflug eingewiesen."
+"Hallo, Pilot! Dein erster Sprung wird dich zu einer Forschungsstation auf Tau Ceti Alpha bringen. Du wirst dort einen unserer besten Wissenschaftler in der Biogenetik, Professor Wilmut an Bord nehmen. Seine Anwesenheit wird andernorts gebraucht, du wirst bei Abflug eingewiesen."
 
-===Round Extro 4===
-"Welcome to Tau Ceti. No time for breaks this time, Professor Wilmut has already boarded your ship."
+===Round Extro 2===
+"Welcome to Tau Ceti. No time for breaks, Professor Wilmut has already boarded your ship."
 
-"Willkommen auf Tau Ceti. Diesmal keine Zeit für Pausen, Professor Wilmut ist bereits an Bord."
+"Willkommen auf Tau Ceti. Keine Zeit für Pausen, Professor Wilmut ist bereits an Bord."
 
-===Round Intro 5===
+===Round Intro 3===
 "No time to lose, pilot. You will immediately commence your jump into the distant Hourglass Nebula, where at the transmitted coordinates you will find a gas harvesting station. Professor Wilmut will supervise the loading of your ship with a small amount of a special gas mix required in your final mission."
 
 "Keine Zeit zu verlieren, Pilot! Du wirst den Sprung in den entfernten Horse Nebula sofort beginnen. An den übertragenen Koordinaten wirst du eine Basis zum Gasabbau finden. Professor Wilmut wird dafür sorgen, dass dein Schiff mit einer kleinen Menge einer besonderen Gasmischung beladen wird, die du in deiner letzten Mission benötigen wirst."
 
-===Round Extro 5===
+===Round Extro 3===
 "The gas mix is being loaded onto your ship, but stay ready for take-off at all time! As soon as the loading finished, Professor Wilmut will board your ship and you will be required to commence your next jump."
 
 "Die Gasmischung wird auf dein Schiff geladen, aber bleib jederzeit bereit für den Abflug! Sobald die Beladung abgeschlossen ist, wird Professor Wilmut wieder an Bord gehen und du wirst deinen nächsten Sprung einleiten müssen."
 
-===Round Intro 6===
+===Round Intro 4===
 "The final jump today will take you to a distant research station in deep space. The impact of dark matter on organisms is being investigated there. Sadly, an experiment went terribly wrong and the base staff hast lost control of large parts of the station to mutated organisms. Professor Wilmut will use the gas you picked up to initiate a complex process to undo the damage done there."
 
 "Der letzte Sprung heute wird dich in eine Forschungsbasis tief im Weltall bringen. Dort wird der Einfluss von dunkler Materie auf Lebewesen untersucht. Leider gab es einen schrecklichen Unfall und die Besatzung hat die Kontrolle über den Großteil der Station an Mutanten verloren. Professor Wilmut wird mithilfe des Gases einen komplexen Prozess einleiten, der den Schaden rückgängig machen wird."
 
-===Round Extro 6===
+===Round Extro 4===
 "Professor Wilmut will stay on the station for a while to monitor the process. Most of the station's staff had barricaded themselves in the control room and survived that way."
 
 "Professor Wilmut eine Weile wird auf der Station bleiben, um den Prozess zu überwachen. Der Großteil der Besatzung hatte sich im Kontrollraum verbarrikadiert und auf diese Weise überlebt."
@@ -131,53 +111,32 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 "Wir haben das Schiff deinem heutigen Zustand optimal angepasst und es im Hangar für dich bereitgestellt. Die Lageeinweisung für deinen ersten Sprung wirst du an Bord über deinen Commlink erhalten. Viel Glück!"
 
-
 ===Round Intro 2===
-"Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. You will now jump to Cervesia Prima, taking one of our officers with you, who's holiday there will start today."
-
-"Der Urlaub von Admiral Farrell auf Cervesia Prima ist vorbei und seine Anwesenheit wird bei der 1st Federal Navy gebraucht. Du wirst nach Cervesia Prima springen und einen unserer Offiziere mitnehmen, dessen Urlaub heute beginnt."
-
-===Round Extro 2===
-"Thank you. Now wait for the Grand Admiral to board your ship. Stand by for further orders."
-
-"Danke. Jetzt warte auf den Admiral. Bleibe für weitere Befehle verfügbar."
-
-===Round Intro 3===
-"Having the Grand Admiral on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. You will then dock at the Terran flagship, the Achilles where the Grand Admiral will leave your ship."
-
-"Mit dem Admiral an Bord wirst du einen Hyperraumsprung zur Front im Krieg gegen die Shadows durchführen. Du wirst dann auf unserem Flaggschiff, der Achilles landen, wo der Admiral dein Schiff verlassen wird."
-
-===Round Extro 3===
-"The Grand Admiral has left your ship and entered his command post. Stand by docked at the Achilles and wait for further orders."
-
-"Der Admiral hat dein Schiff verlassen und ist auf seinem Kommandostand angekommen. Bleibe an Bord deines Schiffes im Hangar der Achilles und warte auf weitere Befehle."
-
-===Round Intro 4===
 "We received a distress signal from a scouting fleet in the Horse Nebula. Unfortunately, the signal was very blurred, so we do not know exactly what happened. You will immediately perform a jump to the last known location of the fleet and report in on arrival."
 
 "Wir haben ein Notsignal von einer Erkundungsflotte im Horse Nebula erhalten. Leider war das Signal sehr verzerrt, daher wissen wir nicht genau, was passiert ist. Du wirst sofort zum letzten bekannten Aufenthalt der Flotte springen und bei deiner Ankunft berichten."
 
-===Round Extro 4===
+===Round Extro 2===
 "Thank you for your report about the fleet being ambushed and destroyed by the shadows. The Federal Naval Command is currently arranging a counter-attack. Stand by for further orders."
 
 "Danke für deinen Bericht darüber, dass die Flotte von den Shadows angegriffen und zerstört wurde. Das Federal Naval Command arrangiert derzeit einen Gegenangriff. Bereite dich auf weitere Befehle vor."
 
-===Round Intro 5===
+===Round Intro 3===
 "Being our only pilot close to the front lines, you are assigned with the task to support the Navy's counter-attack as good as you can. The FNC will not be able to commence the attack without special gear which was just completed at the Federal assembly plant in the Wolf 1061 solar system."
 
 "Da du unser einziger Pilot so nahe an der Front bist, erhältst du die Aufgabe, den Gegenangriff der Navy so gut du kannst zu unterstützen. Die FNC wird diesen Gegenangriff nicht ohne spezielle Ausrüstung durchführen können. Springe zu einer Fabrik im Sonnensystem Wolf 1061 und hole diese Ausrüstung ab."
 
-===Round Extro 5===
+===Round Extro 3===
 "The special gear is being loaded onto your ship. Stand by, ready for take-off."
 
 "Die Ausrüstung wird auf dein Schiff geladen. Sei bereit zum Abflug."
 
-===Round Intro 6===
+===Round Intro 4===
 "The FNC is preparing a fleet to counter-attack the Shadows in the Horse Nebula. You will liase with the fleet close to the nebula and dock at the battleship Athene, where the special gear you transported is going to be unloaded and assembled."
 
 "Das FNC bereitet eine Flotte für den Gegenangriff auf die Shadows vor. Du wirst die Flotte in der Nähe des Horse Nebula treffen und auf dem Schlachtschiff Athene landen, wo die Ausrüstung, die du transportiert hast, entladen und zusammengebaut werden wird."
 
-===Round Extro 6===
+===Round Extro 4===
 "The new special weapon is being unloaded and mounted to the Athene and will ensure her to stand victorious against the Shadow forces."
 
 "Die neue Spezialwaffe wird gerade entladen und an der Athene montiert. Sie wird sicherstellen, dass sie aus dem Kampf gegen die Shadows siegreich hervorgeht."
@@ -335,3 +294,49 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "Good job. You may return home now. You will be debriefed and dismissed on arrival."
 
 "Gut gemacht. Du darfst jetzt nach hause zurückkehren. Melde dich zur Lagebesprechung und dann bist du für heute entlassen."
+
+
+
+==Übrige Rounds==
+
+===Round Intro 2===
+"There has been a power failure in one of our outer-rim antimatter processing plants. Unfortunately, the base is not equipped to deal with this kind of incident. Your mission is to bring a team of engineers from this station there to repair the damage. Take your chance to collect Crystalis!"
+
+"Die Stromversorgung einer unserer Antimaterieverarbeitungsanlagen im weit abgelegenen Raum ist ausgefallen. Leider hat die Basis nicht die richtige Ausrüstung um das Problem selbst zu lösen. Du wirst also ein Team von Ingenieuren dort hin bringen, die den Schaden reparieren. Nutze die Chance, Crystalis zu sammeln!"
+
+===Round Extro 2===
+"Thank you. The maintenance team arrived safely and is now repairing the plant. It should be resuming operation by the end of the day."
+
+"Vielen Dank. Das Wartungsteam ist sicher angekommen und repariert die Schäden in der Anlage. Sie sollte den Betrieb am Ende des Tages wieder aufnehmen können."
+
+===Round Intro 3===
+"A load of antimatter from the plant has been loaded into your ship. It is urgently required by one of our mining bases in the Centauri solar system which is under attack by pirates. Its defence grid ran out of ammunition, it is your job to resupply it before the pirates destroy the base."
+
+"Eine Ladung Antimaterie wurde auf dein Schiff geladen. Es wird dringend auf einer Bergbaukolonie im Sternensystem Centauri benötigt, die von Piraten angegriffen wird. Ihren Verteidigungsanlagen ist die Munition ausgegangen und es ist deine Aufgabe, sie neu zu bestücken, bevor die Piraten die Kolonie vernichten."
+
+===Round Extro 3===
+"The defence grid has been reloaded and is driving the pirates off. Take a break on the asteroid base and await your next orders."
+
+"Die Verteidigungsanlagen wurden nachgeladen und vertreiben die Piraten. Gönn' dir eine Pause auf der Asteroidenkolonie und warte auf deine nächsten Befehle."
+
+
+
+===Round Intro 2===
+"Grand Admiral Farrell's holiday on Cervesia Prima is over and now his presence with the 1st Federal Navy is required. You will now jump to Cervesia Prima, taking one of our officers with you, who's holiday there will start today."
+
+"Der Urlaub von Admiral Farrell auf Cervesia Prima ist vorbei und seine Anwesenheit wird bei der 1st Federal Navy gebraucht. Du wirst nach Cervesia Prima springen und einen unserer Offiziere mitnehmen, dessen Urlaub heute beginnt."
+
+===Round Extro 2===
+"Thank you. Now wait for the Grand Admiral to board your ship. Stand by for further orders."
+
+"Danke. Jetzt warte auf den Admiral. Bleibe für weitere Befehle verfügbar."
+
+===Round Intro 3===
+"Having the Grand Admiral on board, you will perform a hyperspace jump to the Terran frontline in the Shadow war. You will then dock at the Terran flagship, the Achilles where the Grand Admiral will leave your ship."
+
+"Mit dem Admiral an Bord wirst du einen Hyperraumsprung zur Front im Krieg gegen die Shadows durchführen. Du wirst dann auf unserem Flaggschiff, der Achilles landen, wo der Admiral dein Schiff verlassen wird."
+
+===Round Extro 3===
+"The Grand Admiral has left your ship and entered his command post. Stand by docked at the Achilles and wait for further orders."
+
+"Der Admiral hat dein Schiff verlassen und ist auf seinem Kommandostand angekommen. Bleibe an Bord deines Schiffes im Hangar der Achilles und warte auf weitere Befehle."
