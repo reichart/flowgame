@@ -191,34 +191,14 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "Du wirst jetzt zurück ins Sonnensystem Spica springen und die Boje dort im Orbit des Planeten platzieren."
 
 ===Round Extro 4===
-"The AEHH is now launching its freighters and colonization ships. Stand by, we have more work for you to do!"
+"The AEHH is now launching its freighters and colonization ships. That's it for today. Stand by in orbit until we calculated a safe jump route home for you."
 
-"Die G.E.I.L. kann jetzt ihre Frachter und Kolonieschiffe starten. Bleibe bereit, wir haben noch mehr Arbeit für dich."
-
-===Round Intro 5===
-"There is another possibly habitable planet in the Betelguese solar system. As before, you will jump there and run a scan on this system. But be warned, Shadow activity has been detected in a nebula not far from Betelgeuse."
-
-"Es gibt einen weiteren möglicherweise bewohnbaren Planeten im Sonnensystem Betelguese. Du wirst dorthin springen und das System untersuchen. Aber sei gewarnt, wir sind auf Aktivitäten der Shadows in einem nahegelegenen Nebel gestoßen."
-
-===Round Extro 5===
-"You ran straight into trouble there, pilot! Although the scan results were positive and indicated great mineral abundancy on this planet, the whole system is infested with Shadows. Your retreat coordinates will be transmitted immediately."
-
-"Du bist direkt in einen Haufen Ärger gesprungen! Zwar waren die Ergebnisse positiv und der Planet verfügt über großen Mineralienreichtum, aber das ganze System ist voll mit Shadows. Die Zielkoordinaten für deinen Rückzug werden dir sofort übertragen."
-
-===Round Intro 6===
-"There you go. Retreat to the 6th Federal Naval Fleet. Jump immediately, it is only a matter of minutes until the Shadows detect your ship and will attack you. Once arrived, dock at the commanding Battleship, the "Archimedes". You will pass your intel on the Shadow forces to the commanding admiral, who will immediately initiate an attack to drive the Shadows off."
-
-"Ziehe dich zur 6th Federal Naval Fleet zurück. Springe sofort, es kann sich nur um Minuten handeln, bis die Shadows dein Schiff entdecken und dich angreifen. Wenn du angekommen bist, lande auf dem Schlachtschiff Archimedes. Du wirst deine Informationen an den kommandierenden Admiral weitergeben, der sofort einen Angriff einleiten wird, um die Shadows zu vertreiben."
-
-===Round Extro 6===
-"You are safe now, as soon as the admiral dismisses you, return to the F.L.O.W.-base. We will transmit a safe jump route for you."
-
-"Du bist in Sicherheit. Sobald der Admiral dich entlässt, kehre zur Basis von F.L.O.W. zurück. Wir werden eine sichere Sprungroute für dich ausarbeiten."
+"Die G.E.I.L. kann jetzt ihre Frachter und Kolonieschiffe starten. Das war's auch schon für heute. Warte im Orbit, bis wir eine sichere Sprungroute nach hause berechnet haben."
 
 ===Session Extro===
-"Great job today, pilot! Once you arrived safely at home, you will be debriefed and dismissed for today. You must be looking forward to a nice meal and your bed tonight."
+"Good work! Once you arrived safely at home, you will be debriefed and dismissed for today."
 
-"Sehr gut gemacht heute! Sobald du sicher zuhause angekommen bist, melde dich zur Lagebesprechung und du bist für heute entlassen. Nach einem Tag wie diesem musst du dich wirklich auf ein gutes Essen und dein Bett freuen!"
+"Gut gemacht! Sobald du sicher zuhause angekommen bist, melde dich zur Lagebesprechung und du bist für heute entlassen. "
 
 ----
 
@@ -250,28 +230,8 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 "Du hast die Piratenbasis gefunden, aber sie war verlassen. Eine sehr seltsame Entdeckung, besonders, da es keine Spuren eines Kampfes gab. Warte auf neue Befehle."
 
-===Round Intro 3===
-"Deep Space Mining wants another mining base surveyed. They lost all contact with this base earlier today. Check what happened to this base."
-
-"Deep Space Mining möchte eine weitere Bergbaukolonie überprüft haben. Sie haben heute morgen jeden Kontakt mit dieser Kolonie verloren. Überprüfe, was dort passiert ist."
-
-===Round Extro 3===
-"Once more, you found a base suddenly deserted with no sign of a fight. This cannot simply be a coincidence. We will check what our contacts know. Stand by for further orders."
-
-"Wieder einmal fandest du eine plötzlich verlassene Basis, ohne das geringste Anzeichen eines Kampfes. Das kann nicht einfach ein Zufall sein. Wir werden überprüfen, was unsere Kontakte dazu wissen. Warte auf weitere Befehle."
-
-===Round Intro 4===
-"Deep Space Mining wants you to survey an asteroid for minerals. Simply jump to the coordinates and initiate a scan on the asteroid."
-
-"Deep Space Mining möchte, dass du einen Asteroiden auf Mineralienvorkommen überprüfst. Springe einfach zu den Koordinaten und überprüfe den Asteroiden mit deinen Sensoren."
-
-===Round Extro 4===
-"The scan detected abundant minerals, but there is something more essential. We have found a hint to what happened to the deserted colonies. Stand by for your orders."
-
-"Deine Überprüfung ergab reiche Mineralienvorkommen, aber es gibt etwas viel wichtigeres. Wir haben einen Hinweis darauf gefunden, was mit den verlassenen Kolonien passiert ist. Erwarte deine Befehle."
-
 ===Round Intro 5===
-"We have gained intel that there were several more colonies that were deserted just like that. Obviously one of the transport ships the colonists used crashed into an asteroid. Jump to the crash site and see if you can get some information about its destination."
+"We have gained intel that there were several colonies that were suddenly deserted. Obviously one of the transport ships the colonists used crashed into an asteroid. Jump to the crash site and see if you can get some information about its destination."
 
 "Wir haben Informationen über einige weitere Kolonien bekommen, die einfach so verlassen wurden. Offensichtlich ist eines der Transportschiffe, die die Kolonisten benutzt haben, auf einem Asteroiden abgestürzt. Springe zur Absturzstelle und sieh nach, ob du Informationen über sein Ziel finden kannst."
 
@@ -326,6 +286,8 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 
 "Der Urlaub von Admiral Farrell auf Cervesia Prima ist vorbei und seine Anwesenheit wird bei der 1st Federal Navy gebraucht. Du wirst nach Cervesia Prima springen und einen unserer Offiziere mitnehmen, dessen Urlaub heute beginnt."
 
+
+
 ===Round Extro 2===
 "Thank you. Now wait for the Grand Admiral to board your ship. Stand by for further orders."
 
@@ -340,3 +302,45 @@ His presence is required elsewhere, you will be briefed on take-off from Tau Cet
 "The Grand Admiral has left your ship and entered his command post. Stand by docked at the Achilles and wait for further orders."
 
 "Der Admiral hat dein Schiff verlassen und ist auf seinem Kommandostand angekommen. Bleibe an Bord deines Schiffes im Hangar der Achilles und warte auf weitere Befehle."
+
+
+===Round Intro 5===
+"There is another possibly habitable planet in the Betelguese solar system. As before, you will jump there and run a scan on this system. But be warned, Shadow activity has been detected in a nebula not far from Betelgeuse."
+
+"Es gibt einen weiteren möglicherweise bewohnbaren Planeten im Sonnensystem Betelguese. Du wirst dorthin springen und das System untersuchen. Aber sei gewarnt, wir sind auf Aktivitäten der Shadows in einem nahegelegenen Nebel gestoßen."
+
+===Round Extro 5===
+"You ran straight into trouble there, pilot! Although the scan results were positive and indicated great mineral abundancy on this planet, the whole system is infested with Shadows. Your retreat coordinates will be transmitted immediately."
+
+"Du bist direkt in einen Haufen Ärger gesprungen! Zwar waren die Ergebnisse positiv und der Planet verfügt über großen Mineralienreichtum, aber das ganze System ist voll mit Shadows. Die Zielkoordinaten für deinen Rückzug werden dir sofort übertragen."
+
+===Round Intro 6===
+"There you go. Retreat to the 6th Federal Naval Fleet. Jump immediately, it is only a matter of minutes until the Shadows detect your ship and will attack you. Once arrived, dock at the commanding Battleship, the "Archimedes". You will pass your intel on the Shadow forces to the commanding admiral, who will immediately initiate an attack to drive the Shadows off."
+
+"Ziehe dich zur 6th Federal Naval Fleet zurück. Springe sofort, es kann sich nur um Minuten handeln, bis die Shadows dein Schiff entdecken und dich angreifen. Wenn du angekommen bist, lande auf dem Schlachtschiff Archimedes. Du wirst deine Informationen an den kommandierenden Admiral weitergeben, der sofort einen Angriff einleiten wird, um die Shadows zu vertreiben."
+
+
+===Round Extro 6===
+"You are safe now, as soon as the admiral dismisses you, return to the F.L.O.W.-base. We will transmit a safe jump route for you."
+
+"Du bist in Sicherheit. Sobald der Admiral dich entlässt, kehre zur Basis von F.L.O.W. zurück. Wir werden eine sichere Sprungroute für dich ausarbeiten."
+
+===Round Intro 3===
+"Deep Space Mining wants another mining base surveyed. They lost all contact with this base earlier today. Check what happened to this base."
+
+"Deep Space Mining möchte eine weitere Bergbaukolonie überprüft haben. Sie haben heute morgen jeden Kontakt mit dieser Kolonie verloren. Überprüfe, was dort passiert ist."
+
+===Round Extro 3===
+"Once more, you found a base suddenly deserted with no sign of a fight. This cannot simply be a coincidence. We will check what our contacts know. Stand by for further orders."
+
+"Wieder einmal fandest du eine plötzlich verlassene Basis, ohne das geringste Anzeichen eines Kampfes. Das kann nicht einfach ein Zufall sein. Wir werden überprüfen, was unsere Kontakte dazu wissen. Warte auf weitere Befehle."
+
+===Round Intro 4===
+"Deep Space Mining wants you to survey an asteroid for minerals. Simply jump to the coordinates and initiate a scan on the asteroid."
+
+"Deep Space Mining möchte, dass du einen Asteroiden auf Mineralienvorkommen überprüfst. Springe einfach zu den Koordinaten und überprüfe den Asteroiden mit deinen Sensoren."
+
+===Round Extro 4===
+"The scan detected abundant minerals, but there is something more essential. We have found a hint to what happened to the deserted colonies. Stand by for your orders."
+
+"Deine Überprüfung ergab reiche Mineralienvorkommen, aber es gibt etwas viel wichtigeres. Wir haben einen Hinweis darauf gefunden, was mit den verlassenen Kolonien passiert ist. Erwarte deine Befehle."
