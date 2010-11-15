@@ -98,47 +98,47 @@ public class DDLGenerator {
 //		Function speedFunctionLinear5 = new LinearFunction(45, 40f/timeLimit);
 		
 		Function speedFunctionConstant1 = new ConstantFunctionBaseline(-30, 0.85);
-		Function speedFunctionConstant2 = new ConstantFunctionBaseline(-15, 0.925);
+//		Function speedFunctionConstant2 = new ConstantFunctionBaseline(-15, 0.925);
 		Function speedFunctionConstant3 = new ConstantFunctionBaseline(0, 1);
-		Function speedFunctionConstant4 = new ConstantFunctionBaseline(15, 1.075);
+//		Function speedFunctionConstant4 = new ConstantFunctionBaseline(15, 1.075);
 		Function speedFunctionConstant5 = new ConstantFunctionBaseline(30, 1.15);
 		
 		Function speedFunctionLinear1 = new LinearFunctionBaseline(-30, 0.85);
-		Function speedFunctionLinear2 = new LinearFunctionBaseline(-15, 0.925);
+//		Function speedFunctionLinear2 = new LinearFunctionBaseline(-15, 0.925);
 		Function speedFunctionLinear3 = new LinearFunctionBaseline(0, 1);
-		Function speedFunctionLinear4 = new LinearFunctionBaseline(15, 1.075);
+//		Function speedFunctionLinear4 = new LinearFunctionBaseline(15, 1.075);
 		Function speedFunctionLinear5 = new LinearFunctionBaseline(30, 1.15);
 
 		ScenarioRound cBaselineRound = new ScenarioRound(true, timeLimit, df5);
 		ScenarioRound cSr1 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant1, ratioFunction));
-		ScenarioRound cSr2 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction));
+//		ScenarioRound cSr2 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant2, ratioFunction));
 		ScenarioRound cSr3 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant3, ratioFunction));
-		ScenarioRound cSr4 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction));
+//		ScenarioRound cSr4 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant4, ratioFunction));
 		ScenarioRound cSr5 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionConstant5, ratioFunction));
 		
 		ScenarioSession constantScenarioSession = new ScenarioSession();
 		constantScenarioSession.add(cBaselineRound);
 		constantScenarioSession.add(cSr1);
-		constantScenarioSession.add(cSr2);
+//		constantScenarioSession.add(cSr2);
 		constantScenarioSession.add(cSr3);
-		constantScenarioSession.add(cSr4);
+//		constantScenarioSession.add(cSr4);
 		constantScenarioSession.add(cSr5);
 		em.persist(constantScenarioSession);
 		
 		
 		ScenarioRound dBaselineRound = new ScenarioRound(true, timeLimit, df5);
 		ScenarioRound dSr1 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear1, ratioFunction));
-		ScenarioRound dSr2 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear2, ratioFunction));
+//		ScenarioRound dSr2 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear2, ratioFunction));
 		ScenarioRound dSr3 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear3, ratioFunction));
-		ScenarioRound dSr4 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear4, ratioFunction));
+//		ScenarioRound dSr4 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear4, ratioFunction));
 		ScenarioRound dSr5 = new ScenarioRound(false, timeLimit, new DifficultyFunction(intervalFunction, speedFunctionLinear5, ratioFunction));
 		
 		ScenarioSession linearScenarioSession = new ScenarioSession();
 		linearScenarioSession.add(dBaselineRound);
 		linearScenarioSession.add(dSr1);
-		linearScenarioSession.add(dSr2);
+//		linearScenarioSession.add(dSr2);
 		linearScenarioSession.add(dSr3);
-		linearScenarioSession.add(dSr4);
+//		linearScenarioSession.add(dSr4);
 		linearScenarioSession.add(dSr5);
 		em.persist(linearScenarioSession);
 		
