@@ -9,7 +9,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.tum.in.flowgame.GameLogic;
-import de.tum.in.flowgame.client.ui.screens.BeforeRoundQuestionnaireScreen;
 import de.tum.in.flowgame.client.ui.screens.UIMessages;
 import de.tum.in.flowgame.model.GameRound;
 
@@ -34,8 +33,8 @@ public class RoundExtroScreen extends StoryScreen {
 					log.info("no more rounds, game over");
 					menu.show(SessionExtroScreen.class);
 				} else {
-					log.info("more rounds available, showing pre-round qn: " + round);
-					menu.show(BeforeRoundQuestionnaireScreen.class);
+					log.info("more rounds available, showing round-intro: " + round);
+					menu.show(RoundIntroScreen.class);
 				}
 			}
 		});
