@@ -17,6 +17,13 @@ public class ScenarioSession extends AbstractEntity {
 	@Transient
 	private int roundsPlayed;
 
+	/*
+	 * At least one field needs to be mapped for JPA not to complain,
+	 * cf. https://glassfish.dev.java.net/issues/show_bug.cgi?id=1157
+	 */
+	@SuppressWarnings("unused")
+	private final int dummy = 0;
+	
 	public ScenarioSession() {
 		this.rounds = new ArrayList<ScenarioRound>();
 	}
