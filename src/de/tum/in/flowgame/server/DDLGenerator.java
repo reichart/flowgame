@@ -35,7 +35,7 @@ public class DDLGenerator {
 		Questionnaire profile = new Questionnaire("profile", false, 13);
 		
 		// questionnaires used after every round
-		Questionnaire flow = new Questionnaire("flow", false, 10);
+		Questionnaire flow = new Questionnaire("flow", false, 4);
 		Questionnaire reqfit = new Questionnaire("reqfit", true, 1);
 
 		//Create 6 Players
