@@ -25,7 +25,7 @@ public class LinearFunctionBaseline extends Function {
 	@Override
 	public void configure(double baseline, double expectedPlaytime) {
 		super.configure(baseline, expectedPlaytime);
-		difference = 15 + baseline * 0.075;
+		difference = 30 + baseline * 0.150;
 		slope = difference / expectedPlaytime;
 	}
 	
