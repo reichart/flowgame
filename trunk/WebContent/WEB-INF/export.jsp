@@ -56,7 +56,7 @@
 		<tr id="scenario-<s:property value="id" />">
 			<td><s:property value="id" /></td>
 			<td>
-			<table border="1">
+			<table border="1" width="100%">
 				<tr>
 					<th rowspan="2">ID</th>
 					<th rowspan="2">Position</th>
@@ -95,8 +95,6 @@
 		<th>Scenario</th>
 		<th>Player</th>
 		<th>Baseline Difficulty</th>
-		<th>Mood</th>
-		<th>Answering Time</th>
 		<th>Rounds</th>
 	</tr>
 	<s:iterator value="sessions">
@@ -104,17 +102,6 @@
 			<td><a href="#scenario-<s:property value="scenarioSession.id" />"><s:property value="scenarioSession.id" /></a></td>
 			<td><a href="#player-<s:property value="player.id" />"><s:property value="player.id" /> (<s:property value="player.name" />)</a></td>
 			<td><s:property value="baseline" /></td>
-			<td>
-			<table border="1">
-				<s:iterator value="answers">
-					<tr>
-						<td><s:property value="question.text" /></td>
-						<td><s:property value="answer" /></td>
-					</tr>
-				</s:iterator>
-			</table>
-			</td>
-			<td><s:property value="answeringTime" /></td>
 			<td>
 			<table border="1">
 				<tr>
@@ -126,7 +113,8 @@
 					<th>Answering Time (ms)</th>
 					<th>Start Time</th>
 					<th>Score</th>
-					<th>Rank</th>
+					<th>Social Rank</th>
+					<th>Global Rank</th>
 				</tr>
 				<s:iterator value="rounds">
 					<tr>
@@ -134,16 +122,7 @@
 						<td><a href="#scenarioround-<s:property value="scenarioRound.id" />"><s:property value="scenarioRound.id" /></a></td>
 						<td><s:property value="actualPlaytime" /></td>
 						<td><s:property value="collisionsWithFuelcans" />/<s:property value="collisionsWithAsteroids" /></td>
-						<td>
-						<table border="1">
-							<s:iterator value="answers">
-								<tr>
-									<td><s:property value="question.text" /></td>
-									<td><s:property value="answer" /></td>
-								</tr>
-							</s:iterator>
-						</table>
-						</td>
+						<td><s:iterator value="answers"><s:property value="answer" /> </s:iterator></td>
 						<td><s:property value="answeringTime" /></td>
 						<td><s:property value="startTime" /></td>
 						<td><s:property value="score.score" /></td>
