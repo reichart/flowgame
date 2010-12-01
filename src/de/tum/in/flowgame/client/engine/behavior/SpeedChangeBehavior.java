@@ -1,7 +1,7 @@
 package de.tum.in.flowgame.client.engine.behavior;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.tum.in.flowgame.DefaultGameListener;
@@ -41,7 +41,7 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 		this.strategy = new FunctionStrategy2();
 		Utils.export(this);
 
-		speeds = new ArrayList<Double>();
+		speeds = new LinkedList<Double>();
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 				 * 
 				 */
 				public void gameStarted(GameLogic game) {
-					speeds = new ArrayList<Double>();
+					speeds.clear();
 					if (strategy != null) {
 						strategy.reset();
 					}
@@ -114,9 +114,10 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 					if (gameLogic.getCurrentScenarioRound().isBaselineRound()) {
 						// long baseline = (long) (maxSpeed * 0.9);
 						Collections.sort(speeds);
-						System.err.println("Speeds Size: " + speeds.size() + "\tPosition at 70% " + (int) (speeds.size() * 0.5f));
+						final int pos = (int) (speeds.size() * 0.5f);
+						System.err.println("Speeds Size: " + speeds.size() + "\tPosition at 50% " + pos);
 						System.err.println("maxSpeed " + maxSpeed);
-						double baseline = speeds.get((int) (speeds.size() * 0.5f));
+						double baseline = speeds.get(pos);
 						System.err.println("baseline " + baseline);
 						gameLogic.setBaseline(baseline);
 					}
