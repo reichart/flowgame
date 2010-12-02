@@ -149,14 +149,14 @@ public class FriendsBar extends JPanel {
 					}
 				}
 				if (f != null) {
-					friendButtons.get(i).setPicture(f.getPicture());
-					friendButtons.get(i).setScore(highscore.getScore());
+					friendButtons.get(i-currentPosition).setPicture(f.getPicture());
+					friendButtons.get(i-currentPosition).setScore(highscore.getScore());
 				} else {
 					log.warn("Friend Object could not be found");
 				}
 			} else {
-				friendButtons.get(i).setPicture(null);
-				friendButtons.get(i).setScore(null);
+				friendButtons.get(i-currentPosition).setPicture(null);
+				friendButtons.get(i-currentPosition).setScore(null);
 			}
 		}
 	}

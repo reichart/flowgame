@@ -9,7 +9,6 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.Utils;
 import de.tum.in.flowgame.client.GameLogicConsumer;
 import de.tum.in.flowgame.client.strategy.FlowStrategy;
-import de.tum.in.flowgame.client.strategy.FunctionStrategy;
 import de.tum.in.flowgame.client.strategy.FunctionStrategy2;
 import de.tum.in.flowgame.model.Function;
 
@@ -47,8 +46,7 @@ public class SpeedChangeBehavior extends RepeatingBehavior implements GameLogicC
 	@Override
 	protected void update() {
 		if (!isPaused()) {
-			if ((this.strategy instanceof FunctionStrategy || this.strategy instanceof FunctionStrategy2)
-					&& (strategy.getFunction() == null || strategy.getFunction().getSpeed() == null)) {
+			if (strategy.getFunction() == null || strategy.getFunction().getSpeed() == null) {
 				strategy.setFunction(gameLogic.getDifficultyFunction());
 			}
 
