@@ -23,6 +23,7 @@ import de.tum.in.flowgame.model.Person;
 import de.tum.in.flowgame.model.Questionnaire;
 import de.tum.in.flowgame.model.ScenarioSession;
 import de.tum.in.flowgame.model.Score;
+import de.tum.in.flowgame.model.SocialCurrentHighscore;
 
 public class Client {
 
@@ -33,6 +34,7 @@ public class Client {
 	private final String DOWNLOAD_PERCENTAGE;
 	private final String DOWNLOAD_SCENARIOSESSION;
 	private final String DOWNLOAD_HIGHSCORES_URL;
+	private final String DOWNLOAD_SOCIAL_HIGHSCORE;
 	private final String DOWNLOAD_PERSONAL_HIGHSCORES_SET;
 	private final String DOWNLOAD_QUESTIONNAIRES;
 	
@@ -50,6 +52,7 @@ public class Client {
 		this.DOWNLOAD_HIGHSCORES_URL = server + "highscoresDownload" + ext;
 		this.DOWNLOAD_PERSONAL_HIGHSCORES_SET = server + "personalHighscoresSetDownload" + ext;
 		this.DOWNLOAD_QUESTIONNAIRES = server + "questionnaireDownload" + ext;
+		this.DOWNLOAD_SOCIAL_HIGHSCORE = server + "socialHighscoreDownload" + ext;
 	}
 
 	public void uploadQuietly(final Object entity) {
@@ -112,6 +115,15 @@ public class Client {
 
 	public SortedSet<Score> downloadPersonHighscoreSet(final long playerId) throws IOException {
 		return execute(DOWNLOAD_PERSONAL_HIGHSCORES_SET, playerId);
+	}
+	
+	public List<Highscore> downloadSocialHighscore(SocialCurrentHighscore socialCurrentHighscore) {
+		try {
+			return execute(DOWNLOAD_SOCIAL_HIGHSCORE, socialCurrentHighscore);
+		} catch (final Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**

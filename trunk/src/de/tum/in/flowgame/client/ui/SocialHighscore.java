@@ -17,6 +17,7 @@ import de.tum.in.flowgame.GameLogic;
 import de.tum.in.flowgame.client.Client;
 import de.tum.in.flowgame.client.facebook.FacebookFriendCache;
 import de.tum.in.flowgame.model.Highscore;
+import de.tum.in.flowgame.model.SocialCurrentHighscore;
 
 public class SocialHighscore extends JPanel {
 
@@ -53,8 +54,6 @@ public class SocialHighscore extends JPanel {
 	}
 
 	private void updateHighscores() throws Exception {
-		final List<Long> persons = friendCash.getFriendsids();
-
 		final Client client = logic.getClient();
 		if (client == null) {
 			log.warn("no client, not updating highscore");
@@ -63,29 +62,28 @@ public class SocialHighscore extends JPanel {
 
 		final long playerId = friendCash.getCurrentPlayer().getId();
 		
-		final boolean showHighscores = logic.getCurrentGameRound() == null;
-		if (showHighscores) {
-			log.info("displaying social high scores");
-			
-			persons.add(friendCash.getCurrentPlayer().getId());
-
-			final List<Highscore> globalScores = client.getHighscores(persons);
-			for (final Highscore highscore : globalScores) {
-				if (highscore.getPersonid() == playerId) {
-					ownScore = highscore;
-					break;
-				}
-			}
-			globalScores.remove(ownScore);
-			highscores = globalScores;
-		} else {
+		final boolean inGame = logic.getCurrentGameRound() != null;
+		
+		final List<Highscore> tempHighscores;
+		final List<Long> persons = friendCash.getFriendsids();
+		if (inGame) {
 			log.info("displaying social current score");
-			
-			highscores = client.getHighscores(persons);
-			final long currentScore = logic.getScore();
-			final Integer percentage = client.getPercentage(new Highscore(playerId, currentScore));
-			ownScore = new Highscore(playerId, currentScore, percentage);
+			SocialCurrentHighscore socialCurrentHighscore = new SocialCurrentHighscore(persons, playerId, logic.getScore());
+			tempHighscores = client.downloadSocialHighscore(socialCurrentHighscore);
+		} else {
+			log.info("displaying social high scores");
+			persons.add(friendCash.getCurrentPlayer().getId());
+			tempHighscores = client.getHighscores(persons);
 		}
+		
+		for (final Highscore highscore : tempHighscores) {
+			if (highscore.getPersonid() == playerId) {
+				ownScore = highscore;
+				break;
+			}
+		}
+		tempHighscores.remove(ownScore);
+		highscores = tempHighscores;
 		
 		log.info("own score " + ownScore);
 		

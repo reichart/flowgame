@@ -32,7 +32,7 @@ public class ScenarioSessionDownloadAction extends GameDataAction<Long, Scenario
 		} else {
 			sort = true;
 		}
-
+		
 		final List<ScenarioSession> scenarioSessions = list(ScenarioSession.class);
 		
 		

@@ -14,23 +14,5 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<security-role>
-		<role-name>export</role-name>
-	</security-role>
-
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>Data Export Interface</web-resource-name>
-			<url-pattern>/export/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>export</role-name>
-		</auth-constraint>
-	</security-constraint>
-
-	<login-config>
-		<auth-method>DIGEST</auth-method>
-		<realm-name>Data Export Interface Realm</realm-name>
-	</login-config>
 
 </web-app>

@@ -87,7 +87,7 @@ public class GameApplet extends Applet {
 		final String sessionKey;
 
 		// TODO why does isActive() not work when deployed via JNLP?
-		final boolean PRODUCTION = true;
+		final boolean PRODUCTION = false;
 		if (PRODUCTION) {
 			log.info("using: applet deployment path");
 			server = getCodeBase().toString();
