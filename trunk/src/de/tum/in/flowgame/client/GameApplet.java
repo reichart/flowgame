@@ -36,7 +36,7 @@ import de.tum.in.flowgame.model.Person;
 public class GameApplet extends Applet {
 
 	private final static Log log = LogFactory.getLog(GameApplet.class);
-	
+
 	private final Game3D game;
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 400;
@@ -75,19 +75,19 @@ public class GameApplet extends Applet {
 
 	public GameApplet() throws IOException {
 		ImageIO.setUseCache(false); // stay in JWS sandbox
-		
+
 		this.game = new Game3D();
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, game);
 	}
-	
+
 	public CustomFacebookClient createFacebookClient() throws IOException {
 		final String server;
 		final String sessionSecret;
 		final String sessionKey;
 
 		// TODO why does isActive() not work when deployed via JNLP?
-		final boolean PRODUCTION = false;
+		final boolean PRODUCTION = true;
 		if (PRODUCTION) {
 			log.info("using: applet deployment path");
 			server = getCodeBase().toString();
@@ -111,7 +111,7 @@ public class GameApplet extends Applet {
 			final Client client = new Client(facebook.getServer());
 			final Person player = getPlayer(client);
 			final Browser browser = JSObjectBrowser.from(this);
-			
+
 			// this initializes all the other classes
 			new GameLogic(player, client, facebook, browser).addListener(game.getListener());
 
@@ -120,7 +120,7 @@ public class GameApplet extends Applet {
 			} else {
 				game.getMenu().show(MainScreen.class);
 			}
-			
+
 			SoundManager.getInstance().loop(Sound.MENU);
 		} catch (final Exception ex) {
 			throw new RuntimeException("Failed to connect to " + facebook.getServer(), ex);
@@ -137,8 +137,8 @@ public class GameApplet extends Applet {
 			if (player == null) {
 				log.info("creating new player");
 
-				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME,
-						ProfileField.BIRTHDAY_DATE, ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
+				final JSONObject userInfo = facebook.users_getInfo(loggedInUser, ProfileField.FIRST_NAME, ProfileField.BIRTHDAY_DATE,
+						ProfileField.SEX, ProfileField.HOMETOWN_LOCATION);
 
 				try {
 					final String name = userInfo.getString(ProfileField.FIRST_NAME.fieldName());
@@ -149,12 +149,11 @@ public class GameApplet extends Applet {
 					if (userInfo.isNull(ProfileField.HOMETOWN_LOCATION.fieldName())) {
 						country = null;
 					} else {
-						country = userInfo.getJSONObject(ProfileField.HOMETOWN_LOCATION.fieldName()).getString(
-								"country");
+						country = userInfo.getJSONObject(ProfileField.HOMETOWN_LOCATION.fieldName()).getString("country");
 					}
 
 					player = new Person(loggedInUser, name);
-					
+
 					if (!userInfo.isNull(ProfileField.BIRTHDAY_DATE.fieldName())) {
 						try {
 							player.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse(birthday));
