@@ -55,8 +55,8 @@ function toggle_invite_content() {
 
 <table id="links" style="width:${appletWidth}px">
 	<tr>
-		<td class="fbbluebox" id="problems"><a href="https://www.facebook.com/flowspace?v=app_2373072738">Doesn't work?<br />Tell us!</a></td>
-		<td class="fbbluebox" id="comments"><a href="https://www.facebook.com/flowspace">Leave a comment!</a></td>
+		<td class="fbbluebox" id="problems"><a target="_top" href="https://www.facebook.com/flowspace?v=app_2373072738">Doesn't work?<br />Tell us!</a></td>
+		<td class="fbbluebox" id="comments"><a target="_top" href="https://www.facebook.com/flowspace">Leave a comment!</a></td>
 	</tr>
 </table>
 
