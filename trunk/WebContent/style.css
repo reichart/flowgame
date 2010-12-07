@@ -10,6 +10,38 @@ body {
 	text-align: center;
 }	
 
+#links td {
+	width: 50%;
+}
+
+#links a {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: #333333;
+}
+
+#problems {
+	background-image: url("problem.png");
+	background-repeat: no-repeat;
+	background-position: 10px;
+}
+
+#comments {
+	background-image: url("comment.png");
+	background-repeat: no-repeat;
+	background-position: 10px;
+}
+
+#known ul {
+	margin: 0;
+}
+
+#known span {
+	border-bottom: 1px dotted;
+	cursor: help;
+}
+
 /* Default Facebook CSS */
 .fbbody {
 	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
