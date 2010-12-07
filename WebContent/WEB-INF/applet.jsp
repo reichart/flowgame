@@ -53,5 +53,26 @@ function toggle_invite_content() {
 	<iframe src="${invite}" width="755" height="670" scrolling="no">Sorry, your browser doesn't support frames.</iframe>
 </div>
 
+<table id="links" style="width:${appletWidth}px">
+	<tr>
+		<td class="fbbluebox" id="problems"><a href="https://www.facebook.com/flowspace?v=app_2373072738">Doesn't work?<br />Tell us!</a></td>
+		<td class="fbbluebox" id="comments"><a href="https://www.facebook.com/flowspace">Leave a comment!</a></td>
+	</tr>
+</table>
+
+<div id="known" style="width:${appletWidth}px">
+
+<div class="fbbluebox" style="font-weight: normal; margin-top: 1em">
+<p><strong>Known issues</strong> that prevent this game from functioning:</p>
+<ul>
+	<li>Mac OS X comes with an <span title="as in 7 years outdated, from when Mac OS X 10.3 (Panther) came out in 2003">outdated</span>
+		version of Java3D that can't easily be updated. No can do, sorry :(</li>
+
+	<li>OpenJDK (e.g. on Ubuntu Linux) can't access Facebook (we're on it!).</li>
+</ul>
+</div>
+
+</div>
+
 </body>
 </html>
