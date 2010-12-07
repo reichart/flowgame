@@ -35,7 +35,7 @@
 	</tr>
 	<s:iterator value="players">
 		<tr id="player-<s:property value="id" />">
-			<td><s:property value="id" /></td>
+			<td><a href="https://www.facebook.com/profile.php?id=<s:property value="id" />"><s:property value="id" /></a></td>
 			<td><s:property value="name" /></td>
 			<td><s:property value="sex" /></td>
 			<td><s:date name="dateOfBirth" /></td>
