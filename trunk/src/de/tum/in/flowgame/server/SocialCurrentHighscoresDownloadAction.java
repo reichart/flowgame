@@ -2,7 +2,6 @@ package de.tum.in.flowgame.server;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import de.tum.in.flowgame.model.Highscore;
 import de.tum.in.flowgame.model.SocialCurrentHighscore;
