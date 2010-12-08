@@ -21,6 +21,15 @@ function toggle_invite_content() {
 
 <s:text var="appletWidth" name="applet.width" />
 <s:text var="appletHeight" name="applet.height" />
+
+<div style="width:${appletWidth}px">
+<div class="fbbluebox" style="text-align: center">
+<div style="font-weight: normal">This is a psy experiment first, a game second.</div>
+Please play at least one full session (4x spaceship action, ~10min total)
+to give us a complete data point. Thanks a lot :)
+</div>
+</div>
+
 <script src="http://www.java.com/js/deployJava.js"></script>
 <script>
 	var attributes = {code:'de.tum.in.flowgame.client.GameApplet', width:${appletWidth}, height:${appletHeight}} ;
@@ -69,6 +78,8 @@ function toggle_invite_content() {
 		version of Java3D that can't easily be updated. No can do, sorry :(</li>
 
 	<li>OpenJDK (e.g. on Ubuntu Linux) can't access Facebook (we're on it!).</li>
+	
+	<li>Multiple monitors confuse the graphics engine (we're on it!).</li>
 </ul>
 </div>
 
