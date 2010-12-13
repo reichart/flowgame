@@ -12,22 +12,17 @@ public class JSObjectBrowser implements Browser {
 
 	private final static Log log = LogFactory.getLog(JSObjectBrowser.class);
 
-	private final JSObject js;
+	private final Applet applet;
 
 	/**
 	 * Creates a new instance of this class from an applet.
 	 */
 	public static Browser from(final Applet applet) {
-		JSObject win = null;
-		if (applet.isActive()) {
-			win = JSObject.getWindow(applet);
-		}
-
-		return new JSObjectBrowser(win);
+		return new JSObjectBrowser(applet);
 	}
 
-	private JSObjectBrowser(final JSObject js) {
-		this.js = js;
+	private JSObjectBrowser(final Applet applet) {
+		this.applet = applet;
 	}
 
 	public String getCookie(final String name) {
@@ -44,14 +39,21 @@ public class JSObjectBrowser implements Browser {
 
 	private Object call(final String function, final Object... parameters) {
 		final String call = function + "(" + Arrays.toString(parameters) + ")";
-		if (js == null) {
-			log.warn("no JS object, not calling: " + call);
-			return null;
-		} else {
+		try {
+			final JSObject js = JSObject.getWindow(applet);
 			log.info("calling: " + call);
-			final Object ret = js.call(function, parameters);
-			log.info(call + " returned " + ret);
-			return ret;
+			if (js == null) {
+				log.warn("no JS object, not calling: " + call);
+				return null;
+			} else {
+				final Object ret = js.call(function, parameters);
+				log.info(call + " returned " + ret);
+				return ret;
+			}
+		} catch (final Exception ex) {
+			log.warn("failed to get JS object, not calling: " + call, ex);
+			return null;
 		}
 	}
+
 }
