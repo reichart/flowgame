@@ -14,8 +14,8 @@ public class SocialHighscoresScreen extends HighscoresScreen {
 	private final SocialHighscore contentPanel;
 
 	public SocialHighscoresScreen() {
-		final FacebookFriendCache friendCash = new FacebookFriendCache(menu.getLogic().getFacebookClient());
-		contentPanel = new SocialHighscore(friendCash, menu.getLogic());
+		final FacebookFriendCache friendCache = new FacebookFriendCache(menu.getLogic().getFacebookClient());
+		contentPanel = new SocialHighscore(friendCache, menu.getLogic());
 	}
 
 	@Override
