@@ -204,7 +204,7 @@ public class GameOverlay implements GameListener, ComponentListener, FrameCounte
 
 	public void collided(final GameLogic logic, final Item item) {
 		Point2d coords = engine.getShip2DCoords();
-		if (item == Item.ASTEROID) {
+		if (item == Item.DIAMOND) {
 			message(String.valueOf(logic.getPointsAdded()), Color.RED, coords);
 			// message("Oh noes! Evil asteroidz!");
 		} else if (item == Item.FUELCAN) {
