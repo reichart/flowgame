@@ -47,13 +47,16 @@ public class Trend {
 	 * Creates a Trend class with user defined values for the ranges.
 	 * 
 	 * @param shortRange
-	 *            Base number of {@link Collidable}s for calculating a short time ratio.
+	 *            Base number of {@link Collidable}s for calculating a short
+	 *            time ratio.
 	 * @param midRange
-	 *            Base number of {@link Collidable}s for calculating a mid time ratio.
+	 *            Base number of {@link Collidable}s for calculating a mid time
+	 *            ratio.
 	 * @param longRange
-	 *            Base number of {@link Collidable}s for calculating a long time ratio.
-	 * <p>           
-	 * It should be: shortRange < midRange < longRange.
+	 *            Base number of {@link Collidable}s for calculating a long time
+	 *            ratio.
+	 *            <p>
+	 *            It should be: shortRange < midRange < longRange.
 	 */
 	public Trend(int shortRange, int midRange, int longRange) {
 		this.shortRange = shortRange;
@@ -63,7 +66,10 @@ public class Trend {
 
 	/**
 	 * This method updates all ratios.
-	 * @param collision Should be <code>true</code>, if {@link Collidable} was hit, else <code>false</code>
+	 * 
+	 * @param collision
+	 *            Should be <code>true</code>, if {@link Collidable} was hit,
+	 *            else <code>false</code>
 	 */
 	public void update(boolean collision) {
 		items.add(collision);
@@ -135,16 +141,24 @@ public class Trend {
 
 	/**
 	 * @return Number of collisions with all {@link Collidable}s of a certain
-	 *         type divided through the total amount of these {@link Collidable}s.
+	 *         type divided through the total amount of these {@link Collidable}
+	 *         s.
 	 */
 	public float getCompleteRatio() {
 		return completeRatio;
 	}
-	
+
 	/**
 	 * @return Number of bypassed {@link Collidable}s of a certain type.
 	 */
-	public int getPassedItems(){
+	public int getPassedItems() {
 		return items.size();
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getName() + this.hashCode() + " with " + getPassedItems() + " passed Items:\n shortRatio: "
+				+ getShortRatio() + "\t midRatio: " + getMidRatio() + "\t longRatio: " + getLongRatio() + "\t completeRatio: "
+				+ getCompleteRatio();
 	}
 }
