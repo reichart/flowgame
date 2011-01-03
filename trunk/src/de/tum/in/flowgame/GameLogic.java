@@ -35,7 +35,7 @@ public class GameLogic implements Runnable {
 
 	private final static Log log = LogFactory.getLog(GameLogic.class);
 
-	private static final int POINTS_FOR_FUEL = 10;
+	private static final int POINTS_FOR_DIAMOND = 10;
 	private static final int POINTS_FOR_ASTEROID = 5;
 
 	private boolean paused;
@@ -48,10 +48,10 @@ public class GameLogic implements Runnable {
 
 	private final List<GameListener> listeners;
 
-	private volatile int fuelInRow;
+	private volatile int diamondsInRow;
 	private volatile int asteroidsInRow;
 
-	private volatile int fuelcansCollected;
+	private volatile int diamondsCollected;
 	private volatile int asteroidsCollected;
 
 	private volatile int fuelcansSeen;
@@ -107,22 +107,22 @@ public class GameLogic implements Runnable {
 	public void collide(final Item item) {
 		switch (item) {
 		case FUELCAN:
-			fuelcansCollected++;
-			fuelInRow++;
+			diamondsCollected++;
+			diamondsInRow++;
 			asteroidsInRow = 0;
 
 			SoundManager.getInstance().once(Sound.GOODIE);
 			break;
-		case ASTEROID:
+		case DIAMOND:
 			asteroidsCollected++;
 			asteroidsInRow++;
-			fuelInRow = 0;
+			diamondsInRow = 0;
 			SoundManager.getInstance().once(Sound.ASTEROID);
 			break;
 		}
 
 		final double rating = getRating();
-		final long increase = (long) (rating * 10 * ((fuelInRow * POINTS_FOR_FUEL) - (asteroidsInRow * POINTS_FOR_ASTEROID)));
+		final long increase = (long) (rating * 10 * ((diamondsInRow * POINTS_FOR_DIAMOND) - (asteroidsInRow * POINTS_FOR_ASTEROID)));
 		gameRound.increaseScore(increase);
 
 		lastPointsAdded = increase;
@@ -136,7 +136,7 @@ public class GameLogic implements Runnable {
 			fuelTrend.update(collision);
 			fuelcansSeen++;
 			break;
-		case ASTEROID:
+		case DIAMOND:
 			asteroidTrend.update(collision);
 			asteroidsSeen++;
 			break;
@@ -251,7 +251,7 @@ public class GameLogic implements Runnable {
 
 		this.fuelTrend = new Trend();
 		this.asteroidTrend = new Trend();
-		this.fuelcansCollected = 0;
+		this.diamondsCollected = 0;
 		this.fuelcansSeen = 0;
 		this.asteroidsCollected = 0;
 		this.asteroidsSeen = 0;
@@ -262,7 +262,7 @@ public class GameLogic implements Runnable {
 		fuelcansSeen = 0;
 		asteroidsSeen = 0;
 		
-		fuelInRow = 0;
+		diamondsInRow = 0;
 		asteroidsInRow = 0;
 
 		System.err.println("startCurrentRound");
@@ -343,7 +343,7 @@ public class GameLogic implements Runnable {
 	}
 
 	public float getTotalFuelRatio() {
-		return fuelcansSeen == 0 ? 0 : fuelcansCollected / (float) fuelcansSeen;
+		return fuelcansSeen == 0 ? 0 : diamondsCollected / (float) fuelcansSeen;
 	}
 
 	public float getTotalAsteroidRatio() {
@@ -364,6 +364,7 @@ public class GameLogic implements Runnable {
 
 	private long getExpectedPlaytime() {
 		return getCurrentScenarioRound().getExpectedPlaytime();
+//		return 50000;
 	}
 
 	public long getScore() {
