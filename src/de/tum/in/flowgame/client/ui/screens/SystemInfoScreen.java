@@ -33,7 +33,7 @@ public class SystemInfoScreen extends MenuScreen {
 		this.systemInfoScroll = new JScrollPane(systemInfo,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		systemInfoScroll.setMaximumSize(new Dimension(300, 200));
+		systemInfoScroll.setMaximumSize(new Dimension(400, 200));
 	}
 
 	@Override

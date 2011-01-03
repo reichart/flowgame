@@ -11,8 +11,8 @@ public class SystemInfo {
 	/*
 	 * These system properties can be queried from unsigned code
 	 */
-	private static final String[] SYSTEM_PROPERTY_KEYS = { "java.class.version", "java.vendor", "java.version",
-			"os.name", "os.arch", "os.version" };
+	private static final String[] SYSTEM_PROPERTY_KEYS = { "java.version", "java.class.version", "java.vm.version", "java.vm.vendor",
+			"java.vm.name", "os.name", "os.arch", "os.version" };
 
 	public static void getSystemInfo(final PrintWriter out) {
 		for (final String key : SYSTEM_PROPERTY_KEYS) {
