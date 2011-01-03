@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 public class Collision extends AbstractEntity {
 
 	public enum Item {
-		FUELCAN, ASTEROID
+		FUELCAN, DIAMOND
 	}
 	
 	private final long time;

@@ -92,7 +92,7 @@ public class GameRound extends AbstractEntity {
 	}
 	
 	public int getCollisionsWithAsteroids() {
-		return getCollisions(Item.ASTEROID);
+		return getCollisions(Item.DIAMOND);
 	}
 	
 	/**
