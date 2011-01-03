@@ -52,7 +52,7 @@ public class CreateCollidables implements GameListener {
 	public CreateCollidables(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.collidableBranchGroup.setCapability(Group.ALLOW_CHILDREN_EXTEND);
-		this.asteroid = loadModel(Item.ASTEROID, "/res/asteroid.obj", 0.8, null);
+		this.asteroid = loadModel(Item.DIAMOND, "/res/asteroid.obj", 0.8, null);
 
 		// creates new appearance with yellow colored material
 		final Color3f ambient = new Color3f(Color.BLACK);
