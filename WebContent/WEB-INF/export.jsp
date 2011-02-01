@@ -94,6 +94,7 @@
 		<th>Scenario</th>
 		<th>Player</th>
 		<th>Baseline Difficulty</th>
+		<th>Session Type</th>
 		<th>Rounds</th>
 	</tr>
 	<s:iterator value="sessions">
@@ -101,6 +102,7 @@
 			<td><a href="#scenario-<s:property value="scenarioSession.id" />"><s:property value="scenarioSession.id" /></a></td>
 			<td><a href="#player-<s:property value="player.id" />"><s:property value="player.id" /> (<s:property value="player.name" />)</a></td>
 			<td><s:property value="baseline" /></td>
+			<td><s:property value="sessionType" /></td>
 			<td>
 			<table border="1">
 				<tr>

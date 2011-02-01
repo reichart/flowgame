@@ -1,6 +1,7 @@
 package de.tum.in.flowgame.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -61,6 +62,24 @@ public class GameSession extends AbstractEntity {
 		return round;
 	}
 	
+	public String getSessionType() {
+		int scenario = scenarioSession.getId();
+		if (scenario == 2) {
+			return "ansteigend";
+		} else {
+			Collections.sort(rounds);
+			final int sc0 = rounds.get(0).getScenarioRound().getId();
+			final int sc1 = rounds.get(1).getScenarioRound().getId();
+			final int sc2 = rounds.get(2).getScenarioRound().getId();
+			final int sc3 = rounds.get(3).getScenarioRound().getId();
+			if (sc0 == 5 && sc1 == 2 && sc2 == 8 && sc3 == 6) {
+				return "kontinuierlich";
+			} else {
+				return "variabel";
+			}
+		}
+	}
+	
 	public Person getPlayer() {
 		return player;
 	}
@@ -70,6 +89,7 @@ public class GameSession extends AbstractEntity {
 	}
 
 	public List<GameRound> getRounds() {
+		Collections.sort(rounds);
 		return rounds;
 	}
 	

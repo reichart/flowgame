@@ -21,7 +21,7 @@ public class SPSSDataExportAction extends DatabaseAction {
 		this.output = new StringBuilder();
 		this.firstField = true;
 
-		output.append("# user(id,sex,age,personality[1..n]),###,session(id,type,language,highscore),###,gameround(id, asteroids, fuelcans, score, globalRank, socialRank, answeringtime, flow+reqfit[0..1])");
+		output.append("# user(id,sex,age,personality[1..n]),###,session(id,sessiontype,scoringtype,language,highscore),###,gameround(id, asteroids, fuelcans, score, globalRank, socialRank, answeringtime, flow+reqfit[0..1])");
 		next();
 	}
 
@@ -42,14 +42,26 @@ public class SPSSDataExportAction extends DatabaseAction {
 
 	private void output(final Person person) {
 		field(person.getId());
-		field(person.getSex());
+		field(normalizeSex(person));
 		field(person.getAge());
 		output(person.getProfilingAnswers());
 	}
 
+	private String normalizeSex(final Person person) {
+		final String sex = person.getSex();
+		if ("male".equals(sex) || "m&auml;nnlich".equals(sex) || "lad".equals(sex)) {
+			return "m";
+		} else if ("weiblich".equals(sex) || "female".equals(sex) || "lass".equals(sex)) {
+			return "w";
+		} else {
+			return "-";
+		}
+	}
+
 	private void output(final GameSession session) {
 		field(session.getId());
-		field(session.getType());
+		field(session.getSessionType()); // ansteigend/kontinuierlich/variabel
+		field(session.getType()); // indiv/social
 		field(session.getLanguage());
 		field(session.getHighscore());
 	}
