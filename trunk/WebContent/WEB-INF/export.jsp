@@ -49,7 +49,6 @@
 <table border="1">
 	<tr>
 		<th>ID</th>
-		<th>Type</th>
 		<th>Rounds</th>
 	</tr>
 	<s:iterator value="scenarios">
