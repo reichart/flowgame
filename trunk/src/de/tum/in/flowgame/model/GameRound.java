@@ -17,7 +17,7 @@ import de.tum.in.flowgame.model.Collision.Item;
 import de.tum.in.flowgame.model.ConfigChange.ConfigKey;
 
 @Entity
-public class GameRound extends AbstractEntity {
+public class GameRound extends AbstractEntity implements Comparable<GameRound> {
 	private ScenarioRound scenarioRound;
 	private long actualPlaytime;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -180,5 +180,9 @@ public class GameRound extends AbstractEntity {
 
 	public void configChange (ConfigKey key, String value){
 		this.configChanges.add(new ConfigChange(key, value));
+	}
+	
+	public int compareTo(final GameRound other) {
+		return (int) (this.startTime - other.startTime);
 	}
 }
