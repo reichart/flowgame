@@ -21,7 +21,7 @@ public class SPSSDataExportAction extends DatabaseAction {
 		this.output = new StringBuilder();
 		this.firstField = true;
 
-		output.append("# user(id,sex,age,personality[1..n]),###,session(id,sessiontype,scoringtype,language,highscore),###,gameround(id, asteroids, fuelcans, score, globalRank, socialRank, answeringtime, flow+reqfit[0..1])");
+		output.append("# user(id,sex,age,personality[1..n]),###,session(id,sessiontype,scoringtype,language,highscore),###,gameround(id, difficulty, asteroids, fuelcans, score, globalRank, socialRank, answeringtime, flow+reqfit[0..1])");
 		next();
 	}
 
@@ -33,7 +33,7 @@ public class SPSSDataExportAction extends DatabaseAction {
 				field("###");
 				output(session);
 				field("###");
-				output(gameRound);
+				output(gameRound, session);
 				next();
 			}
 		}
@@ -66,8 +66,9 @@ public class SPSSDataExportAction extends DatabaseAction {
 		field(session.getHighscore());
 	}
 
-	private void output(final GameRound round) {
+	private void output(final GameRound round, final GameSession session) {
 		field(round.getId());
+		field(getAbsoluteDifficulty(round, session));
 		field(round.getCollisionsWithAsteroids());
 		field(round.getCollisionsWithFuelcans());
 		field(round.getScore().getScore());
@@ -77,6 +78,12 @@ public class SPSSDataExportAction extends DatabaseAction {
 		output(round.getAnswers());
 	}
 
+	private double getAbsoluteDifficulty(final GameRound round, final GameSession session) {
+		final double offset = round.getScenarioRound().getDifficultyFunction().getSpeed().getInitialValue();
+		final long baseline = session.getBaseline().getSpeed();
+		return baseline + offset;
+	}
+	
 	private static class OrderingByQuestionNumber implements Comparator<Answer> {
 		public int compare(final Answer o1, final Answer o2) {
 			final int n1 = o1.getQuestion().getNumber();
