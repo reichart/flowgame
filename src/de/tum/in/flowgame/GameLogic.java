@@ -54,13 +54,13 @@ public class GameLogic implements Runnable {
 	private volatile int diamondsCollected;
 	private volatile int asteroidsCollected;
 
-	private volatile int fuelcansSeen;
+	private volatile int diamondsSeen;
 	private volatile int asteroidsSeen;
 
 	private Thread thread;
 
 	private Trend asteroidTrend;
-	private Trend fuelTrend;
+	private Trend diamondTrend;
 
 	private volatile long startTime;
 	private volatile long pauseStartTime;
@@ -106,14 +106,14 @@ public class GameLogic implements Runnable {
 
 	public void collide(final Item item) {
 		switch (item) {
-		case FUELCAN:
+		case DIAMOND:
 			diamondsCollected++;
 			diamondsInRow++;
 			asteroidsInRow = 0;
 
 			SoundManager.getInstance().once(Sound.GOODIE);
 			break;
-		case DIAMOND:
+		case ASTEROID:
 			asteroidsCollected++;
 			asteroidsInRow++;
 			diamondsInRow = 0;
@@ -132,11 +132,11 @@ public class GameLogic implements Runnable {
 
 	public void seen(final Item item, final boolean collision) {
 		switch (item) {
-		case FUELCAN:
-			fuelTrend.update(collision);
-			fuelcansSeen++;
-			break;
 		case DIAMOND:
+			diamondTrend.update(collision);
+			diamondsSeen++;
+			break;
+		case ASTEROID:
 			asteroidTrend.update(collision);
 			asteroidsSeen++;
 			break;
@@ -249,17 +249,17 @@ public class GameLogic implements Runnable {
 
 		log.info("starting new game round");
 
-		this.fuelTrend = new Trend();
+		this.diamondTrend = new Trend();
 		this.asteroidTrend = new Trend();
 		this.diamondsCollected = 0;
-		this.fuelcansSeen = 0;
+		this.diamondsSeen = 0;
 		this.asteroidsCollected = 0;
 		this.asteroidsSeen = 0;
 
 		addListener(gameRound.getListener());
 		
 		// reset internal state
-		fuelcansSeen = 0;
+		diamondsSeen = 0;
 		asteroidsSeen = 0;
 		
 		diamondsInRow = 0;
@@ -335,7 +335,7 @@ public class GameLogic implements Runnable {
 	}
 
 	public float getSlidingFuelRatio() {
-		return fuelTrend.getMidRatio();
+		return diamondTrend.getMidRatio();
 	}
 
 	public float getSlidingAsteroidRatio() {
@@ -343,7 +343,7 @@ public class GameLogic implements Runnable {
 	}
 
 	public float getTotalFuelRatio() {
-		return fuelcansSeen == 0 ? 0 : diamondsCollected / (float) fuelcansSeen;
+		return diamondsSeen == 0 ? 0 : diamondsCollected / (float) diamondsSeen;
 	}
 
 	public float getTotalAsteroidRatio() {
@@ -429,7 +429,7 @@ public class GameLogic implements Runnable {
 	}
 
 	public Trend getFuelTrend() {
-		return fuelTrend;
+		return diamondTrend;
 	}
 
 	/**
