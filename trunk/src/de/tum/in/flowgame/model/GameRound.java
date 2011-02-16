@@ -87,12 +87,12 @@ public class GameRound extends AbstractEntity implements Comparable<GameRound> {
 		return collisions;
 	}
 
-	public int getCollisionsWithFuelcans() {
-		return getCollisions(Item.FUELCAN);
+	public int getCollisionsWithDiamonds() {
+		return getCollisions(Item.DIAMOND);
 	}
 	
 	public int getCollisionsWithAsteroids() {
-		return getCollisions(Item.DIAMOND);
+		return getCollisions(Item.ASTEROID);
 	}
 	
 	/**

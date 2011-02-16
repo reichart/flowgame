@@ -36,7 +36,7 @@ public class CreateCollidables implements GameListener {
 
 	private final BranchGroup collidableBranchGroup;
 	private final SharedGroup asteroid;
-	private final SharedGroup fuelcan;
+	private final SharedGroup diamond;
 
 	private long startTime;
 	private long pauseBegin;
@@ -52,7 +52,7 @@ public class CreateCollidables implements GameListener {
 	public CreateCollidables(final BranchGroup collidableBranchGroup) throws IOException {
 		this.collidableBranchGroup = collidableBranchGroup;
 		this.collidableBranchGroup.setCapability(Group.ALLOW_CHILDREN_EXTEND);
-		this.asteroid = loadModel(Item.DIAMOND, "/res/asteroid.obj", 0.8, null);
+		this.asteroid = loadModel(Item.ASTEROID, "/res/asteroid.obj", 0.8, null);
 
 		// creates new appearance with yellow colored material
 		final Color3f ambient = new Color3f(Color.BLACK);
@@ -66,7 +66,7 @@ public class CreateCollidables implements GameListener {
 		// The diamond3.obj has a associated material file (diamond3.mtl).
 		// If you want to overwrite the material defined in the file, then
 		// you have to pass a Material as last parameter (instead of null).
-		this.fuelcan = loadModel(Item.FUELCAN, "/res/diamond3.obj", 1.5, null);
+		this.diamond = loadModel(Item.DIAMOND, "/res/diamond3.obj", 1.5, null);
 	}
 
 	private SharedGroup loadModel(final Item item, final String resource, final double bounds,
@@ -116,7 +116,7 @@ public class CreateCollidables implements GameListener {
 			}
 			c = new Collidable(asteroid, 0, scale, zPos);
 		} else {
-			c = new Collidable(fuelcan, 0, 2f, zPos);
+			c = new Collidable(diamond, 0, 2f, zPos);
 		}
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_READ);
 		c.setCapability(Group.ALLOW_COLLISION_BOUNDS_WRITE);

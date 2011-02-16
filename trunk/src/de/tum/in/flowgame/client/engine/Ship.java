@@ -203,7 +203,7 @@ public class Ship extends TransformGroup implements GameListener {
 		// TODO don't create new objects all the time
 		final Material mat = new Material();
 
-		if (item == Item.DIAMOND) {
+		if (item == Item.ASTEROID) {
 			mat.setAmbientColor(new Color3f(Color.RED));
 			mat.setDiffuseColor(new Color3f(Color.RED));
 		} else {
