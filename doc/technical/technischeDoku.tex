@@ -137,7 +137,7 @@
 Der Zustand des "`Flow"' ist ein psychologisches Phänomen, das bei diversen verschiedenen
 Tätigkeiten zu beobachten ist. Computerspiele zählen zu diesen Tätigkeiten, da sie die
 grundlegenden Anforderungen zur Generierung von Flow erfüllen: Der Spieler muss aktiv
-sein und einer gewissen Herausforderung gegenüberstehen.
+sein und einer gewissen Herausforderung gegenüberstehen.\newline
 In diesem Projekt soll also zunächst einmal ein Spiel entwickelt werden, das den Spieler
 potentiell in einen Zustand des Flow bringt, oder, so gewollt, in einen Zustand des "`Nicht-
 Flow"'.
@@ -149,26 +149,25 @@ Schwierigkeitsgrad regulieren, um so gezielt Unterforderung, Überforderung oder
 Anforderungen schaffen zu können.
 
 Zur Navigation im Spiel ist es nötig, zunächst ein Hauptmenü zu integrieren, in dem man
-wählen kann, ob man eine Runde beginnen, die Highscores einsehen, die Persönlichen
-Einstellungen ändern oder die Credits ansehen möchte.
-
+wählen kann, ob man eine Runde beginnen, die Highscores einsehen, die
+persönlichen Einstellungen ändern oder die Credits ansehen möchte.\newline
 Bei neuen Spielern wird zunächst ein Persönlichkeitsprofil angelegt, in dem der Spieler
 mithilfe eines Fragebogens gewisse persönliche Charakteristika angibt, die zur Auswertung
-der erhobenen Daten hilfreich sind.
-
+der erhobenen Daten hilfreich sind.\newline
 Ist dies geschehen, kann ein Spiel beginnen. Dieses ist aufgeteilt in mehrere Runden, in
 denen zunächst die "`Tagesform"', also die Leistungsfähigkeit für diese Runde gemessen
 wird. Dies ermöglicht, trotz Lerneffekten oder anderen Einflüssen, wie etwa Müdigkeit oder
-mangelnde Konzentration, in jeder Situation die idealen Anforderungen zu generieren.
-Daraufhin folgen drei Runden, in denen sich verschiedene Anforderungsstufen abwechseln.
-Um die Rahmenbedingungen für alle Spieler gleich zu halten, hat jede Runde eine fixe
+mangelnde Konzentration, in jeder Situation die idealen Anforderungen zu
+generieren.\newline
+Daraufhin folgen drei Runden, in denen sich verschiedene
+Anforderungsstufen abwechseln. Um die Rahmenbedingungen für alle Spieler gleich zu halten, hat jede Runde eine fixe
 Dauer.
 
 %\usepackage{graphics} is needed for \includegraphics
 \begin{figure}[htp]
 \begin{center}
   \includegraphics[width=\textwidth]{SpielablaufClient.png}
-  \caption{clientseitiger Spielablauf}
+  \caption{Clientseitiger Spielablauf}
   \label{fig:ClientSpielablauf}
 \end{center}
 \end{figure} 
@@ -176,32 +175,34 @@ Dauer.
 Das ganze Spiel ist, um etwas Atmosphäre zu erzeugen, in eine Rahmengeschichte
 eingebettet, die den Spieler in ein Science-Fiction-Szenario hineinversetzt und ihm vor jeder
 Runde eine Aufgabe gibt, die er zu erfüllen hat und ihm am Ende der Runde über seine
-Erfolge berichtet.
-
+Erfolge berichtet.\newline
 Zusätzlich wird das Befinden in einer Art "`Rennen"' durch ein schnelles, futuristisch
 erscheinendes Musikstück unterstützt, das während den Runden abgespielt wird und
 speziell hierfür komponiert wurde.
+
 Um anhand hiervon nun festzustellen, ob ein Spieler Flow erfährt, muss eine Methode
-gewählt werden, um dies zu Messen.
+gewählt werden, um dies zu messen.\newline
 Das Mittel der Wahl sind hier Teile der Fragebögen der von Engeser entwickelten
-FKS, die zwischen den Spielrunden eingeblendet werden, sowie weitere Fragen zur
-Anforderungspassung, um das subjektive Empfinden der angepassten Schwierigkeit
+FKS\footnote{TODO: Erklärung}, die zwischen den Spielrunden eingeblendet
+werden, sowie weitere Fragen zur Anforderungspassung, um das subjektive Empfinden der angepassten Schwierigkeit
 überprüfen zu können. Die Beantwortung dieser Fragen erfolgt durch einen stufenlos
-anpassbaren Slider, der zwischen zwei gegensätzlichen Adjektiven nach Belieben
-eingestellt werden kann. Ein Lerneffekt beim Beantworten der Fragen oder eine
+anpassbaren Schieberegler, der zwischen zwei gegensätzlichen Adjektiven nach
+Belieben eingestellt werden kann. Ein Lerneffekt beim Beantworten der Fragen oder eine
 Automatisierung ebendessen wird verhindert, indem die Fragen in randomisierter
-Reihenfolge erscheinen, also bei jedem Beantworten in anderer Reihenfolge. Außerdem
+Reihenfolge erscheinen. Außerdem
 wird die Dauer der Beantwortung eines jeden Fragebogens gemessen, was Rückschlüsse
 darauf zulässt, ob der Spieler nur zufällig etwas angeklickt, oder die Fragen tatsächlich
 gelesen und gewissenhaft beantwortet hat.
+
 Als Plattform für das Spiel wurde das soziale Netzwerk Facebook gewählt, das die
 Integration von vielfältigen Anwendungen erlaubt. Mit Facebook lassen sich vielerlei Daten,
 die der Spieler auf seinem Profil ohnehin angegeben hat, wie etwa Alter, Geschlecht und
 Herkunft, nutzen. Diese Daten können dann automatisiert und ohne zusätzliche Angaben
-erfasst werden und in die Auswertung einfließen.
+erfasst werden und in die Auswertung einfließen.\newline
 Außerdem ist es hier möglich,die Leistungen verschiedener Teilnehmer zu vergleichen
 und in einer Highscore darzustellen. Das erlaubt die Untersuchung von Unterschieden der
 Leistung von individuell und sozial motivierten Spielern.
+
 Zuletzt wurde eine einfache und umfassende Möglichkeit der erhobenen Daten gefordert.
 Dies ließ sich durch eine direkte Einspeisung in eine SQL-Datenbank realisieren. Dies hat
 den Vorteil, dass die Daten elektronisch und delokalisiert vorliegen und ein Zugriff über das
@@ -224,6 +225,7 @@ Verringerung der Endpunktzahl. Diese Endpunktzahl übt als Maß zur Leistungsmes
 den Spieler einen Anreiz für hohe Performance und damit Anstrengung aus. Daher ist es
 sinnig, dass der Spieler neben dem zwanghaften Ausweichen von Hindernissen auch noch
 eine Anforderung darin hat, gleichzeitig möglichst viele Bonuspunkte zu sammeln.
+
 Obwohl es sich hierbei um ein psychologisches Experiment handelt, ist es wünschenswert,
 dass der Spieler nicht das Gefühl hat, in einem Labor an einer Datenerhebung
 teilzunehmen, sondern vielmehr ein Spiel spielt, um sich die Zeit zu vertreiben oder
@@ -234,6 +236,7 @@ gehört dazu, dass die Fragebögen möglichst gut ins Spiel eingebettet werden u
 Beantwortung durch eine Rahmengeschichte eingepasst wird. Müssten die Fragebögen
 extern bearbeitet werden, etwa per Papier oder durch einen weiteren Webclient, so wäre es
 unvermeidlich, dass der Spieler sich mehr als Proband empfindet.
+
 Ziel des Projekts ist außerdem, möglichst viele Datensätze zu erheben, also möglichst viele
 Menschen zu erreichen. Dafür muss das Spiel allerdings einige Anforderungen erfüllen
 und nicht zu hohe Hürden an den Benutzer stellen. Das bedeutet zunächst eine möglichst
@@ -243,8 +246,7 @@ dazu gehört es, das Spiel möglichst kurzweilig zu gestalten. Ein Spiel (besteh
 vier Runden) sollte weniger als 15 Minuten dauern, um der kurzlebigen Internetkultur zu
 entsprechen. Im Internet wird oft kurz "`zwischendurch"' oder beim Warten gespielt und eine
 längere Dauer würde das Spiel hierfür komplett ausschließen. Außerdem ist es wichtig, den
-Anforderungen der verschiedenen Betriebssysteme, die verbreitetsten sind Windows, Mac/
-OSX und Linux, gerecht zu werden. Teile der potentiellen Teilnehmerschaft wegen ihres
+Anforderungen der verschiedenen Betriebssysteme, die verbreitetsten sind Windows, Mac/OSX und Linux, gerecht zu werden. Teile der potentiellen Teilnehmerschaft wegen ihres
 Betriebssystems ausschließen zu müssen, wäre äußerst unerfreulich. Ebenso gibt es keinen
 Grund, das Projekt auf den deutschen Raum zu beschränken. Eine Sprachunterstützung
 von Englisch und Deutsch soll die Anzahl der potentiellen Teilnehmer noch einmal
@@ -260,11 +262,10 @@ ermöglicht die Erweiterung auf andere Sprachräume, ohne das eigentliche Progra
 Die grundlegende Architektur des Spiels ist Client-Server-basiert, wobei ein auf
 Facebook angezeigtes Applet den Client und ein auf einem eigenen Server laufender
 Webcontainer den Server darstellen. Die Kommunikation zwischen Client und Server erfolgt
-ausschließlich über HTTP. Programmcode für Funktionalitäten, die spezifisch für Client
-(Benutzerschnittstelle, 3D-Umgebung, Facebook-Anbindung) und Server (Datenbank-
-Anbindung, Programmlogik) sind, ist voneinander unabhängig, lediglich der Programmcode
-für das gemeinsam genutzte Datenmodell ist beiden Seiten bekannt. Dies entspricht der
-üblichen Praxis, reduziert unerwünschte Seiteneffekte und ergibt eine klare Trennung der
+ausschließlich über HTTP\footnote{Hypertext Transfer Protocol -- Protokoll zur
+Übertragung von Daten über ein Netzwerk, hauptsächlich für die Übermittlung
+von Webseiten eingesetzt.}. Programmcode für Funktionalitäten, die spezifisch
+für Client (Benutzerschnittstelle, 3D-Umgebung, Facebook-Anbindung) und Server (Datenbank- Anbindung, Programmlogik) sind, ist voneinander unabhängig, lediglich der Programmcode für das gemeinsam genutzte Datenmodell ist beiden Seiten bekannt. Dies entspricht der üblichen Praxis, reduziert unerwünschte Seiteneffekte und ergibt eine klare Trennung der
 Verantwortlichkeiten.
 
 \subsection{Subsystemzerlegung}
@@ -281,11 +282,13 @@ Um den Entwicklungsaufwand für ein plattformübergreifendes Spiel möglichst ge
 zu halten, haben wir uns entschieden, dass Spiel in Java umzusetzen, da es für alle
 verbreiteten Betriebssysteme verfügbar ist und eine solide Bibliothek an Funktionen mit sich
 bringt.
+
 Serverseitig läuft eine Webanwendung auf Basis von Struts 2 und Servlets/JSPs, die
 über EclipseLink als JPA\footnote{Java Persistence API, eine Schnittstelle um
-Java-Objekte-Graphen in gebräuchliche relationale Datenbanksysteme abzubilden}-Provider mit einer Datenbank kommuniziert, um
-Spieldaten zu speichern. Für die Kommunikation mit dem clientseitigen Spiel wird ein auf serialisierte Java-
+Java-Objekte-Graphen in gebräuchliche relationale Datenbanksysteme
+abzubilden.}-Provider mit einer Datenbank kommuniziert, um Spieldaten zu speichern. Für die Kommunikation mit dem clientseitigen Spiel wird ein auf serialisierte Java-
 Objekte aufbauender RPC-Mechanismus über HTTP angewandt.
+
 Clientseitig läuft ein Applet, dass über Java3D die 3D-Umgebung und über Swing die
 Benutzerschnittstelle anzeigt. Beide Bibliotheken abstrahieren die zugrundelegenden
 Techniken stark, was eine komfortable Entwicklung komplexer 3D-Umgebungen und
@@ -324,7 +327,7 @@ Verlauf.
 %\usepackage{graphics} is needed for \includegraphics
 \begin{figure}[htp]
 \begin{center}
-  \includegraphics[width=0.7\textwidth]{Baseline.png}
+  \includegraphics[width=0.6\textwidth]{Baseline.png}
   \caption[Baselinemessungsverlauf]{Baselinemessung Verlauf (blaue Linie),
   gemessene Baseline (rote Linie)}
   \label{fig:Baseline}
@@ -394,9 +397,9 @@ bei langsamen Geschwindigkeiten deutlicher sind als bei hohen Geschwindigkeiten.
 %\usepackage{graphics} is needed for \includegraphics
 \begin{figure}[htp]
 \begin{center}
-  \includegraphics[width=\textwidth]{BaselineFunktion.png}
-  \caption{Funktion die als Grundlage für die Baselinemessung verwendet wird.\\
-  TODO Vektorgrafik}
+  \includegraphics[width=0.8\textwidth]{BaselineFunktion.png}
+  \caption[Grundlagenfunktion Baselinemessung]{Funktion die als Grundlage für
+  die Baselinemessung verwendet wird.\\ TODO Vektorgrafik}
   \label{fig:BaselineFunktion}
 \end{center}
 \end{figure} 
@@ -425,9 +428,9 @@ Geschwindigkeit (vergleiche Abbildung \ref{fig:SessionTypen}).
 %\usepackage{graphics} is needed for \includegraphics
 \begin{figure}[htp]
 \begin{center}
-  \includegraphics[width=\textwidth]{SessionTypen.png}
-  \caption{Zeigt Relation zwischen Baseline konstanter und linearer Funktion. Die
-konstante Funktion hat innerhalb einer Runde (gestrichelte Linie) stets die gleiche
+  \includegraphics[width=0.8\textwidth]{SessionTypen.png}
+  \caption[Vergleich der Geschwindigkeitsfunktionen]{Zeigt Relation zwischen
+  Baseline konstanter und linearer Funktion. Die konstante Funktion hat innerhalb einer Runde (gestrichelte Linie) stets die gleiche
 mittlere Geschwindigkeit wie die lineare Funktion.\\
   TODO Vektorgrafik}
   \label{fig:SessionTypen}
@@ -444,8 +447,8 @@ besonderen Herausforderungen Rücksicht nehmen zu müssen, die es mit sich bring
 man grafische Elemente wie Buttons, Radio-/Checkboxen und Scrollleisten in einer 3D-
 Umgebung verwenden möchte.
 
-Die hierfür entwickelte Kompatibilitätsschicht (OffscreenJPanel) zeichnet alle Swing-
-Komponenten in ein transparentes Bild, dass dann über die 3D-Umgebung des Spiels
+Die hierfür entwickelte Kompatibilitätsschicht (\texttt{OffscreenJPanel})
+zeichnet alle Swing- Komponenten in ein transparentes Bild, dass dann über die 3D-Umgebung des Spiels
 gelegt wird. Alle Maus- und Tastatureingaben auf diesem Bild werden abgefangen und an
 die eigentlichen Swing-Komponenten weitergeleitet. Während der Spieler das Raumschiff
 steuert, wird das komplette Swing-System ausgeblendet, was die Performance des Spiels
@@ -487,10 +490,11 @@ Datenbankstruktur auf der Clientseite vermieden.
 
 \subsection{Java3D}
 Flowgame ist eine Java3D\footnote{Einführung unter
-\url{http://somewhere}}-Anwendung, die als Java-Applet im Browser des Spielers
-(also auf dem Client) läuft. Das Universum bei Flowgame enthält vier unterschiedliche Typen von dreidimensionalen Objekten. Einen Tunnel, durch den das Raumschiff des Spielers fliegt,
+\url{http://java.sun.com/developer/onlineTraining/java3d/}}-Anwendung, die als
+Java-Applet im Browser des Spielers (also auf dem Client) läuft. Das Universum bei Flowgame enthält vier unterschiedliche Typen von dreidimensionalen Objekten. Einen Tunnel, durch den das Raumschiff des Spielers fliegt,
 wobei es den entgegenkommenden Asteroiden ausweichen und Diamanten aufsammeln
-soll. Das Raumschiff wird von dem Spieler gesteuert, während alle anderen
+soll.
+
 Die folgende Beschreibung bezieht sich auf den Stand von Revision 866.
 Alle Klassen der 3D-Engine befinden sich im Package \texttt{client.engine}.
 
@@ -502,6 +506,7 @@ selbst instanziiert. Der Methodenaufruf in Zeile 162 erstellt die restlichen Obj
 Javacode als zylinderförmige \texttt{Shape3D} erzeugt, während die anderen
 Objekte aus externen Objektmodelldateien eingelesen werden. Diese Objektmodelldateien befinden sich im
 Ressourcen Ordner (\texttt{src/res}).
+
 Schiffsbewegung, Steuerung und Kollisionserkennung wird mit Behaviors realisiert.
 Behaviors dienen bei Java3D als Basis für Interaktion und Animation. Viele dieser Aktionen
 müssen in jedem Frame ausgeführt oder aufgerufen werden. Daher gibt es eine abstrakte
@@ -510,13 +515,15 @@ wird und den Zeitabstand zwischen den Frames misst. Letzteres ermöglicht eine S
 Geschwindigkeit unabhängig von der Framerate. Gleichzeitig implementiert diese abstrakte
 Klasse das Interface \texttt{GameListener}, mit dem auf Ereignisse im
 Spielablauf reagiert werden kann.
+
 \texttt{ShipNavigationBehavior} dient zur Bewegung des Schiffes in xy-Richtung,
 also nach links/ rechts und oben/unten. Die z-Achse entspricht bei Java3D der Tiefeninformation, Bewegung
 in dieser Richtung wird mit der \texttt{ForwardBehavior} realisiert, wobei die
 Geschwindigkeit der Bewegung wiederum von der \texttt{SpeedChangeBehavior}
-gesteuert wird. Die Kamera folgt dem Schiff dabei in festem Abstand, es sieht also so aus, als ob die Kollisionsobjekte
-(Diamanten, Asteroiden) auf den Spieler zukommen. Die
+gesteuert wird. Über diese Behavior wird der Schwierigkeitsgrad reguliert. Die
+Kamera folgt dem Schiff dabei in festem Abstand, es sieht also so aus, als ob die Kollisionsobjekte (Diamanten, Asteroiden) auf den Spieler zukommen. Die
 \texttt{CreateCollidablesBehavior} stellt sicher, dass vor dem Schiff immer wieder neue Kollisionsobjekte erzeugt werden.
+
 Da die bei Java3D eingebauten Möglichkeiten zur Kollisionserkennung vor allem bei
 höheren Bewegungsgeschwindigkeiten des Schiffes versagen, wurde auch eine eigene
 (einfache) Kollisionserkennung in Form der \texttt{CollisionBehavior}
@@ -576,7 +583,7 @@ Spiels, wodurch weniger Fehler im Spiel selbst auftreten.
 \begin{figure}[htp]
 \begin{center}
   \includegraphics[width=\textwidth]{Gesamtablauf.png}
-  \caption{Gesamtablauf\\
+  \caption[Gesamtablauf]{Gesamtablauf\\
 TODO: Phil: Muss noch auf deutsch, Mauszeiger raus und an finalen Ablauf anpassen}
   \label{fig:Gesamtablauf}
 \end{center}
