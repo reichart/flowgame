@@ -70,7 +70,7 @@ public class SPSSDataExportAction extends DatabaseAction {
 		field(round.getId());
 		field(getAbsoluteDifficulty(round, session));
 		field(round.getCollisionsWithAsteroids());
-		field(round.getCollisionsWithFuelcans());
+		field(round.getCollisionsWithDiamonds());
 		field(round.getScore().getScore());
 		field(round.getGlobalRank());
 		field(round.getSocialRank());
