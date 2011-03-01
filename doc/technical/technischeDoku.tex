@@ -193,7 +193,7 @@ Reihenfolge erscheinen. Außerdem wird die Dauer der Beantwortung eines jeden
 Fragebogens gemessen, was Rückschlüsse darauf zulässt, ob der Spieler nur zufällig etwas angeklickt, oder die Fragen tatsächlich
 gelesen und gewissenhaft beantwortet hat.
 
-Als Plattform für das Spiel wurde das soziale Netzwerk Facebook gewählt, das die
+Als Plattform für das Spiel wurde das soziale Netzwerk Facebook\footnote{\url{http://www.facebook.com}} gewählt, das die
 Integration von vielfältigen Anwendungen erlaubt. Mit Facebook lassen sich vielerlei Daten,
 die der Spieler auf seinem Profil ohnehin angegeben hat, wie etwa Alter, Geschlecht und
 Herkunft, nutzen. Diese Daten können dann automatisiert und ohne zusätzliche Angaben
@@ -203,10 +203,7 @@ und in einer Highscore darzustellen. Das erlaubt die Untersuchung von Unterschie
 Leistung von individuell und sozial motivierten Spielern.
 
 Zuletzt wurde eine einfache und umfassende Möglichkeit der erhobenen Daten gefordert.
-Dies ließ sich durch eine direkte Einspeisung in eine SQL-Datenbank realisieren. Dies hat
-den Vorteil, dass die Daten elektronisch und delokalisiert vorliegen und ein Zugriff über das
-Internet möglich ist. Hierfür steht ein browserbasierter Client zur Verfügung. Zudem lässt
-sich die Datenbank im SPSS-Format exportieren.
+Dies ließ sich durch eine direkte Einspeisung in eine SQL\footnote{Structured query language}-Datenbank realisieren. Dies hat den Vorteil, dass die Daten elektronisch und delokalisiert vorliegen und ein Zugriff über das Internet möglich ist. Hierfür steht ein browserbasierter Client zur Verfügung. Zudem lässt sich die Datenbank im SPSS-Format\footnote{Datenformat der Statistiksoftware SPSS Statistics.} exportieren.
 
 
 \section{Nicht-Funktionale Anforderungen}
@@ -239,8 +236,7 @@ unvermeidlich, dass der Spieler sich mehr als Proband empfindet.
 Ziel des Projekts ist außerdem, möglichst viele Datensätze zu erheben, also möglichst viele
 Menschen zu erreichen. Dafür muss das Spiel allerdings einige Anforderungen erfüllen
 und nicht zu hohe Hürden an den Benutzer stellen. Das bedeutet zunächst eine möglichst
-einfache Bedienbarkeit. Angestrebt waren lediglich vier Tasten, nämlich die Pfeiltasten, die
-ausreichend sind, das Raumschiff nach oben, unten, links und rechts zu steuern. Ebenso
+einfache Bedienbarkeit. Angestrebt waren lediglich vier Tasten, nämlich die Pfeiltasten, die ausreichend sind, das Raumschiff nach oben, unten, links und rechts zu steuern. Ebenso
 dazu gehört es, das Spiel möglichst kurzweilig zu gestalten. Ein Spiel (bestehend ja aus
 vier Runden) sollte weniger als 15 Minuten dauern, um der kurzlebigen Internetkultur zu
 entsprechen. Im Internet wird oft kurz "`zwischendurch"' oder beim Warten gespielt und eine
@@ -278,22 +274,17 @@ TODO Christopher, Phil
 
 \section{Technologien}
 Um den Entwicklungsaufwand für ein plattformübergreifendes Spiel möglichst gering
-zu halten, haben wir uns entschieden, dass Spiel in Java umzusetzen, da es für alle
+zu halten, haben wir uns entschieden, dass Spiel in Java\footnote{Java ist eine moderne, statisch typisierte, objektorientierte Programmiersprache. Kompilierte Java-Programme benötigen eine Laufzeitumgebung (Virtuelle Maschine, auch Java Runtime genannt), die für viele unterschiedliche Betriebssysteme zur Verfügung steht und dadurch einen hohen Grad an Plattformunabhängigkeit sicherstellt.} umzusetzen, da es für alle
 verbreiteten Betriebssysteme verfügbar ist und eine solide Bibliothek an Funktionen mit sich
 bringt.
 
-Serverseitig läuft eine Webanwendung auf Basis von Struts 2 und Servlets/JSPs, die
+Serverseitig läuft eine Webanwendung auf Basis von Struts 2\footnote{Java Framework zur Entwicklung von Webapplikationen -- \url{http://struts.apache.org}} und Servlets/JSPs, die
 über EclipseLink als JPA\footnote{Java Persistence API, eine Schnittstelle um
 Java-Objekte-Graphen in gebräuchliche relationale Datenbanksysteme
-abzubilden.}-Provider mit einer Datenbank kommuniziert, um Spieldaten zu speichern. Für die Kommunikation mit dem clientseitigen Spiel wird ein auf serialisierte Java-
-Objekte aufbauender RPC-Mechanismus über HTTP angewandt.
+abzubilden.}-Provider mit einer Datenbank kommuniziert, um Spieldaten zu speichern. Für die Kommunikation mit dem clientseitigen Spiel wird ein auf serialisierte Java-Objekte aufbauender RPC\footnote{Remote Procedure Call, das Aufrufen von
+Programmcode auf einem anderen Computersystem.}-Mechanismus über HTTP angewandt.
 
-Clientseitig läuft ein Applet, dass über Java3D die 3D-Umgebung und über Swing die
-Benutzerschnittstelle anzeigt. Beide Bibliotheken abstrahieren die zugrundelegenden
-Techniken stark, was eine komfortable Entwicklung komplexer 3D-Umgebungen und
-Benutzerschnittstellen ermöglicht. Für die Anbindung an Facebook wird im Applet eine
-weitere Bibliothek verwendet, die aufgrund von Sicherheitseinschränkungen (Same Origin
-Policy) alle Aufrufe an das Facebook API über den Spielserver abwickelt.
+Clientseitig läuft ein Applet\footnote{Im Webbrowser laufendes Java-Programm}, dass über Java3D die 3D-Umgebung und über Swing\footnote{Bibliothek zur Grafikausgabe unter Java} die Benutzerschnittstelle anzeigt. Beide Bibliotheken abstrahieren die zugrundelegenden Techniken stark, was eine komfortable Entwicklung komplexer 3D-Umgebungen und Benutzerschnittstellen ermöglicht. Für die Anbindung an Facebook wird im Applet eine weitere Bibliothek verwendet, die aufgrund von Sicherheitseinschränkungen (Same Origin Policy) alle Aufrufe an das Facebook API über den Spielserver abwickelt.
 
 \section{Implementierung}
 \subsection{Baselinemessung und Adaptive Rundenzeiten}
@@ -320,7 +311,7 @@ kann. An diesem Punkt wird wieder abgesenkt, bis es anscheinend deutlich zu einf
 wird. Dies wird in mehreren Iterationen über zwei Minuten hinweg wiederholt, wobei
 der Ausschlag nach und nach kleiner wird und sich auf einer bestimmten Schwierigkeit
 einpendelt. Die Baseline ist dann die Schwierigkeit oberhalb derer sich der
-Spieler 50\% der Zeit halten konnte. Dieses Verhalten führt zu dem in Abbildung x dargestellten typischen
+Spieler 50\% der Zeit halten konnte. Dieses Verhalten führt zu dem in Abbildung \ref{fig:Baseline} dargestellten typischen
 Verlauf.
 
 %\usepackage{graphics} is needed for \includegraphics
@@ -334,13 +325,10 @@ Verlauf.
 \end{figure} 
 
 Als erstes muss also zunächst bestimmt werden, ob die Schwierigkeit zu einem gegebenen
-Moment zu groß oder zu klein ist. Dazu speichert die Klasse Trend, zu wieviel Prozent
-der Spieler mit einem bestimmten Objekt (Diamant oder Asteroid) kollidiert ist bzw. ihm
-ausgewichen ist. Es wird jeweils ein lang-, mittel- und kurzfristiger Trend ermittelt, sodass
-die Entscheidung nicht nur anhand der letzten Aktionen des Spelers getroffen werden.
+Moment zu groß oder zu klein ist. Dazu speichert die Klasse \texttt{Trend}, zu wieviel Prozent der Spieler mit einem bestimmten Objekt (Diamant oder Asteroid) kollidiert ist bzw. ihm ausgewichen ist. Es wird jeweils ein lang-, mittel- und kurzfristiger Trend ermittelt, sodass die Entscheidung nicht nur anhand der letzten Aktionen des Spelers getroffen werden.
 Der langfristige Trend bezieht sich hierbei auf die letzten 30 passierenden Objekte.
-Mittelfristig sind es die letzten 10 und für den kurzfristigen Trend werden nur die letzten 3
-beachtet.
+Mittelfristig sind es die letzten 10 und für den kurzfristigen Trend werden nur die letzten 3 beachtet.
+
 Beispiel: Es sind 10 Objekte in der folgenden Reihenfolge vorbeigeflogen, wobei ein (K)
 bedeutet, dass der Spieler mit ihnen kollidiert ist:
 \begin{enumerate}
@@ -357,7 +345,7 @@ bedeutet, dass der Spieler mit ihnen kollidiert ist:
 \end{enumerate}
 Dann ist der kurzfristige Trend, dass der Spieler mit 2 Asteroiden kollidiert
 ist (Rate 100\%) und keinen Diamanten gesammelt hat (0\%), was eine Überforderung vermuten lässt.
-Der mittelfristige Trend ist mit 2 Asteroiden (40\%) und 4 Diamanten (80%)
+Der mittelfristige Trend ist mit 2 Asteroiden (40\%) und 4 Diamanten (80\%)
 dagegen deutlich ausgewogener.
 
 Aus dieser Information muss nun abgeschätzt werden, wann das Spiel langsamer und wann
@@ -372,8 +360,7 @@ Geschwindigkeit nach den gemessenen Trends. Kollidiert der Spieler mit einem Ast
 oder schafft er es nur 1/3 der Asteroiden aufzusammmeln so wird kurz abgebremst.
 Sammelt er dagegen erfolgreich mehr als 2/3 der Diamanten, so wird sehr stark
 beschleunigt. Sammelt er mittelfristig zumindest noch mehr als 1/3 der
-passierenden Diamanten so wird leicht beschleunigt. Wenn keine dieser Bedingungen zutrifft, so bleibt alles gleich schnell. Dieses
-Verhalten wird von der FunctionStrategy2 gesteuert.
+passierenden Diamanten so wird leicht beschleunigt. Wenn keine dieser Bedingungen zutrifft, so bleibt alles gleich schnell. Dieses Verhalten wird von der FunctionStrategy2 gesteuert.
 
 Nun bleibt die Frage, wie stark beschleunigt oder gebremst werden soll. Am einfachsten
 erscheint es unabhängig von der aktuellen Geschwindigkeit, diese um einen fixen Betrag
@@ -447,15 +434,14 @@ man grafische Elemente wie Buttons, Radio-/Checkboxen und Scrollleisten in einer
 Umgebung verwenden möchte.
 
 Die hierfür entwickelte Kompatibilitätsschicht (\texttt{OffscreenJPanel})
-zeichnet alle Swing- Komponenten in ein transparentes Bild, dass dann über die 3D-Umgebung des Spiels
+zeichnet alle Swing-Komponenten in ein transparentes Bild, dass dann über die 3D-Umgebung des Spiels
 gelegt wird. Alle Maus- und Tastatureingaben auf diesem Bild werden abgefangen und an
 die eigentlichen Swing-Komponenten weitergeleitet. Während der Spieler das Raumschiff
 steuert, wird das komplette Swing-System ausgeblendet, was die Performance des Spiels
 verbessert.
 
 Um den zugrundeliegenden Ablauf des Spiels intuitiv programmieren zu können, wurde
-aufbauend auf die o.g. Kompatibilitätsschicht ein Menüsystem (GameMenu, MenuScreen
-und das Package \texttt{ui.screen}) entwickelt, dass die von Spielen typische
+aufbauend auf die o.g. Kompatibilitätsschicht ein Menüsystem (\texttt{GameMenu}, \texttt{MenuScreen} und das Package\footnote{Ein Package ist eine Sammlung zusammengehöriger Java Klassen und Intefaces und ordnet den Programmcode sowohl thematisch als auch hierarchisch. Ein Package bildet per Konvention einen eindeutigen Namensraum für diese Klassen, so dass eine Unterscheidung zu Klassen gleichen Namens (in anderen Packages) möglich wird.} \texttt{ui.screen}) entwickelt, dass die von Spielen typische
 Abfolge von "`Bildschirmen"' erleichtert, zwischen denen der Spieler sich auf vordefinierten Pfaden
 bewegen kann.
 
@@ -470,13 +456,12 @@ als Cookie abgelegt und beim wiederholten Starten des Spiels automatisch ausgele
 \subsection{RPC-Eigenbau Serialisierung über HTTP mit Java
 Objekt-Serialisierung}
 Für die Kommunikation des Spielapplets mit dem
-Spielserver wurde ein RPC\footnote{Remote Procedure Call, das Aufrufen von
-Programmcode auf einem anderen Computersystem.}-Mecha\-nismus entwickelt, der
+Spielserver wurde ein RPC-Mecha\-nismus entwickelt, der
 sowohl einfach zu verwenden ist als auch problemlos über das Internet funktioniert. Als Grundlage dient die HTTP-Verbindung zum Spielserver, über die bereits
 das Spiel selbst bestehend aus Programmcode, Grafiken, Sounds, usw. geladen wird.
 Will das Spiel nun im Ablauf weitere Daten vom Spielserver empfangen oder an diesen
 senden, werden diese als Java-Objekte übergeben und serialisiert. Dies ergibt einen binären
-Blob, der als Dateiupload an den Server übertragen wird, der diesen Blob dort wieder
+Blob\footnote{Binary large object}, der als Dateiupload an den Server übertragen wird, der diesen Blob dort wieder
 deserialisiert um das ursprüngliche Java-Objekt zu erhalten. Abhängig von der auf dem
 Spielserver aufgerufenen URL, wird dieses Java-Objekt auf dem Server einem bestimmten
 Teil der Programmlogik übergeben, die dann damit arbeitet. Eventuelle
@@ -501,18 +486,14 @@ Während dem Start des Applets wird in \texttt{GameApplet.java} (Zeile 79) der
 Szenengraph für das Spiel erstellt. Dort wird ein \texttt{Game3D} Objekt
 erzeugt, dass die einzelnen 3D-Objekte erstellt und in einen Szenengraph
 einhängt. In \texttt{Game3D.java} wird in Zeile 151 zunächst das Universum
-selbst instanziiert. Der Methodenaufruf in Zeile 162 erstellt die restlichen Objekte und bindet sie ein. Der Tunnel wird dabei (in Tunnel.java) mittels
+selbst instanziiert. Der Methodenaufruf in Zeile 162 erstellt die restlichen Objekte und bindet sie ein. Der Tunnel wird dabei (in \texttt{Tunnel.java}) mittels
 Javacode als zylinderförmige \texttt{Shape3D} erzeugt, während die anderen
 Objekte aus externen Objektmodelldateien eingelesen werden. Diese Objektmodelldateien befinden sich im
-Ressourcen Ordner (\texttt{src/res}).
+Ressourcen Ordner (\texttt{src/res/}).
 
 Schiffsbewegung, Steuerung und Kollisionserkennung wird mit Behaviors realisiert.
 Behaviors dienen bei Java3D als Basis für Interaktion und Animation. Viele dieser Aktionen
-müssen in jedem Frame ausgeführt oder aufgerufen werden. Daher gibt es eine abstrakte
-\texttt{RepeatingBehavior} Klasse, die beim Neuzeichnen jedes Frames aufgerufen
-wird und den Zeitabstand zwischen den Frames misst. Letzteres ermöglicht eine Steuerung der
-Geschwindigkeit unabhängig von der Framerate. Gleichzeitig implementiert diese abstrakte
-Klasse das Interface \texttt{GameListener}, mit dem auf Ereignisse im
+müssen in jedem Frame\footnote{Animierte Sequenzen in einer dreidimensionalen Umgebung werden von der Grafikhardware Bild für Bild berechnet. Eines dieser Einzelbilder wird Frame genannt. Je leistungsfähiger die vorhandene (Grafik)Hardware ist, desto mehr Bilder können pro Sekunde berechnet werden. Zur flüssigen Darstellung von Bewegung sollten stets mindestens 30 Frames/Sekunde berechnet werden können.} ausgeführt oder aufgerufen werden. Daher gibt es eine abstrakte \texttt{RepeatingBehavior} Klasse, die beim Neuzeichnen jedes Frames aufgerufen wird und den Zeitabstand zwischen den Frames misst. Letzteres ermöglicht eine Steuerung der Geschwindigkeit unabhängig von der Framerate. Gleichzeitig implementiert diese abstrakte Klasse das Interface \texttt{GameListener}, mit dem auf Ereignisse im
 Spielablauf reagiert werden kann.
 
 \texttt{ShipNavigationBehavior} dient zur Bewegung des Schiffes in xy-Richtung,
@@ -535,24 +516,24 @@ betroffenen Objekte gebunden.
 
 \section{Entwicklungsumgebung}
 Die Entwicklungsumgebung beinhaltet alle Programme, die zum entwerfen,
-programmieren, kompilieren und testweisen ausführen des Spiels und der Verwaltung des
+programmieren, kompilieren und testweisen Ausführen des Spiels und der Verwaltung des
 Entwicklungsprozesses nötig sind.
 
 Für eine zentrale Verwaltung des gesamten Codes und aller weiteren Bestandteile des
-Spiels (Grafiken, Musik, Sounds) wurde auf Google Code ein Projekt angelegt, dass neben
-dem Versionskontrollsystem Subversion auch ein Issue-Tracking für das Verfolgen und
-Verwalten von Fehlern und Änderungswünschen bietet.
+Spiels (Grafiken, Musik, Sounds) wurde auf Google Code ein Projekt angelegt\footnote{\url{http://code.google.com/p/flowgame}}, dass neben dem Versionskontrollsystem Subversion auch ein Issue-Tracking für das Verfolgen und Verwalten von Fehlern und Änderungswünschen bietet.
 
 Als IDE\footnote{Integrated Development Environment -- integrierte
-Entwicklungsumgebung} wird Eclipse in der EE\footnote{Enterprise
-Edition, ermöglicht unter anderem das Entwickeln von Webanwendungen}-Variante
-mit diversen Erweiterungen verwendet: Subclipse stellt die Anbindung an das von Google Code zur Verfügung gestellten Versionkontrollsystem bereit, FindBugs und PMD analysieren den Programmcode auf häufig auftretende Programmierfehler.
-Um das Spiel vollständig lokal auszuführen, wird ein lokal installierter MySQL-
-Datenbankserver notwendig. So können Änderungen ohne Beeinflussung des auf Facebook
-laufenden Spiels getestet werden.
+Entwicklungsumgebung} wird Eclipse\footnote{\url{http://www.eclipse.org}} in der EE\footnote{Enterprise Edition,
+ermöglicht unter anderem das Entwickeln von Webanwendungen}-Variante mit
+diversen Erweiterungen verwendet:
+Subclipse\footnote{\url{http://subclipse.tigris.org/}} stellt die Anbindung an
+das von Google Code zur Verfügung gestellten
+Versionkontrollsystem bereit, FindBugs\footnote{statisches Quellcode Analysewerkzeug -- \url{http://findbugs.sourceforge.net}} und PMD\footnote{statisches Quellcode Analysewerkzeug -- \url{http://pmd.sourceforge.net}} analysieren den Programmcode auf häufig auftretende
+Programmierfehler.\newline Um das Spiel vollständig lokal auszuführen, wird ein
+lokal installierter MySQL\footnote{\url{http://mysql.com}}-Daten\-bankserver notwendig. So können Änderungen ohne Beeinflussung des auf Facebook laufenden Spiels getestet werden.
 
 Um jederzeit eine lauffähige Version des neuesten Entwicklungsstands zu haben, wird
-Hudson als CI\footnote{Continuous Integration, das durchgängige Kompilieren und Auswerten von Programmcode}-Server verwendet, der zum einen die o.g. Werkzeuge FindBugs
+Hudson als CI\footnote{Continuous Integration, das durchgängige Kompilieren und Auswerten von Programmcode\\ \url{http://hudson-ci.org}}-Server verwendet, der zum einen die o.g. Werkzeuge FindBugs
 und PMD nochmals zentral ausführt und dazu Statistiken erzeugt und zum anderen das
 Deployment des Spiels auf den Facebook bekannten Spielserver vollständig automatisiert
 und reproduzierbar durchführen kann. Insgesamt verbessert der CI-Server damit die Code-
