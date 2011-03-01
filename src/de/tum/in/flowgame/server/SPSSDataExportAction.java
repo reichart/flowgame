@@ -21,7 +21,7 @@ public class SPSSDataExportAction extends DatabaseAction {
 		this.output = new StringBuilder();
 		this.firstField = true;
 
-		output.append("# user(id,sex,age,personality[1..n]),###,session(id,sessiontype,scoringtype,language,highscore),###,gameround(id, difficulty, asteroids, fuelcans, score, globalRank, socialRank, answeringtime, flow+reqfit[0..1])");
+		output.append("# user(id,sex,age,personality[1..n]),###,session(id,sessiontype,scoringtype,language,highscore),###,gameround(id, position, difficulty, asteroids, fuelcans, score, globalRank, socialRank, answeringtime, flow+reqfit[0..1])");
 		next();
 	}
 
@@ -68,6 +68,7 @@ public class SPSSDataExportAction extends DatabaseAction {
 
 	private void output(final GameRound round, final GameSession session) {
 		field(round.getId());
+		field(round.getScenarioRound().getPosition());
 		field(getAbsoluteDifficulty(round, session));
 		field(round.getCollisionsWithAsteroids());
 		field(round.getCollisionsWithDiamonds());
