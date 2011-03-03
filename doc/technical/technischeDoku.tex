@@ -36,7 +36,7 @@
 \usepackage[hang,flushmargin]{footmisc}
 \usepackage[printonlyused]{acronym}
 \usepackage{url}
-\usepackage[utf8]{inputenc}
+\usepackage[latin1]{inputenc}
 \usepackage{graphicx}
 \usepackage[hang,small,bf]{caption}
 \usepackage{styles/tumlogo}
@@ -52,14 +52,14 @@
 
 % \selectlanguage{english}
 
-% \usepackage{hyperref} % sorgt fÃ¼r fÃ¼r Hyperlinks in PDF-Dokumenten
+% \usepackage{hyperref} % sorgt für für Hyperlinks in PDF-Dokumenten
 \usepackage[plainpages=false,pdfpagelabels, bookmarks=true]{hyperref}                                             %. hyper-references for ps2pdf 
-% \usepackage[ocgcolorlinks]{hyperref}     % sorgt fÃ¼r farbige fÃ¼r Hyperlinks, die beim Ausdruck schwarz sind
+% \usepackage[ocgcolorlinks]{hyperref}     % sorgt für farbige für Hyperlinks, die beim Ausdruck schwarz sind
 \hypersetup{
     breaklinks=true
-    unicode=false,          % non-Latin characters in Acrobatâ€™s bookmarks
-    pdftoolbar=true,        % show Acrobatâ€™s toolbar?
-    pdfmenubar=true,        % show Acrobatâ€™s menu?
+    unicode=false,          % non-Latin characters in Acrobat's bookmarks
+    pdftoolbar=true,        % show Acrobat's toolbar?
+    pdfmenubar=true,        % show Acrobat's menu?
     pdffitwindow=true,      % page fit to window when opened
     pdftitle={},    % title
     pdfauthor={},     % author
@@ -91,14 +91,14 @@
 \widowpenalty=10000
 \clubpenalty=10000
 
-\parindent 0pt % keine AbsatzeinrÃ¼ckung
+\parindent 0pt % keine Absatzeinrückung
 \parskip 6pt % aber danach ein gewisser Abstand
 
 \graphicspath{{graphics/}}
 
 % \sloppy
 
-\input{hyphenation} % in dieses File kommen WÃ¶rter die Latex nicht richtig trennt
+\input{hyphenation} % in dieses File kommen Wörter die Latex nicht richtig trennt
 
 \begin{document}
 
@@ -134,33 +134,33 @@
 
 
 \section{Funktionale Anforderungen}
-Der Zustand des "`Flow"' ist ein psychologisches PhÃ¤nomen, das bei diversen verschiedenen
-TÃ¤tigkeiten zu beobachten ist. Computerspiele zÃ¤hlen zu diesen TÃ¤tigkeiten, da sie die
-grundlegenden Anforderungen zur Generierung von Flow erfÃ¼llen: Der Spieler muss aktiv
-sein und einer gewissen Herausforderung gegenÃ¼berstehen.\newline
-In diesem Projekt soll also zunÃ¤chst einmal ein Spiel entwickelt werden, das den Spieler
+Der Zustand des "`Flow"' ist ein psychologisches Phänomen, das bei diversen verschiedenen
+Tätigkeiten zu beobachten ist. Computerspiele zählen zu diesen Tätigkeiten, da sie die
+grundlegenden Anforderungen zur Generierung von Flow erfüllen: Der Spieler muss aktiv
+sein und einer gewissen Herausforderung gegenüberstehen.\newline
+In diesem Projekt soll also zunächst einmal ein Spiel entwickelt werden, das den Spieler
 potentiell in einen Zustand des Flow bringt, oder, so gewollt, in einen Zustand des "`Nicht-
 Flow"'.
 
-Als Spielkonzept wurde ein simples Setting gewÃ¤hlt: Der Spieler steuert ein Raumschiff
+Als Spielkonzept wurde ein simples Setting gewählt: Der Spieler steuert ein Raumschiff
 und muss dabei Hindernissen ausweichen und Boni aufsammeln, die mit variabler
-Geschwindigkeit auf ihn zukommen. Anhand der Geschwindigkeit lÃ¤sst sich hierbei der
-Schwierigkeitsgrad regulieren, um so gezielt Unterforderung, Ãœberforderung oder ideale
-Anforderungen schaffen zu kÃ¶nnen.
+Geschwindigkeit auf ihn zukommen. Anhand der Geschwindigkeit lässt sich hierbei der
+Schwierigkeitsgrad regulieren, um so gezielt Unterforderung, Überforderung oder ideale
+Anforderungen schaffen zu können.
 
-Zur Navigation im Spiel ist es nÃ¶tig, zunÃ¤chst ein HauptmenÃ¼ zu integrieren, in dem man
-wÃ¤hlen kann, ob man eine Runde beginnen, die Highscores einsehen, die
-persÃ¶nlichen Einstellungen Ã¤ndern oder die Credits ansehen mÃ¶chte.\newline
-Bei neuen Spielern wird zunÃ¤chst ein PersÃ¶nlichkeitsprofil angelegt, in dem der Spieler
-mithilfe eines Fragebogens gewisse persÃ¶nliche Charakteristika angibt, die zur Auswertung
+Zur Navigation im Spiel ist es nötig, zunächst ein Hauptmenü zu integrieren, in dem man
+wählen kann, ob man eine Runde beginnen, die Highscores einsehen, die
+persönlichen Einstellungen ändern oder die Credits ansehen möchte.\newline
+Bei neuen Spielern wird zunächst ein Persönlichkeitsprofil angelegt, in dem der Spieler
+mithilfe eines Fragebogens gewisse persönliche Charakteristika angibt, die zur Auswertung
 der erhobenen Daten hilfreich sind.\newline
 Ist dies geschehen, kann ein Spiel beginnen. Dieses ist aufgeteilt in mehrere Runden, in
-denen zunÃ¤chst die "`Tagesform"', also die LeistungsfÃ¤higkeit fÃ¼r diese Runde gemessen
-wird. Dies ermÃ¶glicht, trotz Lerneffekten oder anderen EinflÃ¼ssen, wie etwa MÃ¼digkeit oder
+denen zunächst die "`Tagesform"', also die Leistungsfähigkeit für diese Runde gemessen
+wird. Dies ermöglicht, trotz Lerneffekten oder anderen Einflüssen, wie etwa Müdigkeit oder
 mangelnde Konzentration, in jeder Situation die idealen Anforderungen zu
 generieren.\newline
 Daraufhin folgen drei Runden, in denen sich verschiedene
-Anforderungsstufen abwechseln. Um die Rahmenbedingungen fÃ¼r alle Spieler gleich zu halten, hat jede Runde eine fixe
+Anforderungsstufen abwechseln. Um die Rahmenbedingungen für alle Spieler gleich zu halten, hat jede Runde eine fixe
 Dauer.
 
 %\usepackage{graphics} is needed for \includegraphics
@@ -172,95 +172,95 @@ Dauer.
 \end{center}
 \end{figure} 
 
-Das ganze Spiel ist, um etwas AtmosphÃ¤re zu erzeugen, in eine Rahmengeschichte
+Das ganze Spiel ist, um etwas Atmosphäre zu erzeugen, in eine Rahmengeschichte
 eingebettet, die den Spieler in ein Science-Fiction-Szenario hineinversetzt und ihm vor jeder
-Runde eine Aufgabe gibt, die er zu erfÃ¼llen hat und ihm am Ende der Runde Ã¼ber seine
+Runde eine Aufgabe gibt, die er zu erfüllen hat und ihm am Ende der Runde über seine
 Erfolge berichtet.\newline
-ZusÃ¤tzlich wird das Befinden in einer Art "`Rennen"' durch ein schnelles, futuristisch
-erscheinendes MusikstÃ¼ck unterstÃ¼tzt, das wÃ¤hrend den Runden abgespielt wird und
-speziell hierfÃ¼r komponiert wurde.
+Zusätzlich wird das Befinden in einer Art "`Rennen"' durch ein schnelles, futuristisch
+erscheinendes Musikstück unterstützt, das während den Runden abgespielt wird und
+speziell hierfür komponiert wurde.
 
-Um anhand hiervon nun festzustellen, ob ein Spieler Flow erfÃ¤hrt, muss eine Methode
-gewÃ¤hlt werden, um dies zu messen.\newline
-Das Mittel der Wahl sind hier Teile der FragebÃ¶gen der von Engeser entwickelten
-FKS\footnote{TODO: ErklÃ¤rung}, die zwischen den Spielrunden eingeblendet
+Um anhand hiervon nun festzustellen, ob ein Spieler Flow erfährt, muss eine Methode
+gewählt werden, um dies zu messen.\newline
+Das Mittel der Wahl sind hier Teile der Fragebögen der von Engeser entwickelten
+FKS\footnote{TODO: Erklärung}, die zwischen den Spielrunden eingeblendet
 werden, sowie weitere Fragen zur Anforderungspassung, um das subjektive Empfinden der angepassten Schwierigkeit
-Ã¼berprÃ¼fen zu kÃ¶nnen. Die Beantwortung dieser Fragen erfolgt durch einen stufenlos
-anpassbaren Schieberegler, der zwischen zwei gegensÃ¤tzlichen Adjektiven nach
+überprüfen zu können. Die Beantwortung dieser Fragen erfolgt durch einen stufenlos
+anpassbaren Schieberegler, der zwischen zwei gegensätzlichen Adjektiven nach
 Belieben eingestellt werden kann. Ein Lerneffekt beim Beantworten der Fragen oder eine
 Automatisierung ebendessen wird verhindert, indem die Fragen in randomisierter
-Reihenfolge erscheinen. AuÃŸerdem wird die Dauer der Beantwortung eines jeden
-Fragebogens gemessen, was RÃ¼ckschlÃ¼sse darauf zulÃ¤sst, ob der Spieler nur zufÃ¤llig etwas angeklickt, oder die Fragen tatsÃ¤chlich
+Reihenfolge erscheinen. Außerdem wird die Dauer der Beantwortung eines jeden
+Fragebogens gemessen, was Rückschlüsse darauf zulässt, ob der Spieler nur zufällig etwas angeklickt, oder die Fragen tatsächlich
 gelesen und gewissenhaft beantwortet hat.
 
-Als Plattform fÃ¼r das Spiel wurde das soziale Netzwerk Facebook\footnote{\url{http://www.facebook.com}} gewÃ¤hlt, das die
-Integration von vielfÃ¤ltigen Anwendungen erlaubt. Mit Facebook lassen sich vielerlei Daten,
+Als Plattform für das Spiel wurde das soziale Netzwerk Facebook\footnote{\url{http://www.facebook.com}} gewählt, das die
+Integration von vielfältigen Anwendungen erlaubt. Mit Facebook lassen sich vielerlei Daten,
 die der Spieler auf seinem Profil ohnehin angegeben hat, wie etwa Alter, Geschlecht und
-Herkunft, nutzen. Diese Daten kÃ¶nnen dann automatisiert und ohne zusÃ¤tzliche Angaben
-erfasst werden und in die Auswertung einflieÃŸen.\newline
-AuÃŸerdem ist es hier mÃ¶glich,die Leistungen verschiedener Teilnehmer zu vergleichen
+Herkunft, nutzen. Diese Daten können dann automatisiert und ohne zusätzliche Angaben
+erfasst werden und in die Auswertung einfließen.\newline
+Außerdem ist es hier möglich,die Leistungen verschiedener Teilnehmer zu vergleichen
 und in einer Highscore darzustellen. Das erlaubt die Untersuchung von Unterschieden der
 Leistung von individuell und sozial motivierten Spielern.
 
-Zuletzt wurde eine einfache und umfassende MÃ¶glichkeit der erhobenen Daten gefordert.
-Dies lieÃŸ sich durch eine direkte Einspeisung in eine SQL\footnote{Structured query language}-Datenbank realisieren. Dies hat den Vorteil, dass die Daten elektronisch und delokalisiert vorliegen und ein Zugriff Ã¼ber das Internet mÃ¶glich ist. HierfÃ¼r steht ein browserbasierter Client zur VerfÃ¼gung. Zudem lÃ¤sst sich die Datenbank im SPSS-Format\footnote{Datenformat der Statistiksoftware SPSS Statistics.} exportieren.
+Zuletzt wurde eine einfache und umfassende Möglichkeit der erhobenen Daten gefordert.
+Dies ließ sich durch eine direkte Einspeisung in eine SQL\footnote{Structured query language}-Datenbank realisieren. Dies hat den Vorteil, dass die Daten elektronisch und delokalisiert vorliegen und ein Zugriff über das Internet möglich ist. Hierfür steht ein browserbasierter Client zur Verfügung. Zudem lässt sich die Datenbank im SPSS-Format\footnote{Datenformat der Statistiksoftware SPSS Statistics.} exportieren.
 
 
 \section{Nicht-Funktionale Anforderungen}
 Um gleiche Rahmenbedingungen und damit eine Vergleichbarkeit zwischen verschiedenen
 Spielern und Spielen nicht von vornherein zu verhindern, muss der Spielablauf in
-eine mÃ¶glichst kontrollierte Umgebung eingebettet werden. Das bedeutet, dass sich
-verschiedene Spiele nicht zu stark voneinander unterscheiden dÃ¼rfen. Ein kritischer Punkt
-hierfÃ¼r ist die Dauer einer Runde. Es steht zu befÃ¼rchten, dass Spieler trotz gleichem
+eine möglichst kontrollierte Umgebung eingebettet werden. Das bedeutet, dass sich
+verschiedene Spiele nicht zu stark voneinander unterscheiden dürfen. Ein kritischer Punkt
+hierfür ist die Dauer einer Runde. Es steht zu befürchten, dass Spieler trotz gleichem
 Schwierigkeitsgrad signifikant unterschiedliche Erlebnisse berichten, wenn sich die
-Spieldauer in groÃŸem MaÃŸe unterscheidet. Daher wurde fÃ¼r jede Runde eine fixe Spieldauer
-von 120 Sekunden festgelegt. Diese Dauer lÃ¤sst sich auch nicht durch ein "`verlieren"'
-oder "`sterben"', wie ich anderen Spielen Ã¼blich verkÃ¼rzen. Man muss in diesem Spiel zwar
-Hindernissen ausweichen, diese fÃ¼hren aber nie zum Spieltod, sondern immer nur zu einer
-Verringerung der Endpunktzahl. Diese Endpunktzahl Ã¼bt als MaÃŸ zur Leistungsmessung fÃ¼r
-den Spieler einen Anreiz fÃ¼r hohe Performance und damit Anstrengung aus. Daher ist es
+Spieldauer in großem Maße unterscheidet. Daher wurde für jede Runde eine fixe Spieldauer
+von 120 Sekunden festgelegt. Diese Dauer lässt sich auch nicht durch ein "`verlieren"'
+oder "`sterben"', wie ich anderen Spielen üblich verkürzen. Man muss in diesem Spiel zwar
+Hindernissen ausweichen, diese führen aber nie zum Spieltod, sondern immer nur zu einer
+Verringerung der Endpunktzahl. Diese Endpunktzahl übt als Maß zur Leistungsmessung für
+den Spieler einen Anreiz für hohe Performance und damit Anstrengung aus. Daher ist es
 sinnig, dass der Spieler neben dem zwanghaften Ausweichen von Hindernissen auch noch
-eine Anforderung darin hat, gleichzeitig mÃ¶glichst viele Bonuspunkte zu sammeln.
+eine Anforderung darin hat, gleichzeitig möglichst viele Bonuspunkte zu sammeln.
 
-Obwohl es sich hierbei um ein psychologisches Experiment handelt, ist es wÃ¼nschenswert,
-dass der Spieler nicht das GefÃ¼hl hat, in einem Labor an einer Datenerhebung
+Obwohl es sich hierbei um ein psychologisches Experiment handelt, ist es wünschenswert,
+dass der Spieler nicht das Gefühl hat, in einem Labor an einer Datenerhebung
 teilzunehmen, sondern vielmehr ein Spiel spielt, um sich die Zeit zu vertreiben oder
-Ã¤hnliches. Daraus resultieren die oben genannten Anforderungen, das Spiel mit
+ähnliches. Daraus resultieren die oben genannten Anforderungen, das Spiel mit
 Rahmengeschichte und Musik auszustatten, da dies von einem Spiel erwartet wird und
-ein Fehlen solcher Details zu einem verfÃ¤lschten Empfinden fÃ¼hren kÃ¶nnte. Ebenso
-gehÃ¶rt dazu, dass die FragebÃ¶gen mÃ¶glichst gut ins Spiel eingebettet werden und ihre
-Beantwortung durch eine Rahmengeschichte eingepasst wird. MÃ¼ssten die FragebÃ¶gen
-extern bearbeitet werden, etwa per Papier oder durch einen weiteren Webclient, so wÃ¤re es
+ein Fehlen solcher Details zu einem verfälschten Empfinden führen könnte. Ebenso
+gehört dazu, dass die Fragebögen möglichst gut ins Spiel eingebettet werden und ihre
+Beantwortung durch eine Rahmengeschichte eingepasst wird. Müssten die Fragebögen
+extern bearbeitet werden, etwa per Papier oder durch einen weiteren Webclient, so wäre es
 unvermeidlich, dass der Spieler sich mehr als Proband empfindet.
 
-Ziel des Projekts ist auÃŸerdem, mÃ¶glichst viele DatensÃ¤tze zu erheben, also mÃ¶glichst viele
-Menschen zu erreichen. DafÃ¼r muss das Spiel allerdings einige Anforderungen erfÃ¼llen
-und nicht zu hohe HÃ¼rden an den Benutzer stellen. Das bedeutet zunÃ¤chst eine mÃ¶glichst
-einfache Bedienbarkeit. Angestrebt waren lediglich vier Tasten, nÃ¤mlich die Pfeiltasten, die ausreichend sind, das Raumschiff nach oben, unten, links und rechts zu steuern. Ebenso
-dazu gehÃ¶rt es, das Spiel mÃ¶glichst kurzweilig zu gestalten. Ein Spiel (bestehend ja aus
+Ziel des Projekts ist außerdem, möglichst viele Datensätze zu erheben, also möglichst viele
+Menschen zu erreichen. Dafür muss das Spiel allerdings einige Anforderungen erfüllen
+und nicht zu hohe Hürden an den Benutzer stellen. Das bedeutet zunächst eine möglichst
+einfache Bedienbarkeit. Angestrebt waren lediglich vier Tasten, nämlich die Pfeiltasten, die ausreichend sind, das Raumschiff nach oben, unten, links und rechts zu steuern. Ebenso
+dazu gehört es, das Spiel möglichst kurzweilig zu gestalten. Ein Spiel (bestehend ja aus
 vier Runden) sollte weniger als 15 Minuten dauern, um der kurzlebigen Internetkultur zu
 entsprechen. Im Internet wird oft kurz "`zwischendurch"' oder beim Warten gespielt und eine
-lÃ¤ngere Dauer wÃ¼rde das Spiel hierfÃ¼r komplett ausschlieÃŸen. AuÃŸerdem ist es wichtig, den
+längere Dauer würde das Spiel hierfür komplett ausschließen. Außerdem ist es wichtig, den
 Anforderungen der verschiedenen Betriebssysteme, die verbreitetsten sind Windows, Mac/OSX und Linux, gerecht zu werden. Teile der potentiellen Teilnehmerschaft wegen ihres
-Betriebssystems ausschlieÃŸen zu mÃ¼ssen, wÃ¤re Ã¤uÃŸerst unerfreulich. Ebenso gibt es keinen
-Grund, das Projekt auf den deutschen Raum zu beschrÃ¤nken. Eine SprachunterstÃ¼tzung
+Betriebssystems ausschließen zu müssen, wäre äußerst unerfreulich. Ebenso gibt es keinen
+Grund, das Projekt auf den deutschen Raum zu beschränken. Eine Sprachunterstützung
 von Englisch und Deutsch soll die Anzahl der potentiellen Teilnehmer noch einmal
-signifikant erhÃ¶hen. Dazu wurden die Standards der in der Informatik so genannten "`I18N"'
-(kurz fÃ¼r Internationalisierung) eingehalten. Teil dessen ist, dass Programmteile, die sich
+signifikant erhöhen. Dazu wurden die Standards der in der Informatik so genannten "`I18N"'
+(kurz für Internationalisierung) eingehalten. Teil dessen ist, dass Programmteile, die sich
 bei unterschiedlichen Sprachversionen unterscheiden, nicht im Quellcode stehen, sondern
-einfach durch den Austausch von bestimmten Dateien ersetzt werden kÃ¶nnen. Dies
-ermÃ¶glicht die Erweiterung auf andere SprachrÃ¤ume, ohne das eigentliche Programm zu
-Ã¤ndern.
+einfach durch den Austausch von bestimmten Dateien ersetzt werden können. Dies
+ermöglicht die Erweiterung auf andere Sprachräume, ohne das eigentliche Programm zu
+ändern.
 
 \section{Architektur}
 \subsection{Client-Server}
 Die grundlegende Architektur des Spiels ist Client-Server-basiert, wobei ein auf
 Facebook angezeigtes Applet den Client und ein auf einem eigenen Server laufender
 Webcontainer den Server darstellen. Die Kommunikation zwischen Client und Server erfolgt
-ausschlieÃŸlich Ã¼ber HTTP\footnote{Hypertext Transfer Protocol -- Protokoll zur
-Ãœbertragung von Daten Ã¼ber ein Netzwerk, hauptsÃ¤chlich fÃ¼r die Ãœbermittlung
-von Webseiten eingesetzt.}. Programmcode fÃ¼r FunktionalitÃ¤ten, die spezifisch
-fÃ¼r Client (Benutzerschnittstelle, 3D-Umgebung, Facebook-Anbindung) und Server (Datenbank- Anbindung, Programmlogik) sind, ist voneinander unabhÃ¤ngig, lediglich der Programmcode fÃ¼r das gemeinsam genutzte Datenmodell ist beiden Seiten bekannt. Dies entspricht der Ã¼blichen Praxis, reduziert unerwÃ¼nschte Seiteneffekte und ergibt eine klare Trennung der
+ausschließlich über HTTP\footnote{Hypertext Transfer Protocol -- Protokoll zur
+Übertragung von Daten über ein Netzwerk, hauptsächlich für die Übermittlung
+von Webseiten eingesetzt.}. Programmcode für Funktionalitäten, die spezifisch
+für Client (Benutzerschnittstelle, 3D-Umgebung, Facebook-Anbindung) und Server (Datenbank- Anbindung, Programmlogik) sind, ist voneinander unabhängig, lediglich der Programmcode für das gemeinsam genutzte Datenmodell ist beiden Seiten bekannt. Dies entspricht der üblichen Praxis, reduziert unerwünschte Seiteneffekte und ergibt eine klare Trennung der
 Verantwortlichkeiten.
 
 \subsection{Subsystemzerlegung}
@@ -273,45 +273,45 @@ TODO Christopher, Phil
 TODO Christopher, Phil
 
 \section{Technologien}
-Um den Entwicklungsaufwand fÃ¼r ein plattformÃ¼bergreifendes Spiel mÃ¶glichst gering
-zu halten, haben wir uns entschieden, dass Spiel in Java\footnote{Java ist eine moderne, statisch typisierte, objektorientierte Programmiersprache. Kompilierte Java-Programme benÃ¶tigen eine Laufzeitumgebung (Virtuelle Maschine, auch Java Runtime genannt), die fÃ¼r viele unterschiedliche Betriebssysteme zur VerfÃ¼gung steht und dadurch einen hohen Grad an PlattformunabhÃ¤ngigkeit sicherstellt.} umzusetzen, da es fÃ¼r alle
-verbreiteten Betriebssysteme verfÃ¼gbar ist und eine solide Bibliothek an Funktionen mit sich
+Um den Entwicklungsaufwand für ein plattformübergreifendes Spiel möglichst gering
+zu halten, haben wir uns entschieden, dass Spiel in Java\footnote{Java ist eine moderne, statisch typisierte, objektorientierte Programmiersprache. Kompilierte Java-Programme benötigen eine Laufzeitumgebung (Virtuelle Maschine, auch Java Runtime genannt), die für viele unterschiedliche Betriebssysteme zur Verfügung steht und dadurch einen hohen Grad an Plattformunabhängigkeit sicherstellt.} umzusetzen, da es für alle
+verbreiteten Betriebssysteme verfügbar ist und eine solide Bibliothek an Funktionen mit sich
 bringt.
 
-Serverseitig lÃ¤uft eine Webanwendung auf Basis von Struts 2\footnote{Java Framework zur Entwicklung von Webapplikationen -- \url{http://struts.apache.org}} und Servlets/JSPs, die
-Ã¼ber EclipseLink als JPA\footnote{Java Persistence API, eine Schnittstelle um
-Java-Objekte-Graphen in gebrÃ¤uchliche relationale Datenbanksysteme
-abzubilden.}-Provider mit einer Datenbank kommuniziert, um Spieldaten zu speichern. FÃ¼r die Kommunikation mit dem clientseitigen Spiel wird ein auf serialisierte Java-Objekte aufbauender RPC\footnote{Remote Procedure Call, das Aufrufen von
-Programmcode auf einem anderen Computersystem.}-Mechanismus Ã¼ber HTTP angewandt.
+Serverseitig läuft eine Webanwendung auf Basis von Struts 2\footnote{Java Framework zur Entwicklung von Webapplikationen -- \url{http://struts.apache.org}} und Servlets/JSPs, die
+über EclipseLink als JPA\footnote{Java Persistence API, eine Schnittstelle um
+Java-Objekte-Graphen in gebräuchliche relationale Datenbanksysteme
+abzubilden.}-Provider mit einer Datenbank kommuniziert, um Spieldaten zu speichern. Für die Kommunikation mit dem clientseitigen Spiel wird ein auf serialisierte Java-Objekte aufbauender RPC\footnote{Remote Procedure Call, das Aufrufen von
+Programmcode auf einem anderen Computersystem.}-Mechanismus über HTTP angewandt.
 
-Clientseitig lÃ¤uft ein Applet\footnote{Im Webbrowser laufendes Java-Programm}, dass Ã¼ber Java3D die 3D-Umgebung und Ã¼ber Swing\footnote{Bibliothek zur Grafikausgabe unter Java} die Benutzerschnittstelle anzeigt. Beide Bibliotheken abstrahieren die zugrundelegenden Techniken stark, was eine komfortable Entwicklung komplexer 3D-Umgebungen und Benutzerschnittstellen ermÃ¶glicht. FÃ¼r die Anbindung an Facebook wird im Applet eine weitere Bibliothek verwendet, die aufgrund von SicherheitseinschrÃ¤nkungen (Same Origin Policy) alle Aufrufe an das Facebook API Ã¼ber den Spielserver abwickelt.
+Clientseitig läuft ein Applet\footnote{Im Webbrowser laufendes Java-Programm}, dass über Java3D die 3D-Umgebung und über Swing\footnote{Bibliothek zur Grafikausgabe unter Java} die Benutzerschnittstelle anzeigt. Beide Bibliotheken abstrahieren die zugrundelegenden Techniken stark, was eine komfortable Entwicklung komplexer 3D-Umgebungen und Benutzerschnittstellen ermöglicht. Für die Anbindung an Facebook wird im Applet eine weitere Bibliothek verwendet, die aufgrund von Sicherheitseinschränkungen (Same Origin Policy) alle Aufrufe an das Facebook API über den Spielserver abwickelt.
 
 \section{Implementierung}
 \subsection{Baselinemessung und Adaptive Rundenzeiten}
-FÃ¼r die Erzeugung und Messung von Flow bzw. Unter- und Ãœberforderung passt sich das
+Für die Erzeugung und Messung von Flow bzw. Unter- und Überforderung passt sich das
 Spiel dem Spieler an. Dazu findet bei jedem Durchgang, einer sogenannten Session,
-zunÃ¤chst eine Messung der Baseline statt. Diese Baseline stellt die vermutete ideale
-Anforderung an einen Spieler dar. Alle weiteren Runden werden im VerhÃ¤ltnis zur Baseline
+zunächst eine Messung der Baseline statt. Diese Baseline stellt die vermutete ideale
+Anforderung an einen Spieler dar. Alle weiteren Runden werden im Verhältnis zur Baseline
 im Schwierigkeitsgrad variiert.
 
-In diesem Kapitel wird zunÃ¤chst kurz die Messung der Baseline erlÃ¤utert und
-Schwierigkeiten die dabei auftreten kÃ¶nnen. AnschlieÃŸend wird gezeigt, wie die
-Geschwindigkeit der Ã¼brigen Runden aus der Baseline errechnet werden kann.
+In diesem Kapitel wird zunächst kurz die Messung der Baseline erläutert und
+Schwierigkeiten die dabei auftreten können. Anschließend wird gezeigt, wie die
+Geschwindigkeit der übrigen Runden aus der Baseline errechnet werden kann.
 Baselinemessung
 
-Bei der Baselinemessung soll erreicht werden, dass man die ideale Spielschwierigkeit fÃ¼r
+Bei der Baselinemessung soll erreicht werden, dass man die ideale Spielschwierigkeit für
 einen Spieler ermittelt. Diese besteht prinzipiell aus den drei Komponenten Geschwindigkeit,
-VerhÃ¤ltnis von Diamanten zu Asteroiden und Abstand zwischen den Asteroiden. Der
-Einfachheit halber wird in unserem Experiment ausschlieÃŸlich die Geschwindigkeit variiert,
-eine Anpassungen der beiden anderen Parameter kÃ¶nnte aber analog erfolgen.
+Verhältnis von Diamanten zu Asteroiden und Abstand zwischen den Asteroiden. Der
+Einfachheit halber wird in unserem Experiment ausschließlich die Geschwindigkeit variiert,
+eine Anpassungen der beiden anderen Parameter könnte aber analog erfolgen.
 
-Die Passung soll ermittelt werden, indem zunÃ¤chst alle auf der gleichen Geschwindigkeit
-starten. Nach und nach wird die Geschwindigkeit erhÃ¶ht, bis der Spieler nicht mehr mithalten
+Die Passung soll ermittelt werden, indem zunächst alle auf der gleichen Geschwindigkeit
+starten. Nach und nach wird die Geschwindigkeit erhöht, bis der Spieler nicht mehr mithalten
 kann. An diesem Punkt wird wieder abgesenkt, bis es anscheinend deutlich zu einfach
-wird. Dies wird in mehreren Iterationen Ã¼ber zwei Minuten hinweg wiederholt, wobei
+wird. Dies wird in mehreren Iterationen über zwei Minuten hinweg wiederholt, wobei
 der Ausschlag nach und nach kleiner wird und sich auf einer bestimmten Schwierigkeit
 einpendelt. Die Baseline ist dann die Schwierigkeit oberhalb derer sich der
-Spieler 50\% der Zeit halten konnte. Dieses Verhalten fÃ¼hrt zu dem in Abbildung \ref{fig:Baseline} dargestellten typischen
+Spieler 50\% der Zeit halten konnte. Dieses Verhalten führt zu dem in Abbildung \ref{fig:Baseline} dargestellten typischen
 Verlauf.
 
 %\usepackage{graphics} is needed for \includegraphics
@@ -324,10 +324,10 @@ Verlauf.
 \end{center}
 \end{figure} 
 
-Als erstes muss also zunÃ¤chst bestimmt werden, ob die Schwierigkeit zu einem gegebenen
-Moment zu groÃŸ oder zu klein ist. Dazu speichert die Klasse \texttt{Trend}, zu wieviel Prozent der Spieler mit einem bestimmten Objekt (Diamant oder Asteroid) kollidiert ist bzw. ihm ausgewichen ist. Es wird jeweils ein lang-, mittel- und kurzfristiger Trend ermittelt, sodass die Entscheidung nicht nur anhand der letzten Aktionen des Spelers getroffen werden.
+Als erstes muss also zunächst bestimmt werden, ob die Schwierigkeit zu einem gegebenen
+Moment zu groß oder zu klein ist. Dazu speichert die Klasse \texttt{Trend}, zu wieviel Prozent der Spieler mit einem bestimmten Objekt (Diamant oder Asteroid) kollidiert ist bzw. ihm ausgewichen ist. Es wird jeweils ein lang-, mittel- und kurzfristiger Trend ermittelt, sodass die Entscheidung nicht nur anhand der letzten Aktionen des Spelers getroffen werden.
 Der langfristige Trend bezieht sich hierbei auf die letzten 30 passierenden Objekte.
-Mittelfristig sind es die letzten 10 und fÃ¼r den kurzfristigen Trend werden nur die letzten 3 beachtet.
+Mittelfristig sind es die letzten 10 und für den kurzfristigen Trend werden nur die letzten 3 beachtet.
 
 Beispiel: Es sind 10 Objekte in der folgenden Reihenfolge vorbeigeflogen, wobei ein (K)
 bedeutet, dass der Spieler mit ihnen kollidiert ist:
@@ -344,13 +344,13 @@ bedeutet, dass der Spieler mit ihnen kollidiert ist:
 \item Diamant
 \end{enumerate}
 Dann ist der kurzfristige Trend, dass der Spieler mit 2 Asteroiden kollidiert
-ist (Rate 100\%) und keinen Diamanten gesammelt hat (0\%), was eine Ãœberforderung vermuten lÃ¤sst.
+ist (Rate 100\%) und keinen Diamanten gesammelt hat (0\%), was eine Überforderung vermuten lässt.
 Der mittelfristige Trend ist mit 2 Asteroiden (40\%) und 4 Diamanten (80\%)
 dagegen deutlich ausgewogener.
 
-Aus dieser Information muss nun abgeschÃ¤tzt werden, wann das Spiel langsamer und wann
-es schneller werden sollte. HierfÃ¼r wurden mehrere verschiedene Methoden getestet. Im
-Folgenden wird lediglich die beschrieben, die tatsÃ¤chlich verwendet wurde, da sie sich als
+Aus dieser Information muss nun abgeschätzt werden, wann das Spiel langsamer und wann
+es schneller werden sollte. Hierfür wurden mehrere verschiedene Methoden getestet. Im
+Folgenden wird lediglich die beschrieben, die tatsächlich verwendet wurde, da sie sich als
 am exaktesten herausgestellt hat.
 
 Bis der Spieler mindestens zehn Objekte passiert hat wird die Geschwindigkeit einfach
@@ -363,52 +363,52 @@ beschleunigt. Sammelt er mittelfristig zumindest noch mehr als 1/3 der
 passierenden Diamanten so wird leicht beschleunigt. Wenn keine dieser Bedingungen zutrifft, so bleibt alles gleich schnell. Dieses Verhalten wird von der FunctionStrategy2 gesteuert.
 
 Nun bleibt die Frage, wie stark beschleunigt oder gebremst werden soll. Am einfachsten
-erscheint es unabhÃ¤ngig von der aktuellen Geschwindigkeit, diese um einen fixen Betrag
-zu erhÃ¶hen oder zu reduzieren. Als dies mit Spielern getestet wurde haben wir jedoch
-festgestelt, dass bei hÃ¶herer Ausgangsgeschwindigkeit schon kleine Beschleunigungen
-sich sehr drastisch anfÃ¼hlen, wÃ¤hrend bei niedrigeren Geschwindigkeiten die
-GeschwindigkeitserhÃ¶hung grÃ¶ÃŸer sein muss, um Ã¼berhaupt wahrgenommen zu werden.
+erscheint es unabhängig von der aktuellen Geschwindigkeit, diese um einen fixen Betrag
+zu erhöhen oder zu reduzieren. Als dies mit Spielern getestet wurde haben wir jedoch
+festgestelt, dass bei höherer Ausgangsgeschwindigkeit schon kleine Beschleunigungen
+sich sehr drastisch anfühlen, während bei niedrigeren Geschwindigkeiten die
+Geschwindigkeitserhöhung größer sein muss, um überhaupt wahrgenommen zu werden.
 
-Um mÃ¶glichst einfach mehrere verschiedene Modelle testen zu kÃ¶nnen wird deshalb der
-Betrag der ErhÃ¶hung aus einer Funktion ermittelt. Die Funktion bildet eine Position auf
+Um möglichst einfach mehrere verschiedene Modelle testen zu können wird deshalb der
+Betrag der Erhöhung aus einer Funktion ermittelt. Die Funktion bildet eine Position auf
 eine Geschwindigkeit ab. Zu Beginn einer Baselinerunde startet der Spieler an Position
-0. Soll das Spiel schneller werden, so wird die Position erhÃ¶ht, anders gesenkt. Die neue
+0. Soll das Spiel schneller werden, so wird die Position erhöht, anders gesenkt. Die neue
 Geschwindigkeit ergibt sich aus dem Wert der Funktion an der neuen Position.
 
 Am besten hat sich die Funktion $\max(240 \tanh(\frac{x}{5000})+60,
 30)$ erwiesen. Sie ist monoton steigend und bewegt sich zwischen dem niedrigsten
-Wert (30) und nÃ¤hert sich langsam an 300. Bei dieser Funktion sind die Anpassungen 
+Wert (30) und nähert sich langsam an 300. Bei dieser Funktion sind die Anpassungen 
 bei langsamen Geschwindigkeiten deutlicher sind als bei hohen Geschwindigkeiten.
 
 %\usepackage{graphics} is needed for \includegraphics
 \begin{figure}[htp]
 \begin{center}
   \includegraphics[width=0.8\textwidth]{BaselineFunktion.png}
-  \caption[Grundlagenfunktion Baselinemessung]{Funktion die als Grundlage fÃ¼r
+  \caption[Grundlagenfunktion Baselinemessung]{Funktion die als Grundlage für
   die Baselinemessung verwendet wird.\\ TODO Vektorgrafik}
   \label{fig:BaselineFunktion}
 \end{center}
 \end{figure} 
 
-Jede Ã„nderung der Geschwindigkeit wird im SpeedChangeBehavior angestossen. Bei der
+Jede Änderung der Geschwindigkeit wird im SpeedChangeBehavior angestossen. Bei der
 Baselinemessung merkt sich das Spiel jeden Wert und bestimmt zum Schluss die Baseline
 aus dem Median dieser Werte.
 
-Ausgehend von der Baseline werden die GeschwindigkeitenfÃ¼r die folgenden drei Runden
-folgendermaÃŸen bestimmt:\\
+Ausgehend von der Baseline werden die Geschwindigkeitenfür die folgenden drei Runden
+folgendermaßen bestimmt:\\
 Stufe 1 (Baseline - 60 + Baseline*0,7)/2\\
 Stufe 2 (Baseline - 0 + Baseline*1)/2\\
 Stufe 3 (Baseline + 60 + Baseline*1,13)/2\\
 
 Im Quellcode wurden diese wiederum durch Funktionen dargestellt. Bei der
-ConstantFunction bleibt die Geschwindigkeit Ã¼ber eine Runde hinweg konstant.
-Die Anfangsgeschwindigkeit wird einmalig anhand der Baseline errechnet. FÃ¼r die
-kontinuierliche Bedingung wird eine passende LinearFunction benÃ¶tigt. Hierbei muss
-sich nicht nur der Schnittpunkt mit der y-Achse Ã¤ndern sondern auch die Steigung,
+ConstantFunction bleibt die Geschwindigkeit über eine Runde hinweg konstant.
+Die Anfangsgeschwindigkeit wird einmalig anhand der Baseline errechnet. Für die
+kontinuierliche Bedingung wird eine passende LinearFunction benötigt. Hierbei muss
+sich nicht nur der Schnittpunkt mit der y-Achse ändern sondern auch die Steigung,
 damit kein Sprung in der Geschwindigkeit zwischen den drei Runden besteht. Also
-wird zunÃ¤chst die Steigung passend zur Baseline ermittelt. Daraufhin muss noch
+wird zunächst die Steigung passend zur Baseline ermittelt. Daraufhin muss noch
 die Geschwindigkeit zum Beginn der Runde ermittelt werden. Diese liegt so, dass
-die mittlere Geschwindigkeit identisch wÃ¤re, zu der bei einer Runde mit konstanter
+die mittlere Geschwindigkeit identisch wäre, zu der bei einer Runde mit konstanter
 Geschwindigkeit (vergleiche Abbildung \ref{fig:SessionTypen}).
 
 %\usepackage{graphics} is needed for \includegraphics
@@ -423,138 +423,138 @@ mittlere Geschwindigkeit wie die lineare Funktion.\\
 \end{center}
 \end{figure} 
 
-\subsection{MenÃ¼system im Spiel}
+\subsection{Menüsystem im Spiel}
 Zur schnellen Entwicklung der Benutzerschnittstellen wurde auf den
-vollstÃ¤ndigen Eigenbau eines MenÃ¼systems verzichtet und stattdessen eine dÃ¼nne KompatibilitÃ¤tsschicht
-eingefÃ¼hrt, die es ermÃ¶glicht, die bestehende Swing-Bibliothek von Java fÃ¼r die
-Benutzerschnittstelle des Spiels Ã¼ber die 3D-Umgebung zu legen. Dadurch kann die
+vollständigen Eigenbau eines Menüsystems verzichtet und stattdessen eine dünne Kompatibilitätsschicht
+eingeführt, die es ermöglicht, die bestehende Swing-Bibliothek von Java für die
+Benutzerschnittstelle des Spiels über die 3D-Umgebung zu legen. Dadurch kann die
 Benutzerschnittstelle wie gewohnt entwickelt und separat getestet werden, ohne auf die
-besonderen Herausforderungen RÃ¼cksicht nehmen zu mÃ¼ssen, die es mit sich bringt, wenn
+besonderen Herausforderungen Rücksicht nehmen zu müssen, die es mit sich bringt, wenn
 man grafische Elemente wie Buttons, Radio-/Checkboxen und Scrollleisten in einer 3D-
-Umgebung verwenden mÃ¶chte.
+Umgebung verwenden möchte.
 
-Die hierfÃ¼r entwickelte KompatibilitÃ¤tsschicht (\texttt{OffscreenJPanel})
-zeichnet alle Swing-Komponenten in ein transparentes Bild, dass dann Ã¼ber die 3D-Umgebung des Spiels
+Die hierfür entwickelte Kompatibilitätsschicht (\texttt{OffscreenJPanel})
+zeichnet alle Swing-Komponenten in ein transparentes Bild, dass dann über die 3D-Umgebung des Spiels
 gelegt wird. Alle Maus- und Tastatureingaben auf diesem Bild werden abgefangen und an
-die eigentlichen Swing-Komponenten weitergeleitet. WÃ¤hrend der Spieler das Raumschiff
+die eigentlichen Swing-Komponenten weitergeleitet. Während der Spieler das Raumschiff
 steuert, wird das komplette Swing-System ausgeblendet, was die Performance des Spiels
 verbessert.
 
-Um den zugrundeliegenden Ablauf des Spiels intuitiv programmieren zu kÃ¶nnen, wurde
-aufbauend auf die o.g. KompatibilitÃ¤tsschicht ein MenÃ¼system (\texttt{GameMenu}, \texttt{MenuScreen} und das Package\footnote{Ein Package ist eine Sammlung zusammengehÃ¶riger Java Klassen und Intefaces und ordnet den Programmcode sowohl thematisch als auch hierarchisch. Ein Package bildet per Konvention einen eindeutigen Namensraum fÃ¼r diese Klassen, so dass eine Unterscheidung zu Klassen gleichen Namens (in anderen Packages) mÃ¶glich wird.} \texttt{ui.screen}) entwickelt, dass die von Spielen typische
+Um den zugrundeliegenden Ablauf des Spiels intuitiv programmieren zu können, wurde
+aufbauend auf die o.g. Kompatibilitätsschicht ein Menüsystem (\texttt{GameMenu}, \texttt{MenuScreen} und das Package\footnote{Ein Package ist eine Sammlung zusammengehöriger Java Klassen und Intefaces und ordnet den Programmcode sowohl thematisch als auch hierarchisch. Ein Package bildet per Konvention einen eindeutigen Namensraum für diese Klassen, so dass eine Unterscheidung zu Klassen gleichen Namens (in anderen Packages) möglich wird.} \texttt{ui.screen}) entwickelt, dass die von Spielen typische
 Abfolge von "`Bildschirmen"' erleichtert, zwischen denen der Spieler sich auf vordefinierten Pfaden
 bewegen kann.
 
 \subsection{Persistenz von Benutzereinstellungen}
-Das Spiel bietet die MÃ¶glichkeit, die Sounds an- und abzustellen sowie die Steuerung zu
+Das Spiel bietet die Möglichkeit, die Sounds an- und abzustellen sowie die Steuerung zu
 invertieren, so dass die Auf/Ab-Pfeile sich wahlweise wie bei einem Flugzeugsimulator oder
 Rennspiel verhalten. Um diese Einstellungen persistent zu halten, verwendet das Applet die
-LiveConnect-FunktionalitÃ¤t moderner Webbrowser, mit denen es Javascript-Code im das
+LiveConnect-Funktionalität moderner Webbrowser, mit denen es Javascript-Code im das
 Applet umgebenden HTML-Dokument aufrufen kann. Dort werden die Einstellungen dann
 als Cookie abgelegt und beim wiederholten Starten des Spiels automatisch ausgelesen.
 
-\subsection{RPC-Eigenbau Serialisierung Ã¼ber HTTP mit Java
+\subsection{RPC-Eigenbau Serialisierung über HTTP mit Java
 Objekt-Serialisierung}
-FÃ¼r die Kommunikation des Spielapplets mit dem
+Für die Kommunikation des Spielapplets mit dem
 Spielserver wurde ein RPC-Mecha\-nismus entwickelt, der
-sowohl einfach zu verwenden ist als auch problemlos Ã¼ber das Internet funktioniert. Als Grundlage dient die HTTP-Verbindung zum Spielserver, Ã¼ber die bereits
+sowohl einfach zu verwenden ist als auch problemlos über das Internet funktioniert. Als Grundlage dient die HTTP-Verbindung zum Spielserver, über die bereits
 das Spiel selbst bestehend aus Programmcode, Grafiken, Sounds, usw. geladen wird.
 Will das Spiel nun im Ablauf weitere Daten vom Spielserver empfangen oder an diesen
-senden, werden diese als Java-Objekte Ã¼bergeben und serialisiert. Dies ergibt einen binÃ¤ren
-Blob\footnote{Binary large object}, der als Dateiupload an den Server Ã¼bertragen wird, der diesen Blob dort wieder
-deserialisiert um das ursprÃ¼ngliche Java-Objekt zu erhalten. AbhÃ¤ngig von der auf dem
+senden, werden diese als Java-Objekte übergeben und serialisiert. Dies ergibt einen binären
+Blob\footnote{Binary large object}, der als Dateiupload an den Server übertragen wird, der diesen Blob dort wieder
+deserialisiert um das ursprüngliche Java-Objekt zu erhalten. Abhängig von der auf dem
 Spielserver aufgerufenen URL, wird dieses Java-Objekt auf dem Server einem bestimmten
-Teil der Programmlogik Ã¼bergeben, die dann damit arbeitet. Eventuelle
-RÃ¼ckgabewerte der Programmlogik werden nach dem gleichen Verfahren durch Serialisierung von Objekten
-in binÃ¤re Blobs umgewandelt, als Dateidownload dem Spielapplet Ã¼bermittelt und dort
-wieder in ein Java-Objekt deserialisiert. Aus SicherheitsgrÃ¼nden werden auf dem Server
-auftretende Fehler nicht an das Spiel Ã¼bergeben und nur in ein Logfile auf dem Server
-geschrieben; so wird das versehentliche Anzeigen bspw. von PasswÃ¶rtern oder der
+Teil der Programmlogik übergeben, die dann damit arbeitet. Eventuelle
+Rückgabewerte der Programmlogik werden nach dem gleichen Verfahren durch Serialisierung von Objekten
+in binäre Blobs umgewandelt, als Dateidownload dem Spielapplet übermittelt und dort
+wieder in ein Java-Objekt deserialisiert. Aus Sicherheitsgründen werden auf dem Server
+auftretende Fehler nicht an das Spiel übergeben und nur in ein Logfile auf dem Server
+geschrieben; so wird das versehentliche Anzeigen bspw. von Passwörtern oder der
 Datenbankstruktur auf der Clientseite vermieden.
 
 \subsection{Java3D}
-Flowgame ist eine Java3D\footnote{EinfÃ¼hrung unter
+Flowgame ist eine Java3D\footnote{Einführung unter
 \url{http://java.sun.com/developer/onlineTraining/java3d/}}-Anwendung, die als
-Java-Applet im Browser des Spielers (also auf dem Client) lÃ¤uft. Das Universum bei Flowgame enthÃ¤lt vier unterschiedliche Typen von dreidimensionalen Objekten. Einen Tunnel, durch den das Raumschiff des Spielers fliegt,
+Java-Applet im Browser des Spielers (also auf dem Client) läuft. Das Universum bei Flowgame enthält vier unterschiedliche Typen von dreidimensionalen Objekten. Einen Tunnel, durch den das Raumschiff des Spielers fliegt,
 wobei es den entgegenkommenden Asteroiden ausweichen und Diamanten aufsammeln
 soll.
 
 Die folgende Beschreibung bezieht sich auf den Stand von Revision 866.
 Alle Klassen der 3D-Engine befinden sich im Package \texttt{client.engine}.
 
-WÃ¤hrend dem Start des Applets wird in \texttt{GameApplet.java} (Zeile 79) der
-Szenengraph fÃ¼r das Spiel erstellt. Dort wird ein \texttt{Game3D} Objekt
+Während dem Start des Applets wird in \texttt{GameApplet.java} (Zeile 79) der
+Szenengraph für das Spiel erstellt. Dort wird ein \texttt{Game3D} Objekt
 erzeugt, dass die einzelnen 3D-Objekte erstellt und in einen Szenengraph
-einhÃ¤ngt. In \texttt{Game3D.java} wird in Zeile 151 zunÃ¤chst das Universum
+einhängt. In \texttt{Game3D.java} wird in Zeile 151 zunächst das Universum
 selbst instanziiert. Der Methodenaufruf in Zeile 162 erstellt die restlichen Objekte und bindet sie ein. Der Tunnel wird dabei (in \texttt{Tunnel.java}) mittels
-Javacode als zylinderfÃ¶rmige \texttt{Shape3D} erzeugt, wÃ¤hrend die anderen
+Javacode als zylinderförmige \texttt{Shape3D} erzeugt, während die anderen
 Objekte aus externen Objektmodelldateien eingelesen werden. Diese Objektmodelldateien befinden sich im
 Ressourcen Ordner (\texttt{src/res/}).
 
 Schiffsbewegung, Steuerung und Kollisionserkennung wird mit Behaviors realisiert.
-Behaviors dienen bei Java3D als Basis fÃ¼r Interaktion und Animation. Viele dieser Aktionen
-mÃ¼ssen in jedem Frame\footnote{Animierte Sequenzen in einer dreidimensionalen Umgebung werden von der Grafikhardware Bild fÃ¼r Bild berechnet. Eines dieser Einzelbilder wird Frame genannt. Je leistungsfÃ¤higer die vorhandene (Grafik)Hardware ist, desto mehr Bilder kÃ¶nnen pro Sekunde berechnet werden. Zur flÃ¼ssigen Darstellung von Bewegung sollten stets mindestens 30 Frames/Sekunde berechnet werden kÃ¶nnen.} ausgefÃ¼hrt oder aufgerufen werden. Daher gibt es eine abstrakte \texttt{RepeatingBehavior} Klasse, die beim Neuzeichnen jedes Frames aufgerufen wird und den Zeitabstand zwischen den Frames misst. Letzteres ermÃ¶glicht eine Steuerung der Geschwindigkeit unabhÃ¤ngig von der Framerate. Gleichzeitig implementiert diese abstrakte Klasse das Interface \texttt{GameListener}, mit dem auf Ereignisse im
+Behaviors dienen bei Java3D als Basis für Interaktion und Animation. Viele dieser Aktionen
+müssen in jedem Frame\footnote{Animierte Sequenzen in einer dreidimensionalen Umgebung werden von der Grafikhardware Bild für Bild berechnet. Eines dieser Einzelbilder wird Frame genannt. Je leistungsfähiger die vorhandene (Grafik)Hardware ist, desto mehr Bilder können pro Sekunde berechnet werden. Zur flüssigen Darstellung von Bewegung sollten stets mindestens 30 Frames/Sekunde berechnet werden können.} ausgeführt oder aufgerufen werden. Daher gibt es eine abstrakte \texttt{RepeatingBehavior} Klasse, die beim Neuzeichnen jedes Frames aufgerufen wird und den Zeitabstand zwischen den Frames misst. Letzteres ermöglicht eine Steuerung der Geschwindigkeit unabhängig von der Framerate. Gleichzeitig implementiert diese abstrakte Klasse das Interface \texttt{GameListener}, mit dem auf Ereignisse im
 Spielablauf reagiert werden kann.
 
 \texttt{ShipNavigationBehavior} dient zur Bewegung des Schiffes in xy-Richtung,
 also nach links/ rechts und oben/unten. Die z-Achse entspricht bei Java3D der Tiefeninformation, Bewegung
 in dieser Richtung wird mit der \texttt{ForwardBehavior} realisiert, wobei die
 Geschwindigkeit der Bewegung wiederum von der \texttt{SpeedChangeBehavior}
-gesteuert wird. Ãœber diese Behavior wird der Schwierigkeitsgrad reguliert. Die
+gesteuert wird. Über diese Behavior wird der Schwierigkeitsgrad reguliert. Die
 Kamera folgt dem Schiff dabei in festem Abstand, es sieht also so aus, als ob die Kollisionsobjekte (Diamanten, Asteroiden) auf den Spieler zukommen. Die
 \texttt{CreateCollidablesBehavior} stellt sicher, dass vor dem Schiff immer wieder neue Kollisionsobjekte erzeugt werden.
 
-Da die bei Java3D eingebauten MÃ¶glichkeiten zur Kollisionserkennung vor allem bei
-hÃ¶heren Bewegungsgeschwindigkeiten des Schiffes versagen, wurde auch eine eigene
+Da die bei Java3D eingebauten Möglichkeiten zur Kollisionserkennung vor allem bei
+höheren Bewegungsgeschwindigkeiten des Schiffes versagen, wurde auch eine eigene
 (einfache) Kollisionserkennung in Form der \texttt{CollisionBehavior}
-implementiert. Der (unendlich lange) Tunnel bewegt sich selbst nicht, die Illusion der Bewegung wird Ã¼ber eine
+implementiert. Der (unendlich lange) Tunnel bewegt sich selbst nicht, die Illusion der Bewegung wird über eine
 Texturtransformation gesteuert. Die \texttt{TextureTransformBehavior} sorgt
-dafÃ¼r, dass die Geschwindigkeit der Textur, zu der des Schiffes passt.
+dafür, dass die Geschwindigkeit der Textur, zu der des Schiffes passt.
 
 Die Behaviors werden bei der Erzeugung des 3D-Universums (s.o.) an die jeweilig
 betroffenen Objekte gebunden.
 
 \section{Entwicklungsumgebung}
 Die Entwicklungsumgebung beinhaltet alle Programme, die zum entwerfen,
-programmieren, kompilieren und testweisen AusfÃ¼hren des Spiels und der Verwaltung des
-Entwicklungsprozesses nÃ¶tig sind.
+programmieren, kompilieren und testweisen Ausführen des Spiels und der Verwaltung des
+Entwicklungsprozesses nötig sind.
 
-FÃ¼r eine zentrale Verwaltung des gesamten Codes und aller weiteren Bestandteile des
-Spiels (Grafiken, Musik, Sounds) wurde auf Google Code ein Projekt angelegt\footnote{\url{http://code.google.com/p/flowgame}}, dass neben dem Versionskontrollsystem Subversion auch ein Issue-Tracking fÃ¼r das Verfolgen und Verwalten von Fehlern und Ã„nderungswÃ¼nschen bietet.
+Für eine zentrale Verwaltung des gesamten Codes und aller weiteren Bestandteile des
+Spiels (Grafiken, Musik, Sounds) wurde auf Google Code ein Projekt angelegt\footnote{\url{http://code.google.com/p/flowgame}}, dass neben dem Versionskontrollsystem Subversion auch ein Issue-Tracking für das Verfolgen und Verwalten von Fehlern und Änderungswünschen bietet.
 
 Als IDE\footnote{Integrated Development Environment -- integrierte
 Entwicklungsumgebung} wird Eclipse\footnote{\url{http://www.eclipse.org}} in der EE\footnote{Enterprise Edition,
-ermÃ¶glicht unter anderem das Entwickeln von Webanwendungen}-Variante mit
+ermöglicht unter anderem das Entwickeln von Webanwendungen}-Variante mit
 diversen Erweiterungen verwendet:
 Subclipse\footnote{\url{http://subclipse.tigris.org/}} stellt die Anbindung an
-das von Google Code zur VerfÃ¼gung gestellten
-Versionkontrollsystem bereit, FindBugs\footnote{statisches Quellcode Analysewerkzeug -- \url{http://findbugs.sourceforge.net}} und PMD\footnote{statisches Quellcode Analysewerkzeug -- \url{http://pmd.sourceforge.net}} analysieren den Programmcode auf hÃ¤ufig auftretende
-Programmierfehler.\newline Um das Spiel vollstÃ¤ndig lokal auszufÃ¼hren, wird ein
-lokal installierter MySQL\footnote{\url{http://mysql.com}}-Daten\-bankserver notwendig. So kÃ¶nnen Ã„nderungen ohne Beeinflussung des auf Facebook laufenden Spiels getestet werden.
+das von Google Code zur Verfügung gestellten
+Versionkontrollsystem bereit, FindBugs\footnote{statisches Quellcode Analysewerkzeug -- \url{http://findbugs.sourceforge.net}} und PMD\footnote{statisches Quellcode Analysewerkzeug -- \url{http://pmd.sourceforge.net}} analysieren den Programmcode auf häufig auftretende
+Programmierfehler.\newline Um das Spiel vollständig lokal auszuführen, wird ein
+lokal installierter MySQL\footnote{\url{http://mysql.com}}-Daten\-bankserver notwendig. So können Änderungen ohne Beeinflussung des auf Facebook laufenden Spiels getestet werden.
 
-Um jederzeit eine lauffÃ¤hige Version des neuesten Entwicklungsstands zu haben, wird
-Hudson als CI\footnote{Continuous Integration, das durchgÃ¤ngige Kompilieren und Auswerten von Programmcode\\ \url{http://hudson-ci.org}}-Server verwendet, der zum einen die o.g. Werkzeuge FindBugs
-und PMD nochmals zentral ausfÃ¼hrt und dazu Statistiken erzeugt und zum anderen das
-Deployment des Spiels auf den Facebook bekannten Spielserver vollstÃ¤ndig automatisiert
-und reproduzierbar durchfÃ¼hren kann. Insgesamt verbessert der CI-Server damit die Code-
-QualitÃ¤t und reduziert etwaige Fehlhandlungen beim Deployment neuer Versionen des
+Um jederzeit eine lauffähige Version des neuesten Entwicklungsstands zu haben, wird
+Hudson als CI\footnote{Continuous Integration, das durchgängige Kompilieren und Auswerten von Programmcode\\ \url{http://hudson-ci.org}}-Server verwendet, der zum einen die o.g. Werkzeuge FindBugs
+und PMD nochmals zentral ausführt und dazu Statistiken erzeugt und zum anderen das
+Deployment des Spiels auf den Facebook bekannten Spielserver vollständig automatisiert
+und reproduzierbar durchführen kann. Insgesamt verbessert der CI-Server damit die Code-
+Qualität und reduziert etwaige Fehlhandlungen beim Deployment neuer Versionen des
 Spiels, wodurch weniger Fehler im Spiel selbst auftreten.
 
 \section{Herausforderungen bei der Umsetzung}
 
 \begin{itemize}
-  \item PlattformÃ¼bergreifende Laufzeit
+  \item Plattformübergreifende Laufzeit
   	\begin{itemize}
     	\item[$\circ$] Java Runtime + Plugin (insb. MacOSX)
     	\item[$\circ$] Java3D
 		\item[$\circ$] Tastatur-Events auf versch. OS
-		\item[$\circ$] Facebook API-Ã„nderungen (Einladungen, App-Einbindung)
+		\item[$\circ$] Facebook API-Änderungen (Einladungen, App-Einbindung)
   	\end{itemize}
 \item Projektmanagement
 	\begin{itemize}
-  		\item[$\circ$] zu spÃ¤t mit Issue Tracking angefangen
-  		\item[$\circ$] Zeitbudget/Auslastung Teammitglieder wÃ¤hrend Studium
-  		\item[$\circ$] unscharfe Anforderungen wurden zu spÃ¤t festgezurrt
+  		\item[$\circ$] zu spät mit Issue Tracking angefangen
+  		\item[$\circ$] Zeitbudget/Auslastung Teammitglieder während Studium
+  		\item[$\circ$] unscharfe Anforderungen wurden zu spät festgezurrt
 	\end{itemize}
 \end{itemize}
 
