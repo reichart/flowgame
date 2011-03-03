@@ -262,14 +262,15 @@ von Webseiten eingesetzt.}. Programmcode für Funktionalitäten, die spezifisch
 für Client (Benutzerschnittstelle, 3D-Umgebung, Facebook-Anbindung) und Server (Datenbank- Anbindung, Programmlogik) sind, ist voneinander unabhängig, lediglich der Programmcode für das gemeinsam genutzte Datenmodell ist beiden Seiten bekannt. Dies entspricht der üblichen Praxis, reduziert unerwünschte Seiteneffekte und ergibt eine klare Trennung der
 Verantwortlichkeiten.
 
-\subsection{Subsystemzerlegung}
-TODO Christopher, Phil
-
 \subsection{Datenmodell (Klassen / UML)}
-TODO Christopher, Phil
 
-\subsection{Datenbankmodell (Tabellen / ER)}
-TODO Christopher, Phil
+\begin{figure}[htp]
+\begin{center}
+  \includegraphics[width=\textwidth]{uml}
+  \caption{Datenmodell in UML}
+  \label{fig:uml}
+\end{center}
+\end{figure} 
 
 \section{Technologien}
 Um den Entwicklungsaufwand für ein plattformübergreifendes Spiel möglichst gering
@@ -511,6 +512,9 @@ dafür, dass die Geschwindigkeit der Textur, zu der des Schiffes passt.
 
 Die Behaviors werden bei der Erzeugung des 3D-Universums (s.o.) an die jeweilig
 betroffenen Objekte gebunden.
+
+\subsection{Facebook-Anbindung}
+Zur Anbindung an Facebook wird die Bibliothek \code{facebook-java-api}\footnote{\url{http://code.google.com/p/facebook-java-api/}} verwendet, mit der Informationen über den Spieler und die Bilder seiner Freunde für den Social High\-score abgerufen werden. Die Facebook-Anfragen werden direkt vom Spiel-Applet gestellt und über den Spiel-Server an die Facebook-API weitergeleitet. Dieser Umweg über den Server ist nötig, da ein Applet wegen der Same Origin Policy nur zum Ursprungsserver und nicht direkt zu den Facebook-Servern eine Verbindung aufbauen darf.
 
 \section{Entwicklungsumgebung}
 Die Entwicklungsumgebung beinhaltet alle Programme, die zum entwerfen,
