@@ -264,7 +264,7 @@ Verantwortlichkeiten.
 
 \clearpage
 
-\subsection{Datenmodell (Klassen / UML)}
+\subsection{Datenmodell}
 
 \begin{figure}[htp]
 \begin{center}
@@ -548,21 +548,18 @@ Spiels, wodurch weniger Fehler im Spiel selbst auftreten.
 
 \section{Herausforderungen bei der Umsetzung}
 
-\begin{itemize}
-  \item Plattformübergreifende Laufzeit
-  	\begin{itemize}
-    	\item[$\circ$] Java Runtime + Plugin (insb. MacOSX)
-    	\item[$\circ$] Java3D
-		\item[$\circ$] Tastatur-Events auf versch. OS
-		\item[$\circ$] Facebook API-Änderungen (Einladungen, App-Einbindung)
-  	\end{itemize}
-\item Projektmanagement
-	\begin{itemize}
-  		\item[$\circ$] zu spät mit Issue Tracking angefangen
-  		\item[$\circ$] Zeitbudget/Auslastung Teammitglieder während Studium
-  		\item[$\circ$] unscharfe Anforderungen wurden zu spät festgezurrt
-	\end{itemize}
-\end{itemize}
+Bei der Umsetzung der Anforderungen mussten verschiedene Herausforderungen
+gemeistert werden, die teils technischer teils projektorganisatorischer Natur
+waren.
+
+\subsection{Technische Herausforderungen}
+
+Trotz des Slogans ``Write once, run anywhere'' entstand durch die vielen verschiedenen Plattformen, auf denen das Spiel am Ende laufen sollte eine enormer Test- und Anpassungsaufwand, der zu Beginn unterschätzt wurde. So verhielten sich die vielfältigen Kombinationen aus Java-Plugin, Browser und Betriebssystem sehr unterschiedlich; insbesondere Mac OS X bereitete hier Probleme, da hier eine nicht austauschbare veraltete Version von Java3D in das Betriebssystem integriert war, die bedeutend langsamer und fehleranfälliger als die zur Verwendung vorgesehene aktuelle Fassung war. Teilweise verweigerte auch Java3D selbst auf eigentlich fähiger Hardware den Dienst, was dazu führte, dass das Spiel sich gar nicht erst starten ließ. Größtes Problem im Betrieb waren die stetigen Änderungen von Facebook an ihren Schnittstellen, die  diverse Male Funktionen des Spiels beeinflussten; am deutlichsten wurde dies zum Ende der Datenerfassung, als das Spiel kurzfristig gar nicht mehr zu erreichen war. Facebook hatte den Mechanismus unangekündigt so verändert, dass eine Umkonfiguration auf dem Spielserver notwendig war, um das Spiel wieder auf Facebook zugänglich zu machen.
+
+
+\subsection{Herausforderungen im Projektmanagement}
+
+Durch die lange Laufzeit des Projekts kam es immer wieder zu Verzögerungen bei der Fertigstellung von Teilschritten, weil über Vorlesungszeit und Semesterferien die Verfügbarkeit von Teammitgliedern durch Vorlesungen, Klausuren und Privates teilweise stark schwankte. Ebenso wurde anfänglich das Anforderungsmanagement nicht stringent genug durchgeführt, was die Erstellung und Abnahme einzelner Teilschritte komplizierte, da hier die Erwartungen auseinandergingen. Etwa zur zweiten Hälfte der Projektlaufzeit wurde dann vermehrt das von Google Code zu Verfügung gestellte Issue Tracking sowohl für das Management von Nacharbeiten als auch neuer Anforderungen verwendet. Dies führte zum einen zu deutlich besser dokumentierten Anforderungen und ermöglichte zum anderen eine verbessere Kommunikation zu einzelnen offenen Punkten. Dadurch erhöhte sich die Geschwindigkeit, mit der Änderungen eingearbeitet werden konnten. Im Nachhinein hätte von Anfang an das Issue Tracking für alle Anforderungen und Fehler verwendet werden sollen, um eine durchgängige Dokumentation und Fortschrittskontrolle zu gewährleisten.
 
 %\usepackage{graphics} is needed for \includegraphics
 \begin{figure}[htp]
