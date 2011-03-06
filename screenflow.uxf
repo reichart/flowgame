@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><umlet_diagram><help_text>// Uncomment the following line to change the fontsize:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.0">
+  <help_text>// Uncomment the following line to change the fontsize:
 // fontsize=14
 
 // Welcome to UMLet!
@@ -11,48 +13,773 @@
 // Press Ctrl-c to copy an element, and to store the whole UML diagram to the system clipboard.
 // Select "Custom elements &gt; New..." to create new element types.
 //
-// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Relation</type><coordinates><x>90</x><y>360</y><w>122</w><h>120</h></coordinates><panel_attributes>lt=&lt;-
-first time
-player</panel_attributes><additional_attributes>70;30;70;100</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>90</x><y>470</y><w>160</w><h>104</h></coordinates><panel_attributes>lt=&lt;-
-returning
-player</panel_attributes><additional_attributes>140;60;70;60;70;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>260</x><y>360</y><w>50</w><h>92</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;71;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>320</x><y>450</y><w>170</w><h>100</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>150;30;30;80</additional_attributes></element><element><type>com.umlet.element.custom.Text</type><coordinates><x>560</x><y>470</y><w>30</w><h>20</h></coordinates><panel_attributes/><additional_attributes/></element><element><type>com.umlet.element.custom.Text</type><coordinates><x>340</x><y>390</y><w>70</w><h>30</h></coordinates><panel_attributes/><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>740</x><y>410</y><w>50</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;30;30;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>740</x><y>350</y><w>50</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;30;30;50</additional_attributes></element><element><type>com.umlet.element.custom.Decision</type><coordinates><x>140</x><y>460</y><w>40</w><h>40</h></coordinates><panel_attributes/><additional_attributes/></element><element><type>com.umlet.element.custom.Decision</type><coordinates><x>750</x><y>610</y><w>40</w><h>40</h></coordinates><panel_attributes/><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>680</x><y>620</y><w>168</w><h>90</h></coordinates><panel_attributes>lt=&lt;-
-no more rounds</panel_attributes><additional_attributes>90;70;90;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>500</x><y>180</y><w>240</w><h>300</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>30;280;30;140;220;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>800</x><y>150</y><w>470</w><h>580</h></coordinates><panel_attributes>lt=&lt;.
-m2=upload game session data</panel_attributes><additional_attributes>290;30;450;90;450;560;30;560</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>610</x><y>180</y><w>280</w><h>190</h></coordinates><panel_attributes>lt=&lt;.
-m1=scores</panel_attributes><additional_attributes>100;170;30;170;30;140;260;30</additional_attributes></element><element><type>com.umlet.element.custom.State</type><coordinates><x>240</x><y>350</y><w>100</w><h>40</h></coordinates><panel_attributes>*Profile*
-(20Q)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>710</x><y>460</y><w>120</w><h>40</h></coordinates><panel_attributes>Round
-Intro
-bg=gray</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>710</x><y>400</y><w>120</w><h>40</h></coordinates><panel_attributes>*Game Play*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>710</x><y>690</y><w>120</w><h>40</h></coordinates><panel_attributes>Session
-Extro
-bg=gray</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>230</x><y>510</y><w>120</w><h>40</h></coordinates><panel_attributes>*Main Menu*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>690</x><y>470</y><w>146</w><h>160</h></coordinates><panel_attributes>lt=&lt;-
- 
-more rounds</panel_attributes><additional_attributes>80;30;80;140</additional_attributes></element><element><type>com.umlet.element.custom.Database</type><coordinates><x>730</x><y>60</y><w>120</w><h>60</h></coordinates><panel_attributes>Database</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.Node</type><coordinates><x>380</x><y>40</y><w>890</w><h>210</h></coordinates><panel_attributes>Server</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>60</x><y>450</y><w>100</w><h>50</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>80;30;30;30</additional_attributes></element><element><type>com.umlet.element.custom.InitialState</type><coordinates><x>70</x><y>470</y><w>20</w><h>20</h></coordinates><panel_attributes>i</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>820</x><y>60</y><w>220</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;30;200;90</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>790</x><y>90</y><w>90</w><h>80</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>30;30;70;60</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>690</x><y>90</y><w>100</w><h>80</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>80;30;30;60</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>540</x><y>60</y><w>210</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>190;30;30;90</additional_attributes></element><element><type>com.umlet.element.custom.State</type><coordinates><x>500</x><y>150</y><w>140</w><h>60</h></coordinates><panel_attributes>Create/fetch
-player profile</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>650</x><y>150</y><w>140</w><h>60</h></coordinates><panel_attributes>Download
-scenario session</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>800</x><y>150</y><w>140</w><h>60</h></coordinates><panel_attributes>Download
-highscore
-data/chart</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>950</x><y>150</y><w>140</w><h>60</h></coordinates><panel_attributes>Upload
-game session</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>310</x><y>180</y><w>240</w><h>210</h></coordinates><panel_attributes>lt=&lt;.&gt;
-m1=person
-m2=user id</panel_attributes><additional_attributes>30;190;100;190;220;30</additional_attributes></element><element><type>com.umlet.element.custom.State</type><coordinates><x>160</x><y>120</y><w>140</w><h>60</h></coordinates><panel_attributes>Facebook API</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>170</x><y>150</y><w>158</w><h>220</h></coordinates><panel_attributes>lt=&lt;.&gt;
-m2=user id
-m1=profile data</panel_attributes><additional_attributes>120;200;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>230</x><y>150</y><w>500</w><h>240</h></coordinates><panel_attributes>lt=&lt;.&gt;
-m1=friends
-m2=friend ids</panel_attributes><additional_attributes>480;220;210;220;120;170;40;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>260</x><y>520</y><w>470</w><h>210</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;30;30;190;450;190</additional_attributes></element><element><type>com.umlet.element.custom.Node</type><coordinates><x>100</x><y>270</y><w>1170</w><h>480</h></coordinates><panel_attributes>Client</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>710</x><y>340</y><w>120</w><h>40</h></coordinates><panel_attributes>*Highscore*
-(indv/social)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.Decision</type><coordinates><x>940</x><y>340</y><w>40</w><h>40</h></coordinates><panel_attributes/><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>800</x><y>330</y><w>160</w><h>50</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>140;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>860</x><y>350</y><w>190</w><h>80</h></coordinates><panel_attributes>lt=&lt;-
-after regular round</panel_attributes><additional_attributes>100;60;100;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>950</x><y>310</y><w>288</w><h>230</h></coordinates><panel_attributes>lt=&lt;-
-after baseline round</panel_attributes><additional_attributes>190;210;190;50;30;50</additional_attributes></element><element><type>com.umlet.element.custom.State</type><coordinates><x>1070</x><y>520</y><w>130</w><h>40</h></coordinates><panel_attributes>Round
-Extro
-bg=gray</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>760</x><y>530</y><w>400</w><h>120</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;100;380;100;380;30</additional_attributes></element><element><type>com.umlet.element.custom.State</type><coordinates><x>470</x><y>460</y><w>120</w><h>40</h></coordinates><panel_attributes>Session
-Intro
-bg=gray</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>560</x><y>450</y><w>170</w><h>50</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>150;30;30;30</additional_attributes></element><element><type>com.umlet.element.custom.State</type><coordinates><x>230</x><y>430</y><w>120</w><h>40</h></coordinates><panel_attributes>After
-Profile
-bg=gray</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>110</x><y>350</y><w>90</w><h>40</h></coordinates><panel_attributes>Before
-Profile
-bg=gray</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>260</x><y>440</y><w>50</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;70;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>170</x><y>340</y><w>90</w><h>50</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>70;30;30;30</additional_attributes></element><element><type>com.umlet.element.custom.Node</type><coordinates><x>100</x><y>40</y><w>260</w><h>210</h></coordinates><panel_attributes>Facebook</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>370</x><y>290</y><w>870</w><h>450</h></coordinates><panel_attributes>Game Session
-fg=red</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>690</x><y>320</y><w>540</w><h>260</h></coordinates><panel_attributes>Game Round
-fg=blue</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>900</x><y>410</y><w>120</w><h>40</h></coordinates><panel_attributes>*Flow*
-(4 questions)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>900</x><y>470</y><w>120</w><h>40</h></coordinates><panel_attributes>*Reqs. Fit*
-(1 question)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>930</x><y>420</y><w>50</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;50;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>930</x><y>480</y><w>160</w><h>80</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>140;60;30;60;30;30</additional_attributes></element><element><type>com.umlet.element.custom.State</type><coordinates><x>170</x><y>760</y><w>120</w><h>40</h></coordinates><panel_attributes>Story
-Screen
-bg=gray</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.State</type><coordinates><x>300</x><y>760</y><w>120</w><h>40</h></coordinates><panel_attributes>*Interactive*
-Screen</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.custom.Text</type><coordinates><x>100</x><y>760</y><w>100</w><h>30</h></coordinates><panel_attributes>Legend:</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.UseCase</type><coordinates><x>630</x><y>460</y><w>20</w><h>40</h></coordinates><panel_attributes>bg=red</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.UseCase</type><coordinates><x>750</x><y>520</y><w>40</w><h>20</h></coordinates><panel_attributes>bg=red</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>570</x><y>470</y><w>90</w><h>150</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>30;130;70;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>570</x><y>500</y><w>200</w><h>120</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>30;100;180;30</additional_attributes></element><element><type>com.umlet.element.custom.Text</type><coordinates><x>530</x><y>580</y><w>80</w><h>40</h></coordinates><panel_attributes>Dropped
-Mood Qn</panel_attributes><additional_attributes/></element></umlet_diagram>
+// This text will be stored with each diagram;  use it for notes.</help_text>
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>240</x>
+      <y>432</y>
+      <w>40</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;80</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>240</x>
+      <y>520</y>
+      <w>112</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>96;48;24;48;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>360</x>
+      <y>432</y>
+      <w>40</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;56;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>408</x>
+      <y>504</y>
+      <w>128</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>112;24;24;64</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>600</x>
+      <y>520</y>
+      <w>24</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>424</x>
+      <y>456</y>
+      <w>56</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>760</x>
+      <y>472</y>
+      <w>40</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>760</x>
+      <y>424</y>
+      <w>40</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Decision</type>
+    <coordinates>
+      <x>248</x>
+      <y>512</y>
+      <w>32</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Decision</type>
+    <coordinates>
+      <x>768</x>
+      <y>632</y>
+      <w>32</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>592</x>
+      <y>608</y>
+      <w>192</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+keine weiteren Runden</panel_attributes>
+    <additional_attributes>24;40;176;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>544</x>
+      <y>272</y>
+      <w>200</w>
+      <h>256</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>24;240;24;128;184;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>544</x>
+      <y>248</y>
+      <w>624</w>
+      <h>464</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>480;24;608;88;608;448;24;448;24;416</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>640</x>
+      <y>272</y>
+      <w>224</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+m1=Punktzahlen</panel_attributes>
+    <additional_attributes>96;152;24;152;24;128;208;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>344</x>
+      <y>424</y>
+      <w>80</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>*Profil*
+(20Q)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>736</x>
+      <y>512</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Runden-
+Beginn
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>736</x>
+      <y>464</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>*Raumschiff*
+*Action*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>520</x>
+      <y>632</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Sitzungs-
+Ende
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>336</x>
+      <y>552</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>*Hauptmenü*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Database</type>
+    <coordinates>
+      <x>736</x>
+      <y>176</y>
+      <w>96</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Datenbank</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>456</x>
+      <y>160</y>
+      <w>728</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>Server</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>168</x>
+      <y>504</y>
+      <w>96</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>80;24;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InitialState</type>
+    <coordinates>
+      <x>184</x>
+      <y>520</y>
+      <w>16</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>i</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>808</x>
+      <y>176</y>
+      <w>176</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;160;72</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>784</x>
+      <y>200</y>
+      <w>72</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>24;24;56;48</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>704</x>
+      <y>200</y>
+      <w>80</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>64;24;24;48</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>584</x>
+      <y>176</y>
+      <w>168</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>152;24;24;72</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>552</x>
+      <y>248</y>
+      <w>112</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Spielerprofil
+erzeugen/runter-
+laden</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>672</x>
+      <y>248</y>
+      <w>112</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>ScenarioSession
+runterladen</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>792</x>
+      <y>248</y>
+      <w>112</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Highscore
+runterladen</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>912</x>
+      <y>248</y>
+      <w>112</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Spielsitzung
+speichern</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>272</y>
+      <w>204</w>
+      <h>184</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.&gt;
+m1=Spielerprofil
+m2=Benutzer-ID</panel_attributes>
+    <additional_attributes>24;168;80;168;176;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>280</x>
+      <y>224</y>
+      <w>112</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Facebook API</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>264</x>
+      <y>248</y>
+      <w>146</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.&gt;
+m2=Benutzer-ID
+m1=Profildaten</panel_attributes>
+    <additional_attributes>120;176;40;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>344</x>
+      <y>248</y>
+      <w>408</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.&gt;
+m1=Freunde
+m2=Freunde-IDs</panel_attributes>
+    <additional_attributes>392;192;160;192;32;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>360</x>
+      <y>560</y>
+      <w>176</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;88;160;88</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>216</x>
+      <y>336</y>
+      <w>968</w>
+      <h>408</h>
+    </coordinates>
+    <panel_attributes>Client</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>736</x>
+      <y>416</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>*Highscore*
+(indv/social)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Decision</type>
+    <coordinates>
+      <x>904</x>
+      <y>416</y>
+      <w>32</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>808</x>
+      <y>408</y>
+      <w>112</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>96;24;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>832</x>
+      <y>424</y>
+      <w>166</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+nach regulärer Runde</panel_attributes>
+    <additional_attributes>88;56;88;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>912</x>
+      <y>408</y>
+      <w>160</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>144;152;144;24;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>1000</x>
+      <y>560</y>
+      <w>104</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Runden-
+Ende
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>776</x>
+      <y>568</y>
+      <w>296</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;80;280;80;280;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>520</x>
+      <y>512</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Sitzungs-
+Beginn
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>592</x>
+      <y>504</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>144;24;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>336</x>
+      <y>488</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>nach
+Profil
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>224</x>
+      <y>424</y>
+      <w>72</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>vor
+Profil
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>360</x>
+      <y>496</y>
+      <w>40</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;56;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>272</x>
+      <y>416</y>
+      <w>88</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>72;24;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>216</x>
+      <y>160</y>
+      <w>224</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>Facebook</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>504</x>
+      <y>360</y>
+      <w>632</w>
+      <h>376</h>
+    </coordinates>
+    <panel_attributes>Spiel-Sitzung
+fg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>632</x>
+      <y>392</y>
+      <w>488</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>Spiel-Runde
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>872</x>
+      <y>480</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>*Flow*
+(4 Fragen)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>872</x>
+      <y>528</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>*Anf.passung*
+(1 Frage)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>896</x>
+      <y>488</y>
+      <w>40</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;40;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>896</x>
+      <y>536</y>
+      <w>120</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>104;40;24;40;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>296</x>
+      <y>752</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Story
+Bildschirm
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>400</x>
+      <y>752</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>*Interaktiver*
+Bildschirm</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>232</x>
+      <y>752</y>
+      <w>80</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>Legende:</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>760</x>
+      <y>520</y>
+      <w>40</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;112</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>960</x>
+      <y>416</y>
+      <w>128</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>nach Baseline-Runde</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>720</x>
+      <y>696</y>
+      <w>200</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>Daten der Spielsitzung hochladen</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>264</x>
+      <y>472</y>
+      <w>56</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>neuer
+Spieler</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>264</x>
+      <y>576</y>
+      <w>72</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>wieder-
+kehrender
+Spieler</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>784</x>
+      <y>568</y>
+      <w>64</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>weitere
+Runden</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
