@@ -27,12 +27,7 @@
 \lhead{\nouppercase{\leftmark}}
 \rhead{\includegraphics[width=0.5cm]{styles/info.pdf}}
 
-
-% \selectlanguage{english}
-
-% \usepackage{hyperref} % sorgt fÃ¼r fÃ¼r Hyperlinks in PDF-Dokumenten
-\usepackage[plainpages=false,pdfpagelabels, bookmarks=true]{hyperref}                                             %. hyper-references for ps2pdf 
-% \usepackage[ocgcolorlinks]{hyperref}     % sorgt fÃ¼r farbige fÃ¼r Hyperlinks, die beim Ausdruck schwarz sind
+\usepackage[plainpages=false,pdfpagelabels, bookmarks=true]{hyperref}
 \hypersetup{
     breaklinks=true
     unicode=false,          % non-Latin characters in Acrobatâ€™s bookmarks
@@ -82,25 +77,13 @@
 
 \include{cover}
 \include{titlepage}
-% \include{disclaimer}
-% 
-% \pagenumbering{roman}
-% \thispagestyle{plain}
-% 
-% 
-% \selectlanguage{english}
-% \thispagestyle{plain}
-% \begin{abstract}
-% \noindent english abstract
-% \end{abstract}
-% \clearpage
 
 \selectlanguage{german}
-% \begin{abstract}
-% \noindent Deutsche Kurzfassung
-% \end{abstract}
-% \clearpage
 
+\begin{abstract}
+Diese Arbeit widmet sich dem von Csikszentmihalyi erforschten Zustand des "`Flow"' und versucht ihn mit Hilfe eines Computerspiels zu messen und herbeizuführen. Es werden die Auswirkungen auf das Flowerleben gemessen, die sich aus der Art der Anpassung des Schwierigkeitsgrades sowie der Unterscheidung von individuellem und sozialem Vergleich ergeben. Während eine Auswirkung durch die erste Bedingung nachgewiesen werde konnte, scheint die zweite Bedingung keine messbare Auswirkung auf Flowerleben zu haben. 
+\end{abstract}
+\clearpage
 
 \tableofcontents
 \clearpage
@@ -131,11 +114,9 @@ Csikszentmihalyi beschreibt Flow als intrinsische Motivation, die allein von den
 
 
 \section{Beschreibung der Aufgabenstellung}
-Diese Arbeit widmet sich der Untersuchung des sogenannten Flow, ein Zustand, der sich durch hohe Konzentration auszeichnet und bei dem subjektiv die Zeit schneller vergeht. Flow wurde erstmals von Csikszentmihalyi erforscht \cite{Csikszentmihalyi1975}, der herausfinden wollte, warum Menschen oft auch ohne extrinsische Belohnungen sehr lange an bestimmten Aufgaben arbeiten. Er fand hierbei heraus, dass Menschen bei idealer Forderung, also aufeinander angepasstem Schwierigkeitsgrad und Fertigkeiten, in einen Zustand geraten, in dem sie sich gleichzeitig effizient, motiviert und glücklich sind. Diesen Zustand nannte er Flow. Inzwischen wird jedoch vermutet, dass Flow nicht alleine von den Anforderungen und Fähigkeiten abhängt, sondern dass auch Wichtigkeit der Aufgabe und Spaß an ihr eine wichtige Rolle spielen.
 
-Im Rahmen dieser Arbeit wollen wir nun versuchen, Flow und die ihn beeinflussenden Parameter zu messen. Außerdem soll im weiteren Verlauf versucht werden Flow gezielt herbei zu führen.
+Im Rahmen dieser Arbeit soll ein Computerspiel entwicklet werden, dass Flow und die ihn beeinflussenden Parameter zu misst und außerdem im weiteren Verlauf versucht, Flow gezielt herbei zu führen. Gezielt wollen wir uns hierbei auf die folgenden beiden Hypothesen konzentrieren:
 
-Gezielt wollen wir uns hierbei auf die folgenden beiden Hypothesen konzentrieren:
 \begin{itemize}
 	\item Erstens vermuten wir, dass das kontinuierliche Anpassen des Schwierigkeitsgrades leichter zum Flow-Erleben führt, als ein stufenweises Anpassen.
 	\item Desweiteren möchten wir herausfinden, inwiefern die Bedeutung, die man der Aufgabe zumisst, Einfluss auf Flow hat. So glauben wir, dass ein Ranking, in dem man sich mit anderen vergleichen kann, die persönliche Bedeutung der Aufgabe erhöht. Dies sollte insbesondere die Motivation des Spielers beeinflussen weiter zu spielen.
@@ -183,26 +164,30 @@ Stufe 3 - Überforderung: $(Baseline + 60 + Baseline\cdot113\%)/2$\\
 
 Die Baseline wird also zum einen um einen fixen Anteil von 60 erhöht/reduziert, sodass auch bei sehr niedriger Baseline ein Geschwindigkeitsunterschied spürbar ist. Dieser ist allerdings bei einer relativ hohen Baseline kaum mehr bemerkbar, weshalb zusätzlich eine Prozentuale Erhöhung um 13\% bzw. Reduzierung 30\% der Geschwindigkeit stattfindet.
 
-\begin{figure}
+\clearpage
+
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{graphics/DifficultiesKonstant.pdf}
+	\includegraphics[width=10cm]{graphics/DifficultiesKonstant.pdf}
 	\caption{Jede Runde läuft mit konstanter Geschwindigkeit. Der Schwierigkeitsgrad wird von einer Runde zur nächsten sprunghaft angehoben.}
 	\label{fig:DifficultiesKonstant}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{graphics/DifficultiesKontinuierlich.pdf}
+	\includegraphics[width=10cm]{graphics/DifficultiesKontinuierlich.pdf}
 	\caption{Die Geschwindigkeit wird innerhalb jeder Runde linear gesteigert. Der Schwierigkeitsgrad wird somit kontinuierlich erhöht.}
 	\label{fig:DifficultiesKontinuierlich}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{graphics/DifficultiesVariabel.pdf}
+	\includegraphics[width=10cm]{graphics/DifficultiesVariabel.pdf}
 	\caption{Jede Runde läuft mit konstanter Geschwindigkeit. Die Stufen sind identisch zu denen bei konstantem Geschwindigkeitsverlauf, allerdings ist die Reihenfolge zufällig.}
 	\label{fig:DifficultiesVariabel}
 \end{figure}
+
+\clearpage
 
 Das Experiment wurde zweimal durchgeführt, da beim ersten Anlauf lediglich 15 abgeschlossene Spielrunden aufgezeichnet wurden, der Rest der Teilnehmer brach während des Versuchs ab. Daraufhin wurde das Spiel, sowie die Fragebögen, so angepasst, dass die Gesamtspielzeit sich deutlich verkürzte.
 
