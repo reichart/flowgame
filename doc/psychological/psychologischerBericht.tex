@@ -164,11 +164,24 @@ Die Studie wurde auf der Social Platform facebook durchgeführt, wobei Teilnehmer
 
 Bevor das Spiel zum ersten mal startet werden 13 Fragen zur Persönlichkeit gestellt, die Flow beeinflussen könnten. Anschließend gelangt der Spieler ins Hauptmenü, aus dem heraus er das eigentliche Spiel starten kann. Jede Spiel-Sitzung besteht nun aus vier Runden. Die erste Runde ist für die Messung der Baseline zuständig, während in den weiteren drei Runden der Flow jeweils bei Über- und Unterforderung, bzw. Passung gemessen wird.
 
-Jede der Runden beginnt jeweils mit einer kurzen Story, anschließend kommt das eigentliche Spiel. Anschließend wird die Highscore angezeigt und zuletzt wird mit den Fragebögen \ref{quest:flow} und \ref{quest:fit} der Flow und die Passung gemessen. Am Ende einer Sitzung kommt der Spieler ins Hauptmenü zurück. Es ist explizit erlaubt, das Spiel erneut zu spielen.
+Jede der Runden beginnt jeweils mit einer kurzen Story, anschließend kommt das eigentliche Spiel. Anschließend wird die Highscore angezeigt und zuletzt wird mit den Fragebögen \ref{quest:flow} und \ref{quest:fit} der Flow und die Passung gemessen. Am Ende einer Sitzung kommt der Spieler ins Hauptmenü zurück. Es ist explizit erlaubt, das Spiel erneut zu spielen. Der gesamte Ablauf wird in Abb. \ref{fig:experiment}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{graphics/screenflow-client.pdf}
+	\caption{Versuchsablauf}
+	\label{fig:experiment}
+\end{figure}
 
 Zu Beginn jeder Spiel-Sitzung werden die Versuchsbedingungen festgelegt. Hierbei werden zwei Parameter variiert, die Geschwindigkeitsverläufe der drei auf die Baselinemessung folgenden Runden und die Art der Highscore, die der Spieler präsentiert bekommt.
 
-Für eine Spiel-Sitzung gibt es drei mögliche Geschwindigkeitsverläufe: konstant (Abb.  \ref{fig:DifficultiesKonstant}), kontinuierlich (Abb. \ref{fig:DifficultiesKontinuierlich}) und variabel (Abb. \ref{fig:DifficultiesVariabel}). Die exakten
+Für eine Spiel-Sitzung gibt es drei mögliche Geschwindigkeitsverläufe: konstant (Abb.  \ref{fig:DifficultiesKonstant}), kontinuierlich (Abb. \ref{fig:DifficultiesKontinuierlich}) und variabel (Abb. \ref{fig:DifficultiesVariabel}). Die Höhe der Steigerung, sowie die Ausgangsgeschwindigkeit, der einzelnen Stufen hängt von der Baseline ab. Die mittlere Geschwindigkeit der Stufen errechnet sich wie folgt: \\
+
+Stufe 1 - Unterforderung: $(Baseline - 60 + Baseline\cdot70\%)/2$\\
+Stufe 2 - Passung: $Baseline$\\
+Stufe 3 - Überforderung: $(Baseline + 60 + Baseline\cdot113\%)/2$\\
+
+Die Baseline wird also zum einen um einen fixen Anteil von 60 erhöht/reduziert, sodass auch bei sehr niedriger Baseline ein Geschwindigkeitsunterschied spürbar ist. Dieser ist allerdings bei einer relativ hohen Baseline kaum mehr bemerkbar, weshalb zusätzlich eine Prozentuale Erhöhung um 13\% bzw. Reduzierung 30\% der Geschwindigkeit stattfindet.
 
 \begin{figure}
 	\centering
@@ -190,7 +203,6 @@ Für eine Spiel-Sitzung gibt es drei mögliche Geschwindigkeitsverläufe: konstant 
 	\caption{Jede Runde läuft mit konstanter Geschwindigkeit. Die Stufen sind identisch zu denen bei konstantem Geschwindigkeitsverlauf, allerdings ist die Reihenfolge zufällig.}
 	\label{fig:DifficultiesVariabel}
 \end{figure}
-
 
 Das Experiment wurde zweimal durchgeführt, da beim ersten Anlauf lediglich 15 abgeschlossene Spielrunden aufgezeichnet wurden, der Rest der Teilnehmer brach während des Versuchs ab. Daraufhin wurde das Spiel, sowie die Fragebögen, so angepasst, dass die Gesamtspielzeit sich deutlich verkürzte.
 
